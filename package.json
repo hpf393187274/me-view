@@ -32,9 +32,12 @@
     ],
     "rules": {
       "no-console": "off",
-      "vue/html-closing-bracket-newline": ["error", {
-        "multiline": "never"
-    }]
+      "vue/html-closing-bracket-newline": [
+        "error",
+        {
+          "multiline": "never"
+        }
+      ]
     },
     "parserOptions": {
       "parser": "babel-eslint"
