@@ -13,14 +13,16 @@ import 'echarts/lib/component/title'
 import 'echarts/lib/component/legend'
 
 import { PREFIX } from './config'
-
-import { components, innerComponents, common, mixins } from './container'
+import { type, tools, localStorage } from '@assets/script/common'
+import { components, innerComponents, mixins } from './container'
 export default {
   install(Vue, options) {
-    const prefix = common.tools.isEmpty(options.prefix) ? options.prefix : PREFIX
-    for (const item of [...components, ECharts]) {
+    const prefix = tools.isEmpty(options) || tools.isEmpty(options.prefix) ? PREFIX : options.prefix
+    for (const item of components) {
       Vue.component(prefix + item.name, item)
     }
+    Vue.component(`${prefix}-chart`, ECharts)
+
     for (const item of innerComponents) {
       Vue.component(PREFIX + item.name, item)
     }
@@ -28,8 +30,8 @@ export default {
     Vue.mixin(mixins)
     Vue.use(ElementUI)
 
-    Vue.prototype.$type = common.type
-    Vue.prototype.$tools = common.tools
-    Vue.prototype.$localStorage = common.localStorage
+    Vue.prototype.$type = type
+    Vue.prototype.$tools = tools
+    Vue.prototype.$localStorage = localStorage
   }
 }

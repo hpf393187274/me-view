@@ -5,13 +5,13 @@ import Layout from './layout'
 import Form from './form'
 import Tools from './tools'
 
-import common from '@assets/script/common'
 import mixins from './mixins'
 
-export default {
-  common, mixins, components: [
-    ...Basic, ...Layout, ...Form, ...Tools
-  ], innerComponents: [
-    ...Basic, ...Layout, ...Form, ...Tools
-  ]
-}
+const components = [
+  ...Basic, ...Layout, ...Form, ...Tools
+]
+
+const innerComponents = [
+  ...Basic, ...Layout, ...Form, ...Tools
+]
+export { mixins, components, innerComponents }
