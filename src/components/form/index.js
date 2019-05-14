@@ -1,7 +1,5 @@
-
-import Text from './Text'
-import Checkbox from './Checkbox'
-import Button from './Button'
+import { adapterComponent } from '@components/common'
+const list = ['Text', 'Button', 'Checkbox']
 export default [
-  Text, Checkbox, Button
+  ...list.flatMap(adapterComponent('form'))
 ]

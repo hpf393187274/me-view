@@ -1,4 +1,3 @@
-
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -14,18 +13,21 @@ import 'echarts/lib/component/legend'
 
 import { PREFIX } from './config'
 import { type, tools, localStorage, http } from '@assets/script/common'
-import { components, innerComponents, mixins } from '@components'
+import { components, innerComponents, mixins } from '@components/index'
+
 export { type, tools, localStorage, http }
 export default {
   install(Vue, options) {
     const prefix = tools.isEmpty(options) || tools.isEmpty(options.prefix) ? PREFIX : options.prefix
     for (const item of components) {
-      Vue.component(prefix + item.name, item)
+      console.log(item)
+      Vue.component(prefix + item.name, () => import(`@components/${item.path}`))
     }
     Vue.component(`${prefix}-chart`, ECharts)
 
     for (const item of innerComponents) {
-      Vue.component(PREFIX + item.name, item)
+      console.log(item)
+      Vue.component(PREFIX + item.name, () => import(`@components/${item.path}`))
     }
 
     Vue.mixin(mixins)
