@@ -1,8 +1,8 @@
 <template>
   <div class="tree-node">
     <div class="tree-node-item" :style="{'padding-left': `${indent}em`}">
-      <vv-icon v-if="nodeBranch" @click="expand__ = !expand__">{{iconExpand}}</vv-icon>
-      <vv-checkbox
+      <me-icon v-if="nodeBranch" @click="expand__ = !expand__">{{iconExpand}}</me-icon>
+      <me-checkbox
         v-if="showCheckbox"
         :value="checked__"
         :indeterminate="indeterminate"
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="tree-node-children" v-show="expand__" v-if="nodeBranch">
-      <vv-tree-node
+      <me-tree-node
         ref="treeNode"
         :show-checkbox="showCheckbox"
         :level=" level + 1 "

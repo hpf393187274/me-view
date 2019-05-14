@@ -5,7 +5,7 @@
       <div class="dialog-header">
         <slot name="header">
           <span class="dialog-title" :class="{[preClass('cursor-move')]:moveable}">{{title}}</span>
-          <vv-icon @click="value=false">icon-shanchu</vv-icon>
+          <me-icon @click="value=false">icon-shanchu</me-icon>
         </slot>
       </div>
       <div class="dialog-body">
@@ -13,8 +13,8 @@
       </div>
       <div class="dialog-footer">
         <slot name="footer">
-          <vv-button @click="$emit('handleConfirm')">确 定</vv-button>
-          <vv-button @click="value = false">取 消</vv-button>
+          <me-button @click="$emit('handleConfirm')">确 定</me-button>
+          <me-button @click="value = false">取 消</me-button>
         </slot>
       </div>
     </div>

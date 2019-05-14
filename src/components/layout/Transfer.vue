@@ -1,22 +1,22 @@
 <template>
   <div :class="addClass('column','flex')">
-    <vv-button @click="add">add</vv-button>
-    <vv-button @click="remove">remove</vv-button>
+    <me-button @click="add">add</me-button>
+    <me-button @click="remove">remove</me-button>
     <div :class="addClass('transfer')">
       <div class="transfer-left">
         <div v-if="showHeader" class="transfer-header">
           <div :class="addClass('flex')">{{leftTitle}}</div>
           <div style="margin-right:5px;"></div>
         </div>
-        <vv-line-row v-if="showHeader"/>
-        <vv-tree ref="leftTree" :class="addClass('flex')" :data="data" expand show-checkbox/>
+        <me-line-row v-if="showHeader"/>
+        <me-tree ref="leftTree" :class="addClass('flex')" :data="data" expand show-checkbox/>
       </div>
       <div class="transfer-center">
         <slot name="center">
-          <vv-button @click="rightMoveAll" :disabled="data.length === 0">全部向右</vv-button>
-          <vv-button @click="rightMove">向右</vv-button>
-          <vv-button @click="leftMove">向左</vv-button>
-          <vv-button @click="leftMoveAll" :disabled="target.length === 0">全部向左</vv-button>
+          <me-button @click="rightMoveAll" :disabled="data.length === 0">全部向右</me-button>
+          <me-button @click="rightMove">向右</me-button>
+          <me-button @click="leftMove">向左</me-button>
+          <me-button @click="leftMoveAll" :disabled="target.length === 0">全部向左</me-button>
         </slot>
       </div>
       <div class="transfer-right">
@@ -24,8 +24,8 @@
           <div :class="addClass('flex')">{{rightTitle}}</div>
           <div style="margin-right:5px;"></div>
         </div>
-        <vv-line-row v-if="showHeader"/>
-        <vv-tree ref="rightTree" :class="addClass('flex')" :data="target" expand show-checkbox/>
+        <me-line-row v-if="showHeader"/>
+        <me-tree ref="rightTree" :class="addClass('flex')" :data="target" expand show-checkbox/>
       </div>
     </div>
   </div>

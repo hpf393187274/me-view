@@ -1,11 +1,11 @@
 
 <template>
   <div :class="addClass('column')" style="overflow: auto;">
-    <vv-tree ref="tree" :class="addClass('flex')" :data="data" expand show-checkbox/>
+    <me-tree ref="tree" :class="addClass('flex')" :data="data" expand show-checkbox/>
     <div>
-      <vv-button @click="result = $refs.tree.getCheckedData()">获取叶子节点</vv-button>
-      <vv-button @click="result = $refs.tree.getCheckedTreeData()">checkboxTree(包含叶子节点)</vv-button>
-      <vv-button @click="result = $refs.tree.getCheckedTreeData({leaf:false})">checkboxTree(不包含叶子节点)</vv-button>
+      <me-button @click="result = $refs.tree.getCheckedData()">获取叶子节点</me-button>
+      <me-button @click="result = $refs.tree.getCheckedTreeData()">checkboxTree(包含叶子节点)</me-button>
+      <me-button @click="result = $refs.tree.getCheckedTreeData({leaf:false})">checkboxTree(不包含叶子节点)</me-button>
     </div>
     <div style="overflow: auto;">
       <pre>{{result}}</pre>

@@ -1,7 +1,7 @@
 
 <template>
   <div :class="addClass('column','flex')">
-    <vv-transfer flex :data="data"/>
+    <me-transfer flex :data="data"/>
   </div>
 </template>
 <script>

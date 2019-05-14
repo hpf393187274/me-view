@@ -1,12 +1,12 @@
 <template>
   <div :class="addClass('panel')">
     <div class="header" :class="headerClass">
-      <vv-icon v-if="iconClass">{{iconClass}}</vv-icon>
+      <me-icon v-if="iconClass">{{iconClass}}</me-icon>
       <slot name="header">
         <span class="title">{{ title }}</span>
       </slot>
     </div>
-    <vv-line-row/>
+    <me-line-row/>
     <div :class="addClass('content')" :style="{'overflow':overflow}">
       <slot/>
     </div>

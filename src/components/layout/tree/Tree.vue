@@ -1,7 +1,7 @@
 <template>
   <div :class="addClass('tree')">
     <template v-if="data && data.length > 0">
-      <vv-tree-node
+      <me-tree-node
         ref="treeNode"
         :show-checkbox="showCheckbox"
         :expand="expand"
@@ -14,7 +14,7 @@
         <template slot="node-title" slot-scope="{data}">
           <slot name="node-title" :data="data"/>
         </template>
-      </vv-tree-node>
+      </me-tree-node>
     </template>
 
     <div :class="addClass('empty')" v-else>暂无数据</div>
