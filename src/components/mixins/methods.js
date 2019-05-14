@@ -1,4 +1,4 @@
-import { PREFIX } from '../config'
+import { PREFIX } from '@/config'
 
 export default {
   addClass(...value) {

@@ -15,8 +15,8 @@ export default {
   data() {
     return {
       list: [
-        { text: 'Tree', router: '/demo/tree' },
-        { text: 'Transfer', router: '/demo/transfer' }
+        { text: 'Tree', router: '/tree' },
+        { text: 'Transfer', router: '/transfer' }
       ]
     }
   },

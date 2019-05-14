@@ -8,8 +8,8 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/demo',
-      name: 'Demo',
+      path: '/',
+      redirect: '/tree',
       component: () => import('@/demo/Index.vue'),
       children: DemoChildren
     }
