@@ -1,0 +1,23 @@
+.@{PREFIX}-tree {
+	.flex(column);
+	.tree-node {
+		.flex(column);
+		.tree-node-item {
+			.flex(row);
+			align-items: center;
+			.tree-node-title {
+				.flex(row);
+				flex: 1;
+				align-items: center;
+				height: 35px;
+			}
+			&:hover {
+				background:#BCD2EE;
+				cursor: pointer;
+			}
+		}
+		.tree-node-children{
+			flex: 1;
+		}
+	}
+}

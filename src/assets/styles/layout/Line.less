@@ -1,0 +1,24 @@
+.@{PREFIX}-line-row {
+	.flex(row);
+	align-items: center;
+	// height: 5px;
+	padding: 5px;
+	> div {
+		background-color:@color_border;
+		flex: 1;
+		height: 1px;
+	}
+}
+
+
+.@{PREFIX}-line-column {
+	.flex(column);
+	justify-content: center;
+	align-items: center;
+	width: 10px;
+	> div {
+		background-color:@color_bg;
+		flex: .9;
+		width: 1px;
+	}
+}

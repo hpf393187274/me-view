@@ -1,0 +1,40 @@
+
+.@{PREFIX}-dialog {
+	.flex(row);
+  position:fixed;
+  background-color: green;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+	top: 0px;
+	background:rgba(0,0,0,0.4);
+	z-index: 10;
+	justify-content: center;
+	align-items: center;
+	.dialog-container {
+		.flex(column);
+		background-color: aliceblue;
+		z-index: 20;
+		color:black;
+		.dialog-header{
+			.flex(row);
+			align-items: center;
+			padding: 15px 10px;
+			.dialog-title {
+				flex: 1;
+			}
+		}
+		.dialog-body{
+			.flex(row);
+			padding: 5px;
+			flex: 1;
+			overflow: auto;
+		}
+		.dialog-footer{
+			.flex(row);
+			align-items: center;
+			padding: 5px;
+			justify-content: flex-end;
+		}
+	}
+}

@@ -1,0 +1,22 @@
+// 选择器前缀
+@PREFIX: vv;
+// 边框主色
+@color_border: #DDE9F6;
+// 背景主色
+@color_bg: #F5F6FA;
+
+
+
+.flex(@type){
+	-webkit-display:flex;
+	display: flex;
+	flex-direction: @type;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+
+
+.border(@color:#DDE9F6) {
+	border: 1px solid @color;
+	// border: 1px solid green;
+}

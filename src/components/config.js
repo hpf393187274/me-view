@@ -1,5 +1,2 @@
-const PREFIX = 'hpf-'
 
-export default {
-    PREFIX
-}
+export const PREFIX = 'vv'
