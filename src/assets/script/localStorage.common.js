@@ -20,7 +20,6 @@ export default {
     localStorage.setItem(key, JSON.stringify(value))
   },
   clear() { },
-  key(index) { },
   remove(key) {
     if (tools.isEmpty(key)) {
       return

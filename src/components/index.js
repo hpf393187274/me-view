@@ -13,8 +13,9 @@ import 'echarts/lib/component/title'
 import 'echarts/lib/component/legend'
 
 import { PREFIX } from './config'
-import { type, tools, localStorage } from '@assets/script/common'
+import { type, tools, localStorage, http } from '@assets/script/common'
 import { components, innerComponents, mixins } from './container'
+export { type, tools, localStorage, http }
 export default {
   install(Vue, options) {
     const prefix = tools.isEmpty(options) || tools.isEmpty(options.prefix) ? PREFIX : options.prefix
