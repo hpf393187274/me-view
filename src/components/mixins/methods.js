@@ -1,6 +1,9 @@
 import { PREFIX } from '@/config'
 
 export default {
+  boolean(value) {
+    return !!value
+  },
   addClass(...value) {
     const classDefault = {
       [this.preClass('border')]: this.border,

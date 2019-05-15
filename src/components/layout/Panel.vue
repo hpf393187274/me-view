@@ -1,7 +1,7 @@
 <template>
   <div :class="addClass('panel')">
     <div class="header" :class="headerClass">
-      <me-icon v-if="iconClass">{{iconClass}}</me-icon>
+      <me-icon v-if="icon">{{icon}}</me-icon>
       <slot name="header">
         <span class="title">{{ title }}</span>
       </slot>

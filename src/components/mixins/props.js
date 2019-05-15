@@ -42,11 +42,13 @@ export default {
    */
   footerClass: { type: String, default: null },
   /**
+   * 图标
+   */
+  icon: { type: String, default: null },
+  /**
    * 图标样式
    */
-  iconClass: {
-    type: String, default: null
-  },
+  iconClass: { type: String, default: null },
   /**
    * 形状
    */

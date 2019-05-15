@@ -3,7 +3,7 @@
     <div class="tree-node-item" :style="{'padding-left': `${indent}em`}">
       <me-icon v-if="nodeBranch" @click="expand__ = !expand__">{{iconExpand}}</me-icon>
       <me-checkbox
-        v-if="showCheckbox"
+        v-if="checkbox"
         :value="checked__"
         :indeterminate="indeterminate"
         @click="clickCheckbox(!checked__)"
@@ -16,11 +16,15 @@
         <span>/</span>
         <span>{{nodeNumber}}</span>
       </div>
+      <div v-if="action" class="em-center tree-node-action">
+        <me-link @click="removeNode">移除</me-link>
+        <me-link v-if="lazy" @click="refreshNode">刷新</me-link>
+      </div>
     </div>
     <div class="tree-node-children" v-show="expand__" v-if="nodeBranch">
       <me-tree-node
         ref="treeNode"
-        :show-checkbox="showCheckbox"
+        :checkbox="checkbox"
         :level=" level + 1 "
         :expand="expand"
         :expand-level="expandLevel"
@@ -33,6 +37,8 @@
         v-for="node in data.children"
         :data="node"
         :key="node[nodeKey]"
+        :lazy="lazy"
+        :action="action"
         :statistics="statistics"
       />
     </div>
@@ -80,29 +86,26 @@ export default {
       return value
     }
   },
-  watch: {
-    nodeNumber(newValue) {
-      newValue === 0 && this.$emit('remove-children', this.$tools.clone(this.data))
-    }
-  },
   methods: {
-    /**
-     * 移除子节点
-     *  @param {Object} data 要移除的节点数据
-     */
-    removeNode(data = {}) {
-      if (this.$type.isArray(data.children) && data.children.length > 0) {
-        this.batchRemoveNode(data.children)
-      } else {
-        this.$emit('remove-children-node', this.getData({ exclude: ['children'] }))
-      }
+    removeNode() {
+      this.$emit('remove-node-before', this.getData())
+      this.$emit('remove-children-node', this)
+      this.$emit('remove-node-after', this.getData())
+    },
+    refreshNode() {
+      this.$emit('refresh-node-before', this.getData())
+      this.$emit('refresh-node', this)
+      this.$emit('refresh-node-after', this.getData())
     },
     /**
      * 移除子节点
-     *  @param {Object} data 要移除的节点数据
+     *  @param {Object} data 要移除的节点
      */
-    removeChildrenNode(data = {}) {
-      this.$tools.arrayRemove(this.data.children, this.defaultFilter(data))
+    removeChildrenNode(node) {
+      this.$tools.arrayRemove(this.data.children, this.defaultFilter(node.getData()))
+      if (node.isChecked()) {
+        this.alterCheckedNumber(-1)
+      }
     },
     click({ level }) {
       if (this.nodeBranch && this.clickNodeExpand) {
@@ -120,7 +123,7 @@ export default {
     getCheckedData({ filter, ...param } = {}) {
       const list = []
       if (this.nodeLeaf) {
-        const resource = this.getData({ exclude: ['children'] })
+        const resource = this.getData()
         list.push(this.$type.isFunction(filter) ? filter(resource) : resource)
       }
       list.push(...this.getCheckedChildren({ filter, ...param }))
@@ -131,7 +134,7 @@ export default {
      * @param {Boolean} param.leaf 是否包含叶子节点：默认：true
      */
     getCheckedTreeData({ ...param } = {}) {
-      const resource = this.getData({ exclude: ['children'] })
+      const resource = this.getData()
       const childrenList = this.getCheckedChildren({ ...param })
       if (childrenList.length !== 0) {
         resource.children = [...childrenList]

@@ -7,17 +7,20 @@
       :class="addClass('border')"
       :data="data"
       expand
+      :checked="checked"
       statistics
+      lazy
       :expand-level="2"
-      show-checkbox
+      checkbox
     />
     <div class="me-border" style="width:300px;overflow: auto;">
       <pre>{{result}}</pre>
     </div>
     <div class="me-flex me-border">
       <div>
-        <me-button>清除选中节点</me-button>
-        <me-button>移除选中节点</me-button>
+        <me-button @click="checked = !checked">全选/反选</me-button>
+        <me-button @click="$refs.tree.clearCheckedNode()">清除选中节点</me-button>
+        <me-button @click="$refs.tree.removeCheckedNode()">移除选中节点</me-button>
       </div>
       <div>
         <me-button @click="result = $refs.tree.getCheckedData()">获取叶子节点</me-button>
@@ -35,6 +38,7 @@ export default {
   data() {
     return {
       result: [],
+      checked: false,
       data
     }
   }

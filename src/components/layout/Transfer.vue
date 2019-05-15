@@ -6,7 +6,7 @@
         <div style="margin-right:5px;"></div>
       </div>
       <me-line-row v-if="showHeader"/>
-      <me-tree ref="leftTree" :class="addClass('flex')" :data="source" expand show-checkbox/>
+      <me-tree ref="leftTree" :class="addClass('flex')" :data="source" expand checkbox/>
     </div>
     <div class="transfer-center">
       <slot name="center">
@@ -22,7 +22,7 @@
         <div style="margin-right:5px;"></div>
       </div>
       <me-line-row v-if="showHeader"/>
-      <me-tree ref="rightTree" :class="addClass('flex')" :data="target" expand show-checkbox/>
+      <me-tree ref="rightTree" :class="addClass('flex')" :data="target" expand checkbox/>
     </div>
   </div>
 </template>
@@ -47,6 +47,11 @@ export default {
     },
     showHeader: Boolean
   },
+  watch: {
+    target(newValue) {
+      this.$emit('input', newValue)
+    }
+  },
   computed: {
     leftTree() {
       return this.$refs.leftTree
@@ -58,19 +63,17 @@ export default {
   data() {
     return {
       source: [...this.data],
-      target: []
+      target: [...this.value]
     }
   },
   methods: {
     leftMove() {
-      const checkTreeData = this.rightTree.getCheckedTreeData()
-      this.leftTree.pushData(checkTreeData)
-      this.rightTree.batchRemoveNode(checkTreeData)
+      this.leftTree.pushData(this.rightTree.getCheckedTreeData())
+      this.rightTree.removeCheckedNode()
     },
     rightMove() {
-      const checkTreeData = this.leftTree.getCheckedTreeData()
-      this.rightTree.pushData(checkTreeData)
-      this.leftTree.batchRemoveNode(checkTreeData)
+      this.rightTree.pushData(this.leftTree.getCheckedTreeData())
+      this.leftTree.removeCheckedNode()
     }
   }
 }

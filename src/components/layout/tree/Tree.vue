@@ -3,7 +3,7 @@
     <template v-if="data && data.length > 0">
       <me-tree-node
         ref="treeNode"
-        :show-checkbox="showCheckbox"
+        :checkbox="checkbox"
         :expand="expand"
         :expand-level="expandLevel"
         :click-node-expand="clickNodeExpand"
@@ -11,6 +11,8 @@
         :data="node"
         :key="node[nodeKey]"
         :statistics="statistics"
+        :lazy="lazy"
+        :action="action"
         @remove-children-node="removeChildrenNode"
         v-for="node in data"
       >
@@ -45,15 +47,15 @@ export default {
     getCheckedTreeData({ leaf = true, ...param } = {}) {
       return this.getCheckedChildren({ leaf, ...param, tree: true })
     },
-    clearCheckedStatus() {
-
-    },
     /**
      * 移除子节点
      * 事件调用
      */
-    removeChildrenNode(data = {}) {
-      this.$tools.arrayRemove(this.data, this.defaultFilter(data))
+    removeChildrenNode(node) {
+      this.$tools.arrayRemove(this.data, this.defaultFilter(node.getData()))
+      if (node.isChecked()) {
+        this.alterCheckedNumber(-1)
+      }
     }
   }
 }

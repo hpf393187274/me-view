@@ -1,7 +1,10 @@
 
 <template>
-  <div :class="addClass('column','flex')">
-    <me-transfer flex :data="data"/>
+  <div :class="addClass('row','flex')">
+    <me-transfer v-model="target" flex :data="data"/>
+    <div style="width:300px;">
+      <pre>{{target}}</pre>
+    </div>
   </div>
 </template>
 <script>
@@ -9,7 +12,7 @@ import data from '@/demo/data/tree'
 export default {
   data() {
     return {
-      checkedData: [],
+      target: [],
       data
     }
   },

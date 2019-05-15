@@ -34,20 +34,27 @@ export default {
     }
   },
   methods: {
-    /**
-     * 获取视图选中状态: 半选 or 全选 为 true, 反之 false
-     */
-    getViewChecked() {
+    isChecked() {
+      return this.checked__
+    },
+    notChecked() {
+      return this.checked__ === false
+    },
+    isIndeterminate() {
+      return this.indeterminate
+    },
+    notIndeterminate() {
+      return this.indeterminate === false
+    },
+    isViewChecked() {
       return this.checked__ || this.indeterminate
     },
-    /**
-     * 根据半选和全选 得到 当前 checkbox 的 选中状态
-     */
-    parseIndetermminate() {
-      if (this.indeterminateNumber > 0) {
-        return true
-      }
-      return this.checkedNumber > 0 && this.checkedNumber < this.nodeNumber
+    notViewChecked() {
+      return this.isViewChecked() === false
+    },
+    setChecked(value, deep = false) {
+      this.checked__ = value
+      deep && this.alterChildrenNodeChecked(value)
     },
     /**
      * 变更子节点全选的个数

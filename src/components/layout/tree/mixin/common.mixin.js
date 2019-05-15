@@ -17,9 +17,17 @@ export default {
      */
     statistics: Boolean,
     /* 是否存在复选框 */
-    showCheckbox: { type: Boolean, default: false },
+    checkbox: { type: Boolean, default: false },
     /* 是否默认选中 */
     checked: { type: Boolean, default: false },
+    /**
+     * 懒加载模式
+     */
+    lazy: Boolean,
+    /**
+     * 操作功能
+     */
+    action: Boolean,
     /**
      * 每个树节点用来作为唯一标识的属性，整棵树应该是唯一的
      */
@@ -34,27 +42,45 @@ export default {
     /**
      * 获取节点数据
      */
-    getData({ deep = false, exclude = [] } = {}) {
+    getData({ deep = false, exclude = ['children'] } = {}) {
       return this.$tools.clone(this.data.resource ? this.data.resource : this.data, { deep, exclude })
     },
     getCheckedChildren({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []
       for (const node of this.getNodeList()) {
-        if (node.getViewChecked() === false) { continue }
+        if (node.notViewChecked()) { continue }
         if (tree === false) {
           childrenList.push(...node.getCheckedData({ leaf, tree, ...param }))
           continue
         }
-        const children = node.$props.data.children
-        if (leaf === false) {
-          // 不需要叶子节点
-          if (this.$type.isNotArray(children) || children.length === 0) {
-            continue
-          }
-        }
+
+        if (leaf === false && node.isLeaf()) { continue }
+
         childrenList.push(node.getCheckedTreeData({ leaf, tree, ...param }))
       }
       return childrenList
+    },
+    clearCheckedNode() {
+      for (const node of this.getNodeList()) {
+        if (node.notViewChecked()) { continue }
+        node.clearCheckedNode()
+        node.setChecked(false)
+      }
+    },
+    isLeaf() { return this.nodeLeaf },
+    isBranch() { return this.nodeBranch },
+    /**
+     * 移除选中的节点
+     */
+    removeCheckedNode() {
+      for (const node of this.getNodeList()) {
+        if (node.notViewChecked()) { continue }
+        if (node.isChecked()) {
+          node.$emit('remove-children-node', node)
+          continue
+        }
+        node.removeCheckedNode()
+      }
     },
     /**
      * 获取 TreeNode
@@ -62,7 +88,7 @@ export default {
      */
     findTreeNode(filter) {
       if (this.$type.isNotFunction(filter)) { return }
-      return this.getNodeList().find(treeNode => filter(treeNode.$props.data))
+      return this.getNodeList().find(node => filter(node.getData()))
     },
     /**
      * 获取 TreeNode
@@ -86,18 +112,6 @@ export default {
       const treeNode = this.$refs.treeNode
       if (this.$tools.isEmpty(treeNode)) { return [] }
       return [treeNode].flat()
-    },
-    /**
-     * 移除
-     * @param {Array} data 
-     */
-    batchRemoveNode(data = []) {
-      if (this.$type.isNotArray(data)) { return }
-      for (const item of data) {
-        const treeNode = this.findTreeNode(this.defaultFilter(this.$tools.clone(item)))
-        if (this.$tools.isEmpty(treeNode)) { continue }
-        treeNode.removeNode(item)
-      }
     },
     pushData(data) {
       if (this.$tools.isEmpty(data)) { return }
