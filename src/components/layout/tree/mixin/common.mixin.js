@@ -4,7 +4,18 @@ export default {
      * 是否展开的
      */
     expand: Boolean,
-    expandClickNode: { type: Boolean, default: true },
+    /**
+     * 展开级别：默认：0 表示不限制
+     */
+    expandLevel: { type: Number, default: 0 },
+    /**
+     * 点击节点是否展开
+     */
+    clickNodeExpand: { type: Boolean, default: true },
+    /**
+     * 视图显示统计
+     */
+    statistics: Boolean,
     /* 是否存在复选框 */
     showCheckbox: { type: Boolean, default: false },
     /* 是否默认选中 */
@@ -16,7 +27,7 @@ export default {
   },
   data() {
     return {
-      expand__: this.expand
+      expand__: this.expand && (this.expandLevel === 0 || this.expandLevel >= this.level)
     }
   },
   methods: {

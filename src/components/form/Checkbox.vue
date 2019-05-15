@@ -1,5 +1,5 @@
 <template>
-  <label style="margin-right:10px" @click="$emit('click')">
+  <label :class="addClass('checkbox')" style="margin-right:10px" @click="$emit('click')">
     <input type="checkbox" ref="checkbox" v-model="currentValue" @change="$emit('change')">
     <span v-if="lable">{{ lable }}</span>
   </label>

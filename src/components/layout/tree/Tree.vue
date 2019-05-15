@@ -5,18 +5,20 @@
         ref="treeNode"
         :show-checkbox="showCheckbox"
         :expand="expand"
+        :expand-level="expandLevel"
+        :click-node-expand="clickNodeExpand"
         :checked="checked"
         :data="node"
-        :key="index"
+        :key="node[nodeKey]"
+        :statistics="statistics"
         @remove-children-node="removeChildrenNode"
-        v-for="(node,index) in data"
+        v-for="node in data"
       >
         <template slot="node-title" slot-scope="{data}">
           <slot name="node-title" :data="data"/>
         </template>
       </me-tree-node>
     </template>
-
     <div :class="addClass('empty')" v-else>暂无数据</div>
   </div>
 </template>

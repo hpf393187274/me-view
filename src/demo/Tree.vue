@@ -7,6 +7,8 @@
       :class="addClass('border')"
       :data="data"
       expand
+      statistics
+      :expand-level="2"
       show-checkbox
     />
     <div class="me-border" style="width:300px;overflow: auto;">

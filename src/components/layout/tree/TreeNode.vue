@@ -11,6 +11,11 @@
       <div class="tree-node-title" @click="click({ level })">
         <slot name="node-title" :data="{...data, children: undefined}">{{data.text}}</slot>
       </div>
+      <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
+        <span>{{checkedNumber}}</span>
+        <span>/</span>
+        <span>{{nodeNumber}}</span>
+      </div>
     </div>
     <div class="tree-node-children" v-show="expand__" v-if="nodeBranch">
       <me-tree-node
@@ -18,14 +23,17 @@
         :show-checkbox="showCheckbox"
         :level=" level + 1 "
         :expand="expand"
+        :expand-level="expandLevel"
+        :click-node-expand="clickNodeExpand"
         :checked="checked || data.checked === true"
         :parent-indent="indent"
         @remove-children-node="removeChildrenNode"
         @alter-checked-number="alterCheckedNumber"
         @alter-indeterminate-number="alterIndeterminateNumber"
-        v-for="(node,index) in data.children"
+        v-for="node in data.children"
         :data="node"
-        :key="index"
+        :key="node[nodeKey]"
+        :statistics="statistics"
       />
     </div>
   </div>
@@ -49,7 +57,7 @@ export default {
   },
   computed: {
     iconExpand() {
-      return this.expand__ ? 'icon-caret-right' : 'icon-sort-down'
+      return this.expand__ ? 'icon-sort-down' : 'icon-caret-right'
     },
     /**
      * 获取当前节点的子节点个数
@@ -97,7 +105,7 @@ export default {
       this.$tools.arrayRemove(this.data.children, this.defaultFilter(data))
     },
     click({ level }) {
-      if (this.nodeBranch && this.expandClickNode) {
+      if (this.nodeBranch && this.clickNodeExpand) {
         this.expand__ = !this.expand__
       }
       // 点击级别 与 当前节点级别一致
