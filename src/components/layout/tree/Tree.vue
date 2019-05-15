@@ -8,7 +8,7 @@
         :checked="checked"
         :data="node"
         :key="index"
-        @remove-children="removeChildren"
+        @remove-children-node="removeChildrenNode"
         v-for="(node,index) in data"
       >
         <template slot="node-title" slot-scope="{data}">
@@ -50,7 +50,7 @@ export default {
      * 移除子节点
      * 事件调用
      */
-    removeChildren(data = {}) {
+    removeChildrenNode(data = {}) {
       this.$tools.arrayRemove(this.data, this.defaultFilter(data))
     }
   }

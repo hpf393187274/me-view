@@ -93,7 +93,7 @@ export default {
       return JSON.parse(JSON.stringify(target))
     }
     if (type.isObject(target)) {
-      const newTarget = Object.assign({}, target)
+      const newTarget = { ...target }
       // 排除掉不用的属性
       for (const key of exclude) { delete newTarget[key] }
       // 排除掉不用的属性

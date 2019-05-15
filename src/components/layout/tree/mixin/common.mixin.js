@@ -23,22 +23,27 @@ export default {
     /**
      * 获取节点数据
      */
-    getData(deep = false) {
-      return this.$tools.clone(this.data.resource ? this.data.resource : this.data, { deep })
+    getData({ deep = false, exclude = [] } = {}) {
+      return this.$tools.clone(this.data.resource ? this.data.resource : this.data, { deep, exclude })
     },
     getCheckedChildren({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []
       for (const node of this.getNodeList()) {
-        if (node.$data.checked__ || node.$data.indeterminate) {
-          if (tree === true) {
-            if (leaf === false && this.nodeLeaf) {
-              return null
-            }
-            childrenList.push(node.getCheckedTreeData({ leaf, tree, ...param }))
-          } else {
-            childrenList.push(...node.getCheckedData({ leaf, tree, ...param }))
+        if (node.$data.checked__ === false && node.$data.indeterminate === false) {
+          continue
+        }
+        if (tree === false) {
+          childrenList.push(...node.getCheckedData({ leaf, tree, ...param }))
+          continue
+        }
+        const children = node.$props.data.children
+        if (leaf === false) {
+          // 不需要叶子节点
+          if (this.$type.isNotArray(children) || children.length === 0) {
+            continue
           }
         }
+        childrenList.push(node.getCheckedTreeData({ leaf, tree, ...param }))
       }
       return childrenList
     },

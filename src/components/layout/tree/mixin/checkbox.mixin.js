@@ -10,7 +10,7 @@ export default {
   watch: {
     checked(newValue) {
       this.checked__ = newValue
-      this.modifyChildren(newValue)
+      this.alterChildrenNodeChecked(newValue)
     },
     checked__(newValue) {
       if (this.level > 1) {
@@ -31,27 +31,54 @@ export default {
       this.indeterminate = this.parseIndetermminate()
     }
   },
+  computed: {
+    indeterminateNew() {
+      if (this.indeterminateNumber > 0) {
+        return true
+      }
+      return this.checkedNumber > 0 && this.checkedNumber < this.nodeNumber
+    }
+  },
   methods: {
+    /**
+     * 根据半选和全选 得到 当前 checkbox 的 选中状态
+     */
     parseIndetermminate() {
       if (this.indeterminateNumber > 0) {
         return true
       }
       return this.checkedNumber > 0 && this.checkedNumber < this.nodeNumber
     },
+    /**
+     * 变更子节点全选的个数
+     * @param {Number} value 1 or -1
+     */
     alterCheckedNumber(value) {
       this.checkedNumber += value
     },
+    /**
+     * 变更子节点半选的个数
+     * @param {Number} value 1 or -1
+     */
     alterIndeterminateNumber(value) {
       this.indeterminateNumber += value
     },
+    /**
+     * 点击 Checkbox
+     * @param {Booelan} value 变更后的Checkbox 状态
+     */
     clickCheckbox(value) {
       this.checked__ = value
-      this.modifyChildren(value)
+      this.alterChildrenNodeChecked(value)
     },
-    modifyChildren(value) {
+    /**
+     * 变更子节点状态
+     * @param {Boolean} value 状态
+     */
+    alterChildrenNodeChecked(value) {
       for (const node of this.getNodeList()) {
         node.$data.checked__ = value
-        node.modifyChildren(value)
+        node.alterChildrenNodeChecked(value)
       }
     }
   }

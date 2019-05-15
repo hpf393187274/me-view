@@ -5,7 +5,7 @@
       <me-checkbox
         v-if="showCheckbox"
         :value="checked__"
-        :indeterminate="indeterminate"
+        :indeterminate="indeterminateNew"
         @click="clickCheckbox(!checked__)"
       />
       <div class="tree-node-title" @click="click({ level })">
@@ -20,7 +20,7 @@
         :expand="expand"
         :checked="checked || data.checked === true"
         :parent-indent="indent"
-        @remove-children="removeChildren"
+        @remove-children-node="removeChildrenNode"
         @alter-checked-number="alterCheckedNumber"
         @alter-indeterminate-number="alterIndeterminateNumber"
         v-for="(node,index) in data.children"
@@ -78,15 +78,22 @@ export default {
     }
   },
   methods: {
+    /**
+     * 移除子节点
+     *  @param {Object} data 要移除的节点数据
+     */
     removeNode(data = {}) {
       if (this.$type.isArray(data.children) && data.children.length > 0) {
         this.batchRemoveNode(data.children)
       } else {
-        this.$emit('remove-children', this.$tools.clone(data))
-        this.$emit('modify-parent', { newState: -1, oldState: 1 })
+        this.$emit('remove-children-node', this.getData({ exclude: ['children'] }))
       }
     },
-    removeChildren(data = {}) {
+    /**
+     * 移除子节点
+     *  @param {Object} data 要移除的节点数据
+     */
+    removeChildrenNode(data = {}) {
       this.$tools.arrayRemove(this.data.children, this.defaultFilter(data))
     },
     click({ level }) {
@@ -98,23 +105,26 @@ export default {
         this.$emit('click', { level, data: this.data })
       }
     },
-    getCheckedData({ leaf = true, filter, ...param } = {}) {
+    /**
+     * 获取选中的叶子节点数据
+     * @param {Boolean} param.leaf 是否包含叶子节点：默认：true
+     */
+    getCheckedData({ filter, ...param } = {}) {
       const list = []
-      if (leaf === true && this.nodeBranch) {
-        // 如果不获取 tree 并且 只获取叶子节点 ，但当前节点不是叶子节点
-        list.push(...this.getCheckedChildren({ leaf, filter, ...param }))
-      } else {
-        const resource = this.getData()
+      if (this.nodeLeaf) {
+        const resource = this.getData({ exclude: ['children'] })
         list.push(this.$type.isFunction(filter) ? filter(resource) : resource)
       }
+      list.push(...this.getCheckedChildren({ filter, ...param }))
       return list
     },
-    getCheckedTreeData({ leaf = true, ...param } = {}) {
-      if (leaf === false && this.nodeLeaf) {
-        return null
-      }
-      const resource = this.getData()
-      const childrenList = this.getCheckedChildren({ leaf, ...param, tree: true })
+    /**
+     * 获取选中的数据(TreeData)
+     * @param {Boolean} param.leaf 是否包含叶子节点：默认：true
+     */
+    getCheckedTreeData({ ...param } = {}) {
+      const resource = this.getData({ exclude: ['children'] })
+      const childrenList = this.getCheckedChildren({ ...param })
       if (childrenList.length !== 0) {
         resource.children = [...childrenList]
       }
