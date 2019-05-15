@@ -5,7 +5,7 @@
       <me-checkbox
         v-if="showCheckbox"
         :value="checked__"
-        :indeterminate="indeterminateNew"
+        :indeterminate="indeterminate"
         @click="clickCheckbox(!checked__)"
       />
       <div class="tree-node-title" @click="click({ level })">

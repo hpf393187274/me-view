@@ -29,9 +29,7 @@ export default {
     getCheckedChildren({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []
       for (const node of this.getNodeList()) {
-        if (node.$data.checked__ === false && node.$data.indeterminate === false) {
-          continue
-        }
+        if (node.getViewChecked() === false) { continue }
         if (tree === false) {
           childrenList.push(...node.getCheckedData({ leaf, tree, ...param }))
           continue

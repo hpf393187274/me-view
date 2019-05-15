@@ -2,7 +2,6 @@ export default {
   data() {
     return {
       checked__: this.checked || this.data.checked === true,
-      indeterminate: false,
       checkedNumber: 0,
       indeterminateNumber: 0
     }
@@ -18,21 +17,16 @@ export default {
       }
     },
     indeterminate(newValue) {
-      // this.$refs.checkbox.indeterminate = newValue
       if (this.level > 1) {
         this.$emit('alter-indeterminate-number', newValue ? 1 : -1)
       }
     },
     checkedNumber(newValue) {
       this.checked__ = newValue === this.nodeNumber
-      this.indeterminate = this.parseIndetermminate()
-    },
-    indeterminateNumber() {
-      this.indeterminate = this.parseIndetermminate()
     }
   },
   computed: {
-    indeterminateNew() {
+    indeterminate() {
       if (this.indeterminateNumber > 0) {
         return true
       }
@@ -40,6 +34,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * 获取视图选中状态: 半选 or 全选 为 true, 反之 false
+     */
+    getViewChecked() {
+      return this.checked__ || this.indeterminate
+    },
     /**
      * 根据半选和全选 得到 当前 checkbox 的 选中状态
      */
