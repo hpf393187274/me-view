@@ -1,4 +1,5 @@
-import { adapterComponent } from '@components/common'
+import Tree from './Tree.vue'
+import TreeNode from './TreeNode.vue'
 export default [
-  ...['Tree', 'TreeNode'].flatMap(adapterComponent('tree'))
+  Tree, TreeNode
 ]

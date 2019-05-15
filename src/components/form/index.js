@@ -1,5 +1,6 @@
-import { adapterComponent } from '@components/common'
-const list = ['Text', 'Button', 'Checkbox']
+import Text from './Text'
+import Checkbox from './Checkbox'
+import Button from './Button'
 export default [
-  ...list.flatMap(adapterComponent('form'))
+  Text, Checkbox, Button
 ]

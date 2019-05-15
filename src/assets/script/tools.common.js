@@ -66,44 +66,37 @@ export default {
       target.splice(target.findIndex(condition), 1)
     }
   },
-  arrayClear(target) {
-    if (type.isNotArray(target)) { return }
-    target.splice(0, target.length)
-  },
-  objectClear(target) {
-    if (type.isNotObject(target)) { return }
-    for (const key of Object.keys(target)) {
-      delete target[key]
-    }
-  },
-  objectRemove(target, condition) {
-    if (type.isNotObject(target)) { return }
-
-    if (type.isString(condition)) {
-      delete target[condition]
+  /**
+   * 
+   * @param {Array | Object} target 清空目标内容
+   */
+  clearEmpty(target) {
+    if (type.isArray(target)) {
+      target.splice(0, target.length)
     }
 
-    // if (type.isFunction(condition)) {
-    //   delete target[condition()]
-    // }
+    if (type.isObject(target)) {
+      for (const key of Object.keys(target)) {
+        delete target[key]
+      }
+    }
   },
-  clone(target, param = {}) {
+  /**
+   * 
+   * @param {Object | Array} target 
+   * @param {Boolean} param.deep 是否深度克隆, 默认：false
+   * @param {Array} param.exclude 是否深度克隆, 默认：false
+   */
+  clone(target, { deep = false, exclude = [] } = {}) {
     if (type.isNotObjectOrArray(target)) { return target }
-    if (type.isNotObject(param)) {
-      param = { deep: false, exclude: [] }
-    }
-    param = Object.assign({ deep: false, exclude: [] }, param);
-    if (param.deep === true) {
+    if (deep === true) {
       return JSON.parse(JSON.stringify(target))
     }
     if (type.isObject(target)) {
-      const newTarget = {}
-      for (const key of Object.keys(target)) {
-        if (param.exclude.includes(key)) {
-          continue
-        }
-        newTarget[key] = target[key]
-      }
+      const newTarget = Object.assign({}, target)
+      // 排除掉不用的属性
+      for (const key of exclude) { delete newTarget[key] }
+      // 排除掉不用的属性
       return newTarget
     }
     return target.flatMap(item => this.clone(item))

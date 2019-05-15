@@ -1,5 +1,11 @@
-import { adapterComponent } from '@components/common'
-const list = ['Row', 'Column', 'LineRow', 'LineColumn', 'Icon']
+
+
+import LineRow from './LineRow'
+import LineColumn from './LineColumn'
+
+import Row from './Row'
+import Column from './Column'
+import Icon from './Icon'
 export default [
-  ...list.flatMap(adapterComponent('basic'))
+  Icon, LineRow, LineColumn, Row, Column
 ]

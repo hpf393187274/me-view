@@ -66,9 +66,6 @@ export default {
     nodeBranch() {
       return this.nodeNumber > 0
     },
-    children() {
-      return this.data.children
-    },
     indent() {
       let value = this.parentIndent + 1
       this.nodeLeaf && (value++)
@@ -81,12 +78,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * 获取子数据
-     */
-    getChildrenData(deep = true) {
-      return this.$tools.clone(this.data.children, deep)
-    },
     removeNode(data = {}) {
       if (this.$type.isArray(data.children) && data.children.length > 0) {
         this.batchRemoveNode(data.children)
@@ -107,23 +98,23 @@ export default {
         this.$emit('click', { level, data: this.data })
       }
     },
-    getCheckedData(param = { leaf: true }) {
+    getCheckedData({ leaf = true, filter, ...param } = {}) {
       const list = []
-      if (param.leaf === true && this.nodeBranch) {
+      if (leaf === true && this.nodeBranch) {
         // 如果不获取 tree 并且 只获取叶子节点 ，但当前节点不是叶子节点
-        list.push(...this.getCheckedChildren(param))
+        list.push(...this.getCheckedChildren({ leaf, filter, ...param }))
       } else {
         const resource = this.getData()
-        list.push(this.$type.isFunction(param.filter) ? param.filter(resource) : resource)
+        list.push(this.$type.isFunction(filter) ? filter(resource) : resource)
       }
       return list
     },
-    getCheckedTreeData(param = { leaf: true }) {
-      if (param.leaf === false && this.nodeLeaf) {
+    getCheckedTreeData({ leaf = true, ...param } = {}) {
+      if (leaf === false && this.nodeLeaf) {
         return null
       }
       const resource = this.getData()
-      const childrenList = this.getCheckedChildren({ tree: true })
+      const childrenList = this.getCheckedChildren({ leaf, ...param, tree: true })
       if (childrenList.length !== 0) {
         resource.children = [...childrenList]
       }

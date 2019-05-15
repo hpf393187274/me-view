@@ -26,17 +26,17 @@ export default {
     getData(deep = false) {
       return this.$tools.clone(this.data.resource ? this.data.resource : this.data, { deep })
     },
-    getCheckedChildren(param = { leaf: true }) {
+    getCheckedChildren({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []
       for (const node of this.getNodeList()) {
         if (node.$data.checked__ || node.$data.indeterminate) {
-          if (param.tree === true) {
-            if (param.leaf === false && this.nodeLeaf) {
+          if (tree === true) {
+            if (leaf === false && this.nodeLeaf) {
               return null
             }
-            childrenList.push(node.getCheckedTreeData(param))
+            childrenList.push(node.getCheckedTreeData({ leaf, tree, ...param }))
           } else {
-            childrenList.push(...node.getCheckedData(param))
+            childrenList.push(...node.getCheckedData({ leaf, tree, ...param }))
           }
         }
       }

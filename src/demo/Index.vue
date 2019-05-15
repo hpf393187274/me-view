@@ -5,7 +5,7 @@
         <router-link :to="{ path: item.router}">{{item.text}}</router-link>
       </div>
     </div>
-    <div :class="addClass('border','flex')" style="overflow: auto;">
+    <div :class="addClass('row','border','flex')" style="overflow: auto;">
       <router-view/>
     </div>
   </div>

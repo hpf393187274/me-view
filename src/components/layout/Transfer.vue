@@ -1,32 +1,28 @@
 <template>
-  <div :class="addClass('column','flex')">
-    <me-button @click="add">add</me-button>
-    <me-button @click="remove">remove</me-button>
-    <div :class="addClass('transfer')">
-      <div class="transfer-left">
-        <div v-if="showHeader" class="transfer-header">
-          <div :class="addClass('flex')">{{leftTitle}}</div>
-          <div style="margin-right:5px;"></div>
-        </div>
-        <me-line-row v-if="showHeader"/>
-        <me-tree ref="leftTree" :class="addClass('flex')" :data="data" expand show-checkbox/>
+  <div :class="addClass('transfer')">
+    <div class="transfer-left">
+      <div v-if="showHeader" class="transfer-header">
+        <div :class="addClass('flex')">{{leftTitle}}</div>
+        <div style="margin-right:5px;"></div>
       </div>
-      <div class="transfer-center">
-        <slot name="center">
-          <me-button @click="rightMoveAll" :disabled="data.length === 0">全部向右</me-button>
-          <me-button @click="rightMove">向右</me-button>
-          <me-button @click="leftMove">向左</me-button>
-          <me-button @click="leftMoveAll" :disabled="target.length === 0">全部向左</me-button>
-        </slot>
+      <me-line-row v-if="showHeader"/>
+      <me-tree ref="leftTree" :class="addClass('flex')" :data="source" expand show-checkbox/>
+    </div>
+    <div class="transfer-center">
+      <slot name="center">
+        <me-button @click="target=[...source]; source=[]" :disabled="source.length === 0">全部向右</me-button>
+        <me-button @click="rightMove">向右</me-button>
+        <me-button @click="leftMove">向左</me-button>
+        <me-button @click="source=[...target]; target=[]" :disabled="target.length === 0">全部向左</me-button>
+      </slot>
+    </div>
+    <div class="transfer-right">
+      <div v-if="showHeader" class="transfer-header">
+        <div :class="addClass('flex')">{{rightTitle}}</div>
+        <div style="margin-right:5px;"></div>
       </div>
-      <div class="transfer-right">
-        <div v-if="showHeader" class="transfer-header">
-          <div :class="addClass('flex')">{{rightTitle}}</div>
-          <div style="margin-right:5px;"></div>
-        </div>
-        <me-line-row v-if="showHeader"/>
-        <me-tree ref="rightTree" :class="addClass('flex')" :data="target" expand show-checkbox/>
-      </div>
+      <me-line-row v-if="showHeader"/>
+      <me-tree ref="rightTree" :class="addClass('flex')" :data="target" expand show-checkbox/>
     </div>
   </div>
 </template>
@@ -61,6 +57,7 @@ export default {
   },
   data() {
     return {
+      source: [...this.data],
       target: []
     }
   },
@@ -74,20 +71,6 @@ export default {
       const checkTreeData = this.leftTree.getCheckedTreeData()
       this.rightTree.pushData(checkTreeData)
       this.leftTree.batchRemoveNode(checkTreeData)
-    },
-    leftMoveAll() {
-      this.leftTree.setData(this.rightTree.$props.data)
-      this.rightTree.clearData()
-    },
-    rightMoveAll() {
-      this.rightTree.setData(this.leftTree.$props.data)
-      this.leftTree.clearData()
-    },
-    add() {
-      this.leftTree.pushData({ id: this.data.length + 1, text: `root-${this.data.length + 1}` })
-    },
-    remove() {
-      this.$tools.arrayRemove(this.leftTree.$props.data, this.length - 1)
     }
   }
 }

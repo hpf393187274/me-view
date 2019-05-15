@@ -20,6 +20,5 @@ module.exports = {
       .set('@store', resolve('src/store'))
       .set('@styles', resolve('src/styles'))
       .set('@directive', resolve('src/directive'))
-  },
-  publicPath: ''
+  }
 }

@@ -1,3 +1,4 @@
+import '@assets/styles/common.less'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -13,22 +14,24 @@ import 'echarts/lib/component/legend'
 
 import { PREFIX } from './config'
 import { type, tools, localStorage, http } from '@assets/script/common'
-import { components, innerComponents, mixins } from '@components/index'
+import { components, mixins } from '@components/index'
 
 export { type, tools, localStorage, http }
+/**
+ * 内置组件
+ */
+const innerComponents = ['Icon', 'LineRow', 'Tree', 'TreeNode', 'Button', 'Checkbox']
 export default {
   install(Vue, options) {
     const prefix = tools.isEmpty(options) || tools.isEmpty(options.prefix) ? PREFIX : options.prefix
     for (const item of components) {
-      console.log(item)
-      Vue.component(prefix + item.name, () => import(`@components/${item.path}`))
+      if (PREFIX !== prefix && innerComponents.includes(item.name)) {
+        Vue.component(PREFIX + item.name, item)
+      }
+      Vue.component(prefix + item.name, item)
     }
-    Vue.component(`${prefix}-chart`, ECharts)
 
-    for (const item of innerComponents) {
-      console.log(item)
-      Vue.component(PREFIX + item.name, () => import(`@components/${item.path}`))
-    }
+    Vue.component(`${prefix}-chart`, ECharts)
 
     Vue.mixin(mixins)
     Vue.use(ElementUI)

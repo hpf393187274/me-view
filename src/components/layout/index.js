@@ -1,8 +1,13 @@
-import { adapterComponent } from '@components/common'
+
+import Panel from './Panel'
+
+import Dialog from './Dialog'
+
+import Menu from './menu'
 import Tree from './tree'
-const list = [
-  'Panel', 'Dialog', 'Transfer', ...Tree
-]
+import Tabs from './tabs'
+
+import Transfer from './Transfer'
 export default [
-  ...list.flatMap(adapterComponent('layout'))
+  Panel, Dialog, ...Tabs, ...Tree, ...Menu, Transfer
 ]

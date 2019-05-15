@@ -37,21 +37,14 @@ export default {
     }
   },
   methods: {
-    getChildrenData(deep = true) {
-      return this.$tools.clone(this.data, deep)
+    getCheckedData({ leaf = true, ...param } = {}) {
+      return this.getCheckedChildren({ leaf, ...param })
     },
-    getCheckedData(param = { leaf: true }) {
-      return this.getCheckedChildren(param)
+    getCheckedTreeData({ leaf = true, ...param } = {}) {
+      return this.getCheckedChildren({ leaf, ...param, tree: true })
     },
-    getCheckedTreeData(param = { leaf: true }) {
-      return this.getCheckedChildren(Object.assign(param || {}, { tree: true }))
-    },
-    clearData() {
-      this.data.splice(0, this.data.length)
-    },
-    setData(data = []) {
-      this.clearData()
-      this.data.push(...data)
+    clearCheckedStatus() {
+
     },
     /**
      * 移除子节点
