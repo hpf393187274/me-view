@@ -6,11 +6,11 @@
       style="width:300px;"
       :class="addClass('border')"
       :data="data"
-      expand
+      expanded
       :checked="checked"
       statistics
       lazy
-      :expand-level="2"
+      :expanded-level="2"
       checkbox
     />
     <div class="me-border" style="width:300px;overflow: auto;">

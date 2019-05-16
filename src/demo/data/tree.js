@@ -1,40 +1,108 @@
-export default [
-  {
-    id: '1',
-    text: '陕西省',
-    children: [
-      {
-        id: '1-1', text: '西安市',
-        children: [
-          { id: '1-1-1', text: '雁塔区' },
-          { id: '1-1-2', text: '长安区' }
-        ]
-      },
-      {
-        id: '1-2', text: '咸阳市',
-        children: [
-          {
-            id: '1-2-1', text: '礼泉县',
-            children: [
-              { id: '1-2-1-1', text: '城关镇' },
-              { id: '1-2-1-2', text: '烟霞镇' },
-              { id: '1-2-1-3', text: '烽火镇' },
-              { id: '1-2-1-4', text: '石潭镇' },
-              { id: '1-2-1-5', text: '昭陵乡' },
-            ]
-          },
-          { id: '1-2-2', text: '乾县' },
-          { id: '1-2-3', text: '永寿县' }
-        ]
-      }
-    ]
-  },
-  {
-    id: '2',
-    text: '四川省',
-    children: [
-      { id: '2-1', text: '成都市' },
-      { id: '2-2', text: '汶川市' }
-    ]
+import { tools } from '@assets/script/common'
+const parseData = (num, level) => {
+  if (level <= 0) { return [] }
+  const data = []
+  for (let index = 0; index < num; index++) {
+    const item = {
+      id: `${level}_${index + 1}`,
+      label: `节点_${level}_${index + 1} `,
+      children: parseData(Math.ceil(num / 2), level - 1)
+    }
+    data.push(item)
   }
-]
+  return data
+}
+const result = tools.expendTime({
+  callback() {
+    parseData(40, 3)
+  }
+})
+
+console.log(`执行函数：parseData(40, 3)， 耗时 ${result} 秒`)
+const data = parseData(40, 3)
+
+export default data
+
+// export default [
+//   {
+//     id: '1',
+//     label: '陕西省',
+//     resource: { name: '陕西省' },
+//     children: [
+//       {
+//         id: '1-1', label: '西安市',
+//         resource: { name: '陕西省' },
+//         children: [
+//           { id: '1-1-1', label: '雁塔区' },
+//           { id: '1-1-2', label: '长安区' }
+//         ]
+//       },
+//       {
+//         id: '1-2', label: '咸阳市',
+//         children: [
+//           {
+//             id: '1-2-1', label: '礼泉县',
+//             children: [
+//               { id: '1-2-1-1', label: '城关镇' },
+//               { id: '1-2-1-2', label: '烟霞镇' },
+//               { id: '1-2-1-3', label: '烽火镇' },
+//               { id: '1-2-1-4', label: '石潭镇' },
+//               { id: '1-2-1-5', label: '昭陵乡' },
+//             ]
+//           },
+//           { id: '1-2-2', label: '乾县' },
+//           { id: '1-2-3', label: '永寿县' }
+//         ]
+//       }
+//     ]
+//   },
+//   {
+//     id: '2',
+//     label: '四川省',
+//     children: [
+//       { id: '2-1', label: '成都市' },
+//       { id: '2-2', label: '汶川市' }
+//     ]
+//   }
+// ]
+
+// export default [
+//   {
+//     id: '1',
+//     label: '陕西省',
+//     children: [
+//       {
+//         id: '1-1', label: '西安市',
+//         children: [
+//           { id: '1-1-1', label: '雁塔区' },
+//           { id: '1-1-2', label: '长安区' }
+//         ]
+//       },
+//       {
+//         id: '1-2', label: '咸阳市',
+//         children: [
+//           {
+//             id: '1-2-1', label: '礼泉县',
+//             children: [
+//               { id: '1-2-1-1', label: '城关镇' },
+//               { id: '1-2-1-2', label: '烟霞镇' },
+//               { id: '1-2-1-3', label: '烽火镇' },
+//               { id: '1-2-1-4', label: '石潭镇' },
+//               { id: '1-2-1-5', label: '昭陵乡' },
+//             ]
+//           },
+//           { id: '1-2-2', label: '乾县' },
+//           { id: '1-2-3', label: '永寿县' }
+//         ]
+//       }
+//     ]
+//   },
+//   {
+//     id: '2',
+//     label: '四川省',
+//     children: [
+//       { id: '2-1', label: '成都市' },
+//       { id: '2-2', label: '汶川市' }
+//     ]
+//   }
+// ]

@@ -1,7 +1,7 @@
 <template>
   <div class="tree-node">
     <div class="tree-node-item" :style="{'padding-left': `${indent}em`}">
-      <me-icon v-if="nodeBranch" @click="expand__ = !expand__">{{iconExpand}}</me-icon>
+      <me-icon v-if="nodeBranch" @click="expanded__ = !expanded__">{{iconExpanded}}</me-icon>
       <me-checkbox
         v-if="checkbox"
         :value="checked__"
@@ -9,7 +9,7 @@
         @click="clickCheckbox(!checked__)"
       />
       <div class="tree-node-title" @click="click({ level })">
-        <slot name="node-title" :data="{...data, children: undefined}">{{data.text}}</slot>
+        <slot name="node-title" :data="{...data, children: undefined}">{{data.label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{checkedNumber}}</span>
@@ -21,14 +21,14 @@
         <me-link v-if="lazy" @click="refreshNode">刷新</me-link>
       </div>
     </div>
-    <div class="tree-node-children" v-show="expand__" v-if="nodeBranch">
+    <div class="tree-node-children" v-show="expanded__" v-if="nodeBranch">
       <me-tree-node
         ref="treeNode"
         :checkbox="checkbox"
         :level=" level + 1 "
-        :expand="expand"
-        :expand-level="expandLevel"
-        :click-node-expand="clickNodeExpand"
+        :expanded="expanded"
+        :expanded-level="expandedLevel"
+        :click-node-expanded="clickNodeExpanded"
         :checked="checked || data.checked === true"
         :parent-indent="indent"
         @remove-children-node="removeChildrenNode"
@@ -40,7 +40,11 @@
         :lazy="lazy"
         :action="action"
         :statistics="statistics"
-      />
+      >
+        <template slot="node-title" slot-scope="{data}">
+          <slot name="node-title" :data="data"/>
+        </template>
+      </me-tree-node>
     </div>
   </div>
 </template>
@@ -52,18 +56,23 @@ export default {
   name: 'TreeNode',
   mixins: [common, checkbox],
   props: {
-    data: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
+    data: { type: Object, default() { return {} } },
     level: { type: Number, default: 1 },
     parentIndent: { type: Number, default: 0 }
   },
+  data() {
+    return {
+      expanded__: this.expanded && (this.expandedLevel === 0 || this.expandedLevel >= this.level)
+    }
+  },
+  mounted() {
+    // this.$on('alter-checked-number', this.alterCheckedNumber)
+    // this.$on('alter-indeterminate-number', this.alterIndeterminateNumber)
+    // this.$on('remove-children-node', this.removeChildrenNode)
+  },
   computed: {
-    iconExpand() {
-      return this.expand__ ? 'icon-sort-down' : 'icon-caret-right'
+    iconExpanded() {
+      return this.expanded__ ? 'icon-sort-down' : 'icon-caret-right'
     },
     /**
      * 获取当前节点的子节点个数
@@ -108,8 +117,8 @@ export default {
       }
     },
     click({ level }) {
-      if (this.nodeBranch && this.clickNodeExpand) {
-        this.expand__ = !this.expand__
+      if (this.nodeBranch && this.clickNodeExpanded) {
+        this.expanded__ = !this.expanded__
       }
       // 点击级别 与 当前节点级别一致
       if (level === this.level) {

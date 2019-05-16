@@ -1,12 +1,12 @@
 <template>
-  <div :class="addClass('tree')">
+  <div :class="addClass('tree')" style="overflow: auto;">
     <template v-if="data && data.length > 0">
       <me-tree-node
         ref="treeNode"
         :checkbox="checkbox"
-        :expand="expand"
-        :expand-level="expandLevel"
-        :click-node-expand="clickNodeExpand"
+        :expanded="expanded"
+        :expanded-level="expandedLevel"
+        :click-node-expanded="clickNodeExpanded"
         :checked="checked"
         :data="node"
         :key="node[nodeKey]"
@@ -26,26 +26,19 @@
 </template>
 
 <script>
-import { type } from '@assets/script/common'
 import common from './mixin/common.mixin'
 export default {
   name: 'Tree',
   mixins: [common],
   props: {
-    data: {
-      type: Array,
-      default() {
-        return []
-      },
-      validator: value => type.isArray(value)
-    }
+    data: { type: Array, default() { return [] } }
   },
   methods: {
     getCheckedData({ leaf = true, ...param } = {}) {
       return this.getCheckedChildren({ leaf, ...param })
     },
-    getCheckedTreeData({ leaf = true, ...param } = {}) {
-      return this.getCheckedChildren({ leaf, ...param, tree: true })
+    getCheckedTreeData({ leaf = true } = {}) {
+      return this.getCheckedChildren({ leaf, tree: true })
     },
     /**
      * 移除子节点

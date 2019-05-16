@@ -3,15 +3,15 @@ export default {
     /**
      * 是否展开的
      */
-    expand: Boolean,
+    expanded: Boolean,
     /**
      * 展开级别：默认：0 表示不限制
      */
-    expandLevel: { type: Number, default: 0 },
+    expandedLevel: { type: Number, default: 0 },
     /**
      * 点击节点是否展开
      */
-    clickNodeExpand: { type: Boolean, default: true },
+    clickNodeExpanded: { type: Boolean, default: true },
     /**
      * 视图显示统计
      */
@@ -33,17 +33,12 @@ export default {
      */
     nodeKey: { type: String, default: 'id' }
   },
-  data() {
-    return {
-      expand__: this.expand && (this.expandLevel === 0 || this.expandLevel >= this.level)
-    }
-  },
   methods: {
     /**
      * 获取节点数据
      */
     getData({ deep = false, exclude = ['children'] } = {}) {
-      return this.$tools.clone(this.data.resource ? this.data.resource : this.data, { deep, exclude })
+      return this.$tools.clone(this.data, { deep, exclude })
     },
     getCheckedChildren({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []

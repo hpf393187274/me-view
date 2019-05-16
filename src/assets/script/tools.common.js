@@ -82,6 +82,38 @@ export default {
     }
   },
   /**
+   * 计算函数执行时间：默认秒
+   * @param {String} param.classify 获取类别
+   * @param {Function} param.callback 执行的回调函数
+   */
+  expendTime({ classify = "second", callback } = {}) {
+    const classifys = ['hour', 'minute', 'second']
+    if (classifys.includes(classify) === false) {
+      classify = 'second'
+    }
+    if (type.isNotFunction(callback)) { return 0 }
+    const begin = new Date().getTime()
+    try {
+      callback.call(this)
+    } catch (error) {
+      console.error(error)
+    }
+    const end = new Date().getTime()
+    let difference = end - begin
+    if (classify === 'second') {
+      difference = Math.ceil(difference / 1000)
+    }
+
+    if (classify === 'minute') {
+      difference = Math.ceil(difference / 60)
+    }
+
+    if (classify === 'hour') {
+      difference = Math.ceil(difference / 60)
+    }
+    return difference
+  },
+  /**
    * 
    * @param {Object | Array} target 
    * @param {Boolean} param.deep 是否深度克隆, 默认：false

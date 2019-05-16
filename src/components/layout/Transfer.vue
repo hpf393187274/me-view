@@ -6,7 +6,11 @@
         <div style="margin-right:5px;"></div>
       </div>
       <me-line-row v-if="showHeader"/>
-      <me-tree ref="leftTree" :class="addClass('flex')" :data="source" expand checkbox/>
+      <me-tree ref="leftTree" :class="addClass('flex')" :data="source" expanded checkbox>
+        <template slot="node-title" slot-scope="{data}">
+          <slot name="node-title" :data="data"/>
+        </template>
+      </me-tree>
     </div>
     <div class="transfer-center">
       <slot name="center">
@@ -22,7 +26,11 @@
         <div style="margin-right:5px;"></div>
       </div>
       <me-line-row v-if="showHeader"/>
-      <me-tree ref="rightTree" :class="addClass('flex')" :data="target" expand checkbox/>
+      <me-tree ref="rightTree" :class="addClass('flex')" :data="target" expanded checkbox>
+        <template slot="node-title" slot-scope="{data}">
+          <slot name="node-title" :data="data"/>
+        </template>
+      </me-tree>
     </div>
   </div>
 </template>

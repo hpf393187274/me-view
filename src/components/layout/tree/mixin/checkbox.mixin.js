@@ -83,10 +83,17 @@ export default {
      * @param {Boolean} value 状态
      */
     alterChildrenNodeChecked(value) {
-      for (const node of this.getNodeList()) {
-        node.$data.checked__ = value
-        node.alterChildrenNodeChecked(value)
-      }
+      new Promise((resolve, reject) => {
+        try {
+          for (const node of this.getNodeList()) {
+            node.setChecked(value)
+            node.alterChildrenNodeChecked(value)
+          }
+          resolve(true)
+        } catch (error) {
+          reject(error)
+        }
+      })
     }
   }
 }
