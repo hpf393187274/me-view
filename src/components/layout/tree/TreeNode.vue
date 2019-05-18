@@ -5,7 +5,7 @@
       <me-checkbox
         v-if="checkbox"
         :value="checked__"
-        :indeterminate="indeterminate"
+        :halfChecked="halfChecked"
         @click="clickCheckbox(!checked__)"
       />
       <div class="tree-node-title" @click="click({ level })">
@@ -32,8 +32,8 @@
         :checked="checked || data.checked === true"
         :parent-indent="indent"
         @remove-children-node="removeChildrenNode"
-        @alter-checked-number="alterCheckedNumber"
-        @alter-indeterminate-number="alterIndeterminateNumber"
+        @alter-all-checked-number="alterAllCheckedNumber"
+        @alter-half-checked-Number="alterHalfCheckedNumber"
         v-for="node in data.children"
         :data="node"
         :key="node[nodeKey]"
@@ -66,8 +66,8 @@ export default {
     }
   },
   mounted() {
-    // this.$on('alter-checked-number', this.alterCheckedNumber)
-    // this.$on('alter-indeterminate-number', this.alterIndeterminateNumber)
+    // this.$on('alter-all-checked-number', this.alterAllCheckedNumber)
+    // this.$on('alter-half-checked-Number', this.alterHalfCheckedNumber)
     // this.$on('remove-children-node', this.removeChildrenNode)
   },
   computed: {
@@ -113,7 +113,7 @@ export default {
     removeChildrenNode(node) {
       this.$tools.arrayRemove(this.data.children, this.defaultFilter(node.getData()))
       if (node.isChecked()) {
-        this.alterCheckedNumber(-1)
+        this.alterAllCheckedNumber(-1)
       }
     },
     click({ level }) {

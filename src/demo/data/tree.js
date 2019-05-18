@@ -1,12 +1,12 @@
 import { tools } from '@assets/script/common'
-const parseData = (num, level) => {
+const parseData = (num, level, parentId = 0) => {
   if (level <= 0) { return [] }
   const data = []
   for (let index = 0; index < num; index++) {
     const item = {
-      id: `${level}_${index + 1}`,
-      label: `节点_${level}_${index + 1} `,
-      children: parseData(Math.ceil(num / 2), level - 1)
+      id: `${parentId}_${index + 1}`,
+      label: `节点_${parentId}_${index + 1} `,
+      children: parseData(Math.ceil(num / 2), level - 1, `${parentId}_${index + 1}`)
     }
     data.push(item)
   }
@@ -19,7 +19,7 @@ const result = tools.expendTime({
 })
 
 console.log(`执行函数：parseData(40, 3)， 耗时 ${result} 秒`)
-const data = parseData(1000, 1)
+const data = parseData(40, 3)
 
 export default data
 

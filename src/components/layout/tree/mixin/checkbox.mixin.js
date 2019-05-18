@@ -2,8 +2,8 @@ export default {
   data() {
     return {
       checked__: this.checked || this.data.checked === true,
-      checkedNumber: 0,
-      indeterminateNumber: 0
+      allCheckedNumber: 0,
+      halfCheckedNumber: 0
     }
   },
   watch: {
@@ -13,24 +13,24 @@ export default {
     },
     checked__(newValue) {
       if (this.level > 1) {
-        this.$emit('alter-checked-number', newValue ? 1 : -1)
+        this.$emit('alter-all-checked-number', newValue ? 1 : -1)
       }
     },
-    indeterminate(newValue) {
+    halfChecked(newValue) {
       if (this.level > 1) {
-        this.$emit('alter-indeterminate-number', newValue ? 1 : -1)
+        this.$emit('alter-half-checked-Number', newValue ? 1 : -1)
       }
     },
-    checkedNumber(newValue) {
+    allCheckedNumber(newValue) {
       this.checked__ = newValue === this.nodeNumber
     }
   },
   computed: {
-    indeterminate() {
-      if (this.indeterminateNumber > 0) {
+    halfChecked() {
+      if (this.halfCheckedNumber > 0) {
         return true
       }
-      return this.checkedNumber > 0 && this.checkedNumber < this.nodeNumber
+      return this.allCheckedNumber > 0 && this.allCheckedNumber < this.nodeNumber
     }
   },
   methods: {
@@ -40,17 +40,11 @@ export default {
     notChecked() {
       return this.checked__ === false
     },
-    isIndeterminate() {
-      return this.indeterminate
+    isHazyChecked() {
+      return this.checked__ || this.halfChecked
     },
-    notIndeterminate() {
-      return this.indeterminate === false
-    },
-    isViewChecked() {
-      return this.checked__ || this.indeterminate
-    },
-    notViewChecked() {
-      return this.isViewChecked() === false
+    notHazyChecked() {
+      return this.isHazyChecked() === false
     },
     setChecked(value, deep = false) {
       this.checked__ = value
@@ -60,15 +54,15 @@ export default {
      * 变更子节点全选的个数
      * @param {Number} value 1 or -1
      */
-    alterCheckedNumber(value) {
-      this.checkedNumber += value
+    alterAllCheckedNumber(value) {
+      this.allCheckedNumber += value
     },
     /**
      * 变更子节点半选的个数
      * @param {Number} value 1 or -1
      */
-    alterIndeterminateNumber(value) {
-      this.indeterminateNumber += value
+    alterHalfCheckedNumber(value) {
+      this.halfCheckedNumber += value
     },
     /**
      * 点击 Checkbox

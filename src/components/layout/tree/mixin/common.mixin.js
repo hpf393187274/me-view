@@ -29,9 +29,14 @@ export default {
      */
     action: Boolean,
     /**
+     * 是否每次只打开一个同级树节点展开
+     * 手风琴模式
+     */
+    accordion: Boolean,
+    /**
      * 每个树节点用来作为唯一标识的属性，整棵树应该是唯一的
      */
-    nodeKey: { type: String, default: 'id' }
+    nodeKey: { type: String, default: 'id' },
   },
   methods: {
     /**
@@ -43,7 +48,7 @@ export default {
     getCheckedChildren({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []
       for (const node of this.getNodeList()) {
-        if (node.notViewChecked()) { continue }
+        if (node.notHazyChecked()) { continue }
         if (tree === false) {
           childrenList.push(...node.getCheckedData({ leaf, tree, ...param }))
           continue
@@ -57,7 +62,7 @@ export default {
     },
     clearCheckedNode() {
       for (const node of this.getNodeList()) {
-        if (node.notViewChecked()) { continue }
+        if (node.notHazyChecked()) { continue }
         node.clearCheckedNode()
         node.setChecked(false)
       }
@@ -69,7 +74,7 @@ export default {
      */
     removeCheckedNode() {
       for (const node of this.getNodeList()) {
-        if (node.notViewChecked()) { continue }
+        if (node.notHazyChecked()) { continue }
         if (node.isChecked()) {
           node.$emit('remove-children-node', node)
           continue

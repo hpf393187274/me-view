@@ -1,16 +1,16 @@
 
 <template>
   <div :class="addClass('row','flex')" style="overflow: auto;">
+    <!-- <el-tree :data="data" show-checkbox node-key="id"></el-tree> -->
+
     <me-tree
       ref="tree"
       style="width:300px;"
       :class="addClass('border')"
       :data="data"
-      expanded
       :checked="checked"
       statistics
       lazy
-      :expanded-level="2"
       checkbox
     />
     <div class="me-border" style="width:300px;overflow: auto;">

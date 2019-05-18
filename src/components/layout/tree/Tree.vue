@@ -47,7 +47,7 @@ export default {
     removeChildrenNode(node) {
       this.$tools.arrayRemove(this.data, this.defaultFilter(node.getData()))
       if (node.isChecked()) {
-        this.alterCheckedNumber(-1)
+        this.alterAllCheckedNumber(-1)
       }
     }
   }
