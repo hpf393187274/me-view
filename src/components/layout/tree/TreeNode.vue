@@ -17,8 +17,8 @@
         <span>{{nodeNumber}}</span>
       </div>
       <div v-if="action" class="em-center tree-node-action">
-        <me-link @click="removeNode">移除</me-link>
-        <me-link v-if="lazy" @click="refreshNode">刷新</me-link>
+        <me-link @click="removeCurrentNode">移除</me-link>
+        <me-link v-if="lazy" @click="refreshChildrenNode">刷新</me-link>
       </div>
     </div>
     <div class="tree-node-children" v-show="expanded__" v-if="childrenRendered">
@@ -94,14 +94,20 @@ export default {
     }
   },
   methods: {
-    removeNode() {
+    /**
+     * 移除当前节点
+     */
+    removeCurrentNode() {
       this.$emit('remove-node-before', this.getData())
-      this.$emit('remove-children-node', this)
+      this.$parent.removeChildrenNode(this)
       this.$emit('remove-node-after', this.getData())
     },
-    refreshNode() {
+    /**
+     * 刷新子节点
+     */
+    refreshChildrenNode() {
       this.$emit('refresh-node-before', this.getData())
-      this.$emit('refresh-node', this)
+      this.$emit('refresh-node', this.data, this)
       this.$emit('refresh-node-after', this.getData())
     },
 
