@@ -38,7 +38,55 @@ export default {
      */
     nodeKey: { type: String, default: 'id' },
   },
+  data() {
+    return {
+      allChecked: this.checked || this.data.checked === true,
+      checkedChildren: this.checked,
+      halfChecked: false,
+      allCheckedNumber: 0,
+      halfCheckedNumber: 0
+    }
+  },
+  computed: {
+    children() {
+      return this.level ? this.data.children : this.data
+    }
+  },
   methods: {
+    /**
+     * 设置全选的子节点个数
+     * @param {Number} value 总数量 
+     */
+    setAllCheckedNumber(value) { this.allCheckedNumber = value },
+    /**
+     * 获取子节点选中个数
+     * 全选 and 半选
+     */
+    getCheckedNumber() {
+      let allCheckedNumber = 0
+      let halfCheckedNumber = 0
+      for (const node of this.getNodeList()) {
+        node.isAllChecked() && allCheckedNumber++
+        node.isHalfChecked() && halfCheckedNumber++
+      }
+      this.setAllCheckedNumber(allCheckedNumber)
+      this.halfCheckedNumber = halfCheckedNumber
+      return { allCheckedNumber, halfCheckedNumber }
+    },
+    /**
+     * 变更父级
+     */
+    alterParent() {
+      const { allCheckedNumber, halfCheckedNumber } = this.getCheckedNumber()
+      this.allChecked = allCheckedNumber === this.nodeNumber
+
+      if (halfCheckedNumber > 0) {
+        this.halfChecked = true
+      } else {
+        this.halfChecked = allCheckedNumber > 0 && allCheckedNumber < this.nodeNumber
+      }
+      this.$emit('alter-parent')
+    },
     /**
      * 获取节点数据
      */
@@ -64,22 +112,40 @@ export default {
       for (const node of this.getNodeList()) {
         if (node.notHazyChecked()) { continue }
         node.clearCheckedNode()
-        node.setChecked(false)
+        node.setAllChecked(false)
       }
+    },
+    setAllChecked(value) {
+      this.allChecked = value
+      this.halfChecked = false
     },
     isLeaf() { return this.nodeLeaf },
     isBranch() { return this.nodeBranch },
+    /**
+     * 移除子节点
+     *  @param {Object} data 要移除的节点
+     */
+    removeChildrenNode(node) {
+      this.$tools.arrayRemove(this.children, this.defaultFilter(node.getData()))
+    },
     /**
      * 移除选中的节点
      */
     removeCheckedNode() {
       for (const node of this.getNodeList()) {
         if (node.notHazyChecked()) { continue }
-        if (node.isChecked()) {
-          node.$emit('remove-children-node', node)
+
+        if (node.isBranch && node.isAllChecked()) {
+          this.removeChildrenNode(node)
           continue
         }
         node.removeCheckedNode()
+        if (node.isAllChecked()) {
+          this.removeChildrenNode(node)
+          continue
+        }
+
+        if (node.isHalfChecked()) { node.setAllChecked(false) }
       }
     },
     /**

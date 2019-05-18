@@ -1,6 +1,12 @@
 <template>
-  <label :class="addClass('checkbox')" @click="$emit('click')">
-    <input type="checkbox" ref="checkbox" v-model="currentValue" @change="$emit('change')">
+  <label :class="addClass('checkbox')">
+    <input
+      type="checkbox"
+      ref="checkbox"
+      v-model="currentValue"
+      @click.stop="click(!currentValue)"
+      @change="$emit('change')"
+    >
     <span v-if="lable">{{ lable }}</span>
   </label>
 </template>
@@ -27,6 +33,12 @@ export default {
     },
     halfChecked(newValue) {
       this.$refs.checkbox.indeterminate = newValue
+    }
+  },
+  methods: {
+    click(value) {
+      this.currentValue = value
+      this.$emit('click', value)
     }
   }
 }

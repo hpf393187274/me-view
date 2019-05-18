@@ -5,12 +5,13 @@
 
     <me-tree
       ref="tree"
-      style="width:300px;"
-      :class="addClass('border')"
+      :class="addClass('border','flex')"
       :data="data"
-      :checked="checked"
+      expanded
       statistics
+      :checked="checked"
       lazy
+      action
       checkbox
     />
     <div class="me-border" style="width:300px;overflow: auto;">
@@ -18,7 +19,7 @@
     </div>
     <div class="me-flex me-border">
       <div>
-        <me-button @click="checked = !checked">全选/反选</me-button>
+        <me-button @click="checked = !checked">全选/反选{{checked}}</me-button>
         <me-button @click="$refs.tree.clearCheckedNode()">清除选中节点</me-button>
         <me-button @click="$refs.tree.removeCheckedNode()">移除选中节点</me-button>
       </div>

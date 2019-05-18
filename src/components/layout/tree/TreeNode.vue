@@ -1,18 +1,18 @@
 <template>
   <div class="tree-node">
     <div class="tree-node-item" :style="{'padding-left': `${indent}em`}">
-      <me-icon v-if="nodeBranch" @click="expanded__ = !expanded__">{{iconExpanded}}</me-icon>
+      <me-icon v-if="nodeBranch" @click="handleExpanded">{{iconExpanded}}</me-icon>
       <me-checkbox
         v-if="checkbox"
-        :value="checked__"
+        :value="allChecked"
         :halfChecked="halfChecked"
-        @click="clickCheckbox(!checked__)"
+        @click="clickCheckbox(!allChecked)"
       />
-      <div class="tree-node-title" @click="click({ level })">
-        <slot name="node-title" :data="{...data, children: undefined}">{{data.label}}</slot>
+      <div class="tree-node-title" @click="click">
+        <slot name="node-title" :data="getData()">{{data.label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
-        <span>{{checkedNumber}}</span>
+        <span>{{allCheckedNumber}}</span>
         <span>/</span>
         <span>{{nodeNumber}}</span>
       </div>
@@ -21,7 +21,7 @@
         <me-link v-if="lazy" @click="refreshNode">刷新</me-link>
       </div>
     </div>
-    <div class="tree-node-children" v-show="expanded__" v-if="nodeBranch">
+    <div class="tree-node-children" v-show="expanded__" v-if="childrenRendered">
       <me-tree-node
         ref="treeNode"
         :checkbox="checkbox"
@@ -29,11 +29,9 @@
         :expanded="expanded"
         :expanded-level="expandedLevel"
         :click-node-expanded="clickNodeExpanded"
-        :checked="checked || data.checked === true"
+        :checked="checkedChildren || data.checked === true"
         :parent-indent="indent"
-        @remove-children-node="removeChildrenNode"
-        @alter-all-checked-number="alterAllCheckedNumber"
-        @alter-half-checked-Number="alterHalfCheckedNumber"
+        @alter-parent="alterParent"
         v-for="node in data.children"
         :data="node"
         :key="node[nodeKey]"
@@ -62,17 +60,17 @@ export default {
   },
   data() {
     return {
-      expanded__: this.expanded && (this.expandedLevel === 0 || this.expandedLevel >= this.level)
+      expanded__: this.expanded
     }
-  },
-  mounted() {
-    // this.$on('alter-all-checked-number', this.alterAllCheckedNumber)
-    // this.$on('alter-half-checked-Number', this.alterHalfCheckedNumber)
-    // this.$on('remove-children-node', this.removeChildrenNode)
   },
   computed: {
     iconExpanded() {
       return this.expanded__ ? 'icon-sort-down' : 'icon-caret-right'
+    },
+    childrenRendered() {
+      if (this.nodeLeaf) { return false }
+
+      return this.expanded__ || this.expandedLevel >= this.level
     },
     /**
      * 获取当前节点的子节点个数
@@ -106,25 +104,26 @@ export default {
       this.$emit('refresh-node', this)
       this.$emit('refresh-node-after', this.getData())
     },
+
     /**
-     * 移除子节点
-     *  @param {Object} data 要移除的节点
+     * 展开子节点
      */
-    removeChildrenNode(node) {
-      this.$tools.arrayRemove(this.data.children, this.defaultFilter(node.getData()))
-      if (node.isChecked()) {
-        this.alterAllCheckedNumber(-1)
-      }
+    handleExpanded() {
+      this.expanded__ = !this.expanded__
+      this.alterChildrenNodeChecked(this.allChecked)
     },
-    click({ level }) {
+    click() {
       if (this.nodeBranch && this.clickNodeExpanded) {
-        this.expanded__ = !this.expanded__
+        this.handleExpanded()
       }
-      // 点击级别 与 当前节点级别一致
-      if (level === this.level) {
-        this.$emit('click', { level, data: this.data })
+      if (this.nodeLeaf) {
+        this.$emit('click', { data: this.getData() })
       }
     },
+    /**
+     * 获取子节点个数
+     */
+    getChildrenNodeNumber() { return this.nodeNumber },
     /**
      * 获取选中的叶子节点数据
      * @param {Boolean} param.leaf 是否包含叶子节点：默认：true

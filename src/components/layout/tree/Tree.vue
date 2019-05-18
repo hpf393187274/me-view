@@ -13,7 +13,6 @@
         :statistics="statistics"
         :lazy="lazy"
         :action="action"
-        @remove-children-node="removeChildrenNode"
         v-for="node in data"
       >
         <template slot="node-title" slot-scope="{data}">
@@ -39,16 +38,6 @@ export default {
     },
     getCheckedTreeData({ leaf = true } = {}) {
       return this.getCheckedChildren({ leaf, tree: true })
-    },
-    /**
-     * 移除子节点
-     * 事件调用
-     */
-    removeChildrenNode(node) {
-      this.$tools.arrayRemove(this.data, this.defaultFilter(node.getData()))
-      if (node.isChecked()) {
-        this.alterAllCheckedNumber(-1)
-      }
     }
   }
 }
