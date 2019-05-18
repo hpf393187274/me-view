@@ -19,7 +19,7 @@ const result = tools.expendTime({
 })
 
 console.log(`执行函数：parseData(40, 3)， 耗时 ${result} 秒`)
-const data = parseData(40, 3)
+const data = parseData(1000, 1)
 
 export default data
 

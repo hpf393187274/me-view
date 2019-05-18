@@ -70,4 +70,8 @@ button {
 
 .@{PREFIX}-link {
 	margin: 0px 2px;
+	&:link {color: #FF0000}     /* 未访问的链接 */
+	&:visited {color: #00FF00}  /* 已访问的链接 */
+	&:hover {color: #FF00FF}    /* 当有鼠标悬停在链接上 */
+	&:active {color: #0000FF}   /* 被选择的链接 */
 }
