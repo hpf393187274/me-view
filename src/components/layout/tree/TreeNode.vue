@@ -9,7 +9,7 @@
         @click="clickCheckbox(!allChecked)"
       />
       <div class="tree-node-title" @click="click">
-        <slot name="node-title" :data="getData()">{{data.label}}</slot>
+        <slot name="node-title" :data="getData()">{{data.label}}--{{renderFirst}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>
@@ -21,7 +21,7 @@
         <me-link v-if="lazy" @click="refreshChildrenNode">刷新</me-link>
       </div>
     </div>
-    <div class="tree-node-children" v-show="expanded__" v-if="childrenRendered">
+    <div class="tree-node-children" v-show="expanded__" v-if="renderFirst">
       <me-tree-node
         ref="treeNode"
         :checkbox="checkbox"
@@ -58,19 +58,21 @@ export default {
     level: { type: Number, default: 1 },
     parentIndent: { type: Number, default: 0 }
   },
+  created() {
+    this.renderFirst = this.nodeBranch && (this.expanded || this.expandedLevel >= this.level)
+  },
   data() {
     return {
-      expanded__: this.expanded
+      expanded__: this.expanded || this.expandedLevel >= this.level,
+      /**
+       * 第一次渲染
+       */
+      renderFirst: false
     }
   },
   computed: {
     iconExpanded() {
       return this.expanded__ ? 'icon-sort-down' : 'icon-caret-right'
-    },
-    childrenRendered() {
-      if (this.nodeLeaf) { return false }
-
-      return this.expanded__ || this.expandedLevel >= this.level
     },
     /**
      * 获取当前节点的子节点个数
@@ -116,7 +118,10 @@ export default {
      */
     handleExpanded() {
       this.expanded__ = !this.expanded__
-      this.alterChildrenNodeChecked(this.allChecked)
+      if (this.renderFirst === false) {
+        this.renderFirst = true
+        this.alterChildrenNodeChecked(this.allChecked)
+      }
     },
     click() {
       if (this.nodeBranch && this.clickNodeExpanded) {

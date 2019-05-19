@@ -7,7 +7,7 @@
       ref="tree"
       :class="addClass('border','flex')"
       :data="data"
-      expanded
+      :expanded-level="1"
       statistics
       :checked="checked"
       lazy
