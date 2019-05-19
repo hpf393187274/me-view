@@ -67,14 +67,6 @@ export default {
       this.hasGrandson = this.getHasGrandson()
     })
   },
-  computed: {
-    // hasGrandson() {
-    //   for (const node of this.getChildrenNodeList()) {
-    //     console.log(node.isBranch())
-    //   }
-    //   return this.getChildrenNodeList().some(node => node.isBranch() === true)
-    // }
-  },
   methods: {
     getHasGrandson() {
       for (const node of this.getChildrenNodeList()) {

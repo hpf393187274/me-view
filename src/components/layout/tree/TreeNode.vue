@@ -71,7 +71,6 @@ export default {
   data() {
     return {
       expanded__: this.expanded || this.expandedLevel >= this.level,
-      checkedChildren: this.checked,
       /**
        * 第一次渲染
        */

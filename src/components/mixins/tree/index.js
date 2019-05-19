@@ -33,7 +33,8 @@ export default {
     return {
       halfChecked: false,
       allCheckedNumber: 0,
-      halfCheckedNumber: 0
+      halfCheckedNumber: 0,
+      checkedChildren: this.checked,
     }
   },
   computed: {
