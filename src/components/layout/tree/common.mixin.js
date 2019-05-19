@@ -8,7 +8,7 @@ export default {
     getCheckedNumber() {
       let allCheckedNumber = 0
       let halfCheckedNumber = 0
-      for (const node of this.getNodeList()) {
+      for (const node of this.getChildrenNodeList()) {
         node.isAllChecked() && allCheckedNumber++
         node.isHalfChecked() && halfCheckedNumber++
       }
@@ -34,7 +34,7 @@ export default {
 
     getCheckedChildren({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []
-      for (const node of this.getNodeList()) {
+      for (const node of this.getChildrenNodeList()) {
         if (node.notHazyChecked()) { continue }
         if (tree === false) {
           childrenList.push(...node.getCheckedData({ leaf, tree, ...param }))
@@ -47,11 +47,12 @@ export default {
       return childrenList
     },
     clearCheckedNode() {
-      for (const node of this.getNodeList()) {
+      for (const node of this.getChildrenNodeList()) {
         if (node.notHazyChecked()) { continue }
         node.clearCheckedNode()
         node.setAllChecked(false)
       }
+      this.setAllChecked(false)
     },
     setAllChecked(value, deep = false) {
       this.allChecked = value
@@ -63,7 +64,7 @@ export default {
      * 移除选中的节点
      */
     removeCheckedNode() {
-      for (const node of this.getNodeList()) {
+      for (const node of this.getChildrenNodeList()) {
         if (node.notHazyChecked()) { continue }
 
         if (node.isBranch && node.isAllChecked()) {
@@ -78,11 +79,12 @@ export default {
 
         if (node.isHalfChecked()) { node.setAllChecked(false) }
       }
+      this.setAllChecked(false)
     },
     pushData(data) {
       if (this.$tools.isEmpty(data)) { return }
       for (const item of [data].flat()) {
-        const node = this.findTreeNode(this.defaultFilter(item))
+        const node = this.findNode(this.defaultFilter(item))
         if (this.$tools.isEmpty(node)) {
           if (this.$tools.isEmpty(this.level)) {
             // TreeRoot

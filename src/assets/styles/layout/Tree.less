@@ -1,33 +1,34 @@
 .@{PREFIX}-tree {
 	.flex(column);
-	.tree-node {
+	.tree-node-header{
 		.flex(column);
+		padding-left: 3px;
+	}
+	.tree-node-body { .flex(column); }
+	
+	.tree-node-item {
+		.flex(row);
+		font-size: 13px;
+		align-items: center;
+		.tree-node-statistics {
+			color: rgba(170, 170, 170, 0.548);
+			margin: 0px 3px;
+			>span { margin: 0px 1px; }
+		}
 
-		.tree-node-item {
+		.tree-node-lable {
 			.flex(row);
-			font-size: 13px;
+			flex: 1;
 			align-items: center;
+			height: 35px;
+		}
 
-			.tree-node-statistics {
-				color: rgba(170, 170, 170, 0.548);
-				margin: 0px 3px;
-				>span { margin: 0px 1px; }
-			}
-
-			.tree-node-lable {
-				.flex(row);
-				flex: 1;
-				align-items: center;
-				height: 35px;
-			}
-
-			.tree-node-action {
-			
-			}
-			&:hover {
-				background:#BCD2EE;
-				cursor: pointer;
-			}
+		.tree-node-action {
+		
+		}
+		&:hover {
+			background:#BCD2EE;
+			cursor: pointer;
 		}
 	}
 }

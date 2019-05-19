@@ -1,9 +1,14 @@
 <template>
-  <div class="tree-node">
-    <div class="tree-node-item" :style="{'padding-left': `${indent}em`}">
-      <me-checkbox v-if="checkbox" :value="allChecked" @click="clickCheckbox(!allChecked)"/>
+  <div class="tree-node-header">
+    <div class="tree-node-item">
+      <me-checkbox
+        v-if="checkbox"
+        :value="allChecked"
+        :halfChecked="halfChecked"
+        @click="clickCheckbox(!allChecked)"
+      />
       <div class="tree-node-lable">
-        <slot name="node-lable">{{title}}</slot>
+        <slot name="node-lable">{{title}}--{{hasGrandson}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>
@@ -15,6 +20,7 @@
         <me-link v-if="lazy" @click="refreshChildrenNode">刷新</me-link>
       </div>
     </div>
+    <me-line-row/>
   </div>
 </template>
 
@@ -24,12 +30,14 @@ export default {
   name: 'TreeHeader',
   mixins: [treeCommon],
   props: {
+    hasGrandson: Boolean,
+    halfChecked: Boolean,
     nodeNumber: { type: Number, default: 0 },
     allCheckedNumber: { type: Number, default: 0 }
   },
-  computed: {
-    indent() {
-      return this.nodeNumber > 0 ? 1 : 0
+  watch: {
+    checked(newValue) {
+      this.allChecked = newValue
     }
   },
   methods: {

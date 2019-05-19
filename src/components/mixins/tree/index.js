@@ -71,7 +71,10 @@ export default {
     * @param {Number} value 总数量 
     */
     setAllCheckedNumber(value) { this.allCheckedNumber = value },
-    getNodeList() {
+    /**
+     * 获取子节点集合
+     */
+    getChildrenNodeList() {
       const treeNode = this.$refs.treeNode
       if (this.$tools.isEmpty(treeNode)) { return [] }
       return [treeNode].flat()
@@ -80,17 +83,17 @@ export default {
      * 获取 TreeNode
      * @param {Function} filter 过滤函数
      */
-    findTreeNode(filter) {
+    findNode(filter) {
       if (this.$type.isNotFunction(filter)) { return }
-      return this.getNodeList().find(node => filter(node.getData()))
+      return this.getChildrenNodeList().find(node => filter(node.getData()))
     },
     /**
      * 获取 TreeNode
      * @param {String} key 实体 key
      * @param {*} value 
      */
-    findTreeNodeByKey(key = this.nodeKey, value) {
-      return this.findTreeNode(item => item[key] === value)
+    findNodeByKey(key = this.nodeKey, value) {
+      return this.findNode(item => item[key] === value)
     },
     /**
      * 获取默认过滤器

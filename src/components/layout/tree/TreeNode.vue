@@ -1,5 +1,5 @@
 <template>
-  <div class="tree-node">
+  <div class="tree-node-body">
     <div class="tree-node-item" :style="{'padding-left': `${indent__}em`}">
       <me-icon v-if="nodeBranch" @click="handleExpanded">{{iconExpanded}}</me-icon>
       <me-checkbox
@@ -113,7 +113,7 @@ export default {
       if (this.checkedStrict === false) { return }
       this.setAllCheckedNumber(value ? this.nodeNumber : 0)
       this.$nextTick(function () {
-        for (const node of this.getNodeList()) {
+        for (const node of this.getChildrenNodeList()) {
           node.setAllChecked(value)
           node.setAllCheckedNumber(value ? node.getChildrenNodeNumber() : 0)
           node.alterChildrenNodeChecked(value)

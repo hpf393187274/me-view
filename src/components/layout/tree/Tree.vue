@@ -4,8 +4,10 @@
       v-if="header"
       class="node-header"
       :checkbox="checkbox"
-      :checked="checked"
+      :checked="allChecked"
+      :halfChecked="halfChecked"
       :title="title"
+      :hasGrandson="hasGrandson"
       :checked-strict="false"
       :nodeNumber="nodeNumber"
       :allCheckedNumber="allCheckedNumber"
@@ -24,7 +26,7 @@
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
         :checkbox="checkbox"
-        :checked="allChecked"
+        :checked="checkedChildren"
         :checked-strict="checkedStrict"
         :data="node"
         :key="node[nodeKey]"
@@ -55,7 +57,31 @@ export default {
     header: Boolean,
     title: { type: String, default: '全选/半选' }
   },
+  data() {
+    return {
+      hasGrandson: false
+    }
+  },
+  created() {
+    this.$nextTick(() => {
+      this.hasGrandson = this.getHasGrandson()
+    })
+  },
+  computed: {
+    // hasGrandson() {
+    //   for (const node of this.getChildrenNodeList()) {
+    //     console.log(node.isBranch())
+    //   }
+    //   return this.getChildrenNodeList().some(node => node.isBranch() === true)
+    // }
+  },
   methods: {
+    getHasGrandson() {
+      for (const node of this.getChildrenNodeList()) {
+        console.log(node.isBranch())
+      }
+      return this.getChildrenNodeList().some(node => node.isBranch() === true)
+    },
     getCheckedData({ leaf = true, ...param } = {}) {
       return this.getCheckedChildren({ leaf, ...param })
     },

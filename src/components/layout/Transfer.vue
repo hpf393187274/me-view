@@ -1,12 +1,14 @@
 <template>
   <div :class="addClass('transfer')">
     <me-tree
-      ref="leftTree"
+      ref="sourceTree"
       class="transfer-item"
+      header
+      checkbox
       :class="addClass('flex')"
       :data="source"
-      statistics
-      checkbox
+      :title="sourceTitle"
+      :statistics="statistics"
     >
       <template #node-title="{data}">
         <slot name="node-title" :data="data"/>
@@ -15,18 +17,20 @@
     <div class="transfer-center">
       <slot name="center">
         <me-button @click="target.push(...source); source=[]" :disabled="source.length === 0">全部向右</me-button>
-        <me-button @click="rightMove">向右</me-button>
-        <me-button @click="leftMove">向左</me-button>
+        <me-button @click="targetMove">向右</me-button>
+        <me-button @click="sourceMove">向左</me-button>
         <me-button @click="source.push(...target); target=[]" :disabled="target.length === 0">全部向左</me-button>
       </slot>
     </div>
     <me-tree
-      ref="rightTree"
+      ref="targetTree"
       class="transfer-item"
+      header
+      checkbox
       :class="addClass('flex')"
       :data="target"
-      statistics
-      checkbox
+      :title="targetTitle"
+      :statistics="statistics"
     >
       <template #node-title="{data}">
         <slot name="node-title" :data="data"/>
@@ -36,23 +40,15 @@
 </template>
 
 <script>
+import treeCommon from '@components/mixins/tree/common'
 export default {
   name: 'Transfer',
+  mixins: [treeCommon],
   props: {
-    value: {
-      type: Array, default() { return [] }
-    },
-    data: {
-      type: Array, default() { return [] }
-    },
-    leftTitle: {
-      type: String,
-      default: 'Left'
-    },
-    rightTitle: {
-      type: String,
-      default: 'Right'
-    },
+    value: { type: Array, default() { return [] } },
+    data: { type: Array, default() { return [] } },
+    sourceTitle: { type: String, default: 'source' },
+    targetTitle: { type: String, default: 'target' },
     showHeader: Boolean
   },
   watch: {
@@ -61,11 +57,11 @@ export default {
     }
   },
   computed: {
-    leftTree() {
-      return this.$refs.leftTree
+    sourceTree() {
+      return this.$refs.sourceTree
     },
-    rightTree() {
-      return this.$refs.rightTree
+    targetTree() {
+      return this.$refs.targetTree
     }
   },
   data() {
@@ -76,13 +72,13 @@ export default {
     }
   },
   methods: {
-    leftMove() {
-      this.leftTree.pushData(this.rightTree.getCheckedTreeData())
-      this.rightTree.removeCheckedNode()
+    sourceMove() {
+      this.sourceTree.pushData(this.targetTree.getCheckedTreeData())
+      this.targetTree.removeCheckedNode()
     },
-    rightMove() {
-      this.rightTree.pushData(this.leftTree.getCheckedTreeData())
-      this.leftTree.removeCheckedNode()
+    targetMove() {
+      this.targetTree.pushData(this.sourceTree.getCheckedTreeData())
+      this.sourceTree.removeCheckedNode()
     }
   }
 }
