@@ -45,9 +45,28 @@ export default {
    * @param {Object} param.request 请求拦截器
    * @param {Object} param.response 相应拦截器
    */
-  initIinterceptor({ request, response } = { request: defaultRequest, response: defaultResponse }) {
+  initIinterceptor({ request = defaultRequest, response = defaultResponse } = {}) {
     axios.interceptors.request.use(request.then, request.catch)
     axios.interceptors.response.use(response.then, response.catch)
+  },
+  /**
+   * 初始化拦Request截器
+   * @param {Object} param 配置 
+   * @param {Function} param.success 成功的
+   * @param {Function} param.failure 失败的
+   */
+  initIinterceptorRequest({ success = defaultRequest.then, failure = defaultRequest.catch } = {}) {
+    axios.interceptors.request.use(success, failure)
+  },
+
+  /**
+   * 初始化拦Response截器
+   * @param {Object} param 配置 
+   * @param {Function} param.success 成功的
+   * @param {Function} param.failure 失败的
+   */
+  initIinterceptorResponse({ success = defaultResponse.then, failure = defaultResponse.catch } = {}) {
+    axios.interceptors.response.use(success, failure)
   },
   /**
    * 初始化配置
