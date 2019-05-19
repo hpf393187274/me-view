@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 /**
  * 默认配置
  */
@@ -34,9 +33,9 @@ const defaultResponse = {
   }
 }
 
-const basal = (url, method, { baseURL, params = {}, data = {} } = {}) => {
-  return axios.request({
-    url, method, baseURL, params, data
+const basal = (url, method, { params = {}, data = {}, ...options } = {}) => {
+  return axios({
+    url, method, params, data, ...options
   })
 }
 export default {
