@@ -1,37 +1,37 @@
 <template>
   <div :class="addClass('transfer')">
-    <div class="transfer-left">
-      <div v-if="showHeader" class="transfer-header">
-        <div :class="addClass('flex')">{{leftTitle}}</div>
-        <div style="margin-right:5px;"></div>
-      </div>
-      <me-line-row v-if="showHeader"/>
-      <me-tree ref="leftTree" :class="addClass('flex')" :data="source" expanded checkbox>
-        <template slot="node-title" slot-scope="{data}">
-          <slot name="node-title" :data="data"/>
-        </template>
-      </me-tree>
-    </div>
+    <me-tree
+      ref="leftTree"
+      class="transfer-item"
+      :class="addClass('flex')"
+      :data="source"
+      statistics
+      checkbox
+    >
+      <template #node-title="{data}">
+        <slot name="node-title" :data="data"/>
+      </template>
+    </me-tree>
     <div class="transfer-center">
       <slot name="center">
-        <me-button @click="target=[...source]; source=[]" :disabled="source.length === 0">全部向右</me-button>
+        <me-button @click="target.push(...source); source=[]" :disabled="source.length === 0">全部向右</me-button>
         <me-button @click="rightMove">向右</me-button>
         <me-button @click="leftMove">向左</me-button>
-        <me-button @click="source=[...target]; target=[]" :disabled="target.length === 0">全部向左</me-button>
+        <me-button @click="source.push(...target); target=[]" :disabled="target.length === 0">全部向左</me-button>
       </slot>
     </div>
-    <div class="transfer-right">
-      <div v-if="showHeader" class="transfer-header">
-        <div :class="addClass('flex')">{{rightTitle}}</div>
-        <div style="margin-right:5px;"></div>
-      </div>
-      <me-line-row v-if="showHeader"/>
-      <me-tree ref="rightTree" :class="addClass('flex')" :data="target" expanded checkbox>
-        <template slot="node-title" slot-scope="{data}">
-          <slot name="node-title" :data="data"/>
-        </template>
-      </me-tree>
-    </div>
+    <me-tree
+      ref="rightTree"
+      class="transfer-item"
+      :class="addClass('flex')"
+      :data="target"
+      statistics
+      checkbox
+    >
+      <template #node-title="{data}">
+        <slot name="node-title" :data="data"/>
+      </template>
+    </me-tree>
   </div>
 </template>
 
@@ -71,6 +71,7 @@ export default {
   data() {
     return {
       source: [...this.data],
+
       target: [...this.value]
     }
   },

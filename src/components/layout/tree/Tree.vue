@@ -1,5 +1,22 @@
 <template>
   <div :class="addClass('tree')" style="overflow: auto;">
+    <me-tree-header
+      v-if="header"
+      class="node-header"
+      :checkbox="checkbox"
+      :checked="checked"
+      :title="title"
+      :checked-strict="false"
+      :nodeNumber="nodeNumber"
+      :allCheckedNumber="allCheckedNumber"
+      :statistics="statistics"
+      :action="action"
+      :lazy="lazy"
+    >
+      <template #node-lable>
+        <slot name="node-header"/>
+      </template>
+    </me-tree-header>
     <template v-if="data && data.length > 0">
       <me-tree-node
         ref="treeNode"
@@ -7,17 +24,18 @@
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
         :checkbox="checkbox"
-        :checked="checked"
+        :checked="allChecked"
         :checked-strict="checkedStrict"
         :data="node"
         :key="node[nodeKey]"
         :statistics="statistics"
         :lazy="lazy"
         :action="action"
+        @alter-parent="alterParent"
         v-for="node in data"
       >
-        <template slot="node-title" slot-scope="{data}">
-          <slot name="node-title" :data="data"/>
+        <template #node-lable="{data}">
+          <slot name="node-lable" :data="data"/>
         </template>
       </me-tree-node>
     </template>
@@ -26,12 +44,16 @@
 </template>
 
 <script>
-import common from './mixin/common.mixin'
+import treeIndex from '@components/mixins/tree'
+import treeCommon from '@components/mixins/tree/common'
+import treeInner from './common.mixin'
 export default {
   name: 'Tree',
-  mixins: [common],
+  mixins: [treeCommon, treeIndex, treeInner],
   props: {
-    data: { type: Array, default() { return [] } }
+    data: { type: Array, default() { return [] } },
+    header: Boolean,
+    title: { type: String, default: '全选/半选' }
   },
   methods: {
     getCheckedData({ leaf = true, ...param } = {}) {

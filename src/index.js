@@ -20,7 +20,7 @@ export { type, tools, localStorage, http }
 /**
  * 内置组件
  */
-const innerComponents = ['Icon', 'LineRow', 'Tree', 'TreeNode', 'Button', 'Checkbox']
+const innerComponents = ['Icon', 'LineRow', 'Tree', 'TreeHeader', 'TreeNode', 'Button', 'Checkbox']
 export default {
   install(Vue, options) {
     const prefix = tools.isEmpty(options) || tools.isEmpty(options.prefix) ? PREFIX : options.prefix

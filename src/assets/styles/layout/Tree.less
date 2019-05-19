@@ -2,28 +2,32 @@
 	.flex(column);
 	.tree-node {
 		.flex(column);
+
 		.tree-node-item {
-			font-size: 13px;
 			.flex(row);
+			font-size: 13px;
 			align-items: center;
+
 			.tree-node-statistics {
 				color: rgba(170, 170, 170, 0.548);
 				margin: 0px 3px;
 				>span { margin: 0px 1px; }
 			}
-			.tree-node-title {
+
+			.tree-node-lable {
 				.flex(row);
 				flex: 1;
 				align-items: center;
 				height: 35px;
 			}
+
+			.tree-node-action {
+			
+			}
 			&:hover {
 				background:#BCD2EE;
 				cursor: pointer;
 			}
-		}
-		.tree-node-children{
-			
 		}
 	}
 }

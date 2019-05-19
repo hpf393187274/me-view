@@ -1,19 +1,18 @@
 
 <template>
   <div :class="addClass('row','flex')" style="overflow: auto;">
-    <!-- <el-tree :data="data" show-checkbox node-key="id"></el-tree> -->
-
     <me-tree
       ref="tree"
       :class="addClass('border','flex')"
       :data="data"
       :expanded-level="1"
+      header
       statistics
       :checked="checked"
       lazy
       action
       checkbox
-    />
+    ></me-tree>
     <div class="me-border" style="width:300px;overflow: auto;">
       <pre>{{result}}</pre>
     </div>

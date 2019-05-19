@@ -1,8 +1,10 @@
 
 <template>
   <div :class="addClass('row','flex')">
-    <me-transfer v-model="target" flex :data="data"/>
-    <div style="width:300px;">
+    <me-transfer v-model="target" flex :data="data">
+      <template #node-lable="{data}">{{data.resource.name}}</template>
+    </me-transfer>
+    <div style="width:300px;overflow: auto;">
       <pre>{{target}}</pre>
     </div>
   </div>

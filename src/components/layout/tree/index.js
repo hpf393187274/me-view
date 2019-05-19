@@ -1,5 +1,6 @@
 import Tree from './Tree.vue'
+import TreeHeader from './TreeHeader.vue'
 import TreeNode from './TreeNode.vue'
 export default [
-  Tree, TreeNode
+  Tree, TreeHeader, TreeNode
 ]

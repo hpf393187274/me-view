@@ -1,6 +1,6 @@
 <template>
   <div class="tree-node">
-    <div class="tree-node-item" :style="{'padding-left': `${indent}em`}">
+    <div class="tree-node-item" :style="{'padding-left': `${indent__}em`}">
       <me-icon v-if="nodeBranch" @click="handleExpanded">{{iconExpanded}}</me-icon>
       <me-checkbox
         v-if="checkbox"
@@ -8,8 +8,8 @@
         :halfChecked="halfChecked"
         @click="clickCheckbox(!allChecked)"
       />
-      <div class="tree-node-title" @click="click">
-        <slot name="node-title" :data="getData()">{{data.label}}</slot>
+      <div class="tree-node-lable" @click="click">
+        <slot name="node-lable" :data="getData()">{{data.label}}--{{indent__}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>
@@ -30,7 +30,7 @@
         :expanded="expanded"
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
-        :parent-indent="indent"
+        :indent="indent__+1"
         :level=" level + 1 "
         :data="node"
         :key="node[nodeKey]"
@@ -49,22 +49,29 @@
 </template>
 
 <script>
-import common from './mixin/common.mixin'
-import checkbox from './mixin/checkbox.mixin'
+import treeIndex from '@components/mixins/tree'
+import treeCommon from '@components/mixins/tree/common'
+import treeInner from './common.mixin'
 export default {
   name: 'TreeNode',
-  mixins: [common, checkbox],
+  mixins: [treeCommon, treeIndex, treeInner],
   props: {
     data: { type: Object, default() { return {} } },
-    level: { type: Number, default: 1 },
-    parentIndent: { type: Number, default: 0 }
+    level: { type: Number, default: 1 }
   },
   created() {
     this.renderFirst = this.nodeBranch && (this.expanded || this.expandedLevel >= this.level)
   },
+  watch: {
+    checked(newValue) {
+      this.checkedChildren = newValue
+      this.setAllChecked(newValue)
+    }
+  },
   data() {
     return {
       expanded__: this.expanded || this.expandedLevel >= this.level,
+      checkedChildren: this.checked,
       /**
        * 第一次渲染
        */
@@ -75,14 +82,6 @@ export default {
     iconExpanded() {
       return this.expanded__ ? 'icon-sort-down' : 'icon-caret-right'
     },
-    /**
-     * 获取当前节点的子节点个数
-     */
-    nodeNumber() {
-      const children = this.data.children
-      /* 获取当前节点的子节点数 */
-      return this.$type.isArray(children) ? children.length : 0
-    },
     nodeLeaf() {
       /* 判断当前节点是否为最后一个节点 */
       return this.nodeNumber === 0
@@ -90,13 +89,43 @@ export default {
     nodeBranch() {
       return this.nodeNumber > 0
     },
-    indent() {
-      let value = this.parentIndent + 1
+    indent__() {
+      let value = this.indent
       this.nodeLeaf && (value++)
       return value
     }
   },
   methods: {
+    /**
+    * 点击 Checkbox
+    * @param {Booelan} value 变更后的Checkbox 状态
+    */
+    clickCheckbox(value) {
+      this.setAllChecked(value)
+      this.$emit('alter-parent')
+      this.alterChildrenNodeChecked(value)
+    },
+    /**
+     * 变更子节点状态
+     * @param {Boolean} value 状态
+     */
+    alterChildrenNodeChecked(value) {
+      if (this.checkedStrict === false) { return }
+      this.setAllCheckedNumber(value ? this.nodeNumber : 0)
+      this.$nextTick(function () {
+        for (const node of this.getNodeList()) {
+          node.setAllChecked(value)
+          node.setAllCheckedNumber(value ? node.getChildrenNodeNumber() : 0)
+          node.alterChildrenNodeChecked(value)
+        }
+      })
+    },
+    /**
+    * 获取节点数据
+    */
+    getData({ deep = false, exclude = ['children'] } = {}) {
+      return this.$tools.clone(this.data, { deep, exclude })
+    },
     /**
      * 移除当前节点
      */
@@ -154,6 +183,9 @@ export default {
      * @param {Boolean} param.leaf 是否包含叶子节点：默认：true
      */
     getCheckedTreeData({ ...param } = {}) {
+      if (this.allChecked) {
+        return this.getData({ deep: true })
+      }
       const resource = this.getData()
       const childrenList = this.getCheckedChildren({ ...param })
       if (childrenList.length !== 0) {
