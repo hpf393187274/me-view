@@ -27,7 +27,6 @@ export default {
      */
     clickCheckbox(value) {
       this.setAllChecked(value)
-      this.setAllCheckedNumber(value ? this.nodeNumber : 0)
       this.$emit('alter-parent')
       this.alterChildrenNodeChecked(value)
     },
@@ -36,6 +35,8 @@ export default {
      * @param {Boolean} value 状态
      */
     alterChildrenNodeChecked(value) {
+      if (this.checkedStrict === false) { return }
+      this.setAllCheckedNumber(value ? this.nodeNumber : 0)
       this.$nextTick(function () {
         for (const node of this.getNodeList()) {
           node.setAllChecked(value)

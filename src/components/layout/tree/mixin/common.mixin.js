@@ -11,7 +11,7 @@ export default {
     /**
      * 点击节点是否展开
      */
-    clickNodeExpanded: { type: Boolean, default: true },
+    expandedNodeClick: { type: Boolean, default: true },
     /**
      * 视图显示统计
      */
@@ -20,6 +20,10 @@ export default {
     checkbox: { type: Boolean, default: false },
     /* 是否默认选中 */
     checked: { type: Boolean, default: false },
+    /**
+     * 严格的选择：默认：true, false 父子联动互不干涉
+     */
+    checkedStrict: { type: Boolean, default: true },
     /**
      * 懒加载模式
      */
@@ -78,12 +82,13 @@ export default {
      */
     alterParent() {
       const { allCheckedNumber, halfCheckedNumber } = this.getCheckedNumber()
-      this.allChecked = allCheckedNumber === this.nodeNumber
-
-      if (halfCheckedNumber > 0) {
-        this.halfChecked = true
-      } else {
-        this.halfChecked = allCheckedNumber > 0 && allCheckedNumber < this.nodeNumber
+      if (this.checkedStrict) {
+        this.allChecked = allCheckedNumber === this.nodeNumber
+        if (halfCheckedNumber > 0) {
+          this.halfChecked = true
+        } else {
+          this.halfChecked = allCheckedNumber > 0 && allCheckedNumber < this.nodeNumber
+        }
       }
       this.$emit('alter-parent')
     },
@@ -115,9 +120,10 @@ export default {
         node.setAllChecked(false)
       }
     },
-    setAllChecked(value) {
+    setAllChecked(value, deep = false) {
       this.allChecked = value
       this.halfChecked = false
+      deep && this.alterChildrenNodeChecked(value)
     },
     isLeaf() { return this.nodeLeaf },
     isBranch() { return this.nodeBranch },

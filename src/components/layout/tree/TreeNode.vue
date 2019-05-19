@@ -9,7 +9,7 @@
         @click="clickCheckbox(!allChecked)"
       />
       <div class="tree-node-title" @click="click">
-        <slot name="node-title" :data="getData()">{{data.label}}--{{renderFirst}}</slot>
+        <slot name="node-title" :data="getData()">{{data.label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>
@@ -25,19 +25,20 @@
       <me-tree-node
         ref="treeNode"
         :checkbox="checkbox"
-        :level=" level + 1 "
+        :checked="checkedChildren || data.checked === true"
+        :checked-strict="checkedStrict"
         :expanded="expanded"
         :expanded-level="expandedLevel"
-        :click-node-expanded="clickNodeExpanded"
-        :checked="checkedChildren || data.checked === true"
+        :expanded-node-click="expandedNodeClick"
         :parent-indent="indent"
-        @alter-parent="alterParent"
-        v-for="node in data.children"
+        :level=" level + 1 "
         :data="node"
         :key="node[nodeKey]"
         :lazy="lazy"
         :action="action"
         :statistics="statistics"
+        @alter-parent="alterParent"
+        v-for="node in data.children"
       >
         <template slot="node-title" slot-scope="{data}">
           <slot name="node-title" :data="data"/>
@@ -124,7 +125,7 @@ export default {
       }
     },
     click() {
-      if (this.nodeBranch && this.clickNodeExpanded) {
+      if (this.nodeBranch && this.expandedNodeClick) {
         this.handleExpanded()
       }
       if (this.nodeLeaf) {

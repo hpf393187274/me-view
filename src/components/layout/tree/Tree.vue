@@ -3,11 +3,12 @@
     <template v-if="data && data.length > 0">
       <me-tree-node
         ref="treeNode"
-        :checkbox="checkbox"
         :expanded="expanded"
         :expanded-level="expandedLevel"
-        :click-node-expanded="clickNodeExpanded"
+        :expanded-node-click="expandedNodeClick"
+        :checkbox="checkbox"
         :checked="checked"
+        :checked-strict="checkedStrict"
         :data="node"
         :key="node[nodeKey]"
         :statistics="statistics"
