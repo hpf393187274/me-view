@@ -13,30 +13,19 @@ const defaultConfig = {
  * 默认拦截器：请求
  */
 const defaultRequest = {
-  then(config) {
-    return config
-  },
-  catch(error) {
-    return Promise.reject(error)
-  }
+  success(config) { return config },
+  failure(error) { return Promise.reject(error) }
 }
 /**
  * 默认拦截器：相应
  */
 const defaultResponse = {
-  then(response) {
-    // 对响应数据做点什么
-    return response.data.data
-  },
-  catch(error) {
-    return Promise.reject(error)
-  }
+  success(response) { return response.data.data },
+  failure(error) { return Promise.reject(error) }
 }
 
 const basal = (url, method, { params = {}, data = {}, ...options } = {}) => {
-  return axios({
-    url, method, params, data, ...options
-  })
+  return axios({ url, method, params, data, ...options })
 }
 export default {
   /**
@@ -46,8 +35,8 @@ export default {
    * @param {Object} param.response 相应拦截器
    */
   initIinterceptor({ request = defaultRequest, response = defaultResponse } = {}) {
-    axios.interceptors.request.use(request.then, request.catch)
-    axios.interceptors.response.use(response.then, response.catch)
+    axios.interceptors.request.use(request.success, request.failure)
+    axios.interceptors.response.use(response.success, response.failure)
   },
   /**
    * 初始化拦Request截器
@@ -55,7 +44,7 @@ export default {
    * @param {Function} param.success 成功的
    * @param {Function} param.failure 失败的
    */
-  initIinterceptorRequest({ success = defaultRequest.then, failure = defaultRequest.catch } = {}) {
+  initIinterceptorRequest({ success = defaultRequest.success, failure = defaultRequest.failure } = {}) {
     axios.interceptors.request.use(success, failure)
   },
 
@@ -65,7 +54,7 @@ export default {
    * @param {Function} param.success 成功的
    * @param {Function} param.failure 失败的
    */
-  initIinterceptorResponse({ success = defaultResponse.then, failure = defaultResponse.catch } = {}) {
+  initIinterceptorResponse({ success = defaultResponse.success, failure = defaultResponse.failure } = {}) {
     axios.interceptors.response.use(success, failure)
   },
   /**
@@ -132,5 +121,5 @@ export default {
    */
   head(url, option) {
     return basal(url, 'HEAD', option)
-  },
+  }
 }
