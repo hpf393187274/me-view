@@ -1,7 +1,7 @@
 export default {
   props: {
     /**
-   * 视图显示统计
+   * 是否显示统计
    */
     statistics: Boolean,
     /* 是否存在复选框 */

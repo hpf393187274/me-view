@@ -1,6 +1,6 @@
 {
   "name": "me-view",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "private": false,
   "main": "dist/index.common.js",
   "scripts": {
@@ -8,7 +8,9 @@
     "build": "vue-cli-service build",
     "package": "vue-cli-service build --target lib --name index ./src/index.js",
     "npm-publish": "npm publish",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -30,9 +32,11 @@
     "eslint-plugin-vue": "^5.0.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "me-view": "^1.0.11",
     "postcss": "^7.0.16",
     "postcss-loader": "^3.0.0",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.5.21",
+    "vuepress": "^0.14.11"
   },
   "eslintConfig": {
     "root": true,
