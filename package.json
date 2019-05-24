@@ -2,11 +2,13 @@
   "name": "me-view",
   "version": "1.0.12",
   "private": false,
-  "main": "dist/index.common.js",
+  "main": "dist/lib/index.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "package": "vue-cli-service build --target lib --name index ./src/index.js",
+    "build": "vue-cli-service build --dest dist/build",
+    "package": "vue-cli-service build --dest dist/lib --target lib --name index ./src/index.js",
+    "package-theme": "vue-cli-service build --dest dist/theme --target lib --name index ./src/index.js",
+    "package-example": "vue-cli-service build --dest dist/example --target lib --name index ./src/example.js",
     "npm-publish": "npm publish",
     "lint": "vue-cli-service lint",
     "docs:dev": "vuepress dev docs",
@@ -16,11 +18,9 @@
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "echarts": "^4.2.1",
-    "element-ui": "^2.8.2",
     "vue": "^2.6.10",
     "vue-echarts": "^4.0.1",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.6.0",

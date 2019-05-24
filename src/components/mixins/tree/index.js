@@ -6,6 +6,10 @@ export default {
      */
     expanded: Boolean,
     /**
+     * 可展开的
+     */
+    expandable: { type: Boolean, default: true },
+    /**
      * 展开级别：默认：0 表示不限制
      */
     expandedLevel: { type: Number, default: 0 },

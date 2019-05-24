@@ -8,7 +8,7 @@
         @click="clickCheckbox(!allChecked)"
       />
       <div class="tree-node-lable">
-        <slot name="node-lable">{{title}}</slot>
+        <slot name="node-lable">{{lable}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>

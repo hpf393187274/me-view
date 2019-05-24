@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import DemoChildren from '@router/demo.router'
+import layout from '@router/layout'
 Vue.use(Router)
 
 export default new Router({
@@ -9,9 +9,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/tree',
-      component: () => import('@/demo/Index.vue'),
-      children: DemoChildren
+      component: () => import('@example/Index.vue'),
+      children: [...layout]
     }
   ]
 })

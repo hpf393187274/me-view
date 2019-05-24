@@ -1,5 +1,8 @@
 module.exports = {
   title: 'me-view',
+  head: [
+    ['script', { type: 'text/javascript', src: "//at.alicdn.com/t/font_1180504_oajz0neruss.js" }]
+  ],
   themeConfig: {
     nav: [
       {

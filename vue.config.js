@@ -19,6 +19,6 @@ module.exports = {
       .set('@router', resolve('src/router'))
       .set('@store', resolve('src/store'))
       .set('@styles', resolve('src/styles'))
-      .set('@directive', resolve('src/directive'))
+      .set('@example', resolve('src/example'))
   }
 }

@@ -10,8 +10,9 @@
   </div>
 </template>
 <script>
-import data from './data/tree'
+import data from '../data/tree'
 export default {
+  name: 'demo-transfer',
   data() {
     return {
       target: [],

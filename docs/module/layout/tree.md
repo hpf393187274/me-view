@@ -5,6 +5,8 @@
 
 ### 基础用法
 
+<me-row>sssssssssssss</me-row>
+
 ### 可选择
 
 ### 默认展开和默认选中
@@ -19,7 +21,7 @@
 | ------------------- | ---------------------------------------------------- | ------- | ------ | -------------- |
 | statistics          | 是否显示统计                                         | Boolean | false  | [true, false]  |
 | checkbox            | 是否显示复选框                                       | Boolean | false  | [true, false]  |
-| checked-strict      | 是否严格模式：false 父子联动互不干涉                 | Boolean | true   | [true, false]  |
+| checked-strict      | 是否严格模式false 父子联动互不干涉                   | Boolean | true   | [true, false]  |
 | checked             | 复选框是否选中                                       | Boolean | false  | [true, false]  |
 | action              | 是否显示功能                                         | Boolean | false  | [true, false]  |
 | lazy                | 是否懒加载                                           | Boolean | false  | [true, false]  |
@@ -31,8 +33,8 @@
 
 ## Tree Methods
 
-| 方法名            | 参数 | 描述             |
-| ----------------- | ---- | ---------------- |
-| removeCheckedNode | -    | 移除选中的节点   |
-| clearCheckedNode  | -    | 清除选中的节点   |
-| pushData          | -    | 向 tree 增加数据 |
+| 方法名            | 描述             | 参数  |
+| ----------------- | ---------------- | :---: |
+| removeCheckedNode | 移除选中的节点   |   -   |
+| clearCheckedNode  | 清除选中的节点   |   -   |
+| pushData          | 向 tree 增加数据 |   -   |

@@ -7,11 +7,11 @@
       checkbox
       :class="addClass('flex')"
       :data="source"
-      :title="sourceTitle"
+      :lable="sourceLable"
       :statistics="statistics"
     >
-      <template #node-title="{data}">
-        <slot name="node-title" :data="data"/>
+      <template #node-lable="{data}">
+        <slot name="node-lable" :data="data"/>
       </template>
     </me-tree>
     <div class="transfer-center">
@@ -29,11 +29,11 @@
       checkbox
       :class="addClass('flex')"
       :data="target"
-      :title="targetTitle"
+      :lable="targetLable"
       :statistics="statistics"
     >
-      <template #node-title="{data}">
-        <slot name="node-title" :data="data"/>
+      <template #node-lable="{data}">
+        <slot name="node-lable" :data="data"/>
       </template>
     </me-tree>
   </div>
@@ -47,8 +47,8 @@ export default {
   props: {
     value: { type: Array, default() { return [] } },
     data: { type: Array, default() { return [] } },
-    sourceTitle: { type: String, default: 'source' },
-    targetTitle: { type: String, default: 'target' },
+    sourceLable: { type: String, default: 'source' },
+    targetLable: { type: String, default: 'target' },
     showHeader: Boolean
   },
   watch: {

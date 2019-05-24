@@ -21,5 +21,10 @@ export default {
     return {
       allChecked: this.checked || (this.data && this.data.checked === true)
     }
+  },
+  methods: {
+    handleClick(...param) {
+      this.$emit.apply(this, ['click', ...param])
+    }
   }
 }

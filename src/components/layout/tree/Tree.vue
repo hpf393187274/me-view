@@ -6,7 +6,7 @@
       :checkbox="checkbox"
       :checked="allChecked"
       :halfChecked="halfChecked"
-      :title="title"
+      :lable="lable"
       :hasGrandson="hasGrandson"
       :checked-strict="false"
       :nodeNumber="nodeNumber"
@@ -23,6 +23,7 @@
       <me-tree-node
         ref="treeNode"
         :expanded="expanded"
+        :expandable="expandable"
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
         :checkbox="checkbox"
@@ -34,6 +35,7 @@
         :lazy="lazy"
         :action="action"
         @alter-parent="alterParent"
+        @click="handleClick"
         v-for="node in data"
       >
         <template #node-lable="{data}">
@@ -54,8 +56,7 @@ export default {
   mixins: [treeCommon, treeIndex, treeInner],
   props: {
     data: { type: Array, default() { return [] } },
-    header: Boolean,
-    title: { type: String, default: '全选/半选' }
+    header: Boolean
   },
   data() {
     return {

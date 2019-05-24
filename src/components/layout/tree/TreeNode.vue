@@ -1,7 +1,7 @@
 <template>
   <div class="tree-node-body">
     <div class="tree-node-item" :style="{'padding-left': `${indent__}em`}">
-      <me-icon v-if="nodeBranch" @click="handleExpanded">{{iconExpanded}}</me-icon>
+      <me-icon v-if="expandable && nodeBranch" @click="handleExpanded">{{iconExpanded}}</me-icon>
       <me-checkbox
         v-if="checkbox"
         :value="allChecked"
@@ -9,7 +9,7 @@
         @click="clickCheckbox(!allChecked)"
       />
       <div class="tree-node-lable" @click="click">
-        <slot name="node-lable" :data="getData()">{{data.label}}--{{indent__}}</slot>
+        <slot name="node-lable" :data="getData()">{{data.label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>
@@ -28,6 +28,7 @@
         :checked="checkedChildren || data.checked === true"
         :checked-strict="checkedStrict"
         :expanded="expanded"
+        :expandable="expandable"
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
         :indent="indent__+1"
@@ -38,6 +39,7 @@
         :action="action"
         :statistics="statistics"
         @alter-parent="alterParent"
+        @click="handleClick"
         v-for="node in data.children"
       >
         <template slot="node-title" slot-scope="{data}">
@@ -60,7 +62,7 @@ export default {
     level: { type: Number, default: 1 }
   },
   created() {
-    this.renderFirst = this.nodeBranch && (this.expanded || this.expandedLevel >= this.level)
+    this.renderFirst = this.nodeBranch && (this.expandable === false || this.expanded || this.expandedLevel >= this.level)
   },
   watch: {
     checked(newValue) {
@@ -70,7 +72,7 @@ export default {
   },
   data() {
     return {
-      expanded__: this.expanded || this.expandedLevel >= this.level,
+      expanded__: this.expandable === false || this.expanded || this.expandedLevel >= this.level,
       /**
        * 第一次渲染
        */
@@ -90,7 +92,7 @@ export default {
     },
     indent__() {
       let value = this.indent
-      this.nodeLeaf && (value++)
+      this.expandable && this.nodeLeaf && (value++)
       return value
     }
   },
@@ -146,6 +148,7 @@ export default {
      * 展开子节点
      */
     handleExpanded() {
+      if (this.expandable === false) { return }
       this.expanded__ = !this.expanded__
       if (this.renderFirst === false) {
         this.renderFirst = true
@@ -157,7 +160,7 @@ export default {
         this.handleExpanded()
       }
       if (this.nodeLeaf) {
-        this.$emit('click', { data: this.getData() })
+        this.$emit('click', this.getData(), this)
       }
     },
     /**

@@ -14,7 +14,6 @@ export default {
     }
   },
   props: {
-    lable: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     value: { type: String, default: '' }
   },

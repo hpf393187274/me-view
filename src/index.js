@@ -1,9 +1,4 @@
 import '@assets/styles/common.less'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-
-import '@assets/styles/common.less'
-import '@assets/styles/business.less'
 
 import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
@@ -21,6 +16,7 @@ export { type, tools, localStorage, http }
  * 内置组件
  */
 const innerComponents = ['Icon', 'LineRow', 'Tree', 'TreeHeader', 'TreeNode', 'Button', 'Checkbox']
+
 export default {
   install(Vue, options) {
     const prefix = tools.isEmpty(options) || tools.isEmpty(options.prefix) ? PREFIX : options.prefix
@@ -34,7 +30,6 @@ export default {
     Vue.component(`${prefix}-chart`, ECharts)
 
     Vue.mixin(mixins)
-    Vue.use(ElementUI)
 
     Vue.prototype.$type = type
     Vue.prototype.$tools = tools
