@@ -1,20 +1,6 @@
 <template>
-  <div :class="addClass('row','flex')">transfer</div>
+  <div class="me-flex" style="overflow: auto;">
+    <me-transfer-basic class="me-flex"/>
+    <me-transfer-all class="me-flex"/>
+  </div>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      list: [
-        { text: 'Tree', router: '/layout/tree' },
-        { text: 'Transfer', router: '/layout/transfer' }
-      ]
-    }
-  },
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath)
-    }
-  }
-}
-</script>
