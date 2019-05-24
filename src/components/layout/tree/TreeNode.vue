@@ -92,7 +92,13 @@ export default {
     },
     indent__() {
       let value = this.indent
-      this.expandable && this.nodeLeaf && (value++)
+      this.expandable && this.level > 1 && value++
+      // this.$parent.name === 'TreeNode' && (value++)
+      if (this.getChildrenNodeList().every(node => node.isLeaf())) {
+        return value
+      }
+
+      this.expandable && this.nodeLeaf && value++
       return value
     }
   },
@@ -106,21 +112,7 @@ export default {
       this.$emit('alter-parent')
       this.alterChildrenNodeChecked(value)
     },
-    /**
-     * 变更子节点状态
-     * @param {Boolean} value 状态
-     */
-    alterChildrenNodeChecked(value) {
-      if (this.checkedStrict === false) { return }
-      this.setAllCheckedNumber(value ? this.nodeNumber : 0)
-      this.$nextTick(function () {
-        for (const node of this.getChildrenNodeList()) {
-          node.setAllChecked(value)
-          node.setAllCheckedNumber(value ? node.getChildrenNodeNumber() : 0)
-          node.alterChildrenNodeChecked(value)
-        }
-      })
-    },
+
     /**
     * 获取节点数据
     */

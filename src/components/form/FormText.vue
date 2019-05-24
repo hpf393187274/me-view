@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Text',
+  name: 'FormText',
   data() {
     return {
       currentValue: this.value

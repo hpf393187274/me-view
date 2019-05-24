@@ -1,6 +1,6 @@
-import Text from './Text'
+import FormText from './FormText'
 import Checkbox from './Checkbox'
 import Button from './Button'
 export default [
-  Text, Checkbox, Button
+  FormText, Checkbox, Button
 ]

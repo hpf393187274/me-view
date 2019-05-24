@@ -1,6 +1,6 @@
 <template>
   <div class="tree-node-header">
-    <div class="tree-node-item">
+    <div class="tree-node-item" :style="{'padding-left': `${indent__}em`}">
       <me-checkbox
         v-if="checkbox"
         :value="allChecked"
@@ -34,6 +34,15 @@ export default {
     halfChecked: Boolean,
     nodeNumber: { type: Number, default: 0 },
     allCheckedNumber: { type: Number, default: 0 }
+  },
+  computed: {
+    indent__() {
+      let value = 0
+      if (this.$parent.data.every(item => this.$type.isArray(item.children) === false)) {
+        return value
+      }
+      return ++value
+    }
   },
   watch: {
     checked(newValue) {

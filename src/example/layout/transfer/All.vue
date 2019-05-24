@@ -4,7 +4,11 @@
     <me-transfer style="width:600px;" :data="data" statistics expanded/>
     <textarea disabled class="me-flex">
     <template >
-      <me-transfer flex :data="data" statistics/>
+      <me-transfer 
+        flex
+        expanded 
+        statistics
+        :data="data" />
     </template>
     </textarea>
     <div class="me-flex">
