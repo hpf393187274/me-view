@@ -1,6 +1,6 @@
 
 <template>
-  <me-panel flex lable="全部 用法" layout="row" border>
+  <me-panel flex label="全部 用法" layout="row" border>
     <me-tree style="width:400px;" :data="data" checkbox expanded statistics action/>
     <textarea disabled class="me-flex">
     <template>

@@ -1,6 +1,6 @@
 
 <template>
-  <me-panel flex lable="Basic 用法" layout="row">
+  <me-panel flex label="Basic 用法" layout="row">
     <me-tree style="width:400px;" :data="data"/>
     <textarea disabled class="me-flex">
     <template >

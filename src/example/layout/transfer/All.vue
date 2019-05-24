@@ -1,6 +1,6 @@
 
 <template>
-  <me-panel flex lable="Basic 用法" layout="row">
+  <me-panel flex label="Basic 用法" layout="row">
     <me-transfer style="width:600px;" :data="data" statistics expanded/>
     <textarea disabled class="me-flex">
     <template >

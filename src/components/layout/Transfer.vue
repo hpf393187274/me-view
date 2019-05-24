@@ -6,12 +6,12 @@
       header
       checkbox
       :data="source"
-      :lable="sourceLable"
+      :label="sourceLabel"
       :expanded="expanded"
       :statistics="statistics"
     >
-      <template #node-lable="{data}">
-        <slot name="node-lable" :data="data"/>
+      <template #node-label="{data}">
+        <slot name="node-label" :data="data"/>
       </template>
     </me-tree>
     <div class="me-column me-center transfer-center">
@@ -28,12 +28,12 @@
       header
       checkbox
       :data="target"
-      :lable="targetLable"
+      :label="targetLabel"
       :expanded="expanded"
       :statistics="statistics"
     >
-      <template #node-lable="{data}">
-        <slot name="node-lable" :data="data"/>
+      <template #node-label="{data}">
+        <slot name="node-label" :data="data"/>
       </template>
     </me-tree>
   </div>
@@ -48,8 +48,8 @@ export default {
   props: {
     value: { type: Array, default() { return [] } },
     data: { type: Array, default() { return [] } },
-    sourceLable: { type: String, default: 'source' },
-    targetLable: { type: String, default: 'target' },
+    sourceLabel: { type: String, default: 'source' },
+    targetLabel: { type: String, default: 'target' },
     showHeader: Boolean
   },
   watch: {

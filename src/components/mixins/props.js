@@ -28,7 +28,7 @@ export default {
   /**
    * 标题
    */
-  lable: { type: String, default: '' },
+  label: { type: String, default: '' },
   /**
    * 头部样式
    */

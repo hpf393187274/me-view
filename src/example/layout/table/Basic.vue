@@ -1,6 +1,6 @@
 
 <template>
-  <me-panel flex lable="Basic 用法">
+  <me-panel flex label="Basic 用法">
     <me-table style="width:400px;" :data="data">
       <me-table-column label="编号" field="id"/>
       <me-table-column label="区域名称" field="label"/>

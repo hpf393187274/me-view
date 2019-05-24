@@ -6,7 +6,7 @@
       :checkbox="checkbox"
       :checked="allChecked"
       :halfChecked="halfChecked"
-      :lable="lable"
+      :label="label"
       :hasGrandson="hasGrandson"
       :checked-strict="false"
       :nodeNumber="nodeNumber"
@@ -15,7 +15,7 @@
       :action="action"
       :lazy="lazy"
     >
-      <template #node-lable>
+      <template #node-label>
         <slot name="node-header"/>
       </template>
     </me-tree-header>
@@ -38,8 +38,8 @@
         @click="handleClick"
         v-for="node in data"
       >
-        <template #node-lable="{data}">
-          <slot name="node-lable" :data="data"/>
+        <template #node-label="{data}">
+          <slot name="node-label" :data="data"/>
         </template>
       </me-tree-node>
     </template>

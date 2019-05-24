@@ -8,8 +8,8 @@
         :halfChecked="halfChecked"
         @click="clickCheckbox(!allChecked)"
       />
-      <div class="me-row me-flex tree-node-lable" @click="click">
-        <slot name="node-lable" :data="getData()">{{data.label}}</slot>
+      <div class="me-row me-flex tree-node-label" @click="click">
+        <slot name="node-label" :data="getData()">{{data.label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>
@@ -42,8 +42,8 @@
         @click="handleClick"
         v-for="node in data.children"
       >
-        <template slot="node-lable" slot-scope="{data}">
-          <slot name="node-lable" :data="data"/>
+        <template slot="node-label" slot-scope="{data}">
+          <slot name="node-label" :data="data"/>
         </template>
       </me-tree-node>
     </div>

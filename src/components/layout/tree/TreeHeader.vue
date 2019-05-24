@@ -7,8 +7,8 @@
         :halfChecked="halfChecked"
         @click="clickCheckbox(!allChecked)"
       />
-      <div class="me-row me-flex tree-node-lable">
-        <slot name="node-lable">{{lable}}</slot>
+      <div class="me-row me-flex tree-node-label">
+        <slot name="node-label">{{label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>

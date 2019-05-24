@@ -1,6 +1,6 @@
 
 <template>
-  <me-panel flex lable="Checkbo 用法" layout="row">
+  <me-panel flex label="Checkbo 用法" layout="row">
     <me-tree style="width:400px;" :data="data" checkbox/>
     <textarea disabled class="me-flex">
     <template >

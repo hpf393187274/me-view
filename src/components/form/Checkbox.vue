@@ -7,7 +7,7 @@
       @click.stop="click(!currentValue)"
       @change="$emit('change')"
     >
-    <span v-if="lable">{{ lable }}</span>
+    <span v-if="label">{{ label }}</span>
   </label>
 </template>
 
@@ -20,7 +20,6 @@ export default {
     }
   },
   props: {
-    lable: { type: String, default: '' },
     halfChecked: Boolean,
     value: Boolean
   },

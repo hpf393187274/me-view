@@ -3,7 +3,7 @@
     <div class="me-row header" :class="headerClass">
       <me-icon v-if="icon">{{icon}}</me-icon>
       <slot name="header">
-        <span class="me-flex">{{ lable }}</span>
+        <span class="me-flex">{{ label }}</span>
       </slot>
     </div>
     <me-line-row/>
