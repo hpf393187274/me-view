@@ -4,7 +4,7 @@
     <div class="dialog-container" :style="{ height: height, width: width}">
       <div class="dialog-header">
         <slot name="header">
-          <span class="dialog-title" :class="{[preClass('cursor-move')]:moveable}">{{title}}</span>
+          <span class="dialog-lable" :class="{[preClass('cursor-move')]:moveable}">{{lable}}</span>
           <me-icon @click="value=false">icon-shanchu</me-icon>
         </slot>
       </div>

@@ -53,10 +53,11 @@ export default {
    * 形状
    */
   shape: {
-    type: String,
-    default: null,
-    validator: function (value) {
-      return ['circle',].includes(value)
-    }
+    type: String, default: null,
+    validator: value => ['circle'].includes(value)
+  },
+  layout: {
+    type: String, default: 'column',
+    validator: value => ['row', 'column'].includes(value)
   }
 }

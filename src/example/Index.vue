@@ -1,6 +1,6 @@
 <template>
   <div :class="addClass('row','flex')">
-    <me-tree :data="data" style="width:300px;" :expandable="false" @click="handleClick"/>
+    <me-tree :data="data" style="width:200px;" :expandable="false" @click="handleClick"/>
     <div :class="addClass('row','border','flex')" style="overflow: auto;">
       <router-view/>
     </div>

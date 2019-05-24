@@ -42,8 +42,8 @@
         @click="handleClick"
         v-for="node in data.children"
       >
-        <template slot="node-title" slot-scope="{data}">
-          <slot name="node-title" :data="data"/>
+        <template slot="node-lable" slot-scope="{data}">
+          <slot name="node-lable" :data="data"/>
         </template>
       </me-tree-node>
     </div>

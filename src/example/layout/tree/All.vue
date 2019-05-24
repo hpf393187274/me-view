@@ -1,10 +1,10 @@
 
 <template>
-  <me-panel flex lable="Basic 用法" layout="row">
-    <me-tree style="width:400px;" :data="data"/>
+  <me-panel flex lable="全部 用法" layout="row" border>
+    <me-tree style="width:400px;" :data="data" checkbox expanded statistics action/>
     <textarea disabled class="me-flex">
-    <template >
-      <me-tree :data="data"/>
+    <template>
+      <me-tree :data="data" checkbox statistics action />
     </template>
     </textarea>
     <div class="me-flex">
@@ -40,7 +40,7 @@
 <script>
 import data from './data'
 export default {
-  name: 'TreeBasic',
+  name: 'TreeAll',
   data() {
     return {
       data

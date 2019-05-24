@@ -3,11 +3,11 @@
     <div class="header" :class="headerClass">
       <me-icon v-if="icon">{{icon}}</me-icon>
       <slot name="header">
-        <span class="title">{{ title }}</span>
+        <span class="lable">{{ lable }}</span>
       </slot>
     </div>
     <me-line-row/>
-    <div :class="addClass('content')" :style="{'overflow':overflow}">
+    <div :class="addClass('content', layout)" :style="{'overflow':overflow}">
       <slot/>
     </div>
   </div>
