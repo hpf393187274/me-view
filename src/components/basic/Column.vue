@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'MeColumn'
+  name: 'me-column'
 }
 
 </script>
