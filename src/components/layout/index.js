@@ -3,11 +3,14 @@ import Panel from './Panel'
 
 import Dialog from './Dialog'
 
-import Menu from './menu'
-import Tree from './tree'
-import Tabs from './tabs'
+import menu from './menu'
+import tree from './tree'
+
+
+import table from './table'
+import tabs from './tabs'
 
 import Transfer from './Transfer'
 export default [
-  Panel, Dialog, ...Tabs, ...Tree, ...Menu, Transfer
+  Panel, Dialog, ...tabs, ...tree, ...menu, Transfer, ...table
 ]

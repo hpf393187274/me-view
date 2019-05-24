@@ -1,17 +1,17 @@
 
 <template>
-  <div :class="addClass('dialog')" v-if="value">
-    <div class="dialog-container" :style="{ height: height, width: width}">
-      <div class="dialog-header">
+  <div class="me-row me-center me-dialog" v-if="value">
+    <div class="me-column dialog-container" :style="{ height: height, width: width}">
+      <div class="me-row dialog-header">
         <slot name="header">
-          <span class="dialog-lable" :class="{[preClass('cursor-move')]:moveable}">{{lable}}</span>
+          <span class="me-flex dialog-lable" :class="{'me-cursor-move':moveable}">{{lable}}</span>
           <me-icon @click="value=false">icon-shanchu</me-icon>
         </slot>
       </div>
-      <div class="dialog-body">
+      <div class="me-row me-flex dialog-body">
         <slot/>
       </div>
-      <div class="dialog-footer">
+      <div class="me-row dialog-footer">
         <slot name="footer">
           <me-button @click="$emit('handleConfirm')">确 定</me-button>
           <me-button @click="value = false">取 消</me-button>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'Dialog',
+  name: 'MeDialog',
   props: {
     value: Boolean,
     center: Boolean,

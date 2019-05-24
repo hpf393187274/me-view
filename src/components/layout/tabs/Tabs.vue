@@ -1,9 +1,7 @@
 
 <script>
-import { Tabs } from 'element-ui'
 export default {
-  name: 'Tabs',
-  extends: Tabs
+  name: 'MeTabs'
   // props: {
   //   type: {
   //     type: String,

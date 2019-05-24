@@ -1,6 +1,6 @@
 <template>
-  <div class="tree-node-body">
-    <div class="tree-node-item" :style="{'padding-left': `${indent__}em`}">
+  <div class="me-column tree-node-body">
+    <div class="me-row tree-node-item" :style="{'padding-left': `${indent__}em`}">
       <me-icon v-if="expandable && nodeBranch" @click="handleExpanded">{{iconExpanded}}</me-icon>
       <me-checkbox
         v-if="checkbox"
@@ -8,7 +8,7 @@
         :halfChecked="halfChecked"
         @click="clickCheckbox(!allChecked)"
       />
-      <div class="tree-node-lable" @click="click">
+      <div class="me-row me-flex tree-node-lable" @click="click">
         <slot name="node-lable" :data="getData()">{{data.label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
@@ -55,7 +55,7 @@ import treeIndex from '@components/mixins/tree'
 import treeCommon from '@components/mixins/tree/common'
 import treeInner from './common.mixin'
 export default {
-  name: 'TreeNode',
+  name: 'MeTreeNode',
   mixins: [treeCommon, treeIndex, treeInner],
   props: {
     data: { type: Object, default() { return {} } },

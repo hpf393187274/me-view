@@ -1,9 +1,7 @@
 
 <script>
-import { TabPane } from 'element-ui'
 export default {
-  name: 'TabPane',
-  extends: TabPane
+  name: 'MeTabPane'
   // props: {
   //   /**
   //    * 选项卡标题

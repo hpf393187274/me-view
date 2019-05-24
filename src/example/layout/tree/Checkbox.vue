@@ -40,7 +40,7 @@
 <script>
 import data from './data'
 export default {
-  name: 'TreeCheckbox',
+  name: 'MeTreeCheckbox',
   data() {
     return {
       data

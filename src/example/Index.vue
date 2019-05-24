@@ -1,7 +1,7 @@
 <template>
-  <div :class="addClass('row','flex')">
+  <div class="me-row me-flex">
     <me-tree :data="data" style="width:200px;" :expandable="false" @click="handleClick"/>
-    <div :class="addClass('row','border','flex')" style="overflow: auto;">
+    <div class="me-row me-flex me-border" style="overflow: auto;">
       <router-view/>
     </div>
   </div>
@@ -23,14 +23,11 @@ export default {
         {
           label: 'layout 布局',
           children: [
+            { label: 'Table', path: '/layout/table' },
             { label: 'Tree', path: '/layout/tree' },
             { label: 'Transfer', path: '/layout/transfer' }
           ]
         }
-      ],
-      list: [
-        { text: 'Tree', router: '/layout/tree' },
-        { text: 'Transfer', router: '/layout/transfer' }
       ]
     }
   },

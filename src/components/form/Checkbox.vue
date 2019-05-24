@@ -1,5 +1,5 @@
 <template>
-  <label :class="addClass('checkbox')">
+  <label class="me-checkbox">
     <input
       type="checkbox"
       ref="checkbox"
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'Checkbox',
+  name: 'MeCheckbox',
   data() {
     return {
       currentValue: this.value

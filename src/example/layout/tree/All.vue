@@ -40,7 +40,7 @@
 <script>
 import data from './data'
 export default {
-  name: 'TreeAll',
+  name: 'MeTreeAll',
   data() {
     return {
       data

@@ -1,11 +1,10 @@
 <template>
-  <div :class="addClass('transfer')">
+  <div class="me-row me-transfer">
     <me-tree
       ref="sourceTree"
-      class="transfer-item"
+      class="me-flex me-border transfer-item"
       header
       checkbox
-      :class="addClass('flex')"
       :data="source"
       :lable="sourceLable"
       :expanded="expanded"
@@ -15,7 +14,7 @@
         <slot name="node-lable" :data="data"/>
       </template>
     </me-tree>
-    <div class="transfer-center">
+    <div class="me-column me-center transfer-center">
       <slot name="center">
         <me-button @click="target.push(...source); source=[]" :disabled="source.length === 0">全部向右</me-button>
         <me-button @click="targetMove">向右</me-button>
@@ -25,10 +24,9 @@
     </div>
     <me-tree
       ref="targetTree"
-      class="transfer-item"
+      class="me-flex me-border transfer-item"
       header
       checkbox
-      :class="addClass('flex')"
       :data="target"
       :lable="targetLable"
       :expanded="expanded"
@@ -45,7 +43,7 @@
 import treeCommon from '@components/mixins/tree/common'
 import treeIndex from '@components/mixins/tree'
 export default {
-  name: 'Transfer',
+  name: 'MeTransfer',
   mixins: [treeCommon, treeIndex],
   props: {
     value: { type: Array, default() { return [] } },

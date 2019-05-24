@@ -1,12 +1,8 @@
 .@{PREFIX}-tree {
-	.flex(column);
-	.tree-node-header{
-		.flex(column);
-	}
-	.tree-node-body { .flex(column); }
+	.tree-node-header{ }
+	.tree-node-body { }
 	
 	.tree-node-item {
-		.flex(row);
 		font-size: 13px;
 		align-items: center;
 		&:hover {
@@ -18,10 +14,7 @@
 			margin: 0px 3px;
 			>span { margin: 0px 1px; }
 		}
-
 		.tree-node-lable {
-			.flex(row);
-			flex: 1;
 			align-items: center;
 			height: 35px;
 		}

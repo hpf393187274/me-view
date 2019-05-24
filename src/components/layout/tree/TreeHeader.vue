@@ -1,13 +1,13 @@
 <template>
-  <div class="tree-node-header">
-    <div class="tree-node-item" :style="{'padding-left': `${indent__}em`}">
+  <div class="me-column tree-node-header">
+    <div class="me-row tree-node-item" :style="{'padding-left': `${indent__}em`}">
       <me-checkbox
         v-if="checkbox"
         :value="allChecked"
         :halfChecked="halfChecked"
         @click="clickCheckbox(!allChecked)"
       />
-      <div class="tree-node-lable">
+      <div class="me-row me-flex tree-node-lable">
         <slot name="node-lable">{{lable}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
@@ -27,7 +27,7 @@
 <script>
 import treeCommon from '@components/mixins/tree/common'
 export default {
-  name: 'TreeHeader',
+  name: 'MeTreeHeader',
   mixins: [treeCommon],
   props: {
     hasGrandson: Boolean,

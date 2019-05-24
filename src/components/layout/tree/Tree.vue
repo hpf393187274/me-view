@@ -1,5 +1,5 @@
 <template>
-  <div :class="addClass('tree')" style="overflow: auto;">
+  <div class="me-column me-tree" style="overflow: auto;">
     <me-tree-header
       v-if="header"
       class="node-header"
@@ -43,7 +43,7 @@
         </template>
       </me-tree-node>
     </template>
-    <div :class="addClass('empty')" v-else>暂无数据</div>
+    <div class="me-empty" v-else>暂无数据</div>
   </div>
 </template>
 
@@ -52,7 +52,7 @@ import treeIndex from '@components/mixins/tree'
 import treeCommon from '@components/mixins/tree/common'
 import treeInner from './common.mixin'
 export default {
-  name: 'Tree',
+  name: 'MeTree',
   mixins: [treeCommon, treeIndex, treeInner],
   props: {
     data: { type: Array, default() { return [] } },

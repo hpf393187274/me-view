@@ -1,12 +1,12 @@
 <template>
-  <button :class="addClass('button')" :disabled="disabled" :margin="margin" @click="click">
+  <button class="me-button" :disabled="disabled" :margin="margin" @click="click">
     <slot/>
   </button>
 </template>
 
 <script>
 export default {
-  name: 'Button',
+  name: 'MeButton',
   methods: {
     click() {
       console.log('click button 了一次')

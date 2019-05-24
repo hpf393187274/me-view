@@ -1,13 +1,13 @@
 <template>
-  <div :class="addClass('text')">
-    <label v-if="lable">{{ lable }}</label>
+  <div class="me-row me-text">
+    <label class="me-row" v-if="lable">{{ lable }}</label>
     <input type="text" v-model="currentValue" :placeholder="placeholder">
   </div>
 </template>
 
 <script>
 export default {
-  name: 'FormText',
+  name: 'MeText',
   data() {
     return {
       currentValue: this.value

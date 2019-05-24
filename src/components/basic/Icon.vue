@@ -1,9 +1,9 @@
 <template>
-  <svg :class="addClass('icon')" aria-hidden="true" @click="$emit('click')">
+  <svg class="me-icon" aria-hidden="true" @click="$emit('click')">
     <use :xlink:href="`#${$slots.default[0].text}`"></use>
   </svg>
 </template>
 
 <script>
-export default { name: 'Icon' }
+export default { name: 'MeIcon' }
 </script>

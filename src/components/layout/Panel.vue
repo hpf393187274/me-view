@@ -1,13 +1,13 @@
 <template>
-  <div :class="addClass('panel')">
-    <div class="header" :class="headerClass">
+  <div class="me-column me-panel">
+    <div class="me-row header" :class="headerClass">
       <me-icon v-if="icon">{{icon}}</me-icon>
       <slot name="header">
-        <span class="lable">{{ lable }}</span>
+        <span class="me-flex">{{ lable }}</span>
       </slot>
     </div>
     <me-line-row/>
-    <div :class="addClass('content', layout)" :style="{'overflow':overflow}">
+    <div class="me-flex me-content" :class="`me-${layout}`" :style="{'overflow':overflow}">
       <slot/>
     </div>
   </div>
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'Panel',
+  name: 'MePanel',
   props: {
     line: Boolean
   }

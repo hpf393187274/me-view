@@ -1,17 +1,14 @@
 <template>
-  <div :class="addClass('line-row')">
+  <div class="me-row me-line-row">
     <div :style="{'background-color': color}">&nbsp;</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LineRow',
+  name: 'MeLineRow',
   props: {
-    color: {
-      type: String,
-      default: '#DDE9F6'
-    }
+    color: { type: String, default: '#DDE9F6' }
   }
 }
 </script>

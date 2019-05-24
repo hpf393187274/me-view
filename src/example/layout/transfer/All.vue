@@ -33,7 +33,7 @@
 </template>
 <script>
 export default {
-  name: 'TransferAll',
+  name: 'MeTransferAll',
   data() {
     return {
       data: [
