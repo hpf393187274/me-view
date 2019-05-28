@@ -48,8 +48,8 @@ export default {
   props: {
     value: { type: Array, default() { return [] } },
     data: { type: Array, default() { return [] } },
-    sourceLabel: { type: String, default: 'source' },
-    targetLabel: { type: String, default: 'target' },
+    sourceLabel: { type: String, default: '来源' },
+    targetLabel: { type: String, default: '目标' },
     showHeader: Boolean
   },
   watch: {

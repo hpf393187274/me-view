@@ -1,14 +1,20 @@
 .@{PREFIX}-tree {
-	.tree-node-header{ }
-	.tree-node-body { }
+	.tree-node-header{ 
+		font-weight: bold;
+		.tree-node-label {
+			font-size: 16px;
+		}
+	}
+	.tree-node-body {
+		.tree-node-item:hover {
+			cursor: pointer;
+			background: @color_hover;
+		}
+	}
 	
 	.tree-node-item {
 		font-size: 13px;
 		align-items: center;
-		&:hover {
-			cursor: pointer;
-			background:#BCD2EE;
-		}
 		.tree-node-statistics {
 			color: rgba(170, 170, 170, 0.548);
 			margin: 0px 3px;
