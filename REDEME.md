@@ -2,7 +2,7 @@
 
 ## Project setup
 ```
-npm install
+npm install me-view
 ```
 
 ### Compiles and hot-reloads for development

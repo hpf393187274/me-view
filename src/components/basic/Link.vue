@@ -1,5 +1,5 @@
 <template>
-  <a class="me-link" @click="$emit('click')">
+  <a :class="class__" @click="disabled === false && $emit('click')" href="javascript:void(0)">
     <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
     <slot/>
   </a>
@@ -7,6 +7,11 @@
 
 <script>
 export default {
-  name: 'MeLink'
+  name: 'MeLink',
+  computed: {
+    class__() {
+      return ['me-link', { 'link-border': this.border }]
+    }
+  }
 }
 </script>

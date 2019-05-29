@@ -1,10 +1,10 @@
 
 <template>
   <div class="me-row me-center me-dialog" v-if="value">
-    <div class="me-column dialog-container" :style="{ height: height, width: width}">
+    <div :style="{ height: height, width: width}" class="me-column dialog-container">
       <div class="me-row dialog-header">
         <slot name="header">
-          <span class="me-flex dialog-label" :class="{'me-cursor-move':moveable}">{{label}}</span>
+          <span :class="{'me-cursor-move':moveable}" class="me-flex dialog-label">{{label}}</span>
           <me-icon @click="value=false">icon-shanchu</me-icon>
         </slot>
       </div>

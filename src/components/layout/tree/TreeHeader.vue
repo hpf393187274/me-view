@@ -1,12 +1,7 @@
 <template>
   <div class="me-column tree-node-header">
-    <div class="me-row tree-node-item" :style="{'padding-left': `${indent__}em`}">
-      <me-checkbox
-        v-if="checkbox"
-        :value="allChecked"
-        :halfChecked="halfChecked"
-        @click="clickCheckbox(!allChecked)"
-      />
+    <div :style="{'padding-left': `${indent__}em`}" class="me-row tree-node-item">
+      <me-checkbox :halfChecked="halfChecked" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
       <div class="me-row me-flex tree-node-label">
         <slot name="node-label">{{label}}</slot>
       </div>
@@ -15,9 +10,9 @@
         <span>/</span>
         <span>{{nodeNumber}}</span>
       </div>
-      <div v-if="action" class="em-center tree-node-action">
+      <div class="em-center tree-node-action" v-if="action">
         <me-link @click="removeCurrentNode">移除</me-link>
-        <me-link v-if="lazy" @click="refreshChildrenNode">刷新</me-link>
+        <me-link @click="refreshChildrenNode" v-if="lazy">刷新</me-link>
       </div>
     </div>
     <me-line-row/>

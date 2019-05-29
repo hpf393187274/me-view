@@ -2,18 +2,18 @@
 <template>
   <me-panel flex label="Basic 用法">
     <me-table :data="data">
-      <me-table-column label="编号" field="id"/>
-      <me-table-column label="a" field="a"/>
-      <me-table-column label="b" field="b"/>
-      <me-table-column label="c" field="c"/>
-      <me-table-column label="d" field="d"/>
-      <me-table-column label="e" field="e"/>
-      <me-table-column label="f" field="f"/>
-      <me-table-column label="g" field="g"/>
-      <me-table-column label="h" field="h"/>
+      <me-table-column field="id" label="编号"/>
+      <me-table-column field="a" label="a"/>
+      <me-table-column field="b" label="b"/>
+      <me-table-column field="c" label="c"/>
+      <me-table-column field="d" label="d"/>
+      <me-table-column field="e" label="e"/>
+      <me-table-column field="f" label="f"/>
+      <me-table-column field="g" label="g"/>
+      <me-table-column field="h" label="h"/>
     </me-table>
     <div class="me-row">
-      <textarea disabled class="me-flex">
+      <textarea class="me-flex" disabled>
       <template >
         <me-table style="width:400px;" :data="data"/>
       </template>

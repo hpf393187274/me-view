@@ -1,19 +1,19 @@
 <template>
   <div class="me-column me-tree" style="overflow: auto;">
     <me-tree-header
-      v-if="header"
-      class="node-header"
+      :action="action"
+      :allCheckedNumber="allCheckedNumber"
       :checkbox="checkbox"
       :checked="allChecked"
-      :halfChecked="halfChecked"
-      :label="label"
-      :hasGrandson="hasGrandson"
       :checked-strict="false"
-      :nodeNumber="nodeNumber"
-      :allCheckedNumber="allCheckedNumber"
-      :statistics="statistics"
-      :action="action"
+      :halfChecked="halfChecked"
+      :hasGrandson="hasGrandson"
+      :label="label"
       :lazy="lazy"
+      :nodeNumber="nodeNumber"
+      :statistics="statistics"
+      class="node-header"
+      v-if="header"
     >
       <template #node-label>
         <slot name="node-header"/>
@@ -21,25 +21,25 @@
     </me-tree-header>
     <template v-if="data && data.length > 0">
       <me-tree-node
-        ref="treeNode"
-        :expanded="expanded"
-        :expandable="expandable"
-        :expanded-level="expandedLevel"
-        :expanded-node-click="expandedNodeClick"
+        :action="action"
         :checkbox="checkbox"
         :checked="checkedChildren"
         :checked-strict="checkedStrict"
         :data="node"
+        :expandable="expandable"
+        :expanded="expanded"
+        :expanded-level="expandedLevel"
+        :expanded-node-click="expandedNodeClick"
         :key="node[nodeKey]"
-        :statistics="statistics"
         :lazy="lazy"
-        :action="action"
+        :statistics="statistics"
         @alter-parent="alterParent"
         @click="handleClick"
+        ref="treeNode"
         v-for="node in data"
       >
         <template #node-label="{data}">
-          <slot name="node-label" :data="data"/>
+          <slot :data="data" name="node-label"/>
         </template>
       </me-tree-node>
     </template>

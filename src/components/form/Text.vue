@@ -1,7 +1,7 @@
 <template>
   <div class="me-row me-text">
     <label class="me-row" v-if="label">{{ label }}</label>
-    <input type="text" v-model="currentValue" :placeholder="placeholder">
+    <input :placeholder="placeholder" type="text" v-model="currentValue">
   </div>
 </template>
 

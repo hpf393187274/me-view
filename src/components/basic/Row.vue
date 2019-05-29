@@ -1,6 +1,6 @@
 <template>
   <div :class="addClass('row')">
-    <slot />
+    <slot/>
   </div>
 </template>
 

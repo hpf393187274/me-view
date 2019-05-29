@@ -1,5 +1,5 @@
 <template>
-  <button class="me-button" :disabled="disabled" :margin="margin" @click="click">
+  <button :disabled="disabled" :margin="margin" @click="click" class="me-button">
     <slot/>
   </button>
 </template>

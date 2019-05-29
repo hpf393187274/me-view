@@ -11,6 +11,8 @@ import table from './table'
 import tabs from './tabs'
 
 import Transfer from './Transfer'
+
+import Paging from './Paging'
 export default [
-  Panel, Dialog, ...tabs, ...tree, ...menu, Transfer, ...table
+  Panel, Dialog, Paging, ...tabs, ...tree, ...menu, Transfer, ...table
 ]

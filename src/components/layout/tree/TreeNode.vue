@@ -1,49 +1,44 @@
 <template>
   <div class="me-column tree-node-body">
-    <div class="me-row tree-node-item" :style="{'padding-left': `${indent__}em`}">
-      <me-icon v-if="expandable && nodeBranch" @click="handleExpanded">{{iconExpanded}}</me-icon>
-      <me-checkbox
-        v-if="checkbox"
-        :value="allChecked"
-        :halfChecked="halfChecked"
-        @click="clickCheckbox(!allChecked)"
-      />
-      <div class="me-row me-flex tree-node-label" @click="click">
-        <slot name="node-label" :data="getData()">{{data.label}}</slot>
+    <div :style="{'padding-left': `${indent__}em`}" class="me-row tree-node-item">
+      <me-icon @click="handleExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
+      <me-checkbox :halfChecked="halfChecked" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
+      <div @click="click" class="me-row me-flex tree-node-label">
+        <slot :data="getData()" name="node-label">{{data.label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>
         <span>/</span>
         <span>{{nodeNumber}}</span>
       </div>
-      <div v-if="action" class="em-center tree-node-action">
+      <div class="em-center tree-node-action" v-if="action">
         <me-link @click="removeCurrentNode">移除</me-link>
-        <me-link v-if="lazy" @click="refreshChildrenNode">刷新</me-link>
+        <me-link @click="refreshChildrenNode" v-if="lazy">刷新</me-link>
       </div>
     </div>
-    <div class="tree-node-children" v-show="expanded__" v-if="renderFirst">
+    <div class="tree-node-children" v-if="renderFirst" v-show="expanded__">
       <me-tree-node
-        ref="treeNode"
+        :action="action"
         :checkbox="checkbox"
         :checked="checkedChildren || data.checked === true"
         :checked-strict="checkedStrict"
-        :expanded="expanded"
+        :data="node"
         :expandable="expandable"
+        :expanded="expanded"
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
         :indent="indent__+1"
-        :level=" level + 1 "
-        :data="node"
         :key="node[nodeKey]"
         :lazy="lazy"
-        :action="action"
+        :level=" level + 1 "
         :statistics="statistics"
         @alter-parent="alterParent"
         @click="handleClick"
+        ref="treeNode"
         v-for="node in data.children"
       >
         <template slot="node-label" slot-scope="{data}">
-          <slot name="node-label" :data="data"/>
+          <slot :data="data" name="node-label"/>
         </template>
       </me-tree-node>
     </div>

@@ -1,13 +1,13 @@
 <template>
   <div class="me-column me-panel">
-    <div class="me-row header" :class="headerClass">
+    <div :class="headerClass" class="me-row header">
       <me-icon v-if="icon">{{icon}}</me-icon>
       <slot name="header">
         <span class="me-flex">{{ label }}</span>
       </slot>
     </div>
     <me-line-row/>
-    <div class="me-flex me-content" :class="`me-${layout}`" :style="{'overflow':overflow}">
+    <div :class="`me-${layout}`" :style="{'overflow':overflow}" class="me-flex me-content">
       <slot/>
     </div>
   </div>

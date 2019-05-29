@@ -1,9 +1,7 @@
-
+import { tools } from '@assets/script/common'
 export default {
-  boolean(value) {
-    return !!value
-  },
   preImg(value) {
     return `/images/${value}`
-  }
+  },
+  boolean(value) { return tools.isNotEmpty(value) }
 }

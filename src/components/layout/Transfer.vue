@@ -1,39 +1,39 @@
 <template>
   <div class="me-row me-transfer">
     <me-tree
-      ref="sourceTree"
+      :data="source"
+      :expanded="expanded"
+      :label="sourceLabel"
+      :statistics="statistics"
+      checkbox
       class="me-flex me-border transfer-item"
       header
-      checkbox
-      :data="source"
-      :label="sourceLabel"
-      :expanded="expanded"
-      :statistics="statistics"
+      ref="sourceTree"
     >
       <template #node-label="{data}">
-        <slot name="node-label" :data="data"/>
+        <slot :data="data" name="node-label"/>
       </template>
     </me-tree>
     <div class="me-column me-center transfer-center">
       <slot name="center">
-        <me-button @click="target.push(...source); source=[]" :disabled="source.length === 0">全部向右</me-button>
+        <me-button :disabled="source.length === 0" @click="target.push(...source); source=[]">全部向右</me-button>
         <me-button @click="targetMove">向右</me-button>
         <me-button @click="sourceMove">向左</me-button>
-        <me-button @click="source.push(...target); target=[]" :disabled="target.length === 0">全部向左</me-button>
+        <me-button :disabled="target.length === 0" @click="source.push(...target); target=[]">全部向左</me-button>
       </slot>
     </div>
     <me-tree
-      ref="targetTree"
+      :data="target"
+      :expanded="expanded"
+      :label="targetLabel"
+      :statistics="statistics"
+      checkbox
       class="me-flex me-border transfer-item"
       header
-      checkbox
-      :data="target"
-      :label="targetLabel"
-      :expanded="expanded"
-      :statistics="statistics"
+      ref="targetTree"
     >
       <template #node-label="{data}">
-        <slot name="node-label" :data="data"/>
+        <slot :data="data" name="node-label"/>
       </template>
     </me-tree>
   </div>
