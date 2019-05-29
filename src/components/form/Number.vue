@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'MeText',
+  name: 'MeNumber',
   data() {
     return {
       currentValue: this.value

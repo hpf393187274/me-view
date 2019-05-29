@@ -1,8 +1,8 @@
 
 <template>
-  <me-panel flex label="全部 用法" layout="row" border>
-    <me-tree style="width:400px;" :data="data" checkbox expanded statistics action/>
-    <textarea disabled class="me-flex">
+  <me-panel border flex label="All 用法" layout="row">
+    <me-tree :data="data" action checkbox expanded statistics style="width:400px;"/>
+    <textarea class="me-flex" disabled>
     <template>
       <me-tree :data="data" checkbox statistics action />
     </template>

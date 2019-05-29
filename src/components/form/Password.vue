@@ -1,13 +1,13 @@
 <template>
   <div class="me-row me-text">
     <label class="me-row" v-if="label">{{ label }}</label>
-    <input :placeholder="placeholder" type="text" v-model="currentValue">
+    <input :placeholder="placeholder" type="password" v-model="currentValue">
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MeText',
+  name: 'MePassword',
   data() {
     return {
       currentValue: this.value

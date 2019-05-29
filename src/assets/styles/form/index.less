@@ -52,26 +52,19 @@ button {
 .@{PREFIX}-text {
 	min-height: 45px;
 	padding: 5px;
-	flex: 1;
 	label {
 		min-width: 80px;
 		align-items:center;
 		justify-content: flex-end;
 		padding-right: 3px;
 	}
-	input {
-		flex: 1px;
-		align-items:center;
-	}
+	input { flex: 1px; }
 }
 
 .@{PREFIX}-link {
 	margin: 0px 2px;
+	display: block;
 	&:link {color: #FF0000}     /* 未访问的链接 */
 	&:visited {color: #00FF00}  /* 已访问的链接 */
 	&:hover { color: @color_hover; }    /* 当有鼠标悬停在链接上 */
-
-	.link-border{
-		&:hover {border: 1px solid @color_hover;}   /* 被选择的链接 */
-	}
 }

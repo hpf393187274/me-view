@@ -1,37 +1,30 @@
 <template>
   <div class="me-row me-center me-border me-paging">
-    <me-link :border="border" :disabled="currentPage <= 1" @click="--currentPage" class="item">
+    <span :class="itemClass()" @click="--currentPage" class="me-row me-center" title="上一页">
       <template v-if="boolean(prevText)">{{prevText}}</template>
       <me-icon v-else>icon-fenye-shangyiye</me-icon>
-    </me-link>
+    </span>
     <div class="me-row me-center pagination">
-      <me-link :border="border" :class="itemClass(1)" @click="currentPage = 1">1</me-link>
+      <span :class="itemClass(1)" @click="currentPage = 1" class="me-row me-center">1</span>
       <template v-if="pageNumber > 2">
-        <me-link :border="border" @click="setCurrentPage(currentPage - size)" class="item" v-if="preMore">
+        <span :title="`向前${size}页`" @click="setCurrentPage(currentPage - size)" class="me-row me-center" v-if="preMore">
           <me-icon>icon-more</me-icon>
-        </me-link>
-        <me-link
-          :border="border"
-          :class="itemClass(value)"
-          :key="value"
-          @click="currentPage = value"
-          v-for="value in visiblePageNumber"
-        >{{value}}</me-link>
-        <me-link :border="border" @click="setCurrentPage(currentPage + size)" class="item" v-if="nextMore">
+        </span>
+        <template v-for="value in visiblePageNumber">
+          <span :class="itemClass(value)" :key="value" @click="currentPage = value" class="me-row me-center">{{value}}</span>
+        </template>
+        <span :title="`向后${size}页`" @click="setCurrentPage(currentPage + size)" class="me-row me-center" v-if="nextMore">
           <me-icon>icon-more</me-icon>
-        </me-link>
+        </span>
       </template>
-      <me-link
-        :border="border"
-        :class="itemClass(pageNumber)"
-        @click="currentPage = pageNumber"
-        v-if="pageNumber > 1"
-      >{{pageNumber}}</me-link>
+      <span :class="itemClass(pageNumber)" @click="currentPage = pageNumber" class="me-row me-center" v-if="pageNumber > 1">{{pageNumber}}</span>
     </div>
-    <me-link :border="border" :disabled="currentPage >= pageNumber" @click="++currentPage" class="item next">
+    <span :class="itemClass()" @click="++currentPage" class="me-row me-center" title="下一页">
       <template v-if="boolean(nextText)">{{nextText}}</template>
       <me-icon v-else>icon-fenye-xiayiye</me-icon>
-    </me-link>
+    </span>
+    <span class="me-row me-center">共 {{total}} 条</span>
+    <me-number :value="`${currentPage}`" @change="setCurrentPage"/>
   </div>
 </template>
 
@@ -44,12 +37,12 @@ export default {
     total: { type: Number, default: 0, validator: value => type.isNumber(value) },
     pageSize: { type: Number, default: 10, validator: value => type.isNumber(value) && value !== 0 },
     pageSizes: { type: Number, default: 10 },
-    prevText: { type: String, default: "" },
-    nextText: { type: String, default: "" }
+    prevText: { type: String, default: '' },
+    nextText: { type: String, default: '' }
   },
   data() {
     return {
-      size: 3,
+      size: 5,
       currentPage: this.value
     }
   },
@@ -90,9 +83,10 @@ export default {
   },
   methods: {
     itemClass(value) {
-      return ['item', { 'selected': this.currentPage === value }]
+      return ['paging-border', { 'selected': value && this.currentPage === value }]
     },
     setCurrentPage(value) {
+      value = Number(value)
       if (value < 1 || value > this.pageNumber) { return }
       this.currentPage = value
     }

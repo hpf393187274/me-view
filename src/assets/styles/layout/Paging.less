@@ -1,12 +1,32 @@
 .@{PREFIX}-paging {
 	padding: 0px 5px;
-	.item {
+	span {
+		min-width: 30px;
+		min-height: 30px;
+		margin: 5px;
 		color: rgb(96, 97, 96);
+		&:hover { 
+			cursor: pointer; 
+			color: @color_selected;
+		} 
 	}
-	.selected{
+	.paging-border {
+		border: 1px solid @color_border;
+		&:hover {
+			border: 1px solid @color_selected;
+		}
+	}
+	.selected {
 		color: @color_selected;
+		border-color: @color_selected;
 	}
 	.pagination {
-		min-width: 200px;
+		flex: 1;
+	}
+
+	input {
+		text-align: center;
+		flex: auto;
+		width: 35px;
 	}
 }

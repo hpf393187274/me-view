@@ -1,2 +1,3 @@
 import Basic from './Basic'
-export default [Basic]
+import All from './All'
+export default [Basic, All]
