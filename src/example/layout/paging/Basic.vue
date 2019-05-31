@@ -1,7 +1,7 @@
 
 <template>
   <me-panel flex label="Basic 用法">
-    <me-paging :total="1000"/>
+    <me-paging :total="500"/>
     <div class="me-row">
       <textarea class="me-flex" disabled>
     <template >

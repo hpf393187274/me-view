@@ -5,26 +5,28 @@
       <me-icon v-else>icon-fenye-shangyiye</me-icon>
     </span>
     <div class="me-row me-center pagination">
-      <span :class="itemClass(1)" @click="currentPage = 1" class="me-row me-center">1</span>
-      <template v-if="pageNumber > 2">
-        <span :title="`向前${size}页`" @click="setCurrentPage(currentPage - size)" class="me-row me-center" v-if="preMore">
-          <me-icon>icon-more</me-icon>
-        </span>
-        <template v-for="value in visiblePageNumber">
-          <span :class="itemClass(value)" :key="value" @click="currentPage = value" class="me-row me-center">{{value}}</span>
-        </template>
-        <span :title="`向后${size}页`" @click="setCurrentPage(currentPage + size)" class="me-row me-center" v-if="nextMore">
-          <me-icon>icon-more</me-icon>
-        </span>
+      <template v-for="value in visibleLeft">
+        <span :class="itemClass(value)" :key="value" @click="currentPage = value" class="me-row me-center">{{value}}</span>
       </template>
-      <span :class="itemClass(pageNumber)" @click="currentPage = pageNumber" class="me-row me-center" v-if="pageNumber > 1">{{pageNumber}}</span>
+      <span :title="`向前${sizeCenter}页`" @click="setCurrentPage(currentPage - sizeCenter)" class="me-row me-center" v-if="start > minCenter">
+        <me-icon>icon-more</me-icon>
+      </span>
+      <template v-for="value in visibleCenter">
+        <span :class="itemClass(value)" :key="value" @click="currentPage = value" class="me-row me-center">{{value}}</span>
+      </template>
+      <span :title="`向后${sizeCenter}页`" @click="setCurrentPage(currentPage + sizeCenter)" class="me-row me-center" v-if="end < maxCenter">
+        <me-icon>icon-more</me-icon>
+      </span>
+      <template v-for="value in visibleRight">
+        <span :class="itemClass(value)" :key="value" @click="currentPage =value" class="me-row me-center">{{value}}</span>
+      </template>
     </div>
     <span :class="itemClass()" @click="++currentPage" class="me-row me-center" title="下一页">
       <template v-if="boolean(nextText)">{{nextText}}</template>
       <me-icon v-else>icon-fenye-xiayiye</me-icon>
     </span>
     <span class="me-row me-center">共 {{total}} 条</span>
-    <me-number :value="`${currentPage}`" @change="setCurrentPage"/>
+    <me-number :value="currentPage" :value-max="pageNumber" :value-min="1" @change="setCurrentPage"/>
   </div>
 </template>
 
@@ -38,36 +40,83 @@ export default {
     pageSize: { type: Number, default: 10, validator: value => type.isNumber(value) && value !== 0 },
     pageSizes: { type: Number, default: 10 },
     prevText: { type: String, default: '' },
-    nextText: { type: String, default: '' }
+    nextText: { type: String, default: '' },
+    sizeSide: { type: Number, default: 2 },
+    sizeCenter: { type: Number, default: 5 },
   },
   data() {
     return {
-      size: 5,
       currentPage: this.value
     }
   },
   computed: {
-    preMore() {
-      return this.visiblePageNumber[0] > 2
+    pageNumber() { return Math.ceil(this.total / this.pageSize) },
+    /**
+     * 全部最大占用
+     */
+    mixAllOccupy() { return this.maxSideOccupy + this.maxCenterOccupy },
+    halfOccupy() {
+      return this.sizeSide + this.sizeCenter
     },
-    nextMore() {
-      return this.visiblePageNumber[this.visiblePageNumber.length - 1] < this.pageNumber - 1
+    currentCenterSize() {
+      const difference = this.pageNumber - this.maxSideOccupy
+      return difference > 0 ? this.maxCenterOccupy : difference
     },
-    pageNumber() {
-      return Math.ceil(this.total / this.pageSize)
+    /**
+     * 两边最大占用
+     */
+    maxSideOccupy() { return this.sizeSide * 2 },
+    /**
+     * 中间最大占用
+     */
+    maxCenterOccupy() { return this.sizeCenter * 2 + 1 },
+    visibleLeft() {
+      return this.pageNumber > this.sizeSide ? this.sizeSide : this.pageNumber
     },
-    visiblePageNumber() {
-      let [start, end] = [2, this.pageNumber - 1]
-
-      const difference = this.currentPage - this.size
-      difference > start && (start = difference)
-
-
-      const sum = this.currentPage + this.size
-      sum < end && (end = sum)
-
+    visibleRight() {
+      const difference = this.pageNumber - this.sizeSide
+      if (difference <= 0) { return [] }
+      const size = difference > this.sizeSide ? this.sizeSide : difference
       const result = []
-      for (let index = start; index <= end; index++) {
+      for (let index = 0; index < size; index++) {
+        result.push(this.pageNumber - index)
+      }
+      return result.sort((a, b) => a - b)
+    },
+    maxCenter() {
+      const difference = this.pageNumber - this.maxSideOccupy
+      return difference > 0 ? this.pageNumber - this.sizeSide : 0
+    },
+    minCenter() {
+      const difference = this.pageNumber - this.maxSideOccupy
+      return difference > 0 ? 1 + this.sizeSide : 0
+    },
+    start() {
+      // 中间实际最大个数  小于 预期最大个数  => start = minCenter
+      if (this.maxCenter - this.minCenter < this.maxCenterOccupy) { return this.minCenter }
+      if (this.currentPage - this.minCenter <= this.sizeCenter) { return this.minCenter }
+
+      const difference = this.maxCenter - this.currentPage
+      if (difference < this.sizeCenter) { return this.maxCenter - this.sizeCenter * 2 }
+
+      return this.currentPage - this.sizeCenter
+    },
+    end() {
+      if (this.maxCenter - this.minCenter < this.maxCenterOccupy) { return this.maxCenter }
+
+      if (this.maxCenter - this.currentPage <= this.sizeCenter) { return this.maxCenter }
+      const difference = this.currentPage - this.minCenter
+      if (difference < this.sizeCenter) { return this.minCenter + this.sizeCenter * 2 }
+
+      return this.currentPage + this.sizeCenter
+    },
+    visibleCenter() {
+      if (this.maxCenter === 0 || this.minCenter === 0) { return [] }
+      // if (this.pageNumber <= this.maxSideOccupy) { return [] }
+      if (this.start === 0 || this.end === 0) { return [] }
+      // if (this.end - this.start < 1) { return [] }
+      const result = []
+      for (let index = this.start; index <= this.end; index++) {
         result.push(index)
       }
       return result
@@ -83,12 +132,13 @@ export default {
   },
   methods: {
     itemClass(value) {
-      return ['paging-border', { 'selected': value && this.currentPage === value }]
+      return { 'paging-border': this.border, 'selected': value && this.currentPage === value }
     },
     setCurrentPage(value) {
       value = Number(value)
-      if (value < 1 || value > this.pageNumber) { return }
-      this.currentPage = value
+      value > this.pageNumber && (this.currentPage = this.pageNumber)
+      value < 1 && (this.currentPage = 1)
+      value >= 1 && value <= this.pageNumber && (this.currentPage = value)
     }
   }
 }
