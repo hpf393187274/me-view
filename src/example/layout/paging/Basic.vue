@@ -5,7 +5,7 @@
     <div class="me-row">
       <textarea class="me-flex" disabled>
     <template >
-      <me-paging :total="1000"/>
+      <me-paging :total="500"/>
     </template>
     </textarea>
       <div class="me-flex">

@@ -1,1 +1,4 @@
-export default []
+import input from './input'
+export default [
+  ...input
+]

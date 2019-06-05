@@ -26,7 +26,7 @@
       <me-icon v-else>icon-fenye-xiayiye</me-icon>
     </span>
     <span class="me-row me-center">共 {{total}} 条</span>
-    <me-number :value="currentPage" :value-max="pageNumber" :value-min="1" @change="setCurrentPage"/>
+    <me-input :max="pageNumber" :min="1" :value="currentPage" @change="setCurrentPage" type="number"/>
   </div>
 </template>
 
@@ -51,17 +51,6 @@ export default {
   },
   computed: {
     pageNumber() { return Math.ceil(this.total / this.pageSize) },
-    /**
-     * 全部最大占用
-     */
-    mixAllOccupy() { return this.maxSideOccupy + this.maxCenterOccupy },
-    halfOccupy() {
-      return this.sizeSide + this.sizeCenter
-    },
-    currentCenterSize() {
-      const difference = this.pageNumber - this.maxSideOccupy
-      return difference > 0 ? this.maxCenterOccupy : difference
-    },
     /**
      * 两边最大占用
      */
@@ -112,9 +101,7 @@ export default {
     },
     visibleCenter() {
       if (this.maxCenter === 0 || this.minCenter === 0) { return [] }
-      // if (this.pageNumber <= this.maxSideOccupy) { return [] }
       if (this.start === 0 || this.end === 0) { return [] }
-      // if (this.end - this.start < 1) { return [] }
       const result = []
       for (let index = this.start; index <= this.end; index++) {
         result.push(index)

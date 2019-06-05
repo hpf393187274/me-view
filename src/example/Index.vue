@@ -1,6 +1,6 @@
 <template>
   <div class="me-row me-flex">
-    <me-tree :data="data" style="width:200px;" :expandable="false" @click="handleClick"/>
+    <me-tree :data="data" :expandable="false" @click="handleClick" style="width:200px;"/>
     <div class="me-row me-flex me-border" style="overflow: auto;">
       <router-view/>
     </div>
@@ -18,7 +18,10 @@ export default {
           ]
         },
         {
-          label: 'Form 表单'
+          label: 'Form 表单',
+          children: [
+            { label: 'Input 输入框', path: '/form/input' }
+          ]
         },
         {
           label: 'layout 布局',
