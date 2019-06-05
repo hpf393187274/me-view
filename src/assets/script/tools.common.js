@@ -132,5 +132,15 @@ export default {
       return newTarget
     }
     return target.flatMap(item => this.clone(item))
+  },
+  /**
+   * 获取 Url 参数
+   * @param {String} key 参数名
+   */
+  urlParam(key) {
+    const search = window.location.search
+    const result = search.replace('?', '').replace(/&/g, ',').replace(/(\w+)=?(\w+|)/ig, '"$1":"$2"')
+    const params = JSON.parse(`{${result}}`)
+    return this.isEmpty(key) ? params : params[key]
   }
 }
