@@ -1,18 +1,27 @@
 <template>
-  <div class="me-row me-text">
-    <label class="me-row" v-if="label">{{ label }}</label>
-    <input
-      :disabled="disabled"
-      :max="max"
-      :min="min"
-      :pattern="pattern"
-      :placeholder="placeholder"
-      :readonly="readonly"
-      :required="required"
-      :type="type"
-      ref="target"
-      v-model="currentValue"
-    >
+  <div class="me-row me-input">
+    <label :class="{'input-required': required}" class="me-row input-label" v-if="boolean(label)">{{ label }}：</label>
+    <div :class="classWrap" :title="invalid.message" @mouseenter="active = true" @mouseleave="active = false">
+      <input
+        :disabled="disabled"
+        :max="max"
+        :min="min"
+        :placeholder="placeholder"
+        :readonly="readonly"
+        :type="type"
+        class="me-flex input-inner"
+        ref="target"
+        v-model="currentValue"
+      >
+      <me-icon @click="$emit('icon-handle', currentValue)" v-if="boolean(icon)">{{icon}}</me-icon>
+      <me-icon
+        :style="{'visibility': active ? 'visible' : 'hidden'}"
+        @click="reset"
+        style="cursor: pointer;"
+        v-if="clearable"
+        v-show="active "
+      >{{$config.icon.clear}}</me-icon>
+    </div>
   </div>
 </template>
 
@@ -23,21 +32,43 @@ export default {
   data() {
     return {
       currentValue: this.value,
-      pattern__: '',
+      initValue: this.value,
+      showClear: false,
+      active: false,
+      message: ''
     }
   },
-  created() {
-    this.type === 'number' && (this.pattern__ = '[0-0]+')
-    this.type === 'email' && (this.pattern__ = '^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$')
+  computed: {
+    pattern__() {
+      let value = this.pattern
+      this.type === 'number' && (value = '[0-0]+')
+      this.type === 'email' && (value = '^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$')
+      return value
+    },
+    classWrap() {
+      return [
+        'me-row', 'me-flex', 'me-border', 'input-wrap',
+        { 'input-invalid': this.invalid.status }
+      ]
+    },
+    invalid() {
+      if (this.required && this.$tools.isEmpty(this.currentValue)) {
+        return { status: true, message: '内容不能为空' }
+      }
+      return { status: false }
+    }
   },
   props: {
     placeholder: { type: String, default: '' },
+    clearable: { type: Boolean },
     required: { type: Boolean },
     readonly: { type: Boolean },
     type: { type: String, default: 'text', validator: value => types.includes(value) },
     value: { type: [Number, String], default: '' },
     min: { type: Number, default: 0 },
-    max: { type: Number, default: 0 },
+    max: { type: Number, default: 1000 },
+    minLength: { type: Number, default: 0 },
+    maxLength: { type: Number, default: 0 },
     pattern: { type: String }
   },
   watch: {
@@ -52,6 +83,12 @@ export default {
       this.$emit('input', newValue)
       this.$emit('change', newValue)
     }
+  },
+  methods: {
+    /**
+     * 重置
+     */
+    reset() { this.currentValue = this.initValue }
   }
 }
 </script>

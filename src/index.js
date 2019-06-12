@@ -9,9 +9,9 @@ import 'echarts/lib/component/legend'
 
 
 import { type, tools, localStorage, http } from '@assets/script/common'
-import { components, mixins } from '@components/index'
-
-export { type, tools, localStorage, http }
+import { components, mixins, config } from '@components/index'
+import watermark from '@assets/script/watermark'
+export { type, tools, localStorage, http, watermark }
 
 export default {
   install(Vue) {
@@ -21,7 +21,8 @@ export default {
     Vue.component('me-chart', ECharts)
 
     Vue.mixin(mixins)
-
+    Vue.prototype.$config = config
+    Vue.prototype.$watermark = watermark
     Vue.prototype.$type = type
     Vue.prototype.$tools = tools
     Vue.prototype.$localStorage = localStorage

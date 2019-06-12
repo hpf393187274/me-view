@@ -1,14 +1,15 @@
 // 选择器前缀
 @PREFIX: me;
-@color_base:rgb(239, 242, 245);
+@color-base:rgb(239, 242, 245);
 // 边框主色
-@color_border: @color_base;
+@color-border: #e3e5eb;
+@color-placeholder: #9c9da0;
 // 填充颜色
-@color_fill:#F5F6FA;
+@color-fill:#F5F6FA;
 // 悬浮的颜色
-@color_hover: #96c5f7;
+@color-hover: #96c5f7;
 // 选中的颜色
-@color_selected:#96c5f7;
+@color-selected:#96c5f7;
 
 
 .flex(@type){
@@ -20,6 +21,6 @@
 }
 
 
-.border(@color: @color_border) {
+.border(@color: @color-border) {
 	border: 1px solid @color;
 }

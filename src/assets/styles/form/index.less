@@ -15,6 +15,11 @@ input[type=checkbox] {
 	cursor: pointer;
 }
 
+
+input::placeholder {
+	color: @color-placeholder;
+}
+
 textarea {
 	resize: none;
 }
@@ -22,8 +27,6 @@ textarea {
 button {
 	cursor: pointer;
 }
-
-
 
 .@{PREFIX}-cursor-move{
 	cursor: move;
@@ -50,16 +53,32 @@ button {
 	}
 }
 
-.@{PREFIX}-text {
-	min-height: 45px;
-	padding: 5px;
-	label {
+.@{PREFIX}-input {
+	min-height: 40px;
+	align-self: center;
+	.input-label {
 		min-width: 80px;
 		align-items:center;
 		justify-content: flex-end;
 		padding-right: 3px;
+		
 	}
-	input { flex: 1px; }
+	.input-required {
+		color: red;
+	}
+	.input-wrap {
+		padding: 0px 10px;
+		margin: 0px 2px;
+		flex: 1;
+		&:hover {
+			border: 1px solid @color-hover;
+			box-shadow:0 0 5px @color-hover;
+		}
+		.input-inner { border: none; }
+	}
+	.input-invalid {
+		border: 1px solid red;
+	}
 }
 
 .@{PREFIX}-link {
@@ -67,5 +86,5 @@ button {
 	display: block;
 	&:link {color: #FF0000}     /* 未访问的链接 */
 	&:visited {color: #00FF00}  /* 已访问的链接 */
-	&:hover { color: @color_hover; }    /* 当有鼠标悬停在链接上 */
+	&:hover { color: @color-hover; }    /* 当有鼠标悬停在链接上 */
 }

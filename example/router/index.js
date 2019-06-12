@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import layout from '@router/layout'
-import form from '@router/form'
+import layout from './layout'
+import form from './form'
+
+import docs from './docs'
 Vue.use(Router)
 
 export default new Router({
@@ -10,8 +12,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: () => import('@example/Index.vue'),
+      component: () => import('../components/Index.vue'),
       children: [...layout, ...form]
-    }
+    },
+    ...docs
   ]
 })

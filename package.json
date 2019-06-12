@@ -32,11 +32,16 @@
     "eslint-plugin-vue": "^5.0.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "markdown-it": "^8.4.2",
+    "markdown-it-anchor": "^5.2.4",
+    "markdown-it-container": "^2.0.0",
     "me-view": "^1.0.11",
     "postcss": "^7.0.16",
     "postcss-loader": "^3.0.0",
-    "vue-template-compiler": "^2.5.21",
-    "vuepress": "^0.14.11"
+    "transliteration": "^2.1.3",
+    "vue-loader": "^15.7.0",
+    "vue-markdown-loader": "^2.4.1",
+    "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
     "root": true,

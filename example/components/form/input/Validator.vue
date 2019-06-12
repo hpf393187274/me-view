@@ -1,7 +1,7 @@
 
 <template>
-  <me-panel flex label="Basic 用法" layout="row">
-    <me-input style="flex:auto;"/>
+  <me-panel flex label="Validator 用法" layout="row">
+    <me-input clearable label="用户名" placeholder="请输入姓名" required style="flex:1;" v-model="value"/>
     <textarea class="me-flex" disabled>
     <template >
       <me-input />
@@ -20,6 +20,11 @@
 </template>
 <script>
 export default {
-  name: 'MeInputBasic'
+  name: 'MeInputValidator',
+  data() {
+    return {
+      value: ''
+    }
+  }
 }
 </script>
