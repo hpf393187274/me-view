@@ -51,7 +51,6 @@ module.exports = {
             require('markdown-it-container'), 'demo',
             {
               validate: function (params) {
-                debugger
                 return params.trim().match(/^demo\s+(.*)$/)
               },
               render(tokens, index) {
@@ -76,7 +75,7 @@ module.exports = {
                 }
                 return ` 
                   </div>
-                </me-demo-block>\n
+                </me-demo-block>
                 `
               }
             }

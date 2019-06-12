@@ -69,12 +69,17 @@ button {
 	.input-wrap {
 		padding: 0px 10px;
 		margin: 0px 2px;
+		border-radius: 3px;
+		color: @color-font;
 		flex: 1;
 		&:hover {
 			border: 1px solid @color-hover;
 			box-shadow:0 0 5px @color-hover;
 		}
-		.input-inner { border: none; }
+		.input-inner {
+			outline: none;
+			border: none; 
+		}
 	}
 	.input-invalid {
 		border: 1px solid red;

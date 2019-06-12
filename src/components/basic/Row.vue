@@ -1,11 +1,11 @@
 <template>
-  <div :class="addClass('row')">
+  <div class="me-row">
     <slot/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Row'
+  name: 'MeRow'
 }
 </script>
