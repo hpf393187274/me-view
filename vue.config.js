@@ -54,29 +54,26 @@ module.exports = {
                 return params.trim().match(/^demo\s+(.*)$/)
               },
               render(tokens, index) {
-                let { nesting, info } = tokens[index]
-                debugger
-                if (nesting === 1) {
-                  // 1.获取代码块的描述内容
-                  const content = info.trim().match(/^demo\s+(.*)$/) || []
-                  let description = content.length > 1 ? content[1] : ''
+                const m = tokens[index].info.trim().match(/^demo\s*(.*)$/);
+                if (tokens[index].nesting === 1) {
+                  let description = m && m.length > 1 ? m[1] : '';
+                  const content = tokens[index + 1].type === 'fence' ? tokens[index + 1].content : '';
                   if (description) {
                     description = md.render(description)
                   }
-                  // 2.获取代码块内的html和js代码
+
+                  console.log("==============content====================")
+                  console.log(content)
+
+                  console.log("================description===================")
+                  console.log(description)
                   const code = tokens[index + 1].content
-                  // 3.代码块包裹
-                  return `
-                    <me-demo-block>
-                      <div class="source" slot="source">${code}</div>
-                        ${description}
-                      <div class="highlight" slot="code">
+                  return `<demo-block>
+                    <div class="source" slot="source">${code}</div>
+                    <div>${description}</div>
                   `
                 }
-                return ` 
-                  </div>
-                </me-demo-block>
-                `
+                return '</demo-block>';
               }
             }
           ]

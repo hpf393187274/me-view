@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
+import './style/index.less'
 import meView from '@/index'
 import meExample from './example.js'
 Vue.use(meView)

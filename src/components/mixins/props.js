@@ -30,6 +30,10 @@ export default {
    */
   label: { type: String, default: '' },
   /**
+   * 标题
+   */
+  title: { type: String, default: '' },
+  /**
    * 头部样式
    */
   headerClass: { type: String, default: null },
