@@ -1,5 +1,5 @@
 <template>
-  <div :class="[blockClass, { 'hover': hovering }]" @mouseenter="hovering = true" @mouseleave="hovering = false" class="demo-block">
+  <div :class="blockClass" class="demo-block">
     <div class="source">
       <slot name="source"></slot>
     </div>
@@ -12,12 +12,7 @@
       </div>
     </div>
     <div @click="isExpanded = !isExpanded" class="me-row me-center demo-block-control" ref="control">
-      <transition name="arrow-slide">
-        <me-icon :class="{ 'hovering': hovering }">{{iconExpanded}}</me-icon>
-      </transition>
-      <transition name="text-slide">
-        <span v-show="hovering">{{ controlText }}</span>
-      </transition>
+      <span>{{ controlText }}</span>
     </div>
   </div>
 </template>
@@ -103,39 +98,12 @@
   .demo-block-control {
     border-top: solid 1px #eaeefb;
     height: 44px;
-    box-sizing: border-box;
     background-color: #fff;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     text-align: center;
-    margin-top: -1px;
     color: #d3dce6;
     cursor: pointer;
-    position: relative;
-
-    &.is-fixed {
-      position: fixed;
-      bottom: 0;
-      width: 868px;
-    }
-
-    i {
-      font-size: 16px;
-      line-height: 44px;
-      transition: 0.3s;
-      &.hovering {
-        transform: translateX(-40px);
-      }
-    }
-
-    > span {
-      position: absolute;
-      transform: translateX(-30px);
-      font-size: 14px;
-      line-height: 44px;
-      transition: 0.3s;
-      display: inline-block;
-    }
 
     &:hover {
       color: #409eff;
@@ -162,7 +130,7 @@
 </style>
 
 <script type="text/babel">
-import { stripScript, stripStyle, stripTemplate } from '../util';
+import { stripScript, stripStyle, stripTemplate } from './util';
 
 export default {
   name: 'DemoBlock',
@@ -200,10 +168,6 @@ export default {
 
     blockClass() {
       return `demo-${this.lang} demo-${this.$router.currentRoute.path.split('/').pop()}`;
-    },
-
-    iconExpanded() {
-      return this.isExpanded ? 'icon-sort-down' : 'icon-sort-up'
     },
 
     controlText() {

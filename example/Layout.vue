@@ -1,7 +1,7 @@
 <template>
   <div class="me-row me-flex">
     <me-tree :data="data" :expandable="false" @click="handleClick" style="width:200px;"/>
-    <div class="me-row me-flex me-border" style="overflow: auto;">
+    <div class="me-row me-flex me-border" style="overflow: auto; padding:5px 10px;">
       <router-view/>
     </div>
   </div>
