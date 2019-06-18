@@ -7,7 +7,6 @@ import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title'
 import 'echarts/lib/component/legend'
 
-
 import { type, tools, localStorage, http } from '@assets/script/common'
 import { components, mixins, config } from '@components/index'
 import watermark from '@assets/script/watermark'

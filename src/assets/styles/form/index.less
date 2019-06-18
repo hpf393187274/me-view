@@ -54,6 +54,7 @@ button {
 }
 
 .@{PREFIX}-input {
+	
 	min-height: 40px;
 	align-self: center;
 	.input-label {
@@ -61,24 +62,33 @@ button {
 		align-items:center;
 		justify-content: flex-end;
 		padding-right: 3px;
-		
 	}
+	
 	.input-required {
 		color: red;
 	}
 	.input-wrap {
-		padding: 0px 10px;
-		margin: 0px 2px;
-		border-radius: 3px;
-		color: @color-font;
+		position: relative;
 		flex: 1;
-		&:hover {
-			border: 1px solid @color-hover;
-			box-shadow:0 0 5px @color-hover;
+		.input-icon {
+			position: absolute;
+			height:100%;
 		}
 		.input-inner {
 			outline: none;
-			border: none; 
+			border: 1px solid @color-border;
+			color: @color-font;
+			border-radius: 5px;
+			padding-left: 10px;
+			padding-right: 10px;
+			&:hover {
+				border: 1px solid @color-hover;
+				box-shadow:0 0 3px @color-hover;
+			}
+			&:focus {
+				border: 1px solid @color-hover;
+				box-shadow:0 0 8px @color-hover;
+			}
 		}
 	}
 	.input-invalid {

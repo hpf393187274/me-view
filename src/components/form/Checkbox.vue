@@ -1,12 +1,6 @@
 <template>
   <label class="me-checkbox">
-    <input
-      @change="$emit('change')"
-      @click.stop="click(!currentValue)"
-      ref="checkbox"
-      type="checkbox"
-      v-model="currentValue"
-    >
+    <input @change="$emit('change')" @click.stop="click(!currentValue)" ref="checkbox" type="checkbox" v-model="currentValue">
     <span v-if="label">{{ label }}</span>
   </label>
 </template>

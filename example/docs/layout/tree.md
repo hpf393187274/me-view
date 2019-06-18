@@ -1,7 +1,7 @@
 
-# Tree 树形控件
+## Tree 树形控件
 
-## 基础用法
+### 基础用法
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
@@ -36,7 +36,7 @@ export default {
 ```
 :::
 
-## Checkbox 用法
+### Checkbox 用法
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
@@ -72,7 +72,7 @@ export default {
 :::
 
 
-## 全部用法
+### 全部用法
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
@@ -107,9 +107,23 @@ export default {
 ```
 :::
 
-## Tree Attributes
-sss
-## Tree Methods
+### Tree Attributes
+| 名称                | 描述                                 |  类型   | 默认值 | 可选值       |
+| ------------------- | ------------------------------------ | :-----: | :----: | ------------ |
+| statistics          | 是否显示统计                         | Boolean | false  | true, false  |
+| checkbox            | 是否显示复选框                       | Boolean | false  | true, false  |
+| checked-strict      | 是否严格模式- false 父子联动互不干涉 | Boolean |  true  | true, false  |
+| checked             | 是否选中                             | Boolean | false  | true, false  |
+| lazy                | 是否懒加载                           | Boolean | false  | true, false  |
+| expanded            | 是否展开                             | Boolean | false  | true, false  |
+| expanded-node-click | 点击节点是否展开                     | Boolean |  true  | true, false  |
+| accordion           | 待实现 - 是否手风琴模式              | Boolean | false  | true, false  |
+| node-key            | 唯一标识的属性                       | String  |   id   | id           |
+| expanded-level      | 展开级别                             | Number  |   0    | 1, 2, 3, ... |
+| action              | 是否显示功能                         | Boolean | false  | true, false  |
+
+
+### Tree Methods
 
 | 方法名            | 描述           | 参数 | 返回值 |
 | ----------------- | -------------- | ---- | ------ |
