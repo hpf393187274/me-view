@@ -1,8 +1,15 @@
 <template>
-  <div class="me-row me-flex">
-    <me-tree :data="data" :expandable="false" @click="handleClick" style="width:200px;"/>
-    <div class="me-row me-flex me-border" style="overflow: auto; padding:5px 10px;">
-      <router-view/>
+  <div class="me-column me-flex">
+    <div class="me-row" style="align-items: center;">
+      <img height="60" src="/logo.png"> Me-View
+    </div>
+    <me-line-row/>
+    <div class="me-row me-flex" style="overflow: auto;">
+      <me-tree :data="data" :expandable="false" @click="handleClick" style="width:200px;"/>
+      <me-line-column/>
+      <div class="me-row me-flex" style="overflow: auto; padding:5px 10px;">
+        <router-view/>
+      </div>
     </div>
   </div>
 </template>

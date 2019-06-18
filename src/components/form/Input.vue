@@ -1,5 +1,6 @@
-<template>
+﻿<template>
   <div class="me-row me-input">
+    {{pattern}}
     <label :class="{'input-required': required}" class="me-row input-label" v-if="boolean(label)">{{ label }}：</label>
     <div :class="classWrap" :title="invalid.message" @mouseenter="active = true" @mouseleave="active = false">
       <input

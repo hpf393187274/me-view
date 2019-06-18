@@ -70,9 +70,6 @@ export default {
   },
   methods: {
     getHasGrandson() {
-      for (const node of this.getChildrenNodeList()) {
-        console.log(node.isBranch())
-      }
       return this.getChildrenNodeList().some(node => node.isBranch() === true)
     },
     getCheckedData({ leaf = true, ...param } = {}) {

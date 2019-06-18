@@ -1,5 +1,5 @@
 <template>
-  <div class="me-row me-center me-border me-paging">
+  <div class="me-row me-center me-paging">
     <span :class="itemClass()" @click="--currentPage" class="me-row me-center" title="上一页">
       <template v-if="boolean(prevText)">{{prevText}}</template>
       <me-icon v-else>icon-fenye-shangyiye</me-icon>
@@ -8,15 +8,11 @@
       <template v-for="value in visibleLeft">
         <span :class="itemClass(value)" :key="value" @click="currentPage = value" class="me-row me-center">{{value}}</span>
       </template>
-      <span :title="`向前${sizeCenter}页`" @click="setCurrentPage(currentPage - sizeCenter)" class="me-row me-center" v-if="start > minCenter">
-        <me-icon>icon-more</me-icon>
-      </span>
+      <me-icon :title="`向前${sizeCenter}页`" @click="setCurrentPage(currentPage - sizeCenter)" v-if="start > minCenter">icon-more</me-icon>
       <template v-for="value in visibleCenter">
         <span :class="itemClass(value)" :key="value" @click="currentPage = value" class="me-row me-center">{{value}}</span>
       </template>
-      <span :title="`向后${sizeCenter}页`" @click="setCurrentPage(currentPage + sizeCenter)" class="me-row me-center" v-if="end < maxCenter">
-        <me-icon>icon-more</me-icon>
-      </span>
+      <me-icon :title="`向后${sizeCenter}页`" @click="setCurrentPage(currentPage + sizeCenter)" v-if="end < maxCenter">icon-more</me-icon>
       <template v-for="value in visibleRight">
         <span :class="itemClass(value)" :key="value" @click="currentPage =value" class="me-row me-center">{{value}}</span>
       </template>

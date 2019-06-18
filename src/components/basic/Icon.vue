@@ -1,5 +1,5 @@
 <template>
-  <span :title="title">
+  <span :title="title" class="me-row me-center">
     <svg @click="$emit('click')" aria-hidden="true" class="me-icon">
       <use :xlink:href="`#${$slots.default[0].text}`"></use>
     </svg>

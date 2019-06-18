@@ -37,7 +37,7 @@
         ref="treeNode"
         v-for="node in data.children"
       >
-        <template slot="node-label" slot-scope="{data}">
+        <template #node-label="{data}">
           <slot :data="data" name="node-label"/>
         </template>
       </me-tree-node>

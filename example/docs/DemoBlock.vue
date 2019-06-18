@@ -1,5 +1,5 @@
 <template>
-  <div :class="blockClass" class="demo-block">
+  <div class="demo-block">
     <div class="source">
       <slot name="source"></slot>
     </div>
@@ -109,39 +109,15 @@
       color: #409eff;
       background-color: #f9fafc;
     }
-
-    & .text-slide-enter,
-    & .text-slide-leave-active {
-      opacity: 0;
-      transform: translateX(10px);
-    }
-
-    .control-button {
-      line-height: 26px;
-      position: absolute;
-      top: 0;
-      right: 0;
-      font-size: 14px;
-      padding-left: 5px;
-      padding-right: 25px;
-    }
   }
 }
 </style>
 
 <script type="text/babel">
-import { stripScript, stripStyle, stripTemplate } from './util';
-
 export default {
   name: 'DemoBlock',
   data() {
     return {
-      codepen: {
-        script: '',
-        html: '',
-        style: ''
-      },
-      hovering: false,
       isExpanded: false,
       fixedControl: false,
       scrollParent: null
@@ -162,14 +138,6 @@ export default {
   },
 
   computed: {
-    lang() {
-      return this.$route.path.split('/')[1];
-    },
-
-    blockClass() {
-      return `demo-${this.lang} demo-${this.$router.currentRoute.path.split('/').pop()}`;
-    },
-
     controlText() {
       return this.isExpanded ? '隐藏代码' : '显示代码'
     },
@@ -201,25 +169,6 @@ export default {
         this.scrollParent && this.scrollParent.addEventListener('scroll', this.scrollHandler);
         this.scrollHandler();
       }, 200);
-    }
-  },
-
-  created() {
-    const highlight = this.$slots.highlight;
-    if (highlight && highlight[0]) {
-      let code = '';
-      let cur = highlight[0];
-      if (cur.tag === 'pre' && (cur.children && cur.children[0])) {
-        cur = cur.children[0];
-        if (cur.tag === 'code') {
-          code = cur.children[0].text;
-        }
-      }
-      if (code) {
-        this.codepen.html = stripTemplate(code);
-        this.codepen.script = stripScript(code);
-        this.codepen.style = stripStyle(code);
-      }
     }
   },
 

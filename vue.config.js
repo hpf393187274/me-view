@@ -68,8 +68,11 @@ module.exports = {
                   console.log("================description===================")
                   console.log(description)
                   const code = tokens[index + 1].content
+
+                  console.log("================code===================")
+                  console.log(code)
                   return `<demo-block>
-                    <div class="source" slot="source">${code}</div>
+                    <template #source>${code}</template>
                     <div>${description}</div>
                   `
                 }
