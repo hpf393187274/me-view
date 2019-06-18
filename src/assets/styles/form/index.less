@@ -35,24 +35,6 @@ button {
 	cursor: pointer;
 }
 
-.@{PREFIX}-button {
-	margin: 5px;
-	white-space: nowrap;
-	background: #fff;
-	border: 1px solid #dcdfe6;
-	color: #606266;
-	-webkit-appearance: none;
-	text-align: center;
-	transition: .1s;
-	padding: 10px 15px;
-	font-size: 14px;
-	border-radius: 4px;
-	&:hover {
-		border-color: rgb(37, 37, 170);
-		color:  rgb(37, 37, 170);
-	}
-}
-
 .@{PREFIX}-input {
 	min-height: 32px;
 	margin: 5px;
@@ -103,3 +85,6 @@ button {
 	&:visited {color: #00FF00}  /* 已访问的链接 */
 	&:hover { color: @color-hover; }    /* 当有鼠标悬停在链接上 */
 }
+
+
+@import "./Button.less";

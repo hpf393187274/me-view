@@ -1,22 +1,21 @@
 
-## Input 输入框
+# Button 按钮
 
 ### 基础用法
 ::: demo `label` 设置标签 `clearable` 可清除的
 ```html
 
-<div class="me-row">
-  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
-  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
-  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
-  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
-</div>
-<div class="me-row">
-  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
-  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
-  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
-  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
-</div>
+<me-row>
+  <me-button type="default">default</me-button>
+  <me-button type="primary">primary</me-button>
+  <me-button type="dashed">dashed</me-button>
+  <me-button type="text">text</me-button>
+  <me-button type="info">info</me-button>
+  <me-button type="success">success</me-button>
+  <me-button type="warning">warning</me-button>
+  <me-button type="error">error</me-button>
+</me-row>
+
 <script>
 export default {
   data() {
@@ -28,14 +27,21 @@ export default {
 ```
 :::
 
-### 图标显示
+### 幽灵按钮
 
-#### 普通模式
-
-::: demo `icon-prefix` 前置图标 `icon-suffix` 后置图标
+::: demo `ghost` 幽灵按钮
 ```html
 
-<me-input style="width:500px;" icon-prefix="icon-user" icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
+<me-row>
+  <me-button ghost type="default">default</me-button>
+  <me-button ghost type="primary">primary</me-button>
+  <me-button ghost type="dashed">dashed</me-button>
+  <me-button ghost type="text">text</me-button>
+  <me-button ghost type="info">info</me-button>
+  <me-button ghost type="success">primary</me-button>
+  <me-button ghost type="warning">warning</me-button>
+  <me-button ghost type="error">error</me-button>
+</me-row>
 
 <script>
 export default {
@@ -67,21 +73,15 @@ export default {
 :::
 
 ### Input Attributes
-| 名称        | 描述                |  类型   | 默认值 | 可选值                 |
-| ----------- | ------------------- | :-----: | :----: | ---------------------- |
-| type        | 文本内心            | String  |  text  | text, password, number |
-| label       | 标签描述            | String  |   -    | -                      |
-| clearable   | 可清除的            | Boolean | false  | true, false            |
-| placeholder | 原生属性 - 提示表述 | String  |   -    | -                      |
-| icon-prefix | 图标库 - 前置图标   | String  |   -    | -                      |
-| icon-suffix | 图标库 - 后置图标   | String  |   -    | -                      |
+| 名称  | 描述                     |  类型   | 默认值  | 可选值                                                        |
+| ----- | ------------------------ | :-----: | :-----: | ------------------------------------------------------------- |
+| type  | 按钮类型                 | String  | default | default、primary、dashed、text、info、success、warning、error |
+| ghost | 幽灵属性，使按钮背景透明 | Boolean |  false  | true、false                                                   |
 
 ### Input Events
-| 名称          | 描述         |    参数    |
-| ------------- | ------------ | :--------: |
-| change        | 内容改变事件 | 当前文本值 |
-| handle-prefix | 前置图标事件 | 当前文本值 |
-| handle-suffix | 后置图标事件 | 当前文本值 |
+| 名称  | 描述     | 参数  |
+| ----- | -------- | :---: |
+| click | 点击事件 |   -   |
 
 
 ### Input Slot

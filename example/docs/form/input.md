@@ -1,7 +1,7 @@
 
-## Input 输入框
+# Input 输入框
 
-### 基础用法
+## 基础用法
 ::: demo `label` 设置标签 `clearable` 可清除的
 ```html
 
@@ -18,9 +18,9 @@ export default {
 ```
 :::
 
-### 图标显示
+## 图标显示
 
-#### 普通模式
+### 普通模式
 
 ::: demo `icon-prefix` 前置图标 `icon-suffix` 后置图标
 ```html
@@ -38,7 +38,7 @@ export default {
 ```
 :::
 
-#### Solt 模式
+### Solt 模式
 
 ::: demo `label` 设置标签 `clearable` 可清除的
 ```html
@@ -56,7 +56,7 @@ export default {
 ```
 :::
 
-### Input Attributes
+## Input Attributes
 | 名称        | 描述                |  类型   | 默认值 | 可选值                 |
 | ----------- | ------------------- | :-----: | :----: | ---------------------- |
 | type        | 文本内心            | String  |  text  | text, password, number |
@@ -66,7 +66,7 @@ export default {
 | icon-prefix | 图标库 - 前置图标   | String  |   -    | -                      |
 | icon-suffix | 图标库 - 后置图标   | String  |   -    | -                      |
 
-### Input Events
+## Input Events
 | 名称          | 描述         |    参数    |
 | ------------- | ------------ | :--------: |
 | change        | 内容改变事件 | 当前文本值 |
@@ -74,7 +74,7 @@ export default {
 | handle-suffix | 后置图标事件 | 当前文本值 |
 
 
-### Input Slot
+## Input Slot
 | 名称   | 描述     |
 | ------ | -------- |
 | prefix | 前置图标 |

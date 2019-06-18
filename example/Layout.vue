@@ -33,7 +33,7 @@ export default {
           ]
         },
         {
-          label: 'layout 布局',
+          label: 'Layout 布局',
           children: [
             { label: 'Table 表格', path: '/layout/table' },
             { label: 'Paging 分页', path: '/layout/paging' },
