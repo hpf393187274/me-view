@@ -5,8 +5,18 @@
 ::: demo `label` 设置标签 `clearable` 可清除的
 ```html
 
-<me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
-
+<div class="me-row">
+  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
+  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
+  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
+  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
+</div>
+<div class="me-row">
+  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
+  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
+  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
+  <me-input class="me-flex" label="用户名" clearable placeholder="请输入姓名"></me-input>
+</div>
 <script>
 export default {
   data() {

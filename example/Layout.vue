@@ -27,7 +27,9 @@ export default {
         {
           label: 'Form 表单',
           children: [
-            { label: 'Input 输入框', path: '/form/input' }
+            { label: 'Form 表单', path: '/form/form' },
+            { label: 'Input 输入框', path: '/form/input' },
+            { label: 'Button 按钮', path: '/form/button' }
           ]
         },
         {
