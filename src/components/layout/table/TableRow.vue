@@ -1,6 +1,6 @@
 <template>
-  <div class="me-row me-flex table-row" @click="$emit('click')">
-    <div :class="rowClass" :key="item.label" v-for="item in columns">{{content(item)}}</div>
+  <div @click="$emit('click')" class="me-row me-flex table-row">
+    <div :class="classColumn" :key="item.label" v-for="item in columns">{{content(item)}}</div>
   </div>
 </template>
 <script>
@@ -15,7 +15,7 @@ export default {
     data: { type: Object, default: () => ({}) },
   },
   computed: {
-    rowClass() {
+    classColumn() {
       return 'me-row me-flex table-column'
     }
   },

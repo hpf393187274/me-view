@@ -14,12 +14,12 @@
         ref="target"
         v-model="currentValue"
       >
-      <div class="input-icon me-row" ref="prefix" style="left:6px;">
+      <div class="input-icon me-row" ref="prefix" style="left:5px;">
         <slot name="prefix">
           <me-icon @click="$emit('handle-prefix', currentValue)" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
         </slot>
       </div>
-      <div class="input-icon me-row" ref="suffix" style="right:6px;">
+      <div class="input-icon me-row" ref="suffix" style="right:5px;">
         <me-icon @click="reset" v-if="clearable" v-show="active">{{$config.icon.clear}}</me-icon>
         <slot name="suffix">
           <me-icon @click="$emit('handle-suffix', currentValue)" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>

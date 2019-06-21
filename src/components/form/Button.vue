@@ -1,5 +1,6 @@
 <template>
-  <button :class="classes" :disabled="disabled" :margin="margin" @click="click">
+  <button :class="classes" :disabled="disabled" :margin="margin" :style="styles" @click="click">
+    <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
     <slot/>
   </button>
 </template>
@@ -9,15 +10,30 @@ export default {
   name: 'MeButton',
   props: {
     type: { type: String, default: 'default' },
-    ghost: Boolean
+    shape: { type: String, default: 'default', validator: value => ['default', 'round', 'circle'].includes(value) },
+    plain: Boolean
   },
   computed: {
+    radius() {
+      let value = ''
+      return value
+    },
+    styles() {
+      return {
+        // 'border-radius': this.radius
+      }
+    },
     classes() {
       return [
         'me-btn',
+        'me-row',
+        'me-center',
         `me-btn-${this.type}`,
         {
-          'me-btn-ghost': this.ghost
+          'me-btn-plain': this.plain,
+          'me-btn-disabled': this.disabled,
+          'me-btn-shape--round': this.shape === 'round',
+          'me-btn-shape--circle': this.shape === 'circle'
         }
       ]
     }

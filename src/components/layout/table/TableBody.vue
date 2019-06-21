@@ -1,13 +1,15 @@
 <template>
   <div class="me-cloumn table-body">
-    <me-table-row
-      v-for="item in data"
-      :key="item[nodeKey]"
-      :columns="columns"
-      :data="item"
-      :class="{'selected': activate === item[nodeKey]}"
-      @click="activate = item[nodeKey]"
-    />
+    <template v-for="item in data">
+      <me-table-row
+        :class="{'selected': activate === item[nodeKey]}"
+        :columns="columns"
+        :data="item"
+        :key="item[nodeKey]"
+        @click="activate = item[nodeKey]"
+      />
+      <div :key="item[nodeKey]" class="me-border" style="height:100px;">ssss</div>
+    </template>
   </div>
 </template>
 <script>

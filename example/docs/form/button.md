@@ -2,90 +2,102 @@
 # Button 按钮
 
 ### 基础用法
-::: demo `label` 设置标签 `clearable` 可清除的
+::: demo `type` 按钮类别 `plain` 简介按钮 `shape` 形状
 ```html
 
 <me-row>
   <me-button type="default">default</me-button>
   <me-button type="primary">primary</me-button>
-  <me-button type="dashed">dashed</me-button>
-  <me-button type="text">text</me-button>
   <me-button type="info">info</me-button>
   <me-button type="success">success</me-button>
   <me-button type="warning">warning</me-button>
   <me-button type="error">error</me-button>
 </me-row>
 
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
+<me-row>
+  <me-button plain type="default">default</me-button>
+  <me-button plain type="primary">primary</me-button>
+  <me-button plain type="info">info</me-button>
+  <me-button plain type="success">primary</me-button>
+  <me-button plain type="warning">warning</me-button>
+  <me-button plain type="error">error</me-button>
+</me-row>
+
+<me-row>
+  <me-button shape="round" type="default" icon="icon-sousuo">default</me-button>
+  <me-button shape="round" type="primary" icon="icon-icon_exchange">primary</me-button>
+  <me-button shape="round" type="info" icon="icon-more">info</me-button>
+  <me-button shape="round" type="success" icon="icon-shezhi">success</me-button>
+  <me-button shape="round" type="warning" icon="icon-xiazai">warning</me-button>
+  <me-button shape="round" type="error" icon="icon-shezhi">error</me-button>
+</me-row>
+
+<me-row>
+  <me-button shape="circle" type="default" icon="icon-sousuo"></me-button>
+  <me-button shape="circle" type="primary" icon="icon-icon_exchange"></me-button>
+  <me-button shape="circle" type="info" icon="icon-more"></me-button>
+  <me-button shape="circle" type="success" icon="icon-shezhi"></me-button>
+  <me-button shape="circle" type="warning" icon="icon-xiazai"></me-button>
+  <me-button shape="circle" type="error" icon="icon-shezhi"></me-button>
+</me-row>
+
 ```
 :::
 
-### 幽灵按钮
-
-::: demo `ghost` 幽灵按钮
+### 禁用状态
+::: demo `disabled` 禁用
 ```html
 
 <me-row>
-  <me-button ghost type="default">default</me-button>
-  <me-button ghost type="primary">primary</me-button>
-  <me-button ghost type="dashed">dashed</me-button>
-  <me-button ghost type="text">text</me-button>
-  <me-button ghost type="info">info</me-button>
-  <me-button ghost type="success">primary</me-button>
-  <me-button ghost type="warning">warning</me-button>
-  <me-button ghost type="error">error</me-button>
+  <me-button disabled type="default">default</me-button>
+  <me-button disabled type="primary">primary</me-button>
+  <me-button disabled type="info">info</me-button>
+  <me-button disabled type="success">success</me-button>
+  <me-button disabled type="warning">warning</me-button>
+  <me-button disabled type="error">error</me-button>
 </me-row>
 
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
+<me-row>
+  <me-button disabled plain type="default">default</me-button>
+  <me-button disabled plain type="primary">primary</me-button>
+  <me-button disabled plain type="info">info</me-button>
+  <me-button disabled plain type="success">primary</me-button>
+  <me-button disabled plain type="warning">warning</me-button>
+  <me-button disabled plain type="error">error</me-button>
+</me-row>
+
+<me-row>
+  <me-button disabled shape="round" type="default" icon="icon-sousuo">default</me-button>
+  <me-button disabled shape="round" type="primary" icon="icon-icon_exchange">primary</me-button>
+  <me-button disabled shape="round" type="info" icon="icon-more">info</me-button>
+  <me-button disabled shape="round" type="success" icon="icon-shezhi">success</me-button>
+  <me-button disabled shape="round" type="warning" icon="icon-xiazai">warning</me-button>
+  <me-button disabled shape="round" type="error" icon="icon-shezhi">error</me-button>
+</me-row>
+
+<me-row>
+  <me-button disabled shape="circle" type="default" icon="icon-sousuo"></me-button>
+  <me-button disabled shape="circle" type="primary" icon="icon-icon_exchange"></me-button>
+  <me-button disabled shape="circle" type="info" icon="icon-more"></me-button>
+  <me-button disabled shape="circle" type="success" icon="icon-shezhi"></me-button>
+  <me-button disabled shape="circle" type="warning" icon="icon-xiazai"></me-button>
+  <me-button disabled shape="circle" type="error" icon="icon-shezhi"></me-button>
+</me-row>
+
 ```
 :::
 
-#### Solt 模式
 
-::: demo `label` 设置标签 `clearable` 可清除的
-```html
+### Button Attributes
+| 名称     | 描述             |  类型   | 默认值  | 可选值                                                        |
+| -------- | ---------------- | :-----: | :-----: | ------------------------------------------------------------- |
+| type     | 按钮类型         | String  | default | default、primary、dashed、text、info、success、warning、error |
+| disabled | 是否禁用状态     | Boolean |  false  | true、false                                                   |
+| plain    | 普通的           | Boolean |  false  | true、false                                                   |
+| icon     | 图标库：按钮图标 | String  |    -    | 图标库                                                        |
+| shape    | 形状             | String  | default | default、circle、round                                        |
 
-<me-input style="width:500px;" icon-prefix="icon-user" icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
-
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
-```
-:::
-
-### Input Attributes
-| 名称  | 描述                     |  类型   | 默认值  | 可选值                                                        |
-| ----- | ------------------------ | :-----: | :-----: | ------------------------------------------------------------- |
-| type  | 按钮类型                 | String  | default | default、primary、dashed、text、info、success、warning、error |
-| ghost | 幽灵属性，使按钮背景透明 | Boolean |  false  | true、false                                                   |
-
-### Input Events
+### Button Events
 | 名称  | 描述     | 参数  |
 | ----- | -------- | :---: |
 | click | 点击事件 |   -   |
-
-
-### Input Slot
-| 名称   | 描述     |
-| ------ | -------- |
-| prefix | 前置图标 |
-| suffix | 前置图标 |

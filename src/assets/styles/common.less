@@ -43,11 +43,14 @@
 }
 
 .@{PREFIX}-icon {
-	width: 1em; height: 1em;
-	vertical-align: -0.15em;
-	fill: currentColor;
-	overflow: hidden;
-	cursor: pointer;
+	margin: 2px;
+	.icon-inner {
+		width: 1em; height: 1em;
+		vertical-align: -0.15em;
+		fill: currentColor;
+		overflow: hidden;
+		cursor: pointer;
+	}
 }
 
 @import "./form/index.less";

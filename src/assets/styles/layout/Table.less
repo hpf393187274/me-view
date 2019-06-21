@@ -1,4 +1,12 @@
 .@{PREFIX}-table {
+	.table-row {
+		min-height: 50px;
+	}
+	.table-column {
+		align-items: center;
+		padding: 5px 10px;
+		min-width: 60px;
+	}
 	.table-header{
 		font-size: 16px;
 		font-weight: bold;
@@ -15,10 +23,21 @@
 			background-color:@color-selected;
 		}
 	}
-	.table-column {
-		align-items: center;
-		padding: 3px;
-		min-width: 60px;
-		min-height: 35px;
+}
+
+.@{PREFIX}-table-border {
+	// box-shadow: 0 0 2px @color-border;
+	border-collapse: separate;
+	border-top: 1px solid #ebeef5;
+	border-left: 1px solid #ebeef5;
+	.table-row {
+		border-bottom: 1px solid #ebeef5;
 	}
+	.table-column {
+		border-right: 1px solid #ebeef5;
+	}
+	.table-body {
+		
+	}
+	.table-header {}
 }

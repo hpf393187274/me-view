@@ -1,7 +1,7 @@
 <template>
-  <div class="me-column me-table">
+  <div :class="classes">
     <me-table-header :columns="columns"/>
-    <me-table-body :node-key="nodeKey" :data="data" :columns="columns"/>
+    <me-table-body :columns="columns" :data="data" :node-key="nodeKey"/>
   </div>
 </template>
 <script>
@@ -18,6 +18,14 @@ export default {
     nodeKey: { type: String, default: 'id' },
     field: { type: String, default: '' },
     data: { type: Array, default: () => [] }
+  },
+  computed: {
+    classes() {
+      return [
+        'me-column me-table',
+        { 'me-table-border': this.border }
+      ]
+    }
   },
   data() {
     return {
