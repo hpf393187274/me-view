@@ -8,7 +8,6 @@
       :columns="columns"
       @click-checkbox="handlerCheckboxHeader"
     />
-    {{selectedChecked}}
     <div class="me-cloumn table-body">
       <me-table-row-body
         :center="center"
