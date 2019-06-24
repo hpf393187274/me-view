@@ -1,43 +1,57 @@
+@table-border: #ebeef5;
+@table-color: rgb(141, 141, 141);
+@table-header: #F8F8F9;
+@table-body: #FFFFFF;
+@table-body-row-odd:#FFFFFF;
+@table-body-row-even:#F8F8F9;
+@table-body-hover: #ebf7ff;
+@table-body-active: #ebf7ff;
 .@{PREFIX}-table {
+	color: @table-color;
+	overflow: auto;
+	font-size: 12px;
 	.table-row {
 		min-height: 50px;
 	}
 	.table-column {
 		align-items: center;
-		padding: 5px 10px;
-		min-width: 60px;
+		min-width: 40px;
+		.table-column-inner {
+			margin: 5px 10px;
+		}
 	}
 	.table-header{
 		font-size: 16px;
 		font-weight: bold;
+		background: @table-header;
 	}
 	.table-body {
-		color: rgb(141, 141, 141);
-		.table-row{
+		background: @table-body;
+		.table-row {
+			&:nth-child(odd){
+				background: @table-body-row-odd;
+			}
+			&:nth-child(even){
+				background: @table-body-row-even;
+			}
 			&:hover{
 				cursor: pointer;
-				background-color: @color-hover;
+				background-color: @table-body-hover;
 			}
 		}
-		.selected{
-			background-color:@color-selected;
+		.table-row.row-selected {
+			background-color: @table-body-active;
 		}
 	}
 }
 
 .@{PREFIX}-table-border {
-	// box-shadow: 0 0 2px @color-border;
-	border-collapse: separate;
-	border-top: 1px solid #ebeef5;
-	border-left: 1px solid #ebeef5;
+	border-top: 1px solid @table-border;
+	border-left: 1px solid @table-border;
 	.table-row {
-		border-bottom: 1px solid #ebeef5;
+		border-bottom: 1px solid @table-border;
 	}
 	.table-column {
-		border-right: 1px solid #ebeef5;
+		border-right: 1px solid @table-border;
 	}
-	.table-body {
-		
-	}
-	.table-header {}
 }

@@ -6,7 +6,7 @@
       :checkbox="checkbox"
       :checked="allChecked"
       :checked-strict="false"
-      :halfChecked="halfChecked"
+      :checkedHalf="checkedHalf"
       :hasGrandson="hasGrandson"
       :label="label"
       :lazy="lazy"

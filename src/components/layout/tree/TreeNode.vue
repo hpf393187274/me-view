@@ -2,7 +2,7 @@
   <div class="me-column tree-node-body">
     <div :style="{'padding-left': `${indent__}em`}" class="me-row tree-node-item">
       <me-icon @click="handleExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
-      <me-checkbox :halfChecked="halfChecked" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
+      <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
       <div @click="click" class="me-row me-flex tree-node-label">
         <slot :data="getData()" name="node-label">{{data.label}}</slot>
       </div>

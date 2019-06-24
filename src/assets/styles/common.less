@@ -10,6 +10,15 @@
 .@{PREFIX}-row { 
 	.flex(row);
 }
+.@{PREFIX}-row.@{PREFIX}-center-row{
+	.flex(row);
+	justify-items: center;
+}
+
+.@{PREFIX}-row.@{PREFIX}-center-column{
+	.flex(row);
+	align-items: center;
+}
 
 /* 空间不足，可换行 */
 .@{PREFIX}-wrap {
@@ -18,6 +27,15 @@
 
 .@{PREFIX}-column {
 	.flex(column);
+}
+.@{PREFIX}-column.@{PREFIX}-center-row{
+	.flex(column);
+	align-items: center;
+}
+
+.@{PREFIX}-column.@{PREFIX}-center-column{
+	.flex(column);
+	justify-items: center;
 }
 
 

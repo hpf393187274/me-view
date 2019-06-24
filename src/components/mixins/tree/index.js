@@ -35,9 +35,9 @@ export default {
   },
   data() {
     return {
-      halfChecked: false,
+      checkedHalf: false,
       allCheckedNumber: 0,
-      halfCheckedNumber: 0,
+      checkedHalfNumber: 0,
       checkedChildren: this.checked,
     }
   },
@@ -58,13 +58,13 @@ export default {
       return this.allChecked
     },
     isHalfChecked() {
-      return this.halfChecked
+      return this.checkedHalf
     },
     notChecked() {
       return this.allChecked === false
     },
     isHazyChecked() {
-      return this.allChecked || this.halfChecked
+      return this.allChecked || this.checkedHalf
     },
     notHazyChecked() {
       return this.isHazyChecked() === false

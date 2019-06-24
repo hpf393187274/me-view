@@ -110,6 +110,7 @@ export default {
 ### Tree Attributes
 | 名称                | 描述                                 |  类型   | 默认值 | 可选值       |
 | ------------------- | ------------------------------------ | :-----: | :----: | ------------ |
+| expandable          | 可折叠的，false 展开全部节点         | Boolean |  true  | true, false  |
 | statistics          | 是否显示统计                         | Boolean | false  | true, false  |
 | checkbox            | 是否显示复选框                       | Boolean | false  | true, false  |
 | checked-strict      | 是否严格模式- false 父子联动互不干涉 | Boolean |  true  | true, false  |

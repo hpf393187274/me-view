@@ -7,6 +7,9 @@ export default {
    * 剧中
    */
   center: Boolean,
+  centerRow: Boolean,
+  centerColumn: Boolean,
+  index: Number,
   /**
    * flex
    */
@@ -21,6 +24,8 @@ export default {
   disabled: Boolean,
   margin: String,
   padding: Boolean,
+  checkbox: Boolean,
+  checked: Boolean,
   /**
    * 滚动条
    */

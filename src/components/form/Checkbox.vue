@@ -14,7 +14,7 @@ export default {
     }
   },
   props: {
-    halfChecked: Boolean,
+    checkedHalf: Boolean,
     value: Boolean
   },
   watch: {
@@ -24,7 +24,7 @@ export default {
     currentValue(newValue) {
       this.$emit('input', newValue)
     },
-    halfChecked(newValue) {
+    checkedHalf(newValue) {
       this.$refs.checkbox.indeterminate = newValue
     }
   },

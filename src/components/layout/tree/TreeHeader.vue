@@ -1,7 +1,7 @@
 <template>
   <div class="me-column tree-node-header">
     <div :style="{'padding-left': `${indent__}em`}" class="me-row tree-node-item">
-      <me-checkbox :halfChecked="halfChecked" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
+      <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
       <div class="me-row me-flex tree-node-label">
         <slot name="node-label">{{label}}</slot>
       </div>
@@ -26,7 +26,7 @@ export default {
   mixins: [treeCommon],
   props: {
     hasGrandson: Boolean,
-    halfChecked: Boolean,
+    checkedHalf: Boolean,
     nodeNumber: { type: Number, default: 0 },
     allCheckedNumber: { type: Number, default: 0 }
   },

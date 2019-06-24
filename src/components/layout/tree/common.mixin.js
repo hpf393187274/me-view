@@ -7,26 +7,26 @@ export default {
      */
     getCheckedNumber() {
       let allCheckedNumber = 0
-      let halfCheckedNumber = 0
+      let checkedHalfNumber = 0
       for (const node of this.getChildrenNodeList()) {
         node.isAllChecked() && allCheckedNumber++
-        node.isHalfChecked() && halfCheckedNumber++
+        node.isHalfChecked() && checkedHalfNumber++
       }
       this.setAllCheckedNumber(allCheckedNumber)
-      this.halfCheckedNumber = halfCheckedNumber
-      return { allCheckedNumber, halfCheckedNumber }
+      this.checkedHalfNumber = checkedHalfNumber
+      return { allCheckedNumber, checkedHalfNumber }
     },
     /**
      * 变更父级
      */
     alterParent() {
-      const { allCheckedNumber, halfCheckedNumber } = this.getCheckedNumber()
+      const { allCheckedNumber, checkedHalfNumber } = this.getCheckedNumber()
       if (this.checkedStrict) {
         this.allChecked = allCheckedNumber === this.nodeNumber
-        if (halfCheckedNumber > 0) {
-          this.halfChecked = true
+        if (checkedHalfNumber > 0) {
+          this.checkedHalf = true
         } else {
-          this.halfChecked = allCheckedNumber > 0 && allCheckedNumber < this.nodeNumber
+          this.checkedHalf = allCheckedNumber > 0 && allCheckedNumber < this.nodeNumber
         }
       }
       this.$emit('alter-parent')
@@ -56,7 +56,7 @@ export default {
     },
     setAllChecked(value, deep = false) {
       this.allChecked = value
-      this.halfChecked = false
+      this.checkedHalf = false
       deep && this.alterChildrenNodeChecked(value)
     },
     /**
