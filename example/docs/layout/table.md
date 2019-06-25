@@ -38,7 +38,7 @@ export default {
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
-  <me-table :data="data" border checkbox center-row selected-checked >
+  <me-table :data="data" border checkbox center-row  selected-checked>
     <me-table-column field="id" label="编号"></me-table-column>
     <me-table-column field="a" label="a"></me-table-column>
     <me-table-column field="b" label="b"></me-table-column>

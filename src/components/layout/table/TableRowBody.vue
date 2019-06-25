@@ -1,7 +1,7 @@
 <template>
   <div :class="clesses" @click="handlerRow">
     <div class="me-row me-center table-column" v-if="checkbox">
-      <me-checkbox @click.stop="handlerCheckbox" v-model="checked__"/>
+      <me-checkbox @click="handlerChecked(!checked__)" v-model="checked__"/>
     </div>
     <div :class="classColumn" :key="item.label" @click="handlerColumn(item,index)" v-for="(item, index) in columns">
       <span class="table-column-inner">{{data[item.field]}}</span>
@@ -27,12 +27,13 @@ export default {
     }
   },
   methods: {
-    handlerCheckbox(value) {
+    handlerChecked(value) {
       this.$emit('click-checkbox', value, this.data, this.index)
     },
     handlerRow() {
       if (this.selectedChecked) {
-        this.handlerCheckbox(this.checked__ = !this.checked__)
+        this.checked__ = !this.checked__
+        this.$emit('click-checkbox', this.checked__, this.data, this.index)
       }
       this.$emit('click-row', this.data, this.index)
     },

@@ -1,5 +1,6 @@
 <template>
   <div :class="classes">
+    <div>checkedBodyNumber={{checkedBodyNumber}} --length={{length}}</div>
     <me-table-row-header
       :center="center"
       :checkbox="checkbox"
@@ -85,6 +86,7 @@ export default {
   },
   methods: {
     handlerCheckboxHeader(value) {
+      this.checkedHalf = false
       this.checkedHeader = this.checkedBody = value
       this.checkedBodyNumber = value ? this.length : 0
     },
