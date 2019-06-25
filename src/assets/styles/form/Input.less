@@ -1,0 +1,60 @@
+
+input[type=checkbox] {
+	vertical-align:middle;
+	cursor: pointer;
+}
+input::placeholder {
+	color: @color-placeholder;
+}
+
+input{
+  width: 10px;
+  min-width: 50px;
+}
+
+textarea {
+	resize: none;
+}
+
+.@{PREFIX}-input {
+	min-height: 32px;
+	margin: 5px;
+  align-self: center;
+	.input-label {
+		min-width: 80px;
+		align-items:center;
+		justify-content: flex-end;
+		padding-right: 3px;
+	}
+	
+	.input-required {
+		color: red;
+	}
+	.input-wrap {
+		position: relative;
+		flex: 1;
+		.input-icon {
+			position: absolute;
+			height:100%;
+		}
+		.input-inner {
+			outline: none;
+			border: 1px solid @color-border;
+			color: @color-font;
+			border-radius: 5px;
+			padding-left: 5px;
+			padding-right: 5px;
+			&:hover {
+				border: 1px solid @color-hover;
+				box-shadow:0 0 3px @color-hover;
+			}
+			&:focus {
+				border: 1px solid @color-hover;
+				box-shadow:0 0 8px @color-hover;
+			}
+		}
+	}
+	.input-invalid {
+		border: 1px solid red;
+	}
+}

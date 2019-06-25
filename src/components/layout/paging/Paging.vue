@@ -1,5 +1,6 @@
 <template>
   <div class="me-row me-center me-paging">
+    {{$type.getType(currentPage)}}
     <span :class="itemClass()" @click="--currentPage" title="上一页">
       <template v-if="boolean(prevText)">{{prevText}}</template>
       <me-icon v-else>icon-fenye-shangyiye</me-icon>
@@ -21,8 +22,9 @@
       <template v-if="boolean(nextText)">{{nextText}}</template>
       <me-icon v-else>icon-fenye-xiayiye</me-icon>
     </span>
+    <span :class="itemClass()">{{`${currentPage} / ${pageSizes}`}}</span>
     <span :class="itemClass()">共 {{total}} 条</span>
-    <me-input :max="pageNumber" :min="1" :value="currentPage" @change="setCurrentPage" type="number"/>
+    <me-input :max="pageNumber" :min="1" type="number" v-model="currentPage"/>
   </div>
 </template>
 
@@ -117,14 +119,17 @@ export default {
     itemClass(value) {
       return [
         'me-row me-center',
-        { 'paging-border': this.border, 'selected': value && this.currentPage === value }
+        { 'paging-border': this.border, 'paging-selected': value && this.currentPage === value }
       ]
     },
     setCurrentPage(value) {
-      value = Number(value)
-      value > this.pageNumber && (this.currentPage = this.pageNumber)
-      value < 1 && (this.currentPage = 1)
-      value >= 1 && value <= this.pageNumber && (this.currentPage = value)
+      if (value > this.pageNumber) {
+        this.currentPage = this.pageNumber
+      } else if (value < 1) {
+        this.currentPage = 1
+      } else {
+        this.currentPage = value
+      }
     }
   }
 }

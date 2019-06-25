@@ -8,7 +8,7 @@
         :min="min"
         :placeholder="placeholder"
         :readonly="readonly"
-        :style="style"
+        :style="styles"
         :type="type"
         class="me-flex input-inner"
         ref="target"
@@ -35,10 +35,8 @@ export default {
   name: 'MeInput',
   data() {
     return {
-      style: {
-        'padding-left': '10px',
-        'padding-right': '10px'
-      },
+      left: 6,
+      right: 6,
       currentValue: this.value,
       initValue: this.value,
       showClear: false,
@@ -48,11 +46,17 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.style['padding-left'] = `${this.$refs.prefix.offsetWidth + 10}px`
-      this.style['padding-right'] = `${this.$refs.suffix.offsetWidth + 10}px`
+      this.left += this.$refs.prefix.offsetWidth
+      this.right += this.$refs.suffix.offsetWidth
     })
   },
   computed: {
+    styles() {
+      return {
+        'padding-left': `${this.left}px`,
+        'padding-right': `${this.right}px`
+      }
+    },
     paddingLeft() {
       let value = 10
       this.clearable === true && (value += 10)
@@ -90,7 +94,7 @@ export default {
     type: { type: String, default: 'text', validator: value => types.includes(value) },
     value: { type: [Number, String], default: '' },
     min: { type: Number, default: 0 },
-    max: { type: Number, default: 1000 },
+    max: { type: Number, default: 1000000 },
     minLength: { type: Number, default: 0 },
     maxLength: { type: Number, default: 0 },
     iconPrefix: String,
@@ -106,11 +110,23 @@ export default {
         this.currentValue = oldValue
         return
       }
-      this.$emit('input', newValue)
-      this.$emit('change', newValue)
+      const target = this.convertValue(newValue)
+      console.log(this.$type.getType(target))
+      this.$emit('input', target)
+      this.$emit('change', target)
+    },
+    change(value) {
+      this.$emit('input', this.convertValue(value))
+      this.$emit('change', this.convertValue(value))
     }
   },
   methods: {
+    convertValue(value) {
+      if (this.type === 'number') {
+        return Number(value)
+      }
+      return value
+    },
     /**
      * 重置
      */
