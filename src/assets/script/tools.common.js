@@ -56,14 +56,17 @@ export default {
     return result
   },
   arrayRemove(target, condition) {
-    if (type.isNotArray(target)) { return }
+    if (type.isNotArray(target)) { return Promise.reject('target is not Array') }
 
     if (type.isNumber(condition)) {
-      target.splice(condition, 1)
+      if (condition < 0 || condition > target.length) { return Promise.reject('not exist') }
+
+      return Promise.try(target.splice(condition, 1))
     }
 
     if (type.isFunction(condition)) {
-      target.splice(target.findIndex(condition), 1)
+      const index = target.findIndex(condition)
+      return index === -1 ? Promise.reject('not exist') : Promise.resolve(target.splice(index, 1))
     }
   },
   /**

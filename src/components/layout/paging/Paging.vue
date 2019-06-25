@@ -1,27 +1,27 @@
 <template>
   <div class="me-row me-center me-paging">
-    <span :class="itemClass()" @click="--currentPage" class="me-row me-center" title="上一页">
+    <span :class="itemClass()" @click="--currentPage" title="上一页">
       <template v-if="boolean(prevText)">{{prevText}}</template>
       <me-icon v-else>icon-fenye-shangyiye</me-icon>
     </span>
-    <div class="me-row me-center pagination">
+    <div class="me-row me-center me-flex">
       <template v-for="value in visibleLeft">
-        <span :class="itemClass(value)" :key="value" @click="currentPage = value" class="me-row me-center">{{value}}</span>
+        <span :class="itemClass(value)" :key="value" @click="currentPage = value">{{value}}</span>
       </template>
       <me-icon :title="`向前${sizeCenter}页`" @click="setCurrentPage(currentPage - sizeCenter)" v-if="start > minCenter">icon-more</me-icon>
       <template v-for="value in visibleCenter">
-        <span :class="itemClass(value)" :key="value" @click="currentPage = value" class="me-row me-center">{{value}}</span>
+        <span :class="itemClass(value)" :key="value" @click="currentPage = value">{{value}}</span>
       </template>
       <me-icon :title="`向后${sizeCenter}页`" @click="setCurrentPage(currentPage + sizeCenter)" v-if="end < maxCenter">icon-more</me-icon>
       <template v-for="value in visibleRight">
-        <span :class="itemClass(value)" :key="value" @click="currentPage =value" class="me-row me-center">{{value}}</span>
+        <span :class="itemClass(value)" :key="value" @click="currentPage =value">{{value}}</span>
       </template>
     </div>
-    <span :class="itemClass()" @click="++currentPage" class="me-row me-center" title="下一页">
+    <span :class="itemClass()" @click="++currentPage" title="下一页">
       <template v-if="boolean(nextText)">{{nextText}}</template>
       <me-icon v-else>icon-fenye-xiayiye</me-icon>
     </span>
-    <span class="me-row me-center">共 {{total}} 条</span>
+    <span :class="itemClass()">共 {{total}} 条</span>
     <me-input :max="pageNumber" :min="1" :value="currentPage" @change="setCurrentPage" type="number"/>
   </div>
 </template>
@@ -115,7 +115,10 @@ export default {
   },
   methods: {
     itemClass(value) {
-      return { 'paging-border': this.border, 'selected': value && this.currentPage === value }
+      return [
+        'me-row me-center',
+        { 'paging-border': this.border, 'selected': value && this.currentPage === value }
+      ]
     },
     setCurrentPage(value) {
       value = Number(value)

@@ -1,6 +1,5 @@
 <template>
   <div :class="classes">
-    <div>checkedBodyNumber={{checkedBodyNumber}} --length={{length}}</div>
     <me-table-row-header
       :center="center"
       :checkbox="checkbox"
@@ -27,6 +26,7 @@
         v-for="(item,index) in data"
       />
     </div>
+    <me-paging :border="border" :total="100"/>
   </div>
 </template>
 <script>
@@ -76,7 +76,8 @@ export default {
       checkedHeader: this.checked,
       checkedBody: this.checked,
       checkedHalf: false,
-      checkedBodyNumber: 0
+      checkedBodyNumber: 0,
+      checkedRows: []
     }
   },
   mounted() {
@@ -85,20 +86,50 @@ export default {
     })
   },
   methods: {
+    /**
+     * 追加：选中的行
+     */
+    appendCheckedRows(target) {
+      const index = this.checkedRows.findIndex(item => target[this.nodeKey] === item[this.nodeKey])
+      index === -1 && this.checkedRows.push(target)
+    },
+    /**
+     * 移除：选中的行
+     */
+    removeCheckedRows(target) {
+      this.$tools.arrayRemove(this.checkedRows, item => target[this.nodeKey] === item[this.nodeKey])
+    },
+    /**
+     * 点击 Header row checkbox
+     */
     handlerCheckboxHeader(value) {
       this.checkedHalf = false
       this.checkedHeader = this.checkedBody = value
       this.checkedBodyNumber = value ? this.length : 0
+
+      this.$tools.clearEmpty(this.checkedRows)
+      value && this.checkedRows.push(...this.data)
     },
-    handlerCheckboxBody(value) {
+    /**
+     * 点击 Body Row checkbox
+     */
+    handlerCheckboxBody(value, row, index) {
       this.checkedBodyNumber += value ? 1 : -1
+      value ? this.appendCheckedRows(row) : this.removeCheckedRows(row)
+      this.$emit('click-checkbox', value, row, index)
     },
+    /**
+     * 点击 Row
+     */
     handlerRow(row, index) {
       this.active = row[this.nodeKey]
-      this.$emit('click-checkbox', row, index)
+      this.$emit('click-row', row, index)
     },
-    handlerColumn(value) {
-      this.$emit('click-checkbox', value)
+    /**
+     * 点击 Column
+     */
+    handlerColumn(...value) {
+      this.$emit('click-column', ...value)
     },
     getColumns() {
       if (this.$type.isNotArray(this.$slots.default)) { return [] }
