@@ -1,7 +1,7 @@
 <template>
   <button :class="classes" :disabled="disabled" :margin="margin" :style="styles" :title="label" @click="click">
     <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
-    <span class="button-inner">
+    <span class="button-inner" v-if="$slots.default">
       <slot/>
     </span>
   </button>

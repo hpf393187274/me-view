@@ -4,6 +4,7 @@
       :disabled="disabled"
       @change="$emit('change')"
       @click.stop="click(!currentValue)"
+      class="checkbox-inner"
       ref="checkbox"
       type="checkbox"
       v-model="currentValue"

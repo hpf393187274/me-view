@@ -4,7 +4,7 @@
       <me-icon @click="handleExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
       <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
       <div @click="click" class="me-row me-flex tree-node-label">
-        <slot :data="getData()" name="node-label">{{data.label}}-{{indent__}}</slot>
+        <slot :data="getData()" name="node-label">{{data.label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>
