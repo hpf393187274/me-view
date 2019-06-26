@@ -1,10 +1,10 @@
 <template>
   <div class="me-column tree-node-body">
-    <div :style="{'padding-left': `${indent__}em`}" class="me-row tree-node-item">
+    <div :style="styleIndent" class="me-row tree-node-item">
       <me-icon @click="handleExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
       <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
       <div @click="click" class="me-row me-flex tree-node-label">
-        <slot :data="getData()" name="node-label">{{data.label}}</slot>
+        <slot :data="getData()" name="node-label">{{data.label}}-{{indent__}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{allCheckedNumber}}</span>
@@ -27,7 +27,7 @@
         :expanded="expanded"
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
-        :indent="indent__+1"
+        :indent="indent__ + 1"
         :key="node[nodeKey]"
         :lazy="lazy"
         :level=" level + 1 "
@@ -85,16 +85,14 @@ export default {
     nodeBranch() {
       return this.nodeNumber > 0
     },
-    indent__() {
-      let value = this.indent
-      this.expandable && this.level > 1 && value++
-      // this.$parent.name === 'TreeNode' && (value++)
-      if (this.getChildrenNodeList().every(node => node.isLeaf())) {
-        return value
+    styleIndent() {
+      return {
+        'padding-left': `${this.indent__}rem`
       }
-
-      this.expandable && this.nodeLeaf && value++
-      return value
+    },
+    indent__() {
+      if (this.expandable && this.nodeLeaf) { return this.indent + 1 }
+      return this.indent
     }
   },
   methods: {
