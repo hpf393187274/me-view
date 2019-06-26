@@ -1,14 +1,14 @@
 <template>
   <div class="me-row me-transfer">
     <me-tree
-      :data="source"
+      :data="leftData"
       :expanded="expanded"
-      :label="sourceLabel"
+      :label="leftLabel"
       :statistics="statistics"
       checkbox
       class="me-flex me-border transfer-item"
       header
-      ref="sourceTree"
+      ref="leftTree"
     >
       <template #node-label="{data}">
         <slot :data="data" name="node-label"/>
@@ -16,21 +16,21 @@
     </me-tree>
     <div class="me-column me-center transfer-center">
       <slot name="center">
-        <me-button :disabled="source.length === 0" @click="target.push(...source); source=[]">全部向右</me-button>
-        <me-button @click="targetMove">向右</me-button>
-        <me-button @click="sourceMove">向左</me-button>
-        <me-button :disabled="target.length === 0" @click="source.push(...target); target=[]">全部向左</me-button>
+        <me-button :disabled="disabledRight" @click="moveToRightAll" icon="icon-angle-double-right" label="全部向右"/>
+        <me-button :disabled="disabledRight" @click="moveToRight" icon="icon-angle-right" label="向右"/>
+        <me-button :disabled="disabledLeft" @click="moveToLeft" icon="icon-angle-left" label="向左"/>
+        <me-button :disabled="disabledLeft" @click="moveToLeftAll" icon="icon-angle-double-left" label="全部向左"/>
       </slot>
     </div>
     <me-tree
-      :data="target"
+      :data="rightData"
       :expanded="expanded"
-      :label="targetLabel"
+      :label="rightLabel"
       :statistics="statistics"
       checkbox
       class="me-flex me-border transfer-item"
       header
-      ref="targetTree"
+      ref="rightTree"
     >
       <template #node-label="{data}">
         <slot :data="data" name="node-label"/>
@@ -48,38 +48,49 @@ export default {
   props: {
     value: { type: Array, default() { return [] } },
     data: { type: Array, default() { return [] } },
-    sourceLabel: { type: String, default: '来源' },
-    targetLabel: { type: String, default: '目标' },
+    leftLabel: { type: String, default: '来源' },
+    rightLabel: { type: String, default: '目标' },
     showHeader: Boolean
   },
   watch: {
-    target(newValue) {
+    right(newValue) {
       this.$emit('input', newValue)
     }
   },
   computed: {
-    sourceTree() {
-      return this.$refs.sourceTree
+    disabledLeft() {
+      return this.rightData.length === 0
     },
-    targetTree() {
-      return this.$refs.targetTree
+    disabledRight() {
+      return this.leftData.length === 0
+    },
+    leftTree() {
+      return this.$refs.leftTree
+    },
+    rightTree() {
+      return this.$refs.rightTree
     }
   },
   data() {
     return {
-      source: [...this.data],
-
-      target: [...this.value]
+      leftData: [...this.data],
+      rightData: [...this.value],
     }
   },
   methods: {
-    sourceMove() {
-      this.sourceTree.pushData(this.targetTree.getCheckedTreeData())
-      this.targetTree.removeCheckedNode()
+    moveToLeftAll() {
+      this.leftData.push(...this.rightData); this.rightData = []
     },
-    targetMove() {
-      this.targetTree.pushData(this.sourceTree.getCheckedTreeData())
-      this.sourceTree.removeCheckedNode()
+    moveToLeft() {
+      this.leftTree.pushData(this.rightTree.getCheckedTreeData())
+      this.rightTree.removeCheckedNode()
+    },
+    moveToRight() {
+      this.rightTree.pushData(this.leftTree.getCheckedTreeData())
+      this.leftTree.removeCheckedNode()
+    },
+    moveToRightAll() {
+      this.rightData.push(...this.leftData); this.leftData = []
     }
   }
 }
