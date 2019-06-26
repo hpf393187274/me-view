@@ -7,6 +7,7 @@
       :checked="allChecked"
       :checked-strict="false"
       :checkedHalf="checkedHalf"
+      :disabled="length === 0"
       :hasGrandson="hasGrandson"
       :label="label"
       :lazy="lazy"
@@ -61,6 +62,11 @@ export default {
   data() {
     return {
       hasGrandson: false
+    }
+  },
+  computed: {
+    length() {
+      return this.$type.isArray(this.data) ? this.data.length : 0
     }
   },
   created() {
