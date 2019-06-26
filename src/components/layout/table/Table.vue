@@ -1,5 +1,12 @@
 <template>
   <div :class="classes">
+    <template v-if="$slots.header">
+      <div class="me-row table-toolbar">
+        <slot name="header"/>
+      </div>
+      <me-line-row/>
+    </template>
+
     <me-table-row-header
       :center="center"
       :checkbox="checkbox"
@@ -26,7 +33,9 @@
         v-for="(item,index) in data"
       />
     </div>
-    <me-paging :border="border" :total="10000"/>
+    <div class="me-row table-toolbar" v-if="$slots.footer">
+      <slot name="footer"/>
+    </div>
   </div>
 </template>
 <script>

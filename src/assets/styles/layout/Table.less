@@ -10,6 +10,9 @@
 	color: @table-color;
 	overflow: auto;
 	font-size: 12px;
+	.table-toolbar{
+		padding: 3px;
+	}
 	.table-row {
 		min-height: 50px;
 	}
@@ -46,8 +49,7 @@
 }
 
 .@{PREFIX}-table-border {
-	border-top: 1px solid @table-border;
-	border-left: 1px solid @table-border;
+	border: 1px solid @table-border;
 	.table-row {
 		border-bottom: 1px solid @table-border;
 	}
