@@ -1,6 +1,5 @@
 <template>
   <div class="me-row me-center me-paging">
-    {{$type.getType(currentPage)}}
     <span :class="itemClass()" @click="--currentPage" title="上一页">
       <template v-if="boolean(prevText)">{{prevText}}</template>
       <me-icon v-else>icon-fenye-shangyiye</me-icon>
@@ -22,7 +21,7 @@
       <template v-if="boolean(nextText)">{{nextText}}</template>
       <me-icon v-else>icon-fenye-xiayiye</me-icon>
     </span>
-    <span :class="itemClass()">{{`${currentPage} / ${pageSizes}`}}</span>
+    <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{`${currentPage} / ${pageNumber}`}}</span>
     <span :class="itemClass()">共 {{total}} 条</span>
     <me-input :max="pageNumber" :min="1" type="number" v-model="currentPage"/>
   </div>
