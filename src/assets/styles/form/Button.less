@@ -1,11 +1,12 @@
 
 @color-disabled: #fff;
+@color-disabled-border: #c0c4cc;
 @color-disabled-font: #c0c4cc;
-@color-disabled-hover: #ecf5ff;
+@color-disabled-hover: #fff;
 @color-disabled-hover-font:@color-disabled-font;
-@color-disabled-active: #ecf5ff;
+@color-disabled-active: #fff;
 @color-disabled-active-font:@color-disabled-font;
-@color-disabled-focus: #ecf5ff;
+@color-disabled-focus: #fff;
 @color-disabled-focus-font:@color-disabled-font;
 
 @color-default: 0;
@@ -25,14 +26,14 @@
 @color-primary:#2d8cf0;
 @color-primary-border:#2d8cf0;
 @color-primary-font:#fff;
-@color-primary-hover:#2baee9;
-@color-primary-hover-border:#2baee9;
+@color-primary-hover:#5cadff;
+@color-primary-hover-border:#5cadff;
 @color-primary-hover-font:#f2f2f2;
-@color-primary-active:#2baee9 + #111;
-@color-primary-active-border:#2baee9;
+@color-primary-active:#2b85e4;
+@color-primary-active-border:#2b85e4;
 @color-primary-active-font:#f2f2f2;
-@color-primary-focus:#2baee9 + #111;
-@color-primary-focus-border:#2baee9;
+@color-primary-focus:#2b85e4;
+@color-primary-focus-border:#2b85e4;
 @color-primary-focus-font:#f2f2f2;
 
 // color - info
@@ -50,17 +51,17 @@
 @color-info-focus-font:#fff;
 
 // color - success
-@color-success: #67c23a;
-@color-success-border: #67c23a;
+@color-success: #19be6b;
+@color-success-border: #19be6b;
 @color-success-font:#fff;
-@color-success-hover:#67c23a;
-@color-success-hover-border: #67c23a;
+@color-success-hover:#19be6b;
+@color-success-hover-border: #19be6b;
 @color-success-hover-font:#f2f2f2;
-@color-success-active:#67c23a + #111;
-@color-success-active-border: #67c23a;
+@color-success-active:#19be6b + #111;
+@color-success-active-border: #19be6b;
 @color-success-active-font:#f2f2f2;
-@color-success-focus:#67c23a + #111;
-@color-success-focus-border: #67c23a;
+@color-success-focus:#19be6b + #111;
+@color-success-focus-border: #19be6b;
 @color-success-focus-font:#f2f2f2;
 
 @color-warning: #ebb563;
@@ -126,6 +127,9 @@
 	border-radius: 5px;
 	outline: 0;
 	cursor: pointer;
+	.button-inner {
+		margin: 0px 2px;
+	}
 }
 
 .@{PREFIX}-btn-default { .btn-type(@color-default, @color-default-font, @color-default-border) }
@@ -176,10 +180,10 @@
 }
 
 .@{PREFIX}-btn-disabled,.@{PREFIX}-btn-disabled.@{PREFIX}-btn-plain {
-	&:hover { .btn-hover(@color-disabled-hover, @color-disabled-hover-font) }
+	&:hover { .btn-hover(@color-disabled-hover, @color-disabled-hover-font, @color-disabled-border) }
 	&:active { .btn-active(@color-disabled-active, @color-disabled-active-font) }
 	&:focus { .btn-focus(@color-disabled-focus, @color-disabled-focus-font) }
-	.btn-type(@color-disabled, @color-disabled-font);
+	.btn-type(@color-disabled, @color-disabled-font, @color-disabled-border);
 	 cursor: not-allowed;
 }
 
