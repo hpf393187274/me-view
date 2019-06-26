@@ -26,7 +26,7 @@
         v-for="(item,index) in data"
       />
     </div>
-    <me-paging :border="border" :total="100"/>
+    <me-paging :border="border" :total="10000"/>
   </div>
 </template>
 <script>
