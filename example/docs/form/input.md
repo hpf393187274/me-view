@@ -56,6 +56,26 @@ export default {
 ```
 :::
 
+### Type 模式
+
+::: demo `label` 设置标签 `clearable` 可清除的
+```html
+
+<me-input style="width:500px;" placeholder="我是文本" type="text"></me-input>
+<me-input style="width:500px;" placeholder="我是密码" type="password"></me-input>
+<me-input style="width:500px;" placeholder="我是数字" type="number"></me-input>
+<me-input style="width:500px;" placeholder="我是数字" type="email" value="hpf393187274@163.com"></me-input>
+<script>
+export default {
+  data() {
+    return {
+    }
+  }
+}
+</script>
+```
+:::
+
 ## Input Attributes
 | 名称        | 描述                |  类型   | 默认值 | 可选值                 |
 | ----------- | ------------------- | :-----: | :----: | ---------------------- |
