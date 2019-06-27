@@ -30,6 +30,7 @@ export default {
   padding: Boolean,
   checkbox: Boolean,
   checked: Boolean,
+  placeholder: String,
   /**
    * 滚动条
    */

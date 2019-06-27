@@ -10,19 +10,21 @@
         :readonly="readonly"
         :style="styles"
         :type="type"
+        @blur="blurInput"
+        @click="clickInput"
         class="me-flex input-inner"
         ref="target"
         v-model="currentValue"
       >
       <div class="input-icon me-row" ref="prefix" style="left:5px;">
         <slot name="prefix">
-          <me-icon :disabled="disabled" @click="$emit('click-prefix', currentValue)" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
+          <me-icon :disabled="disabled" @click="clickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
         </slot>
       </div>
       <div class="input-icon me-row" ref="suffix" style="right:5px;">
         <me-icon :disabled="disabled" @click="reset" v-if="clearable && readonly === false" v-show="active">{{$config.icon.clear}}</me-icon>
         <slot name="suffix">
-          <me-icon :disabled="disabled" @click="$emit('click-suffix', currentValue)" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
+          <me-icon :disabled="disabled" @click="clickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
         </slot>
       </div>
     </div>
@@ -54,7 +56,7 @@ export default {
     classes() {
       return [
         'me-row me-input',
-        { 'me-input-disabled': this.disabled },
+        { 'me-readonly': this.readonly },
         { 'me-disabled': this.disabled }
       ]
     },
@@ -140,6 +142,29 @@ export default {
     reset() {
       console.log('重置内容')
       this.currentValue = this.initValue
+    },
+    clickInput() {
+      this.$emit('click-input-before', this.currentValue)
+      this.$emit('click-input', this.currentValue)
+      this.$emit('click-input-after', this.currentValue)
+    },
+    clickPrefix() {
+      this.$emit('click-prefix-before', this.currentValue)
+      this.$emit('click-prefix', this.currentValue)
+      this.$emit('click-prefix-after', this.currentValue)
+    },
+    focus() {
+      this.$refs.target.focus()
+    },
+    clickSuffix() {
+      this.$emit('click-suffix-before', this.currentValue)
+      this.$emit('click-suffix', this.currentValue)
+      this.$emit('click-suffix-after', this.currentValue)
+    },
+    blurInput() {
+      this.$emit('blur-input-before', this.currentValue)
+      this.$emit('blur-input', this.currentValue)
+      this.$emit('blur-input-after', this.currentValue)
     }
   }
 }

@@ -7,6 +7,7 @@
 
 <me-column>
   <me-combo-select :data="data"></me-combo-select>
+  <me-combo-select :data="data" readonly :value="'山西省'"></me-combo-select>
 </me-column>
 <script>
 export default {
@@ -15,7 +16,9 @@ export default {
       data: [
         { label: '山西省', value: '1' },
         { label: '陕西省', value: '2' },
-        { label: '四川省', value: '3' }
+        { label: '四川省', value: '3' },
+        { label: '河南省', value: '4' },
+        { label: '江苏省', value: '5' }
       ]
     }
   }

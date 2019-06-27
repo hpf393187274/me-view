@@ -89,12 +89,21 @@ export default {
 | icon-suffix | 图标库 - 后置图标   | String  |   -    | -                      |
 
 ## Input Events
-| 名称         | 描述                           |    参数    |
-| ------------ | ------------------------------ | :--------: |
-| change       | 内容改变事件                   | 当前文本值 |
-| click-prefix | icon-prefix 有值：前置图标事件 | 当前文本值 |
-| click-suffix | icon-suffix 有值：后置图标事件 | 当前文本值 |
-
+| 名称                | 描述                |    参数    |
+| ------------------- | ------------------- | :--------: |
+| change              | 内容改变事件        | 当前文本值 |
+| click-input         | 点击文本框          | 当前文本值 |
+| click-input-before  | 点击文本框 `之前`   | 当前文本值 |
+| click-input-after   | 点击文本框 `之后`   | 当前文本值 |
+| click-suffix        | 点击后置图标        | 当前文本值 |
+| click-suffix-before | 点击前置图标 `之前` | 当前文本值 |
+| click-suffix-after  | 点击后置图标 `之后` | 当前文本值 |
+| click-prefix        | 点击前置图标        | 当前文本值 |
+| click-prefix-before | 点击后置图标 `之前` | 当前文本值 |
+| click-prefix-after  | 点击后置图标 `之后` | 当前文本值 |
+| blur-input          | 文本框失焦          | 当前文本值 |
+| blur-input-before   | 文本框失焦 `之前`   | 当前文本值 |
+| blur-input-after    | 文本框失焦 `之后`   | 当前文本值 |
 
 ## Input Slot
 | 名称   | 描述     |
