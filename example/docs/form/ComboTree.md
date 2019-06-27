@@ -1,5 +1,5 @@
 
-# Input 输入框
+# ComboTree 组合树
 
 ## 基础用法
 ::: demo `label` 设置标签 `clearable` 可清除的

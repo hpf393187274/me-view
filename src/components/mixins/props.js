@@ -17,11 +17,15 @@ export default {
   /**
    * 只读
    */
-  readOnly: Boolean,
+  readonly: Boolean,
   /**
    * 禁用
    */
   disabled: Boolean,
+  /**
+   * 多选
+   */
+  multiple: Boolean,
   margin: String,
   padding: Boolean,
   checkbox: Boolean,

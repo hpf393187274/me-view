@@ -3,10 +3,10 @@
     <div class="me-row" style="align-items: center;">
       <img height="60" src="/logo.png"> Me-View
     </div>
-    <me-line-row/>
+    <me-line-h/>
     <div class="me-row me-flex" style="overflow: auto;">
       <me-tree :data="data" :expandable="false" @click="handleClick" style="width:200px;"/>
-      <me-line-column/>
+      <me-line-v/>
       <div class="me-row me-flex" style="overflow: auto; padding:5px 10px;">
         <router-view/>
       </div>
@@ -21,7 +21,12 @@ export default {
         {
           label: 'Basic 基础',
           children: [
-
+            { label: 'Row 行布局', path: '/basic/row' },
+            { label: 'Column 列布局', path: '/basic/column' },
+            { label: 'Icon 图标库', path: '/basic/icon' },
+            { label: 'Link 连接', path: '/basic/link' },
+            { label: 'LineH 水平线', path: '/basic/line/h' },
+            { label: 'LineV 垂直线', path: '/basic/line/v' }
           ]
         },
         {
@@ -29,7 +34,11 @@ export default {
           children: [
             { label: 'Form 表单', path: '/form/form' },
             { label: 'Input 输入框', path: '/form/input' },
-            { label: 'Button 按钮', path: '/form/button' }
+            { label: 'Button 按钮', path: '/form/button' },
+            { label: 'Checkbox 复选框', path: '/form/checkbox' },
+            { label: 'ComboSelect 组合框', path: '/form/combo/select' },
+            { label: 'ComboTree 组合树', path: '/form/combo/tree' },
+            { label: 'ComboTable 组合表', path: '/form/combo/table' }
           ]
         },
         {

@@ -1,7 +1,7 @@
 ﻿<template>
-  <div class="me-row me-input">
+  <div :class="classes">
     <label :class="{'input-required': required}" class="me-row input-label" v-if="boolean(label)">{{ label }}：</label>
-    <div :class="classWrap" :title="invalid.message" @mouseenter="active = true" @mouseleave="active = false">
+    <div :class="classWrap" :title="invalid.message" @mouseenter="disabled === false && (active = true)" @mouseleave="active = false">
       <input
         :disabled="disabled"
         :max="max"
@@ -16,13 +16,13 @@
       >
       <div class="input-icon me-row" ref="prefix" style="left:5px;">
         <slot name="prefix">
-          <me-icon @click="$emit('handle-prefix', currentValue)" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
+          <me-icon :disabled="disabled" @click="$emit('click-prefix', currentValue)" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
         </slot>
       </div>
       <div class="input-icon me-row" ref="suffix" style="right:5px;">
-        <me-icon @click="reset" v-if="clearable" v-show="active">{{$config.icon.clear}}</me-icon>
+        <me-icon :disabled="disabled" @click="reset" v-if="clearable && readonly === false" v-show="active">{{$config.icon.clear}}</me-icon>
         <slot name="suffix">
-          <me-icon @click="$emit('handle-suffix', currentValue)" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
+          <me-icon :disabled="disabled" @click="$emit('click-suffix', currentValue)" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
         </slot>
       </div>
     </div>
@@ -30,13 +30,13 @@
 </template>
 
 <script>
-const types = ['text', 'number', 'email']
+const types = ['text', 'number', 'email', 'password']
 export default {
   name: 'MeInput',
   data() {
     return {
-      left: 6,
-      right: 6,
+      left: 8,
+      right: 8,
       currentValue: this.value,
       initValue: this.value,
       showClear: false,
@@ -51,6 +51,13 @@ export default {
     })
   },
   computed: {
+    classes() {
+      return [
+        'me-row me-input',
+        { 'me-input-disabled': this.disabled },
+        { 'me-disabled': this.disabled }
+      ]
+    },
     styles() {
       return {
         'padding-left': `${this.left}px`,
@@ -130,7 +137,10 @@ export default {
     /**
      * 重置
      */
-    reset() { this.currentValue = this.initValue }
+    reset() {
+      console.log('重置内容')
+      this.currentValue = this.initValue
+    }
   }
 }
 </script>

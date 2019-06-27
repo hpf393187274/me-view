@@ -6,7 +6,7 @@
         <span class="me-flex">{{ label }}</span>
       </slot>
     </div>
-    <me-line-row/>
+    <me-line-h/>
     <div :class="`me-${layout}`" :style="{'overflow':overflow}" class="me-flex me-content">
       <slot/>
     </div>

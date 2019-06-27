@@ -1,5 +1,5 @@
 
-# Input 输入框
+# ComboTable 组合表
 
 ## 基础用法
 ::: demo `label` 设置标签 `clearable` 可清除的

@@ -15,7 +15,7 @@
         <me-link @click="refreshChildrenNode" v-if="lazy">刷新</me-link>
       </div>
     </div>
-    <me-line-row/>
+    <me-line-h/>
   </div>
 </template>
 

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import basic from './basic'
 import layout from './layout'
 import form from './form'
 
@@ -12,7 +13,7 @@ export default new Router({
     {
       path: '/',
       component: () => import('../Layout.vue'),
-      children: [...layout, ...form]
+      children: [...layout, ...form, ...basic]
     }
   ]
 })

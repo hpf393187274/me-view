@@ -4,7 +4,7 @@
       <div class="me-row table-toolbar">
         <slot name="header"/>
       </div>
-      <me-line-row/>
+      <me-line-h/>
     </template>
 
     <me-table-row-header

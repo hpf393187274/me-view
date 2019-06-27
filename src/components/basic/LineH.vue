@@ -1,12 +1,12 @@
 <template>
-  <div class="me-column me-line-column">
+  <div class="me-row me-line-h">
     <div :style="{'background-color': color}">&nbsp;</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MeLineColumn',
+  name: 'MeLineH',
   props: {
     color: { type: String, default: '#DDE9F6' }
   }
