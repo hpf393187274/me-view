@@ -52,7 +52,7 @@ export default {
   computed: {
     classes() {
       return [
-        'me-row me-input me-flex input-wrap',
+        'me-row me-input',
         {
           'me-readonly': this.readonly,
           'me-disabled': this.disabled,
