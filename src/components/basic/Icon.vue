@@ -1,11 +1,20 @@
 <template>
-  <!-- <svg :title="title" @click="$emit('click')" aria-hidden="true" class="me-icon">
-    <use :xlink:href="`#${$slots.default[0].text}`"></use>
-  </svg>-->
-  <i :class="`iconfont ${$slots.default[0].text} me-icon `" :title="title" @click="disabled===false && $emit('click')"/>
+  <i
+    :class="`iconfont ${$slots.default[0].text} me-icon`"
+    :title="title"
+    @click="handlerEvent('click')"
+    @mouseout="handlerEvent('mouseout')"
+    @mouseover="handlerEvent('mouseover')"
+  />
 </template>
 
 <script>
-
-export default { name: 'MeIcon' }
+export default {
+  name: 'MeIcon',
+  methods: {
+    handlerEvent(eventName) {
+      this.disabled === false && this.$emit(eventName)
+    }
+  }
+}
 </script>
