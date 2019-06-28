@@ -11,10 +11,18 @@
       ref="input"
       v-model="label__"
     />
-    <div :style="{'z-index':status?10000:0}" class="me-column me-border combo-body" v-show="status">
+    <div
+      :style="{'z-index':status?10000:0}"
+      @mouseout="closable=true"
+      @mouseover="mouseoverBody"
+      class="me-column me-border combo-body"
+      v-show="status"
+    >
       <div :class="classItem(item.label)" :key="item.value" @click="clickItem(item,index)" v-for="(item,index) in data">
         <me-checkbox v-if="checkbox"/>
-        <span class="combo-item-inner">{{item.label}}</span>
+        <slot :data="item">
+          <span class="combo-item-inner">{{item.label}}</span>
+        </slot>
       </div>
     </div>
   </div>
@@ -32,7 +40,8 @@ export default {
       status: false,
       label__: '',
       value__: '',
-      index__: 0
+      index__: 0,
+      closable: true
     }
   },
   created() {
@@ -50,10 +59,7 @@ export default {
   },
   watch: {
     status(value) {
-      if (value) {
-        console.log(value)
-        // this.$refs.input.focus()
-      }
+      value && this.focusInput()
     }
   },
   methods: {
@@ -84,6 +90,16 @@ export default {
     clickItem({ label, value }, index) {
       this.status = false
       this.label__ = label, this.value__ = value, this.index__ = index
+    },
+    blurInput() {
+      this.closable && (this.status = false)
+    },
+    focusInput() {
+      this.$refs.input.focus()
+    },
+    mouseoverBody() {
+      this.closable = false
+      this.focusInput()
     }
   }
 }
