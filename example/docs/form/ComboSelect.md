@@ -31,14 +31,12 @@ export default {
 
 
 ## Input Attributes
-| 名称        | 描述                |  类型   | 默认值 | 可选值                 |
-| ----------- | ------------------- | :-----: | :----: | ---------------------- |
-| type        | 文本内心            | String  |  text  | text, password, number |
-| label       | 标签描述            | String  |   -    | -                      |
-| clearable   | 可清除的            | Boolean | false  | true, false            |
-| placeholder | 原生属性 - 提示表述 | String  |   -    | -                      |
-| icon-prefix | 图标库 - 前置图标   | String  |   -    | -                      |
-| icon-suffix | 图标库 - 后置图标   | String  |   -    | -                      |
+| 名称        | 描述                |  类型   | 默认值 | 可选值      |
+| ----------- | ------------------- | :-----: | :----: | ----------- |
+| clearable   | 可清除的            | Boolean | false  | true, false |
+| placeholder | 原生属性 - 提示表述 | String  |   -    | -           |
+| icon-prefix | 图标库 - 前置图标   | String  |   -    | -           |
+| icon-suffix | 图标库 - 后置图标   | String  |   -    | -           |
 
 ## Input Events
 | 名称         | 描述                           |    参数    |

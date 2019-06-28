@@ -3,7 +3,7 @@
     <me-input
       :disabled="disabled"
       :placeholder="placeholder"
-      :readonly="readonly"
+      :readonly="readonly || multiple"
       @blur-input="blurInput"
       @click-input="clickInput"
       ref="input"
