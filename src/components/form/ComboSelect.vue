@@ -2,19 +2,21 @@
   <div :class="classes">
     <me-input
       :disabled="disabled"
-      :icon-suffix="iconSuffix"
       :placeholder="placeholder"
       :readonly="readonly"
       @blur-input="blurInput"
       @click-input="clickInput"
-      @click-suffix="clickSuffix"
       ref="input"
       v-model="label__"
-    />
+    >
+      <template #suffix>
+        <me-icon @click="clickSuffix" @mouseout="closable=true" @mouseover="mouseoverOther">{{iconSuffix}}</me-icon>
+      </template>
+    </me-input>
     <div
-      :style="{'z-index':status?10000:0}"
+      :style="{'z-index': status? 10000 : 0}"
       @mouseout="closable=true"
-      @mouseover="mouseoverBody"
+      @mouseover="mouseoverOther"
       class="me-column me-border combo-body"
       v-show="status"
     >
@@ -41,6 +43,7 @@ export default {
       label__: '',
       value__: '',
       index__: 0,
+      /** input 失焦 移入 body 区域 */
       closable: true
     }
   },
@@ -97,7 +100,7 @@ export default {
     focusInput() {
       this.$refs.input.focus()
     },
-    mouseoverBody() {
+    mouseoverOther() {
       this.closable = false
       this.focusInput()
     }
