@@ -2,13 +2,13 @@
 # Input 输入框
 
 ## 基础用法
-::: demo `label` 设置标签 `clearable` 可清除的
+::: demo `clearable` 可清除的
 ```html
 
 <me-column>
-  <me-input style="width:500px;" label="用户名" clearable placeholder="请输入姓名"></me-input>
-  <me-input style="width:500px;" label="用户名" clearable readonly placeholder="我是只读的"></me-input>
-  <me-input style="width:500px;" label="用户名" clearable disabled placeholder="我是禁用的"></me-input>
+  <me-input style="width:500px;" clearable placeholder="请输入姓名"></me-input>
+  <me-input style="width:500px;" clearable readonly placeholder="我是只读的"></me-input>
+  <me-input style="width:500px;" clearable disabled placeholder="我是禁用的"></me-input>
 </me-column>
 <script>
 export default {
@@ -42,7 +42,7 @@ export default {
 
 ### Solt 模式
 
-::: demo `label` 设置标签 `clearable` 可清除的
+::: demo `clearable` 可清除的
 ```html
 
 <me-input style="width:500px;" icon-prefix="icon-user" icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
@@ -60,7 +60,7 @@ export default {
 
 ### Type 模式
 
-::: demo `label` 设置标签 `clearable` 可清除的
+::: demo `clearable` 可清除的
 ```html
 
 <me-input style="width:500px;" placeholder="我是文本" type="text"></me-input>
@@ -82,7 +82,6 @@ export default {
 | 名称        | 描述                |  类型   | 默认值 | 可选值                 |
 | ----------- | ------------------- | :-----: | :----: | ---------------------- |
 | type        | 文本内心            | String  |  text  | text, password, number |
-| label       | 标签描述            | String  |   -    | -                      |
 | clearable   | 可清除的            | Boolean | false  | true, false            |
 | placeholder | 原生属性 - 提示表述 | String  |   -    | -                      |
 | icon-prefix | 图标库 - 前置图标   | String  |   -    | -                      |

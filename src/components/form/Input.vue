@@ -1,32 +1,29 @@
 ﻿<template>
-  <div :class="classes">
-    <label :class="{'input-required': required}" class="me-row input-label" v-if="boolean(label)">{{ label }}：</label>
-    <div :class="classWrap" :title="invalid.message" @mouseenter="disabled === false && (active = true)" @mouseleave="active = false">
-      <input
-        :disabled="disabled"
-        :max="max"
-        :min="min"
-        :placeholder="placeholder"
-        :readonly="readonly"
-        :style="styles"
-        :type="type"
-        @blur="blurInput"
-        @click="clickInput"
-        class="me-flex input-inner"
-        ref="target"
-        v-model="currentValue"
-      >
-      <div class="input-icon me-row" ref="prefix" style="left:5px;">
-        <slot name="prefix">
-          <me-icon :disabled="disabled" @click="clickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
-        </slot>
-      </div>
-      <div class="input-icon me-row" ref="suffix" style="right:5px;">
-        <me-icon :disabled="disabled" @click="reset" v-if="clearable && readonly === false" v-show="active">{{$config.icon.clear}}</me-icon>
-        <slot name="suffix">
-          <me-icon :disabled="disabled" @click="clickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
-        </slot>
-      </div>
+  <div :class="classes" :title="invalid.message" @mouseenter="disabled === false && (active = true)" @mouseleave="active = false">
+    <input
+      :disabled="disabled"
+      :max="max"
+      :min="min"
+      :placeholder="placeholder"
+      :readonly="readonly"
+      :style="styles"
+      :type="type"
+      @blur="blurInput"
+      @click="clickInput"
+      class="me-flex input-inner"
+      ref="target"
+      v-model="currentValue"
+    >
+    <div class="input-icon me-row" ref="prefix" style="left:5px;">
+      <slot name="prefix">
+        <me-icon :disabled="disabled" @click="clickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
+      </slot>
+    </div>
+    <div class="input-icon me-row" ref="suffix" style="right:5px;">
+      <me-icon :disabled="disabled" @click="reset" v-if="clearable && readonly === false" v-show="active">{{$config.icon.clear}}</me-icon>
+      <slot name="suffix">
+        <me-icon :disabled="disabled" @click="clickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
+      </slot>
     </div>
   </div>
 </template>
@@ -55,9 +52,12 @@ export default {
   computed: {
     classes() {
       return [
-        'me-row me-input',
-        { 'me-readonly': this.readonly },
-        { 'me-disabled': this.disabled }
+        'me-row me-input me-flex input-wrap',
+        {
+          'me-readonly': this.readonly,
+          'me-disabled': this.disabled,
+          'input-invalid': this.invalid.status
+        },
       ]
     },
     styles() {
@@ -82,12 +82,7 @@ export default {
       this.type === 'email' && (value = '^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$')
       return value
     },
-    classWrap() {
-      return [
-        'me-row', 'me-flex', 'input-wrap',
-        { 'input-invalid': this.invalid.status }
-      ]
-    },
+
     invalid() {
       if (this.required && this.$tools.isEmpty(this.currentValue)) {
         return { status: true, message: '内容不能为空' }
