@@ -1,48 +1,61 @@
 ﻿<template>
   <div :class="classes">
     <me-input
+      :clearable="clearable || readonly__"
       :disabled="disabled"
       :placeholder="placeholder"
-      :readonly="readonly || multiple"
+      :readonly="readonly__"
       @blur-input="blurInput"
       @click-input="clickInput"
       ref="input"
-      v-model="label__"
+      v-model="value__"
     >
       <template #suffix>
-        <me-icon @click="clickSuffix" @mouseout="closable=true" @mouseover="mouseoverOther">{{iconSuffix}}</me-icon>
+        <me-icon :disabled="disabled" @click="clickSuffix" @mouseout="closable=true" @mouseover="mouseoverOther">{{iconSuffix}}</me-icon>
       </template>
     </me-input>
     <div
       :style="{'z-index': status? 10000 : 0}"
       @mouseout="closable=true"
       @mouseover="mouseoverOther"
-      class="me-column me-border combo-body"
+      class="me-column me-border combo-options"
       v-show="status"
     >
-      <div :class="classItem(item.label)" :key="item.value" @click="clickItem(item,index)" v-for="(item,index) in data">
-        <me-checkbox v-if="checkbox"/>
-        <slot :data="item">
-          <span class="combo-item-inner">{{item.label}}</span>
-        </slot>
-      </div>
+      <slot name="options">
+        <me-combo-option
+          :checkbox="checkbox"
+          :data="item"
+          :disabled="disabled"
+          :index="index"
+          :key="item.value"
+          :multiple="multiple"
+          :selected="isSelected(item.value)"
+          @click="clickOption"
+          v-for="(item,index) in data"
+        />
+      </slot>
     </div>
   </div>
 </template>
 
 <script>
+import Option from './Option'
 export default {
   name: 'MeComboSelect',
+  components: {
+    [Option.name]: Option
+  },
   props: {
     data: { type: Array, default() { return [] } },
-    value: { type: [String, Object] }
+    value: { type: [String, Object, Array] }
   },
   data() {
     return {
       status: false,
-      label__: '',
       value__: '',
-      index__: 0,
+      valueSingle: {},
+      valueMultiple: [],
+      readonly__: this.readonly || this.multiple,
       /** input 失焦 移入 body 区域 */
       closable: true
     }
@@ -69,30 +82,78 @@ export default {
     findItem(target) {
       return this.data.find(({ value, label }) => value === target.value || label === target.label)
     },
-    initValue() {
-      if (this.$tools.isEmpty(this.value)) { return }
-      const inputValue = this.$type.isString(this.value) ? { value: this.value, label: this.value } : this.value
-      const result = this.findItem(inputValue)
-      if (result) {
-        this.value__ = result.value || ''
-        this.label__ = result.label || ''
+    initValueSingle() {
+      const data = this.parseValue(this.value)
+      this.valueSingle = { ...data }
+      this.value__ = data.label || ''
+    },
+    adapterValue(data) {
+      if (this.$type.isString(data)) {
+        return { value: data, label: data }
+      }
+      if (this.$type.isObject(data)) {
+        return {
+          value: data.value || '',
+          label: data.label || ''
+        }
+      }
+      return {}
+    },
+    parseValue(data) {
+      return this.findItem(this.adapterValue(data)) || {}
+    },
+    initValueMultiple() {
+      this.value__ = []
+      if (this.$tools.isEmpty(this.value)) {
+        return
+      }
+      const list = this.$type.isArray(this.value) ? this.value : [this.value]
+      for (const item of list) {
+        const data = this.parseValue(item)
+        this.valueMultiple.push({ ...data })
+        this.value__.push(data.label || '')
       }
     },
-    classItem(label) {
-      return [
-        'me-row combo-item',
-        { 'combo-item-selected': this.label__ === label }
-      ]
+    initValue() {
+      this.multiple ? this.initValueMultiple() : this.initValueSingle()
+    },
+    isSelected(value) {
+      const list = this.multiple ? this.valueMultiple : [this.valueSingle]
+      return list.findIndex(item => value === item.value) !== -1
     },
     clickSuffix() {
       this.status = !this.status
     },
     clickInput() {
-      this.readonly && this.clickSuffix()
+      this.readonly__ && this.clickSuffix()
     },
-    clickItem({ label, value }, index) {
+    selectSingle(data) {
       this.status = false
-      this.label__ = label, this.value__ = value, this.index__ = index
+      this.value__ = data.label
+      this.valueSingle = { ...data }
+    },
+    selectMultiple(data) {
+      const this_ = this
+      this.$tools.includes(this.valueMultiple, data, (source, target) => source.value === target.value)
+        .then(({ status, data, index }) => {
+          if (status) {
+            this_.$tools.arrayRemove(this_.value__, index).catch(error => { console.error(error) })
+            this_.$tools.arrayRemove(this_.valueMultiple, index).catch(error => { console.error(error) })
+          } else {
+            this_.value__.push(data.label)
+            this_.valueMultiple.push({ ...data })
+          }
+        })
+        .catch(message => {
+          console.error(message)
+        })
+    },
+    clickOption(item, index) {
+      const data = { ...item, index }
+      this.$emit('click-option-before', item, index)
+      this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
+      this.$emit('click-option', item, index)
+      this.$emit('click-option-after', item, index)
     },
     blurInput() {
       this.closable && (this.status = false)

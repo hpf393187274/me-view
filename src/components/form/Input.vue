@@ -13,14 +13,14 @@
       class="me-flex input-inner"
       ref="target"
       v-model="currentValue"
-    >
-    <div class="input-icon me-row" ref="prefix" style="left:5px;">
+    />
+    <div class="me-row input-icon" ref="prefix" style="left: 5px;">
       <slot name="prefix">
         <me-icon :disabled="disabled" @click="clickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
       </slot>
     </div>
-    <div class="input-icon me-row" ref="suffix" style="right:5px;">
-      <me-icon :disabled="disabled" @click="reset" v-if="clearable && readonly === false" v-show="active">{{$config.icon.clear}}</me-icon>
+    <div class="me-row input-icon" ref="suffix" style="right: 5px;">
+      <me-icon :disabled="disabled" @click="reset" v-if="clearable" v-show="active">{{$config.icon.clear}}</me-icon>
       <slot name="suffix">
         <me-icon :disabled="disabled" @click="clickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
       </slot>
@@ -36,12 +36,14 @@ export default {
     return {
       left: 8,
       right: 8,
-      currentValue: this.value,
-      initValue: this.value,
-      showClear: false,
+      currentValue: '',
+      resetValue: '',
       active: false,
       message: ''
     }
+  },
+  created() {
+    this.initValue(this.value)
   },
   mounted() {
     this.$nextTick(() => {
@@ -91,12 +93,9 @@ export default {
     }
   },
   props: {
-    placeholder: { type: String, default: '' },
-    clearable: { type: Boolean },
     required: { type: Boolean },
-    readonly: { type: Boolean },
     type: { type: String, default: 'text', validator: value => types.includes(value) },
-    value: { type: [Number, String], default: '' },
+    value: { type: [Number, String, Array], default: '' },
     min: { type: Number, default: 0 },
     max: { type: Number, default: 1000000 },
     minLength: { type: Number, default: 0 },
@@ -115,7 +114,6 @@ export default {
         return
       }
       const target = this.convertValue(newValue)
-      console.log(this.$type.getType(target))
       this.$emit('input', target)
       this.$emit('change', target)
     },
@@ -131,12 +129,23 @@ export default {
       }
       return value
     },
+    initValue(value) {
+      if (this.$type.isObject(value)) {
+        this.currentValue = { ...value }
+        this.resetValue = { ...value }
+      } else if (this.$type.isArray(value)) {
+        this.currentValue = [...value]
+        this.resetValue = [...value]
+      } else {
+        this.currentValue = value
+        this.resetValue = value
+      }
+    },
     /**
      * 重置
      */
     reset() {
-      console.log('重置内容')
-      this.currentValue = this.initValue
+      this.currentValue = this.resetValue
     },
     clickInput() {
       this.$emit('click-input-before', this.currentValue)

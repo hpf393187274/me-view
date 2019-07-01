@@ -59,9 +59,9 @@ export default {
     if (type.isNotArray(target)) { return Promise.reject('target is not Array') }
 
     if (type.isNumber(condition)) {
-      if (condition < 0 || condition > target.length) { return Promise.reject('not exist') }
+      if (condition < 0 || condition > target.length) { return Promise.reject('index 下标越界') }
 
-      return Promise.try(target.splice(condition, 1))
+      return Promise.resolve(target.splice(condition, 1))
     }
 
     if (type.isFunction(condition)) {
@@ -82,6 +82,32 @@ export default {
       for (const key of Object.keys(target)) {
         delete target[key]
       }
+    }
+  },
+  /**
+   * 是否存在于数组
+   * then 存在
+   * catch 不存在
+   * params.status true 异常
+   * @param {Array} source 
+   * @param {Object} target 
+   * @param {Function} callback 
+   */
+  includes(source, target, callback) {
+    if (type.isNotArray(source)) {
+      return Promise.reject('source is not Array')
+    }
+    if (this.isEmpty(target)) {
+      return Promise.reject('target is Empty')
+    }
+    if (type.isNotFunction(callback)) {
+      callback = (source, target) => source === target
+    }
+    const index = source.findIndex(item => callback(item, target))
+    if (index === -1) {
+      return Promise.resolve({ status: false, data: target })
+    } else {
+      return Promise.resolve({ status: true, data: source[index], index })
     }
   },
   /**

@@ -1,19 +1,28 @@
 
-# ComboTable 组合表
+# ComboSelect 组合框
 
 ## 基础用法
-::: demo `label` 设置标签 `clearable` 可清除的
+::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的
 ```html
 
 <me-column>
-  <me-input style="width:500px;" label="用户名" clearable placeholder="请输入姓名"></me-input>
-  <me-input style="width:500px;" label="用户名" clearable readonly placeholder="我是只读的"></me-input>
-  <me-input style="width:500px;" label="用户名" clearable disabled placeholder="我是禁用的"></me-input>
+  <me-combo-select :data="data"></me-combo-select>
+  <me-combo-select clearable :data="data"></me-combo-select>
+  <me-combo-select :data="data" readonly value="山西省"></me-combo-select>
+  <me-combo-select :data="data" readonly value="陕西省"></me-combo-select>
+  <me-combo-select :data="data" disabled value="山西省"></me-combo-select>
 </me-column>
 <script>
 export default {
   data() {
     return {
+      data: [
+        { label: '山西省', value: '1' },
+        { label: '陕西省', value: '2' },
+        { label: '四川省', value: '3' },
+        { label: '河南省', value: '4' },
+        { label: '江苏省', value: '5' }
+      ]
     }
   }
 }
@@ -21,18 +30,27 @@ export default {
 ```
 :::
 
-## 图标显示
-
-### 普通模式
-
-::: demo `icon-prefix` 前置图标 `icon-suffix` 后置图标
+## 多选用法
+::: `multiple` 多选的 `checkbox`
 ```html
 
-<me-input style="width:500px;" icon-prefix="icon-user" icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
+<me-column>
+  <me-combo-select :data="data" multiple value="陕西省"></me-combo-select>
+  <me-combo-select :data="data" multiple checkbox value="河南省"></me-combo-select>
+  <me-combo-select :data="data" multiple :value="['陕西省', '四川省']"></me-combo-select>
+  <me-combo-select :data="data" multiple disabled :value="[{ label: '山西省', value: '1' }, { label: '陕西省', value: '2' }]"></me-combo-select>
+</me-column>
 <script>
 export default {
   data() {
     return {
+      data: [
+        { label: '山西省', value: '1' },
+        { label: '陕西省', value: '2' },
+        { label: '四川省', value: '3' },
+        { label: '河南省', value: '4' },
+        { label: '江苏省', value: '5' }
+      ]
     }
   }
 }
@@ -40,64 +58,26 @@ export default {
 ```
 :::
 
-### Solt 模式
 
-::: demo `label` 设置标签 `clearable` 可清除的
-```html
+## ComboSelect Attributes
+| 名称        | 描述                    |  类型   | 默认值 | 可选值      |
+| ----------- | ----------------------- | :-----: | :----: | ----------- |
+| data        | 数据                    |  Array  |   []   | [{}]        |
+| disabled    | 禁用状态                | Boolean | false  | true, false |
+| readonly    | 只读状态                | Boolean | false  | true, false |
+| clearable   | 可清除的                | Boolean | false  | true, false |
+| placeholder | 原生属性 - 提示表述     | String  |   -    | -           |
+| multiple    | 只读状态                | Boolean | false  | true, false |
+| checkbox    | multiple = true，复选框 | Boolean | false  | true, false |
 
-<me-input style="width:500px;" icon-prefix="icon-user" icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
+## ComboSelect Events
+| 名称                | 描述            |    参数    |
+| ------------------- | --------------- | :--------: |
+| click-option        | 点击选项        | row, index |
+| click-option-before | 点击选项 `之前` | row, index |
+| click-option-after  | 点击选项 `之后` | row, index |
 
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
-```
-:::
-
-### Type 模式
-
-::: demo `label` 设置标签 `clearable` 可清除的
-```html
-
-<me-input style="width:500px;" placeholder="我是文本" type="text"></me-input>
-<me-input style="width:500px;" placeholder="我是密码" type="password"></me-input>
-<me-input style="width:500px;" placeholder="我是数字" type="number"></me-input>
-<me-input style="width:500px;" placeholder="我是数字" type="email" value="hpf393187274@163.com"></me-input>
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
-```
-:::
-
-## Input Attributes
-| 名称        | 描述                |  类型   | 默认值 | 可选值                 |
-| ----------- | ------------------- | :-----: | :----: | ---------------------- |
-| type        | 文本内心            | String  |  text  | text, password, number |
-| label       | 标签描述            | String  |   -    | -                      |
-| clearable   | 可清除的            | Boolean | false  | true, false            |
-| placeholder | 原生属性 - 提示表述 | String  |   -    | -                      |
-| icon-prefix | 图标库 - 前置图标   | String  |   -    | -                      |
-| icon-suffix | 图标库 - 后置图标   | String  |   -    | -                      |
-
-## Input Events
-| 名称         | 描述                           |    参数    |
-| ------------ | ------------------------------ | :--------: |
-| change       | 内容改变事件                   | 当前文本值 |
-| click-prefix | icon-prefix 有值：前置图标事件 | 当前文本值 |
-| click-suffix | icon-suffix 有值：后置图标事件 | 当前文本值 |
-
-
-## Input Slot
-| 名称   | 描述     |
-| ------ | -------- |
-| prefix | 前置图标 |
-| suffix | 前置图标 |
+## ComboSelect Slot
+| 名称   | 描述       |
+| ------ | ---------- |
+| option | 选项自定义 |

@@ -26,8 +26,10 @@ export default {
    * 多选
    */
   multiple: Boolean,
+  clearable: Boolean,
   margin: String,
   padding: Boolean,
+  selected: Boolean,
   checkbox: Boolean,
   checked: Boolean,
   placeholder: String,

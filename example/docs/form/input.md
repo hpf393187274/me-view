@@ -82,6 +82,8 @@ export default {
 | 名称        | 描述                |  类型   | 默认值 | 可选值                 |
 | ----------- | ------------------- | :-----: | :----: | ---------------------- |
 | type        | 文本内心            | String  |  text  | text, password, number |
+| disabled    | 禁用状态            | Boolean | false  | true, false            |
+| readonly    | 只读状态            | Boolean | false  | true, false            |
 | clearable   | 可清除的            | Boolean | false  | true, false            |
 | placeholder | 原生属性 - 提示表述 | String  |   -    | -                      |
 | icon-prefix | 图标库 - 前置图标   | String  |   -    | -                      |
