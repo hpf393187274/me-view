@@ -27,9 +27,13 @@
 		font-size: 16px;
 		font-weight: bold;
 		background: @table-header;
+		.table-row {
+			min-height: 50px;
+		}
 	}
 	.table-body {
 		background: @table-body;
+		overflow: auto;
 		.table-row {
 			&:nth-child(odd){
 				background: @table-body-row-odd;

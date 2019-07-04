@@ -6,11 +6,8 @@
 ```html
 
 <me-column>
-  <me-combo-select :data="data"></me-combo-select>
-  <me-combo-select clearable :data="data"></me-combo-select>
-  <me-combo-select :data="data" readonly value="山西省"></me-combo-select>
-  <me-combo-select :data="data" readonly value="陕西省"></me-combo-select>
-  <me-combo-select :data="data" disabled value="山西省"></me-combo-select>
+  <me-combo-table :data="data"></me-combo-table>
+  <me-combo-table clearable checkbox :data="data"></me-combo-table>
 </me-column>
 <script>
 export default {
@@ -31,7 +28,7 @@ export default {
 :::
 
 ## 多选用法
-::: `multiple` 多选的 `checkbox`
+::: demo `multiple` 多选的 `checkbox`
 ```html
 
 <me-column>

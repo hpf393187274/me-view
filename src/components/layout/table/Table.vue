@@ -2,9 +2,9 @@
   <div :class="classes">
     <template v-if="$slots.header">
       <div class="me-row table-toolbar">
-        <slot name="header"/>
+        <slot name="header" />
       </div>
-      <me-line-h/>
+      <me-line-h />
     </template>
 
     <me-table-row-header
@@ -13,6 +13,7 @@
       :checked="checkedHeader"
       :checked-half="checkedHalf"
       :columns="columns"
+      :width="width__"
       @click-checkbox="handlerCheckboxHeader"
     />
     <div class="me-cloumn table-body">
@@ -27,6 +28,7 @@
         :index="index"
         :key="item[nodeKey]"
         :selected-checked="selectedChecked"
+        :width="width__"
         @click-checkbox="handlerCheckboxBody"
         @click-column="handlerColumn"
         @click-row="handlerRow"
@@ -34,7 +36,7 @@
       />
     </div>
     <div class="me-row table-toolbar" v-if="$slots.footer">
-      <slot name="footer"/>
+      <slot name="footer" />
     </div>
   </div>
 </template>
@@ -86,12 +88,14 @@ export default {
       checkedBody: this.checked,
       checkedHalf: false,
       checkedBodyNumber: 0,
-      checkedRows: []
+      checkedRows: [],
+      width__: '100%'
     }
   },
   mounted() {
     this.$nextTick(() => {
       this.columns = this.parseColumns()
+      this.width__ = this.$el.offsetWidth
     })
   },
   methods: {

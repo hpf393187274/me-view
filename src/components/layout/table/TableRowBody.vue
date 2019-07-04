@@ -1,11 +1,12 @@
 <template>
   <div :class="clesses" @click="handlerRow">
     <div class="me-row me-center table-column" v-if="checkbox">
-      <me-checkbox @click="handlerChecked(!checked__)" v-model="checked__"/>
+      <me-checkbox @click="handlerChecked(!checked__)" v-model="checked__" />
     </div>
     <div :class="classColumn" :key="item.label" @click="handlerColumn(item,index)" v-for="(item, index) in columns">
       <span class="table-column-inner">{{data[item.field]}}</span>
     </div>
+    <div style="min-width:30px;max-width:40px;"></div>
   </div>
 </template>
 <script>

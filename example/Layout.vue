@@ -1,14 +1,14 @@
 <template>
   <div class="me-column me-flex">
     <div class="me-row" style="align-items: center;">
-      <img height="60" src="/logo.png"> Me-View
+      <img height="60" src="/logo.png" /> Me-View
     </div>
-    <me-line-h/>
+    <me-line-h />
     <div class="me-row me-flex" style="overflow: auto;">
-      <me-tree :data="data" :expandable="false" @click="handleClick" style="width:200px;"/>
-      <me-line-v/>
+      <me-tree :data="data" :expandable="false" @click="handleClick" style="width:200px;" />
+      <me-line-v />
       <div class="me-row me-flex" style="overflow: auto; padding:5px 10px;">
-        <router-view/>
+        <router-view />
       </div>
     </div>
   </div>
@@ -26,7 +26,9 @@ export default {
             { label: 'Icon 图标库', path: '/basic/icon' },
             { label: 'Link 连接', path: '/basic/link' },
             { label: 'LineH 水平线', path: '/basic/line/h' },
-            { label: 'LineV 垂直线', path: '/basic/line/v' }
+            { label: 'LineV 垂直线', path: '/basic/line/v' },
+            { label: 'Scrollbar 滚动条', path: '/basic/scrollbar' },
+            { label: 'Slidebar 滑动条', path: '/basic/slidebar' },
           ]
         },
         {

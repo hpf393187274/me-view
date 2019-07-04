@@ -1,0 +1,38 @@
+@slidebar-base:rgb(243, 240, 240);
+@slidebar: rgb(194, 191, 191);
+@slidebar-hover: rgb(209, 209, 209);
+@slidebar-active: #747474;
+.@{PREFIX}-slidebar {
+  position: relative;
+  background: @slidebar-base;
+  .slidebar-button {
+    left: 0px; 
+    position: relative;
+    background: @slidebar;
+    cursor: pointer;
+    &:hover {
+      border-color: @slidebar-hover;
+      box-shadow:0 0 3px @slidebar-hover;
+    }
+    &:active {
+      border-color: @slidebar-hover;
+      background: @slidebar-active;
+      box-shadow:0 0 3px @slidebar-hover;
+    }
+  }
+}
+
+.@{PREFIX}-slidebar-vertical {
+  height: 100%;
+  min-height: 100px;
+  .slidebar-button {
+    height: 50px;
+  }
+}
+.@{PREFIX}-slidebar-horizontal {
+  width: 100%;
+  .slidebar-button {
+    width: 50px;
+    height: 100%;
+  }
+}
