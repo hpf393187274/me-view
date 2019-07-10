@@ -1,6 +1,6 @@
 <template>
-  <div :style="styles" class="me-column table-header">
-    <div class="me-row table-row">
+  <div class="me-column table-header">
+    <div :style="stylesRow" class="me-row table-row">
       <div class="me-row me-center table-column" v-if="checkbox">
         <me-checkbox :checkedHalf="checkedHalf" @click="handlerCheckbox" v-model="checked__" />
       </div>
@@ -25,20 +25,24 @@ export default {
     }
   },
   computed: {
-    styles() {
+    stylesRow() {
       if (this.hasScrollbar) {
         return { width: `calc( 100% - ${this.scrollbarWidth}px)` }
       }
       return {}
     }
   },
-  created() {
+  mounted() {
     this.$nextTick(() => {
       this.hasScrollbar = this.existScrollbar()
       this.hasScrollbar && (this.scrollbarWidth = this.getScrollbarWidth())
     })
   },
   methods: {
+    init() {
+      this.hasScrollbar = this.existScrollbar()
+      this.hasScrollbar && (this.scrollbarWidth = this.getScrollbarWidth())
+    },
     existScrollbar() {
       const parent = this.$parent ? this.$parent : this.$root
       const target = parent.$refs.body

@@ -3,7 +3,9 @@
 </template>
 
 <script>
+import ComboMixin from '../combo.mixin'
 export default {
+  mixins: [ComboMixin],
   name: 'MeComboTree'
 }
 </script>

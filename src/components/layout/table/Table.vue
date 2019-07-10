@@ -14,6 +14,7 @@
       :columns="columns"
       :width="width__"
       @click-checkbox="handlerCheckboxHeader"
+      ref="header"
     />
     <div class="table-body" ref="body">
       <me-table-row-body

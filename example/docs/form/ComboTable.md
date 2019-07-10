@@ -7,12 +7,19 @@
 
 <me-column>
   <me-combo-table :data="data"></me-combo-table>
-  <me-combo-table checkbox :data="data"></me-combo-table>
+  <me-combo-table :data="data" border></me-combo-table>
 </me-column>
 <script>
 export default {
   data() {
     return {
+      data3: [
+        { title: '山西省', id: '1' },
+        { title: '陕西省', id: '2' },
+        { title: '四川省', id: '3' },
+        { title: '河南省', id: '4' },
+        { title: '江苏省', id: '5' }
+      ],
       data: [
         { label: '山西省', value: '1' },
         { label: '陕西省', value: '2' },
@@ -32,6 +39,77 @@ export default {
 ```
 :::
 
+## 多选用法
+::: demo `multiple` 多选的 `checkbox`
+```html
+
+<me-column>
+  <me-combo-table :data="data" multiple value="陕西省"></me-combo-table>
+  <me-combo-table :data="data" multiple border value="河南省"></me-combo-table>
+  <me-combo-table :data="data" multiple :value="['陕西省', '四川省']"></me-combo-table>
+  <me-combo-table :data="data" multiple disabled :value="[{ label: '山西省', value: '1' }, { label: '陕西省', value: '2' }]"></me-combo-table>
+</me-column>
+
+<script>
+export default {
+  data() {
+    return {
+      data: [
+        { label: '山西省', value: '1' },
+        { label: '陕西省', value: '2' },
+        { label: '四川省', value: '3' },
+        { label: '河南省', value: '4' },
+        { label: '江苏省', value: '5' }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
+
+## Slot 用法
+::: demo `multiple` 多选的 `checkbox`
+```html
+
+<me-column>
+  <me-combo-table :data="data3" multiple value="陕西省" field-value="id" field-label="title">
+    <me-table-column field="id" label="主键"></me-table-column>
+    <me-table-column field="title" label="标题"></me-table-column>
+  </me-combo-table>
+  <me-combo-table :data="data3" multiple border value="河南省" field-value="id" field-label="title">
+    <me-table-column field="id" label="主键"></me-table-column>
+    <me-table-column field="title" label="标题"></me-table-column>
+  </me-combo-table>
+  <me-combo-table :data="data3" multiple disabled field-value="id" field-label="title" :value="['陕西省', '四川省']" >
+    <me-table-column field="id" label="主键"></me-table-column>
+    <me-table-column field="title" label="标题"></me-table-column>
+  </me-combo-table>
+  <me-combo-table :data="data3" field-value="id" field-label="title"
+    :value="[{ title: '山西省', id: '1' }, { title: '陕西省', id: '2' }]">
+    <me-table-column field="id" label="主键"></me-table-column>
+    <me-table-column field="title" label="标题"></me-table-column>
+  </me-combo-table>
+</me-column>
+
+<script>
+export default {
+  data() {
+    return {
+      data3: [
+        { title: '山西省', id: '1' },
+        { title: '陕西省', id: '2' },
+        { title: '四川省', id: '3' },
+        { title: '河南省', id: '4' },
+        { title: '江苏省', id: '5' }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
 
 
 ## ComboSelect Attributes

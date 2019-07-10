@@ -2,7 +2,7 @@
   <div :class="classes" @click="handleClick">
     <me-checkbox v-if="multiple && checkbox" v-model="selected__" />
     <slot :data="data">
-      <span class="combo-option-inner">{{data.label}}</span>
+      <span class="combo-option-inner">{{data[fieldLabel]}}</span>
     </slot>
   </div>
 </template>
@@ -10,7 +10,8 @@
 export default {
   name: 'MeComboOption',
   props: {
-    data: { type: Object, default() { return {} } }
+    data: { type: Object, default() { return {} } },
+    fieldLabel: { type: String, default: 'label' }
   },
   data() {
     return {

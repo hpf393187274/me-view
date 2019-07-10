@@ -26,10 +26,12 @@
           :checkbox="checkbox"
           :data="item"
           :disabled="disabled"
+          :field-label="fieldLabel"
+          :field-value="fieldValue"
           :index="index"
-          :key="item.value"
+          :key="item[fieldValue]"
           :multiple="multiple"
-          :selected="isSelected(item.value)"
+          :selected="isSelected(item[fieldValue])"
           @click="clickOption"
           v-for="(item,index) in data"
         />
@@ -40,19 +42,16 @@
 
 <script>
 import Option from './Option'
+import ComboMixin from '../combo.mixin'
 export default {
+  mixins: [ComboMixin],
   name: 'MeComboSelect',
   components: {
     [Option.name]: Option
   },
-  props: {
-    data: { type: Array, default() { return [] } },
-    value: { type: [String, Object, Array] }
-  },
   data() {
     return {
       status: false,
-      value__: '',
       valueSingle: {},
       valueMultiple: [],
       readonly__: this.readonly || this.multiple,
@@ -65,9 +64,7 @@ export default {
   },
   computed: {
     classes() {
-      return [
-        'me-combo'
-      ]
+      return ['me-combo']
     },
     iconSuffix() {
       return this.status ? this.$config.icon.angle_down_fill : this.$config.icon.angle_up_fill
@@ -76,25 +73,28 @@ export default {
   watch: {
     status(value) {
       value && this.focusInput()
+      this.$emit('change-status', value)
     }
   },
   methods: {
     findItem(target) {
-      return this.data.find(({ value, label }) => value === target.value || label === target.label)
+      return this.data.find(item => {
+        return item[this.fieldValue] === target[this.fieldValue] || item[this.fieldLabel] === target[this.fieldLabel]
+      })
     },
     initValueSingle() {
       const data = this.parseValue(this.value)
       this.valueSingle = { ...data }
-      this.value__ = data.label || ''
+      this.value__ = data[this.fieldLabel] || ''
     },
     adapterValue(data) {
       if (this.$type.isString(data)) {
-        return { value: data, label: data }
+        return { [this.fieldValue]: data, [this.fieldLabel]: data }
       }
       if (this.$type.isObject(data)) {
         return {
-          value: data.value || '',
-          label: data.label || ''
+          [this.fieldValue]: data[this.fieldValue] || '',
+          [this.fieldLabel]: data[this.fieldLabel] || ''
         }
       }
       return {}
@@ -111,7 +111,7 @@ export default {
       for (const item of list) {
         const data = this.parseValue(item)
         this.valueMultiple.push({ ...data })
-        this.value__.push(data.label || '')
+        this.value__.push(data[this.fieldLabel] || '')
       }
     },
     initValue() {
@@ -119,7 +119,7 @@ export default {
     },
     isSelected(value) {
       const list = this.multiple ? this.valueMultiple : [this.valueSingle]
-      return list.findIndex(item => value === item.value) !== -1
+      return list.findIndex(item => value === item[this.fieldValue]) !== -1
     },
     clickSuffix() {
       this.status = !this.status
@@ -129,18 +129,18 @@ export default {
     },
     selectSingle(data) {
       this.status = false
-      this.value__ = data.label
+      this.value__ = data[this.fieldLabel]
       this.valueSingle = { ...data }
     },
     selectMultiple(data) {
       const this_ = this
-      this.$tools.includes(this.valueMultiple, data, (source, target) => source.value === target.value)
+      this.$tools.includes(this.valueMultiple, data, (source, target) => source[this.fieldValue] === target[this.fieldValue])
         .then(({ status, data, index }) => {
           if (status) {
             this_.$tools.arrayRemove(this_.value__, index).catch(error => { console.error(error) })
             this_.$tools.arrayRemove(this_.valueMultiple, index).catch(error => { console.error(error) })
           } else {
-            this_.value__.push(data.label)
+            this_.value__.push(data[this_.fieldLabel])
             this_.valueMultiple.push({ ...data })
           }
         })
