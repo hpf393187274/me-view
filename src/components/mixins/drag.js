@@ -1,83 +1,38 @@
-
 export default {
-  props: {
-    value: { type: Number, default: 30 },
-    length: { type: Number, default: 100 },
-    width: { type: Number, default: 40 },
-    vertical: Boolean,
-  },
   data() {
     return {
       dragging: false,
       isClick: false,
-      clientStart: 0,
-      valueStart: this.value,
-      valueCurrent: this.value,
-      max__: this.max || 0,
-      min__: this.min || 0
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      if (this.vertical) {
-        this.max__ = this.$el.scrollHeight - this.$refs.button.scrollHeight
-      } else {
-        this.max__ = this.$el.scrollWidth - this.$refs.button.scrollWidth
-      }
-    })
-  },
-  watch: {
-    valueCurrent(newValue) {
-      this.$emit('input', newValue)
-    },
-    value(value) {
-      this.setPosition(value)
-    }
-  },
-  computed: {
-    classes() {
-      return [
-        'me-slidebar',
-        {
-          'me-slidebar-vertical': this.vertical,
-          'me-slidebar-horizontal': this.vertical === false
-        }
-      ]
-    },
-    styles() {
-      return {
-        [this.vertical ? 'width' : 'height']: `${this.width}px`,
-      }
-    },
-    stylesBtn() {
-      return {
-        'border-radius': `${this.width / 2}px`,
-        [this.vertical ? 'height' : 'width']: `${this.length}px`,
-        [this.vertical ? 'top' : 'left']: `${this.valueCurrent}px`
-      }
+      pointStart: { x: 0, y: 0 },
+      pointEnd: { x: 0, y: 0 },
+      pointMin: { x: 0, y: 0 },
+      pointMax: { x: 0, y: 0 },
+      clientStart: { x: 0, y: 0 },
+      clientEnd: { x: 0, y: 0 }
     }
   },
   methods: {
-    handlerMouseDown(event) {
+    onMouseDown(event) {
       if (this.disabled) { return }
       event.preventDefault();
-      this.handlerDragStart(event);
-      window.addEventListener('mousemove', this.handlerDragging);
-      window.addEventListener('touchmove', this.handlerDragging);
-      window.addEventListener('mouseup', this.handlerDragEnd);
-      window.addEventListener('touchend', this.handlerDragEnd);
-      window.addEventListener('contextmenu', this.handlerDragEnd);
+      this.onDragStart(event);
+      window.addEventListener('mousemove', this.onDragging);
+      window.addEventListener('touchmove', this.onDragging);
+      window.addEventListener('mouseup', this.onDragEnd);
+      window.addEventListener('touchend', this.onDragEnd);
+      window.addEventListener('contextmenu', this.onDragEnd);
     },
-    handlerDragStart(event) {
+    onDragStart(event) {
       this.dragging = true;
       this.isClick = true;
       if (event.type === 'touchstart') {
         event.clientY = event.touches[0].clientY;
         event.clientX = event.touches[0].clientX;
       }
-      this.clientStart = this.vertical ? event.clientY : event.clientX
+      Object.assign(this.clientStart, { x: event.clientX, y: event.clientY })
+      this.handlerDragStart && this.handlerDragStart()
     },
-    handlerDragging(event) {
+    onDragging(event) {
       if (this.dragging === false) { return }
       this.isClick = false;
 
@@ -85,11 +40,16 @@ export default {
         event.clientY = event.touches[0].clientY;
         event.clientX = event.touches[0].clientX;
       }
-      const clientEnd = this.vertical ? event.clientY : event.clientX
-      let diff = clientEnd - this.clientStart
-      this.setPosition(this.valueStart + diff)
+
+      Object.assign(this.clientEnd, { x: event.clientX, y: event.clientY })
+      Object.assign(this.pointEnd, {
+        x: this.pointStart.x + (this.clientEnd.x - this.clientStart.x),
+        y: this.pointStart.y + (this.clientEnd.y - this.clientStart.y)
+      })
+      this.verifyPointEnd()
+      this.handlerDragging && this.handlerDragging()
     },
-    handlerDragEnd() {
+    onDragEnd() {
       if (this.dragging === false) { return }
       /*
          * 防止在 mouseup 后立即触发 click，导致滑块有几率产生一小段位移
@@ -98,27 +58,38 @@ export default {
       setTimeout(() => {
         this.dragging = false;
         if (this.isClick === false) {
-          this.setPosition(this.newPosition);
-          this.valueStart = this.valueCurrent
+          this.verifyPointEnd()
+          Object.assign(this.pointStart, { x: this.pointEnd.x, y: this.pointEnd.y })
+          this.handlerDragEnd && this.handlerDragEnd()
         }
       }, 0);
-      window.removeEventListener('mousemove', this.handlerDragging);
-      window.removeEventListener('touchmove', this.handlerDragging);
-      window.removeEventListener('mouseup', this.handlerDragEnd);
-      window.removeEventListener('touchend', this.handlerDragEnd);
-      window.removeEventListener('contextmenu', this.handlerDragEnd);
+      window.removeEventListener('mousemove', this.onDragging);
+      window.removeEventListener('touchmove', this.onDragging);
+      window.removeEventListener('mouseup', this.onDragEnd);
+      window.removeEventListener('touchend', this.onDragEnd);
+      window.removeEventListener('contextmenu', this.onDragEnd);
     },
-    setPosition(newPosition) {
-      if (newPosition === null || isNaN(newPosition)) return;
-      if (newPosition < this.min__) {
-        newPosition = this.min__
-        this.$emit('input', newPosition)
+    verifyPointEnd() {
+      const { x, y } = this.pointEnd
+      let flag = false
+      if (x < this.pointMin.x) {
+        this.pointEnd.x = this.pointMin.x
+        flag = true
       }
-      if (newPosition > this.max__) {
-        newPosition = this.max__
-        this.$emit('input', newPosition)
+      if (y < this.pointMin.y) {
+        this.pointEnd.y = this.pointMin.y
+        flag = true
       }
-      this.valueCurrent = newPosition
+      if (x > this.pointMax.x) {
+        this.pointEnd.x = this.pointMax.x
+        flag = true
+      }
+      if (y > this.pointMax.y) {
+        this.pointEnd.y = this.pointMax.y
+        flag = true
+      }
+      // 若点位越界，则进行越界回调
+      flag && this.handlerBoundary && this.handlerBoundary()
     }
   }
 }

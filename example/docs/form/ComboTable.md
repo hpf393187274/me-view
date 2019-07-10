@@ -1,5 +1,5 @@
 
-# ComboSelect 组合框
+# ComboTable 组合框
 
 ## 基础用法
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的
@@ -7,7 +7,7 @@
 
 <me-column>
   <me-combo-table :data="data"></me-combo-table>
-  <me-combo-table clearable checkbox :data="data"></me-combo-table>
+  <me-combo-table checkbox :data="data"></me-combo-table>
 </me-column>
 <script>
 export default {
@@ -18,7 +18,12 @@ export default {
         { label: '陕西省', value: '2' },
         { label: '四川省', value: '3' },
         { label: '河南省', value: '4' },
-        { label: '江苏省', value: '5' }
+        { label: '江苏省', value: '5' },
+        { label: '山东省', value: '6' },
+        { label: '河北省', value: '7' },
+        { label: '浙江省', value: '8' },
+        { label: '湖北省', value: '9' },
+        { label: '湖南省', value: '10' },
       ]
     }
   }
@@ -27,33 +32,6 @@ export default {
 ```
 :::
 
-## 多选用法
-::: demo `multiple` 多选的 `checkbox`
-```html
-
-<me-column>
-  <me-combo-select :data="data" multiple value="陕西省"></me-combo-select>
-  <me-combo-select :data="data" multiple checkbox value="河南省"></me-combo-select>
-  <me-combo-select :data="data" multiple :value="['陕西省', '四川省']"></me-combo-select>
-  <me-combo-select :data="data" multiple disabled :value="[{ label: '山西省', value: '1' }, { label: '陕西省', value: '2' }]"></me-combo-select>
-</me-column>
-<script>
-export default {
-  data() {
-    return {
-      data: [
-        { label: '山西省', value: '1' },
-        { label: '陕西省', value: '2' },
-        { label: '四川省', value: '3' },
-        { label: '河南省', value: '4' },
-        { label: '江苏省', value: '5' }
-      ]
-    }
-  }
-}
-</script>
-```
-:::
 
 
 ## ComboSelect Attributes

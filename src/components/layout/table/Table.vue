@@ -6,7 +6,6 @@
       </div>
       <me-line-h />
     </template>
-
     <me-table-row-header
       :center="center"
       :checkbox="checkbox"
@@ -16,7 +15,7 @@
       :width="width__"
       @click-checkbox="handlerCheckboxHeader"
     />
-    <div class="me-cloumn table-body">
+    <div class="table-body" ref="body">
       <me-table-row-body
         :center="center"
         :checkbox="checkbox"
@@ -62,6 +61,12 @@ export default {
         'me-column me-table',
         { 'me-table-border': this.border }
       ]
+    },
+    styleBody() {
+      // hasScrollbar
+      return {
+        width: `calc( 100% - 20px )`
+      }
     },
     length() {
       return this.$type.isArray(this.data) ? this.data.length : 0

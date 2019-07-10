@@ -1,13 +1,17 @@
 @slidebar-base:rgb(243, 240, 240);
 @slidebar: rgb(194, 191, 191);
+@slidebar-axis: #409eff;
 @slidebar-hover: rgb(209, 209, 209);
 @slidebar-active: #747474;
 .@{PREFIX}-slidebar {
   position: relative;
   background: @slidebar-base;
+  .slidebar-axis {
+    background: @slidebar-axis;
+  }
   .slidebar-button {
     left: 0px; 
-    position: relative;
+    position: absolute;
     background: @slidebar;
     cursor: pointer;
     &:hover {
@@ -24,15 +28,21 @@
 
 .@{PREFIX}-slidebar-vertical {
   height: 100%;
-  min-height: 100px;
+  .slidebar-axis {
+    height: 100%;
+    width: 100%;
+  }
   .slidebar-button {
-    height: 50px;
+    width: 100%;
   }
 }
 .@{PREFIX}-slidebar-horizontal {
   width: 100%;
+  .slidebar-axis {
+    height: 100%;
+    width: auto;
+  }
   .slidebar-button {
-    width: 50px;
     height: 100%;
   }
 }

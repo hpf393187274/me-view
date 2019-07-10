@@ -57,20 +57,13 @@ module.exports = {
                 const m = tokens[index].info.trim().match(/^demo\s*(.*)$/);
                 if (tokens[index].nesting === 1) {
                   let description = m && m.length > 1 ? m[1] : '';
-                  const content = tokens[index + 1].type === 'fence' ? tokens[index + 1].content : '';
+                  // const content = tokens[index + 1].type === 'fence' ? tokens[index + 1].content : '';
                   if (description) {
                     description = md.render(description)
                   }
 
-                  console.log("==============content====================")
-                  console.log(content)
-
-                  console.log("================description===================")
-                  console.log(description)
                   const code = tokens[index + 1].content
 
-                  console.log("================code===================")
-                  console.log(code)
                   return `<demo-block>
                     <template #source>${code}</template>
                     <div>${description}</div>

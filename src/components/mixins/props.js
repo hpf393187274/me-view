@@ -31,7 +31,7 @@ export default {
   clearable: Boolean,
   margin: String,
   padding: Boolean,
-  width: { type: String, default: '100%' },
+  // width: { type: String, default: '100%' },
   selected: Boolean,
   checkbox: Boolean,
   checked: Boolean,

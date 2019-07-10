@@ -6,7 +6,6 @@
     <div :class="classColumn" :key="item.label" @click="handlerColumn(item,index)" v-for="(item, index) in columns">
       <span class="table-column-inner">{{data[item.field]}}</span>
     </div>
-    <div style="min-width:30px;max-width:40px;"></div>
   </div>
 </template>
 <script>
@@ -28,6 +27,10 @@ export default {
     }
   },
   methods: {
+    hasScrollbar() {
+      const body = this.$refs.body
+      return body.scrollHeight > (body.innerHeight || body.clientHeight);
+    },
     handlerChecked(value) {
       this.$emit('click-checkbox', value, this.data, this.index)
     },

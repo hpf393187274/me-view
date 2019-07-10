@@ -1,10 +1,34 @@
-# Slidebar 滚动条
+# Slidebar 滑块
 
-## 基础用法
+## 水平滑块
 ::: demo `clearable` 可清除的
 ```html
-<me-slidebar style="height: 300px;" vertical> </me-slidebar>
-<me-slidebar style="width: 300px;" > </me-slidebar>
+<me-column>
+  <me-slidebar style="margin: 2px 0px;"></me-slidebar>
+  <me-slidebar style="margin: 2px 0px;"></me-slidebar>
+  <me-slidebar style="margin: 2px 0px;"></me-slidebar>
+  <me-slidebar style="margin: 2px 0px;"></me-slidebar>
+</me-column>
+<script>
+export default {
+  data() {
+    return {
+    }
+  }
+}
+</script>
+```
+:::
+
+## 垂直滑块
+::: demo `clearable` 可清除的
+```html
+<me-row style="height:400px;">
+  <me-slidebar vertical style="margin: 0px 2px;"></me-slidebar>
+  <me-slidebar vertical style="margin: 0px 2px;"></me-slidebar>
+  <me-slidebar vertical style="margin: 0px 2px;"></me-slidebar>
+  <me-slidebar vertical style="margin: 0px 2px;"></me-slidebar>
+</me-row>
 <script>
 export default {
   data() {

@@ -9,12 +9,14 @@
 .@{PREFIX}-table {
 	color: @table-color;
 	overflow: auto;
+	height: 100%;
+	width: 100%;
 	font-size: 12px;
 	.table-toolbar{
 		padding: 3px;
 	}
 	.table-row {
-		min-height: 50px;
+		min-height: 40px;
 	}
 	.table-column {
 		align-items: center;
@@ -27,9 +29,6 @@
 		font-size: 16px;
 		font-weight: bold;
 		background: @table-header;
-		.table-row {
-			min-height: 50px;
-		}
 	}
 	.table-body {
 		background: @table-body;
