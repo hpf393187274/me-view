@@ -5,14 +5,13 @@
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的
 ```html
 
-<me-column>
+<div class="me-column">
   <me-combo-select :data="data"></me-combo-select>
   <me-combo-select clearable :data="data"></me-combo-select>
-  <me-combo-select :data="data" readonly value="山西省"></me-combo-select>
-  <me-combo-select :data="data" readonly value="陕西省"></me-combo-select>
-  <me-combo-select :data="data" disabled value="山西省"></me-combo-select>
-</me-column>
-
+  <me-combo-select :data="data" readonly value="1"></me-combo-select>
+  <me-combo-select :data="data" readonly value="2"></me-combo-select>
+  <me-combo-select :data="data" disabled value="3"></me-combo-select>
+</div>
 <script>
 export default {
   data() {
@@ -35,12 +34,11 @@ export default {
 ::: demo `multiple` 多选的 `checkbox`
 ```html
 
-<me-column>
-  <me-combo-select :data="data" multiple value="陕西省"></me-combo-select>
-  <me-combo-select :data="data" multiple checkbox value="河南省"></me-combo-select>
-  <me-combo-select :data="data" multiple :value="['陕西省', '四川省']"></me-combo-select>
-  <me-combo-select :data="data" multiple disabled :value="[{ label: '山西省', value: '1' }, { label: '陕西省', value: '2' }]"></me-combo-select>
-</me-column>
+<div class="me-column">
+  <me-combo-select :data="data" multiple :value="['1']"></me-combo-select>
+  <me-combo-select :data="data" multiple disabled :value="['2']"></me-combo-select>
+  <me-combo-select :data="data" multiple :value="['1', '2']"></me-combo-select>
+</div>
 
 <script>
 export default {

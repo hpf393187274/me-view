@@ -27,14 +27,16 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboTable',
-  data() {
-    return {
-      value__: this.value
-    }
+  watch: {
+    value(value) { this.value__ = [...value] }
+  },
+  created() {
+    this.value__ = [...this.value]
   },
   methods: {
     onClickRow(row, index) {
       this.$refs.combo.clickOption(row, index)
+      this.$emit('input', this.multiple ? [...this.value__] : this.value__)
     },
     onChangeStatus(value) {
       if (value) {

@@ -113,21 +113,26 @@ export default {
         this.currentValue = oldValue
         return
       }
-      const target = this.convertValue(newValue)
-      this.$emit('input', target)
-      this.$emit('change', target)
+      this.updateValue(newValue)
     },
     change(value) {
-      this.$emit('input', this.convertValue(value))
-      this.$emit('change', this.convertValue(value))
+      this.updateValue(value)
     }
   },
   methods: {
+    updateValue(value) {
+      // if (this.$type.isArray(this.value)) {
+      //   return
+      // }
+      const newValue = this.convertValue(value)
+      this.$emit('input', newValue)
+      this.$emit('change', newValue)
+    },
     convertValue(value) {
       if (this.type === 'number') {
         return Number(value)
       }
-      return value
+      return this.$type.isArray(this.value) ? value.split(',') : value
     },
     initValue(value) {
       if (this.$type.isObject(value)) {

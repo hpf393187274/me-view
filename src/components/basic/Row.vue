@@ -1,6 +1,6 @@
 <template>
   <div class="me-row">
-    <slot/>
+    <slot />
   </div>
 </template>
 

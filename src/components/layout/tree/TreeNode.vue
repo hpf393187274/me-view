@@ -2,7 +2,7 @@
   <div class="me-column tree-node-body">
     <div :style="styleIndent" class="me-row tree-node-item">
       <me-icon @click="handleExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
-      <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
+      <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox" />
       <div @click="click" class="me-row me-flex tree-node-label">
         <slot :data="getData()" name="node-label">{{data.label}}</slot>
       </div>
@@ -38,7 +38,7 @@
         v-for="node in data.children"
       >
         <template #node-label="{data}">
-          <slot :data="data" name="node-label"/>
+          <slot :data="data" name="node-label" />
         </template>
       </me-tree-node>
     </div>
@@ -179,6 +179,15 @@ export default {
         resource.children = [...childrenList]
       }
       return resource
+    },
+    onClickNode(data, node) {
+      this.$emit('click-node', data, node)
+    },
+    onClickNodeBranch(data, node) {
+      this.$emit('click-node-branch', data, node)
+    },
+    onClickNodeLeaf(data, node) {
+      this.$emit('click-node-leaf', data, node)
     }
   }
 }

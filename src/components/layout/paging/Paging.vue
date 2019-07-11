@@ -23,7 +23,7 @@
     </span>
     <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{`${currentPage} / ${pageNumber}`}}</span>
     <span :class="itemClass()">共 {{total}} 条</span>
-    <me-input :max="pageNumber" :min="1" type="number" v-model="currentPage"/>
+    <me-input :max="pageNumber" :min="1" type="number" v-model="currentPage" />
   </div>
 </template>
 

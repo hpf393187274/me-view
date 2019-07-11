@@ -17,7 +17,7 @@
       v-if="header"
     >
       <template #node-label>
-        <slot name="node-header"/>
+        <slot name="node-header" />
       </template>
     </me-tree-header>
     <template v-if="data && data.length > 0">
@@ -36,11 +36,14 @@
         :statistics="statistics"
         @alter-parent="alterParent"
         @click="handleClick"
+        @click-node="onClickNode"
+        @click-node-branch="onClickNodeBranch"
+        @click-node-leaf="onClickNodeLeaf"
         ref="treeNode"
         v-for="node in data"
       >
         <template #node-label="{data}">
-          <slot :data="data" name="node-label"/>
+          <slot :data="data" name="node-label" />
         </template>
       </me-tree-node>
     </template>
@@ -83,6 +86,15 @@ export default {
     },
     getCheckedTreeData({ leaf = true } = {}) {
       return this.getCheckedChildren({ leaf, tree: true })
+    },
+    onClickNode(data, node) {
+      this.$emit('click-node', data, node)
+    },
+    onClickNodeBranch(data, node) {
+      this.$emit('click-node-branch', data, node)
+    },
+    onClickNodeLeaf(data, node) {
+      this.$emit('click-node-leaf', data, node)
     }
   }
 }

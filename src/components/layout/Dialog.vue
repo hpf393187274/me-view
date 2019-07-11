@@ -9,7 +9,7 @@
         </slot>
       </div>
       <div class="me-row me-flex dialog-body">
-        <slot/>
+        <slot />
       </div>
       <div class="me-row dialog-footer">
         <slot name="footer">
@@ -27,23 +27,14 @@ export default {
   props: {
     value: Boolean,
     center: Boolean,
-    height: {
-      type: String,
-      default: '300px'
-    },
-    width: {
-      type: String,
-      default: '300px'
-    },
+    height: { type: String, default: '300px' },
+    width: { type: String, default: '300px' },
     moveable: Boolean
   },
   watch: {
     value(newValue) {
       this.$emit('input', newValue)
     }
-  },
-  data() {
-    return {}
   }
 }
 </script>

@@ -1,5 +1,6 @@
 ﻿<template>
   <div :class="classes">
+    <div>value={{value}}---value__={{value__}}</div>
     <me-input
       :clearable="clearable || readonly__"
       :disabled="disabled"
@@ -8,7 +9,7 @@
       @blur-input="blurInput"
       @click-input="clickInput"
       ref="input"
-      v-model="value__"
+      v-model="label__"
     >
       <template #suffix>
         <me-icon :disabled="disabled" @click="clickSuffix" @mouseout="closable=true" @mouseover="mouseoverOther">{{iconSuffix}}</me-icon>
@@ -74,44 +75,34 @@ export default {
     status(value) {
       value && this.focusInput()
       this.$emit('change-status', value)
+    },
+    value() {
+      this.initValue()
     }
   },
   methods: {
-    findItem(target) {
-      return this.data.find(item => {
-        return item[this.fieldValue] === target[this.fieldValue] || item[this.fieldLabel] === target[this.fieldLabel]
-      })
+    findItem(value) {
+      return this.data.find(item => item[this.fieldValue] === value)
     },
     initValueSingle() {
-      const data = this.parseValue(this.value)
-      this.valueSingle = { ...data }
-      this.value__ = data[this.fieldLabel] || ''
-    },
-    adapterValue(data) {
-      if (this.$type.isString(data)) {
-        return { [this.fieldValue]: data, [this.fieldLabel]: data }
-      }
-      if (this.$type.isObject(data)) {
-        return {
-          [this.fieldValue]: data[this.fieldValue] || '',
-          [this.fieldLabel]: data[this.fieldLabel] || ''
-        }
-      }
-      return {}
-    },
-    parseValue(data) {
-      return this.findItem(this.adapterValue(data)) || {}
+      const data = this.findItem(this.value)
+      if (this.$tools.isEmpty(data)) { return }
+      Object.assign(this.valueSingle, data)
+      this.label__ = data[this.fieldLabel] || ''
+      this.value__ = data[this.fieldValue] || ''
     },
     initValueMultiple() {
-      this.value__ = []
-      if (this.$tools.isEmpty(this.value)) {
-        return
-      }
-      const list = this.$type.isArray(this.value) ? this.value : [this.value]
-      for (const item of list) {
-        const data = this.parseValue(item)
-        this.valueMultiple.push({ ...data })
-        this.value__.push(data[this.fieldLabel] || '')
+      this.$type.isNotArray(this.label__) && (this.label__ = [])
+      this.$type.isNotArray(this.value__) && (this.value__ = [])
+      this.$tools.clearEmpty(this.label__)
+      this.$tools.clearEmpty(this.value__)
+      if (this.$tools.isEmpty(this.value)) { return }
+      const list = this.$type.isArray(this.value) ? [...this.value] : [this.value]
+      this.valueMultiple = this.data.filter(item => list.includes(item[this.fieldValue]))
+
+      for (const item of this.valueMultiple) {
+        this.label__.push(item[this.fieldLabel])
+        this.value__.push(item[this.fieldValue])
       }
     },
     initValue() {
@@ -129,24 +120,34 @@ export default {
     },
     selectSingle(data) {
       this.status = false
-      this.value__ = data[this.fieldLabel]
+      this.label__ = data[this.fieldLabel]
+      this.value__ = data[this.fieldValue]
       this.valueSingle = { ...data }
+      this.$emit('input', this.value__)
+    },
+    handleMultipleRemove(index) {
+      this.$tools.arrayRemove(this.label__, index).catch(error => { console.error(error) })
+      this.$tools.arrayRemove(this.value__, index).catch(error => { console.error(error) })
+      this.$tools.arrayRemove(this.valueMultiple, index).catch(error => { console.error(error) })
+    },
+    handleMultiplPush(data) {
+      this.label__.push(data[this.fieldLabel])
+      this.value__.push(data[this.fieldValue])
+      this.valueMultiple.push({ ...data })
     },
     selectMultiple(data) {
       const this_ = this
       this.$tools.includes(this.valueMultiple, data, (source, target) => source[this.fieldValue] === target[this.fieldValue])
         .then(({ status, data, index }) => {
-          if (status) {
-            this_.$tools.arrayRemove(this_.value__, index).catch(error => { console.error(error) })
-            this_.$tools.arrayRemove(this_.valueMultiple, index).catch(error => { console.error(error) })
-          } else {
-            this_.value__.push(data[this_.fieldLabel])
-            this_.valueMultiple.push({ ...data })
-          }
+          status ? this_.handleMultipleRemove(index) : this_.handleMultiplPush(data)
         })
         .catch(message => {
           console.error(message)
         })
+        .finally(() => {
+          this.$emit('input', [...this.value__])
+        })
+
     },
     clickOption(item, index) {
       const data = { ...item, index }

@@ -130,3 +130,10 @@ export default {
 | ----------------- | -------------- | ---- | ------ |
 | removeCheckedNode | 移除选中的节点 | -    | -      |
 | clearCheckedNode  | 清除选中的节点 | -    | -      |
+
+## Tree Events
+| 名称              | 描述            |   参数    |
+| ----------------- | --------------- | :-------: |
+| click-node        | 点击节点        | data,node |
+| click-node-leaf   | 点击节点 `叶子` | data,node |
+| click-node-branch | 点击节点 `分支` | data,node |

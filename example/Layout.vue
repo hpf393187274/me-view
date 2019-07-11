@@ -49,6 +49,7 @@ export default {
             { label: 'Table 表格', path: '/layout/table' },
             { label: 'Paging 分页', path: '/layout/paging' },
             { label: 'Tree 树型控件', path: '/layout/tree' },
+            { label: 'Dialog 对话框', path: '/layout/dialog' },
             { label: 'Transfer 穿梭框', path: '/layout/transfer' }
           ]
         }
