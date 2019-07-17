@@ -5,7 +5,7 @@
     </div>
     <me-line-h />
     <div class="me-row me-flex" style="overflow: auto;">
-      <me-tree :data="data" :expandable="false" @click="handleClick" style="width:200px;" />
+      <me-tree :data="data" :expandable="false" @click-node-leaf="handleClick" style="width:200px;" />
       <me-line-v />
       <div class="me-row me-flex" style="overflow: auto; padding:5px 10px;">
         <router-view />

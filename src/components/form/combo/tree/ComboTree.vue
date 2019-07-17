@@ -11,7 +11,7 @@
     v-model="value__"
   >
     <template #options>
-      <me-tree :border="border" :data="data" :expanded-node-click="false" :node-key="fieldValue" ref="tree"></me-tree>
+      <me-tree :border="border" :data="data" :expanded-node-click="false" :node-key="fieldValue" @click-node="onClickNode" ref="tree"></me-tree>
     </template>
   </me-combo-select>
 </template>
@@ -28,7 +28,7 @@ export default {
     this.value__ = [...this.value]
   },
   methods: {
-    onClickRow(row, index) {
+    onClickNode(row, index) {
       this.$refs.combo.clickOption(row, index)
       this.$emit('input', this.multiple ? [...this.value__] : this.value__)
     }

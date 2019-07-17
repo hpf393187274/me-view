@@ -1,9 +1,9 @@
 <template>
   <div class="me-column tree-node-body">
     <div :style="styleIndent" class="me-row tree-node-item">
-      <me-icon @click="handleExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
+      <me-icon @click="doExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
       <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox" />
-      <div @click="click" class="me-row me-flex tree-node-label">
+      <div @click="onClickLabel" class="me-row me-flex tree-node-label">
         <slot :data="getData()" name="node-label">{{data.label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
@@ -33,7 +33,6 @@
         :level=" level + 1 "
         :statistics="statistics"
         @alter-parent="alterParent"
-        @click="handleClick"
         ref="treeNode"
         v-for="node in data.children"
       >
@@ -49,6 +48,7 @@
 import treeIndex from '@components/mixins/tree'
 import treeCommon from '@components/mixins/tree/common'
 import treeInner from './common.mixin'
+import EventTree from './EventTree'
 export default {
   name: 'MeTreeNode',
   mixins: [treeCommon, treeIndex, treeInner],
@@ -116,23 +116,20 @@ export default {
      * 移除当前节点
      */
     removeCurrentNode() {
-      this.$emit('remove-node-before', this.getData())
       this.$parent.removeChildrenNode(this)
-      this.$emit('remove-node-after', this.getData())
+      EventTree.$emit('remove-node', this.getData())
     },
     /**
      * 刷新子节点
      */
     refreshChildrenNode() {
-      this.$emit('refresh-node-before', this.getData())
-      this.$emit('refresh-node', this.data, this)
-      this.$emit('refresh-node-after', this.getData())
+      EventTree.$emit('refresh-node', this.getData(), this)
     },
 
     /**
      * 展开子节点
      */
-    handleExpanded() {
+    doExpanded() {
       if (this.expandable === false) { return }
       this.expanded__ = !this.expanded__
       if (this.renderFirst === false) {
@@ -140,14 +137,7 @@ export default {
         this.alterChildrenNodeChecked(this.allChecked)
       }
     },
-    click() {
-      if (this.nodeBranch && this.expandedNodeClick) {
-        this.handleExpanded()
-      }
-      if (this.nodeLeaf) {
-        this.$emit('click', this.getData(), this)
-      }
-    },
+
     /**
      * 获取子节点个数
      */
@@ -180,14 +170,27 @@ export default {
       }
       return resource
     },
-    onClickNode(data, node) {
-      this.$emit('click-node', data, node)
+    onClickLabel() {
+      if (this.nodeBranch && this.expandedNodeClick) {
+        this.doExpanded()
+      }
+      const data = this.getData()
+      this.handlerClickNode(data, this)
+      if (this.nodeLeaf) {
+        this.handlerClickNodeLeaf(data, this)
+      }
+      if (this.nodeBranch) {
+        this.handlerClickNodeBranch(data, this)
+      }
     },
-    onClickNodeBranch(data, node) {
-      this.$emit('click-node-branch', data, node)
+    handlerClickNode(data, node) {
+      EventTree.$emit('click-node', data, node)
     },
-    onClickNodeLeaf(data, node) {
-      this.$emit('click-node-leaf', data, node)
+    handlerClickNodeBranch(data, node) {
+      EventTree.$emit('click-node-branch', data, node)
+    },
+    handlerClickNodeLeaf(data, node) {
+      EventTree.$emit('click-node-leaf', data, node)
     }
   }
 }

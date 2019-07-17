@@ -35,10 +35,6 @@
         :lazy="lazy"
         :statistics="statistics"
         @alter-parent="alterParent"
-        @click="handleClick"
-        @click-node="onClickNode"
-        @click-node-branch="onClickNodeBranch"
-        @click-node-leaf="onClickNodeLeaf"
         ref="treeNode"
         v-for="node in data"
       >
@@ -55,6 +51,7 @@
 import treeIndex from '@components/mixins/tree'
 import treeCommon from '@components/mixins/tree/common'
 import treeInner from './common.mixin'
+import EventTree from './EventTree'
 export default {
   name: 'MeTree',
   mixins: [treeCommon, treeIndex, treeInner],
@@ -75,6 +72,26 @@ export default {
   created() {
     this.$nextTick(() => {
       this.hasGrandson = this.getHasGrandson()
+      // 点击节点
+      EventTree.$on('click-node', (data, node) => {
+        this.$emit('click-node', data, node)
+      })
+      EventTree.$on('click-node-branch', (data, node) => {
+        this.$emit('click-node-branch', data, node)
+      })
+      EventTree.$on('click-node-leaf', (data, node) => {
+        this.$emit('click-node-leaf', data, node)
+      })
+
+      // 移出节点
+      EventTree.$on('remove-node', (data, node) => {
+        this.$emit('remove-node', data, node)
+      })
+
+      // 刷新节点
+      EventTree.$on('refresh-node', (data, node) => {
+        this.$emit('refresh-node', data, node)
+      })
     })
   },
   methods: {
@@ -86,15 +103,6 @@ export default {
     },
     getCheckedTreeData({ leaf = true } = {}) {
       return this.getCheckedChildren({ leaf, tree: true })
-    },
-    onClickNode(data, node) {
-      this.$emit('click-node', data, node)
-    },
-    onClickNodeBranch(data, node) {
-      this.$emit('click-node-branch', data, node)
-    },
-    onClickNodeLeaf(data, node) {
-      this.$emit('click-node-leaf', data, node)
     }
   }
 }

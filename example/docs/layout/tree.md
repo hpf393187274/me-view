@@ -137,3 +137,5 @@ export default {
 | click-node        | 点击节点        | data,node |
 | click-node-leaf   | 点击节点 `叶子` | data,node |
 | click-node-branch | 点击节点 `分支` | data,node |
+| remove-node       | 移出节点        | data,node |
+| refresh-node      | 刷新节点        | data,node |
