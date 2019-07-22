@@ -12,7 +12,7 @@
     v-model="value__"
   >
     <template #options>
-      <me-table :border="border" :data="data" :node-key="fieldValue" @click-row="onClickRow" ref="table" selected-checked>
+      <me-table :border="border" :data="data" :node-key="fieldValue" @click-row="onClickRow" checked-directly ref="table">
         <slot>
           <me-table-column field="value" label="值" />
           <me-table-column field="label" label="标签" />

@@ -37,6 +37,14 @@ export default {
   checked: Boolean,
   placeholder: String,
   /**
+   * 严格的选择：默认：true, false 父子联动互不干涉
+   */
+  checkedStrictly: { type: Boolean, default: true },
+  /**
+   *  开启后：checked and selected 保持一致
+   */
+  checkedDirectly: { type: Boolean, default: true },
+  /**
    * 滚动条
    */
   overflow: { type: String, default: 'visible' },

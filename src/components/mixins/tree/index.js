@@ -2,9 +2,9 @@
 export default {
   props: {
     /**
-     * 是否展开的
+     * 展开所有
      */
-    expanded: Boolean,
+    expandedAll: Boolean,
     /**
      * 可展开的
      */
@@ -17,11 +17,6 @@ export default {
      * 点击节点是否展开
      */
     expandedNodeClick: { type: Boolean, default: true },
-    /**
-     * 严格的选择：默认：true, false 父子联动互不干涉
-     */
-    checkedStrict: { type: Boolean, default: true },
-
     /**
      * 是否每次只打开一个同级树节点展开
      * 手风琴模式

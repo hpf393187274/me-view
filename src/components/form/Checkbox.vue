@@ -8,7 +8,7 @@
       ref="checkbox"
       type="checkbox"
       v-model="currentValue"
-    >
+    />
     <span v-if="label">{{ label }}</span>
   </label>
 </template>
@@ -24,6 +24,11 @@ export default {
   props: {
     checkedHalf: Boolean,
     value: Boolean
+  },
+  computed: {
+    styles() {
+      return {}
+    }
   },
   watch: {
     value(newValue) {

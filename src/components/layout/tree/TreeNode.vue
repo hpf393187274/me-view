@@ -21,10 +21,11 @@
         :action="action"
         :checkbox="checkbox"
         :checked="checkedChildren || data.checked === true"
-        :checked-strict="checkedStrict"
+        :checked-directly="checkedDirectly"
+        :checked-strictly="checkedStrictly"
         :data="node"
         :expandable="expandable"
-        :expanded="expanded"
+        :expanded-all="expandedAll"
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
         :indent="indent__ + 1"
@@ -57,7 +58,7 @@ export default {
     level: { type: Number, default: 1 }
   },
   created() {
-    this.renderFirst = this.nodeBranch && (this.expandable === false || this.expanded || this.expandedLevel >= this.level)
+    this.renderFirst = this.nodeBranch && (this.expandable === false || this.expandedAll || this.expandedLevel >= this.level)
   },
   watch: {
     checked(newValue) {
@@ -67,7 +68,7 @@ export default {
   },
   data() {
     return {
-      expanded__: this.expandable === false || this.expanded || this.expandedLevel >= this.level,
+      expanded__: this.expandable === false || this.expandedAll || this.expandedLevel >= this.level,
       /**
        * 第一次渲染
        */

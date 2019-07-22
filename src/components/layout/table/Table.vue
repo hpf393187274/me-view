@@ -1,5 +1,6 @@
 <template>
   <div :class="classes">
+    {{checkedDirectly}}
     <template v-if="$slots.header">
       <div class="me-row table-toolbar">
         <slot name="header" />
@@ -12,6 +13,7 @@
       :checked="checkedHeader"
       :checked-half="checkedHalf"
       :columns="columns"
+      :multiple="multiple"
       :width="width__"
       @click-checkbox="handlerCheckboxHeader"
       ref="header"
@@ -21,17 +23,16 @@
         :center="center"
         :checkbox="checkbox"
         :checked="checkedBody"
-        :checked-selected="checkedSelected"
-        :class="{'row-selected': !selectedChecked && active === item[nodeKey]}"
+        :checked-directly="checkedDirectly"
+        :class="{'row-selected': active === item[nodeKey]}"
         :columns="columns"
         :data="item"
         :index="index"
         :key="item[nodeKey]"
-        :selected-checked="selectedChecked"
         :width="width__"
-        @click-checkbox="handlerCheckboxBody"
-        @click-column="handlerColumn"
-        @click-row="handlerRow"
+        @click-checkbox="onCheckboxBody"
+        @click-column="onColumn"
+        @click-row="onRow"
         v-for="(item,index) in data"
       />
     </div>
@@ -52,8 +53,6 @@ export default {
   props: {
     nodeKey: { type: String, default: 'id' },
     field: { type: String, default: '' },
-    selectedChecked: Boolean,
-    checkedSelected: Boolean,
     data: { type: Array, default: () => [] }
   },
   computed: {
@@ -95,6 +94,8 @@ export default {
       checkedHalf: false,
       checkedBodyNumber: 0,
       checkedRows: [],
+      checkedSingleNode: null,
+      checkedSingleRow: null,
       width__: '100%'
     }
   },
@@ -130,24 +131,39 @@ export default {
       value && this.checkedRows.push(...this.data)
     },
     /**
+     * 如果单选，则记录选择的节点，并清除上一次选择
+     */
+    handleCheckedSingleNode(data, node) {
+      if (this.checkedSingleNode !== null) {
+        this.checkedSingleNode.setChecked(false)
+      }
+      this.checkedSingleNode = node
+      this.checkedSingleRow = data
+    },
+    /**
      * 点击 Body Row checkbox
      */
-    handlerCheckboxBody(value, row, index) {
-      this.checkedBodyNumber += value ? 1 : -1
-      value ? this.appendCheckedRows(row) : this.removeCheckedRows(row)
-      this.$emit('click-checkbox', value, row, index)
+    onCheckboxBody(value, row, index, node) {
+      if (this.multiple) {
+        this.checkedBodyNumber += value ? 1 : -1
+        value ? this.appendCheckedRows(row) : this.removeCheckedRows(row)
+      } else {
+        this.checkedBodyNumber = value ? 1 : 0
+        this.handleCheckedSingleNode(row, node)
+      }
+      this.$emit('click-checkbox', value, row, index, node)
     },
     /**
      * 点击 Row
      */
-    handlerRow(row, index) {
+    onRow(row, index, node) {
       this.active = row[this.nodeKey]
-      this.$emit('click-row', row, index)
+      this.$emit('click-row', row, index, node)
     },
     /**
      * 点击 Column
      */
-    handlerColumn(...value) {
+    onColumn(...value) {
       this.$emit('click-column', ...value)
     },
     getColumns() {

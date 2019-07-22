@@ -21,7 +21,7 @@ export default {
      */
     alterParent() {
       const { allCheckedNumber, checkedHalfNumber } = this.getCheckedNumber()
-      if (this.checkedStrict) {
+      if (this.checkedStrictly) {
         this.allChecked = allCheckedNumber === this.nodeNumber
         if (checkedHalfNumber > 0) {
           this.checkedHalf = true
@@ -64,7 +64,7 @@ export default {
       * @param {Boolean} value 状态
       */
     alterChildrenNodeChecked(value) {
-      if (this.checkedStrict === false) { return }
+      if (this.checkedStrictly === false) { return }
       this.setAllCheckedNumber(value ? this.nodeNumber : 0)
       this.$nextTick(function () {
         for (const node of this.getChildrenNodeList()) {

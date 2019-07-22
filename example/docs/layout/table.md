@@ -1,10 +1,10 @@
 # Table 表格
-<!-- 
+
 ## 基础用法
-::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
+::: demo `data` 数据 `border` 边框
 ```html
 <template>
-  <me-table :data="data" border>
+  <me-table :data="data" border >
     <me-table-column field="id" label="编号"></me-table-column>
     <me-table-column field="a" label="a"></me-table-column>
     <me-table-column field="b" label="b"></me-table-column>
@@ -31,15 +31,15 @@ export default {
 }
 </script>
 ```
-::: -->
+:::
 
 
 ## Checkbox 用法
-::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
+::: demo ` checked-directly` 关联选择 `checkbox` 复选框 `multiple` 多选
 ```html
 <template>
   <div style="height:400px;">
-    <me-table :data="data" border checkbox center-row selected-checked>
+    <me-table :data="data" border checkbox center-row multiple :checked-directly="false">
       <me-table-column field="id" label="编号"></me-table-column>
       <me-table-column field="a" label="a"></me-table-column>
       <me-table-column field="b" label="b"></me-table-column>
@@ -82,7 +82,7 @@ export default {
 ::: demo `slot header` 工具栏-头部 `slot footer` 工具栏-尾部
 ```html
 <template>
-  <me-table :data="data" border checkbox center-row  selected-checked>
+  <me-table :data="data" border checkbox center-row>
     <template #header>
       <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
       <me-button plain type="primary" icon="icon-minus-square">批量删除</me-button>

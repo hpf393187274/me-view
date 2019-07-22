@@ -14,30 +14,31 @@ export default {
   name: 'MeTableRowBody',
   mixins: [RowMixin],
   props: {
-    data: { type: Object, default: () => ({}) },
-    selectedChecked: Boolean,
-    checkedSelected: Boolean
+    data: { type: Object, default: () => ({}) }
   },
   computed: {
     clesses() {
       return [
         'me-row me-flex table-row',
-        { 'row-selected': this.selectedChecked && this.checked__ }
+        { 'row-selected': this.checkedDirectly && this.checked__ }
       ]
     }
   },
   methods: {
+    setChecked(value) {
+      this.checked__ = value
+    },
     hasScrollbar() {
       const body = this.$refs.body
       return body.scrollHeight > (body.innerHeight || body.clientHeight);
     },
     handlerChecked(value) {
-      this.$emit('click-checkbox', value, this.data, this.index)
+      this.$emit('click-checkbox', value, this.data, this.index, this)
     },
     handlerRow() {
-      if (this.selectedChecked) {
+      if (this.checkedDirectly) {
         this.checked__ = !this.checked__
-        this.$emit('click-checkbox', this.checked__, this.data, this.index)
+        this.$emit('click-checkbox', this.checked__, this.data, this.index, this)
       }
       this.$emit('click-row', this.data, this.index)
     },
