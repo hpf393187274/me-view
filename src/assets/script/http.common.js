@@ -1,33 +1,48 @@
 import axios from 'axios'
+import tools from './tools.common'
+import jsonp from './tools.common'
 /**
  * 默认配置
  */
 const defaultConfig = {
   'baseURL': '/',
   'timeout': 10000,
-  'token': 'AUTH_TOKEN',
-  'contentType': 'application/x-www-form-urlencoded'
+  'tokenKey': 'authorization',
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'X-Requested-With': 'XMLHttpRequest'
 }
+
+/**
+ * 默认配置
+ */
+const newConfig = Object.assign({}, defaultConfig)
 
 /**
  * 默认拦截器：请求
  */
 const defaultRequest = {
-  success(config) { return config },
-  failure(error) { return Promise.reject(error) }
+  resolve(config) { return config },
+  reject(error) { return Promise.reject(error) }
 }
 /**
  * 默认拦截器：相应
  */
 const defaultResponse = {
-  success(response) { return response.data.data },
-  failure(error) { return Promise.reject(error) }
+  resolve(response) { return response.data.data },
+  reject(error) { return Promise.reject(error) }
 }
+
 
 const basal = (url, method, { params = {}, data = {}, ...options } = {}) => {
   return axios({ url, method, params, data, ...options })
 }
 export default {
+  getConfig() {
+    return { ...newConfig }
+  },
+  getConfigKey(key) {
+    return Reflect.get(newConfig, key)
+  },
   /**
    * 初始化拦截器
    * @param {Object} param 配置 
@@ -35,51 +50,66 @@ export default {
    * @param {Object} param.response 相应拦截器
    */
   initIinterceptor({ request = defaultRequest, response = defaultResponse } = {}) {
-    axios.interceptors.request.use(request.success, request.failure)
-    axios.interceptors.response.use(response.success, response.failure)
+    axios.interceptors.request.use(request.resolve, request.failure)
+    axios.interceptors.response.use(response.resolve, response.failure)
   },
   /**
    * 初始化拦Request截器
    * @param {Object} param 配置 
-   * @param {Function} param.success 成功的
+   * @param {Function} param.resolve 成功的
    * @param {Function} param.failure 失败的
    */
-  initIinterceptorRequest({ success = defaultRequest.success, failure = defaultRequest.failure } = {}) {
-    axios.interceptors.request.use(success, failure)
+  initIinterceptorRequest({ resolve = defaultRequest.resolve, reject = defaultRequest.reject } = {}) {
+    axios.interceptors.request.use(resolve, reject)
   },
 
   /**
    * 初始化拦Response截器
    * @param {Object} param 配置 
-   * @param {Function} param.success 成功的
-   * @param {Function} param.failure 失败的
+   * @param {Function} param.resolve 成功的
+   * @param {Function} param.reject 失败的
    */
-  initIinterceptorResponse({ success = defaultResponse.success, failure = defaultResponse.failure } = {}) {
-    axios.interceptors.response.use(success, failure)
+  initIinterceptorResponse({ resolve = defaultResponse.resolve, reject = defaultResponse.reject } = {}) {
+    axios.interceptors.response.use(resolve, reject)
   },
   /**
    * 初始化配置
    * @param {Object} option 
    */
-  initConfig({ baseURL, timeout, token, contentType } = defaultConfig) {
-    this.updateConfig({ baseURL, timeout, token, contentType })
+  initConfig(options) {
+    this.updateConfig(Object.assign(newConfig, options))
   },
   /**
    * 更新配置
    * @param {Object} option 
    */
-  updateConfig({ baseURL, timeout, token, contentType } = {}) {
-    timeout && (axios.defaults.timeout = timeout)
-    baseURL && (axios.defaults.baseURL = baseURL)
-    token && (axios.defaults.headers.common['token'] = token)
-    contentType && (axios.defaults.headers.common['Content-Type'] = contentType)
+  updateConfig(options = {}) {
+    const config = Object.assign({}, options)
+    tools.isNotEmpty(config.timeout) && (axios.defaults.timeout = config.timeout);
+    tools.isNotEmpty(config.baseURL) && (axios.defaults.baseURL = config.baseURL);
+
+    const contentType = Reflect.get(config, 'Content-Type');
+    if (tools.isNotEmpty(contentType)) {
+      Reflect.set(axios.defaults.headers, 'Content-Type', contentType)
+    }
+
+    const requested = Reflect.get(config, 'X-Requested-With');
+    if (tools.isNotEmpty(requested)) {
+      Reflect.set(axios.defaults.headers, 'X-Requested-With', requested)
+    }
+  },
+  setTokenValue(value) {
+    this.setToken(newConfig.tokenKey, value)
+  },
+  setToken(key, value) {
+    Reflect.set(axios.defaults.headers, key, value)
   },
   /**
    * 请求：get
    * @param {String} url 
    * @param {Object} option 
    */
-  get(url, option) {
+  get(url, option = {}) {
     return basal(url, 'GET', option)
   },
   /**
@@ -87,8 +117,8 @@ export default {
    * @param {String} url 
    * @param {Object} option 
    */
-  pust(url, option) {
-    return basal(url, 'PUST', option)
+  post(url, option) {
+    return basal(url, 'POST', option)
   },
   /**
    * 请求：put
@@ -121,5 +151,8 @@ export default {
    */
   head(url, option) {
     return basal(url, 'HEAD', option)
+  },
+  jsonp(url) {
+    return jsonp(url)
   }
 }

@@ -55,6 +55,17 @@ export default {
     }
     return result
   },
+  getUUId() {
+    var s = [];
+    var hexDigits = "0123456789abcdef";
+    for (var i = 0; i < 36; i++) {
+      s.push(hexDigits.substr(Math.floor(Math.random() * 0x10), 1))
+    }
+    s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    s[8] = s[13] = s[18] = s[23] = "-";
+    return s.join('');
+  },
   arrayRemove(target, condition) {
     if (type.isNotArray(target)) { return Promise.reject('target is not Array') }
 
@@ -162,13 +173,22 @@ export default {
     }
     return target.flatMap(item => this.clone(item))
   },
+  sendRedirect(url) {
+    window.location.href = url
+  },
+  /**
+   * 如果存在 iframe
+   */
+  isSameHost() {
+    return window.top.location.host === window.location.host
+  },
   /**
    * 获取 Url 参数
    * @param {String} key 参数名
    */
-  urlParam(key) {
-    const search = window.location.search
-    const result = search.replace('?', '').replace(/&/g, ',').replace(/(\w+)=?(\w+|)/ig, '"$1":"$2"')
+  urlParam({ target, key } = { target: window.location.search }) {
+    let result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
+    result = result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '"$1":"$2"')
     const params = JSON.parse(`{${result}}`)
     return this.isEmpty(key) ? params : params[key]
   }
