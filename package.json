@@ -1,6 +1,6 @@
 {
   "name": "me-view",
-  "version": "1.0.14",
+  "version": "1.0.16",
   "private": false,
   "main": "dist/lib/index.common.js",
   "scripts": {
@@ -79,6 +79,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/hpf393187274/me-view/issues"
+  },
+  "publishConfig": {
+    "registry": "http://192.168.201.198:9002/repository/npm-hosted"
   },
   "homepage": "https://github.com/hpf393187274/me-view#readme"
 }

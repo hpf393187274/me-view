@@ -1,0 +1,60 @@
+@import (reference) "config.less";
+
+.flex(@type){
+	-webkit-display:flex;
+	display: flex;
+	flex-direction: @type;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+
+
+.border(@color: @color-border) {
+	border: 1px solid @color;
+}
+
+* {
+	box-sizing: border-box;
+}
+.@{PREFIX}-row { 
+	.flex(row);
+}
+.@{PREFIX}-column {
+	.flex(column);
+}
+
+.@{PREFIX}-center {
+	justify-content: center !important;
+	align-items: center !important;
+}
+
+.@{PREFIX}-flex {
+	flex: 1;
+}
+.@{PREFIX}-border {
+	.border;
+}
+
+.@{PREFIX}-main-center{
+	justify-items: center !important;
+}
+.@{PREFIX}-main-start{
+	justify-items: flex-start !important;
+}
+.@{PREFIX}-main-end{
+	justify-items: flex-end !important;
+}
+.@{PREFIX}-cross-center{
+	align-items: center !important;
+}
+.@{PREFIX}-cross-start{
+	align-items: flex-start !important;
+}
+.@{PREFIX}-cross-end{
+	align-items: flex-end !important;
+}
+
+/* 空间不足，可换行 */
+.@{PREFIX}-wrap {
+	flex-wrap: wrap !important;
+}

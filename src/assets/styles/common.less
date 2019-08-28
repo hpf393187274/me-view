@@ -1,7 +1,5 @@
 @import (reference) "config.less";
-* {
-	box-sizing: border-box;
-}
+
 html {
 	height: 100%;
 	padding: 5px;
@@ -24,50 +22,6 @@ body {
 	.flex(row);
 }
 
-.@{PREFIX}-row { 
-	.flex(row);
-}
-.@{PREFIX}-row.@{PREFIX}-center-row{
-	.flex(row);
-	justify-items: center;
-}
-
-.@{PREFIX}-row.@{PREFIX}-center-column{
-	.flex(row);
-	align-items: center;
-}
-
-/* 空间不足，可换行 */
-.@{PREFIX}-wrap {
-	flex-wrap: wrap;
-}
-
-.@{PREFIX}-column {
-	.flex(column);
-}
-.@{PREFIX}-column.@{PREFIX}-center-row{
-	.flex(column);
-	align-items: center;
-}
-
-.@{PREFIX}-column.@{PREFIX}-center-column{
-	.flex(column);
-	justify-items: center;
-}
-
-
-.@{PREFIX}-center {
-	justify-content: center;
-	align-items: center;
-}
-
-
-.@{PREFIX}-flex {
-	flex: 1;
-}
-.@{PREFIX}-border {
-	.border;
-}
 
 .@{PREFIX}-empty {
 	.flex(row);
@@ -82,6 +36,8 @@ body {
 	align-self: center;
 	font-size: 1rem !important;
 }
+
+@import "./layout.less";
 
 @import "./basic/Index.less";
 
