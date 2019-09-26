@@ -6,9 +6,9 @@
         <span class="me-flex">{{ label }}</span>
       </slot>
     </div>
-    <me-line-h/>
+    <me-line-h />
     <div :class="`me-${layout}`" :style="{'overflow':overflow}" class="me-flex me-content">
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>
@@ -17,7 +17,8 @@
 export default {
   name: 'MePanel',
   props: {
-    line: Boolean
+    line: Boolean,
+    icon: String
   }
 }
 </script>

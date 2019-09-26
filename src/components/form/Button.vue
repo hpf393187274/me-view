@@ -2,7 +2,7 @@
   <button :class="classes" :disabled="disabled" :margin="margin" :style="styles" :title="label" @click="click">
     <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
     <span class="button-inner" v-if="$slots.default">
-      <slot/>
+      <slot />
     </span>
   </button>
 </template>
@@ -13,7 +13,8 @@ export default {
   props: {
     type: { type: String, default: 'default' },
     shape: { type: String, default: 'default', validator: value => ['default', 'round', 'circle'].includes(value) },
-    plain: Boolean
+    plain: Boolean,
+    icon: String
   },
   computed: {
     radius() {

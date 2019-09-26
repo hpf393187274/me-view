@@ -63,10 +63,7 @@ export default {
    * 尾部样式
    */
   footerClass: { type: String, default: null },
-  /**
-   * 图标
-   */
-  icon: { type: String, default: null },
+
   /**
    * 形状
    */
