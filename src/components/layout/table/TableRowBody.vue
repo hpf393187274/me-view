@@ -14,6 +14,7 @@ export default {
   name: 'MeTableRowBody',
   mixins: [RowMixin],
   props: {
+    index: Number,
     data: { type: Object, default: () => ({}) }
   },
   computed: {

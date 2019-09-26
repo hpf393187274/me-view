@@ -11,15 +11,11 @@ export default {
   center: Boolean,
   centerRow: Boolean,
   centerColumn: Boolean,
-  index: Number,
   /**
    * flex
    */
   flex: Boolean,
-  /**
-   * 只读
-   */
-  readonly: Boolean,
+
   /**
    * 禁用
    */
@@ -32,7 +28,6 @@ export default {
   margin: String,
   padding: Boolean,
   // width: { type: String, default: '100%' },
-  selected: Boolean,
   checkbox: Boolean,
   checked: Boolean,
   placeholder: String,
@@ -73,18 +68,10 @@ export default {
    */
   icon: { type: String, default: null },
   /**
-   * 图标样式
-   */
-  iconClass: { type: String, default: null },
-  /**
    * 形状
    */
   shape: {
     type: String, default: null,
     validator: value => ['circle'].includes(value)
-  },
-  layout: {
-    type: String, default: 'column',
-    validator: value => ['row', 'column'].includes(value)
   }
 }

@@ -4,8 +4,10 @@ export default {
    * 校验：对象是否为空
    * @param {Object} target 目标
    */
-  isEmpty(target) {
+  isEmpty(target, strict = false) {
     if (target === null || target === undefined) { return true }
+    // if (strict === false) { return false }
+
     if (type.isArray(target) && target.length === 0) { return true }
     if (type.isObject(target) && Object.keys(target).length === 0) { return true }
     if (type.isString(target)) {
@@ -78,6 +80,15 @@ export default {
     if (type.isFunction(condition)) {
       const index = target.findIndex(condition)
       return index === -1 ? Promise.reject('not exist') : Promise.resolve(target.splice(index, 1))
+    }
+  },
+  clearProperty(target, strict) {
+    if (type.isObject(target)) {
+      for (const key in target) {
+        if (this.isEmpty(target[key])) {
+          Reflect.deleteProperty(target, key)
+        }
+      }
     }
   },
   /**

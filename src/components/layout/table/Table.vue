@@ -51,6 +51,7 @@ export default {
     [TableRowBody.name]: TableRowBody
   },
   props: {
+    index: Number,
     nodeKey: { type: String, default: 'id' },
     field: { type: String, default: '' },
     data: { type: Array, default: () => [] }

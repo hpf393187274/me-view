@@ -61,11 +61,11 @@ module.exports = {
                   if (description) {
                     description = md.render(description)
                   }
-
-                  const code = tokens[index + 1].content
-
+                  console.log('description', '-->', 'index = ', index, '-->', description)
+                  const content = tokens[index + 1].content
+                  console.log('content', '-->', 'index = ', index, '-->', content)
                   return `<demo-block>
-                    <template #source>${code}</template>
+                    <template #source>${content}</template>
                     <div>${description}</div>
                   `
                 }

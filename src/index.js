@@ -7,10 +7,10 @@ import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title'
 import 'echarts/lib/component/legend'
 
-import { type, tools, localStorage, http } from '@assets/script/common'
+import { type, tools, local, session, http } from '@assets/script/common'
 import { components, mixins, config } from '@components/index'
 import watermark from '@assets/script/watermark'
-export { type, tools, localStorage, http, watermark }
+export { type, tools, local, session, http, watermark }
 
 export default {
   install(Vue) {
@@ -24,6 +24,7 @@ export default {
     Vue.prototype.$watermark = watermark
     Vue.prototype.$type = type
     Vue.prototype.$tools = tools
-    Vue.prototype.$localStorage = localStorage
+    Vue.prototype.$local = local
+    Vue.prototype.$session = session
   }
 }

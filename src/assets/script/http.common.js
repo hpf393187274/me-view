@@ -1,57 +1,54 @@
 import axios from 'axios'
-import tools from './tools.common'
-import jsonp from './tools.common'
+import Qs from 'qs'
+
+const type_form = 'application/x-www-form-urlencoded; charset=UTF-8'
 /**
  * 默认配置
  */
 const defaultConfig = {
   'baseURL': '/',
   'timeout': 10000,
-  'tokenKey': 'authorization',
-  'Content-Type': 'application/x-www-form-urlencoded',
-  'X-Requested-With': 'XMLHttpRequest'
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'X-Requested-With': 'XMLHttpRequest'
+  }
 }
 
-/**
- * 默认配置
- */
-const newConfig = Object.assign({}, defaultConfig)
 
 /**
  * 默认拦截器：请求
  */
 const defaultRequest = {
-  resolve(config) { return config },
+  resolve(config) {
+    const contentType = Reflect.get(config.headers, 'Content-Type')
+    if (type_form.includes(contentType)) { config.data = Qs.stringify(config.data) }
+    return config
+  },
   reject(error) { return Promise.reject(error) }
 }
 /**
- * 默认拦截器：相应
+ * 默认拦截器：响应
  */
 const defaultResponse = {
-  resolve(response) { return response.data.data },
+  resolve(response) { return response },
   reject(error) { return Promise.reject(error) }
 }
 
+const instance = axios
 
-const basal = (url, method, { params = {}, data = {}, ...options } = {}) => {
-  return axios({ url, method, params, data, ...options })
+const basal = ({ url, method = "GET", params, data, config }) => {
+  return instance({ url, method, params, data, ...config })
 }
-export default {
-  getConfig() {
-    return { ...newConfig }
-  },
-  getConfigKey(key) {
-    return Reflect.get(newConfig, key)
-  },
+const http = {
   /**
    * 初始化拦截器
    * @param {Object} param 配置 
    * @param {Object} param.request 请求拦截器
-   * @param {Object} param.response 相应拦截器
+   * @param {Object} param.response 响应拦截器
    */
-  initIinterceptor({ request = defaultRequest, response = defaultResponse } = {}) {
-    axios.interceptors.request.use(request.resolve, request.failure)
-    axios.interceptors.response.use(response.resolve, response.failure)
+  initIinterceptor({ request, response } = { request: defaultRequest, response: defaultResponse }) {
+    instance.interceptors.request.use(request.resolve, request.reject)
+    instance.interceptors.response.use(response.resolve, response.reject)
   },
   /**
    * 初始化拦Request截器
@@ -59,8 +56,8 @@ export default {
    * @param {Function} param.resolve 成功的
    * @param {Function} param.failure 失败的
    */
-  initIinterceptorRequest({ resolve = defaultRequest.resolve, reject = defaultRequest.reject } = {}) {
-    axios.interceptors.request.use(resolve, reject)
+  initIinterceptorRequest({ resolve, reject } = defaultRequest) {
+    instance.interceptors.request.use(resolve, reject)
   },
 
   /**
@@ -69,90 +66,97 @@ export default {
    * @param {Function} param.resolve 成功的
    * @param {Function} param.reject 失败的
    */
-  initIinterceptorResponse({ resolve = defaultResponse.resolve, reject = defaultResponse.reject } = {}) {
-    axios.interceptors.response.use(resolve, reject)
+  initIinterceptorResponse({ resolve, reject } = defaultResponse) {
+    instance.interceptors.response.use(resolve, reject)
   },
   /**
    * 初始化配置
    * @param {Object} option 
    */
   initConfig(options) {
-    this.updateConfig(Object.assign(newConfig, options))
+    const { headers, ...other } = options
+    const newOptions = {
+      ...Object.assign(defaultConfig, other),
+      headers: { ...Object.assign(defaultConfig.headers, headers) }
+    }
+    this.updateConfig(newOptions)
   },
   /**
    * 更新配置
    * @param {Object} option 
    */
   updateConfig(options = {}) {
-    const config = Object.assign({}, options)
-    tools.isNotEmpty(config.timeout) && (axios.defaults.timeout = config.timeout);
-    tools.isNotEmpty(config.baseURL) && (axios.defaults.baseURL = config.baseURL);
-
-    const contentType = Reflect.get(config, 'Content-Type');
-    if (tools.isNotEmpty(contentType)) {
-      Reflect.set(axios.defaults.headers, 'Content-Type', contentType)
-    }
-
-    const requested = Reflect.get(config, 'X-Requested-With');
-    if (tools.isNotEmpty(requested)) {
-      Reflect.set(axios.defaults.headers, 'X-Requested-With', requested)
-    }
-  },
-  setTokenValue(value) {
-    this.setToken(newConfig.tokenKey, value)
+    const { headers, ...other } = options
+    // for (const key in headers) {
+    //   if (headers.hasOwnProperty(key)) {
+    //     const value = headers[key];
+    //     if (tools.isEmpty(value)) {
+    //       Reflect.deleteProperty(headers, key)
+    //     }
+    //   }
+    // }
+    // for (const key in other) {
+    //   if (other.hasOwnProperty(key)) {
+    //     const value = other[key];
+    //     if (tools.isEmpty(value)) {
+    //       Reflect.deleteProperty(other, key)
+    //     }
+    //   }
+    // }
+    Object.assign(instance.defaults, other)
+    Object.assign(instance.defaults.headers, headers)
   },
   setToken(key, value) {
-    Reflect.set(axios.defaults.headers, key, value)
+    Reflect.set(instance.defaults.headers, key, value)
   },
   /**
    * 请求：get
    * @param {String} url 
-   * @param {Object} option 
+   * @param {Object} params 数据
+   * @param {Object} config 配置
    */
-  get(url, option = {}) {
-    return basal(url, 'GET', option)
+  get(url, params = {}, config = {}) {
+    return basal({ url, method: 'GET', params, config })
   },
   /**
    * 请求：pust
    * @param {String} url 
-   * @param {Object} option 
+   * @param {Object} data 数据
+   * @param {Object} config 配置
    */
-  post(url, option) {
-    return basal(url, 'POST', option)
+  post(url, data = {}, config = {}) {
+    return basal({ url, method: 'POST', data, config })
   },
   /**
    * 请求：put
    * @param {String} url 
-   * @param {Object} option 
+   * @param {Object} data 数据
+   * @param {Object} config 配置
    */
-  put(url, option) {
-    return basal(url, 'PUT', option)
+  put(url, data = {}, config = {}) {
+    return basal({ url, method: 'PUT', data, config })
   },
   /**
    * 请求：delete
-   * @param {String} url 
-   * @param {Object} option 
+ * @param {String} url 
+   * @param {Object} params 数据
+   * @param {Object} config 配置
    */
-  delete(url, option) {
-    return basal(url, 'DELETE', option)
+  delete(url, params = {}, config = {}) {
+    return basal({ url, method: 'DELETE', params, config })
   },
   /**
    * 请求：patch
    * @param {String} url 
-   * @param {Object} option 
+   * @param {Object} data 数据
+   * @param {Object} config 配置
    */
-  patch(url, option) {
-    return basal(url, 'PATCH', option)
+  patch(url, data = {}, config = {}) {
+    return basal({ url, method: 'PATCH', data, config })
   },
-  /**
-   * 请求：head
-   * @param {String} url 
-   * @param {Object} option 
-   */
-  head(url, option) {
-    return basal(url, 'HEAD', option)
-  },
-  jsonp(url) {
-    return jsonp(url)
+  ajax({ url, method, params, data, ...config }) {
+    return basal({ url, method, params, data, ...config })
   }
 }
+http.initIinterceptor()
+export default http

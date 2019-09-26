@@ -10,6 +10,8 @@
 export default {
   name: 'MeComboOption',
   props: {
+    selected: Boolean,
+    index: Number,
     data: { type: Object, default() { return {} } },
     fieldLabel: { type: String, default: 'label' }
   },

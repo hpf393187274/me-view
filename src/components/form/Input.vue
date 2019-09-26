@@ -32,6 +32,9 @@
 const types = ['text', 'number', 'email', 'password']
 export default {
   name: 'MeInput',
+  props: {
+    readonly: Boolean
+  },
   data() {
     return {
       left: 8,
