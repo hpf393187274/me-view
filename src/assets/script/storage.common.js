@@ -1,32 +1,35 @@
 import tools from './tools.common'
 import type from './type.common'
-const localStorage = window.localStorage
-// const sessionStorage = window.sessionStorage
 
-export default {
+export default class Storage {
+  constructor(storage) {
+    this.storage = tools.isEmpty(storage) ? window.localStorage : storage
+  }
   get(key) {
     if (tools.isEmpty(key)) {
       return null
     }
-    const value = localStorage.getItem(key)
+    const value = this.storage.getItem(key)
     if (tools.isEmpty(value)) {
       return null
     }
     return JSON.parse(value)
-  },
+  }
   set(key, value) {
     if (tools.isEmpty(key) || tools.isEmpty(value)) {
       return
     }
-    localStorage.setItem(key, JSON.stringify(value))
-  },
-  clear() { },
+    this.storage.setItem(key, JSON.stringify(value))
+  }
+  clear() { }
+
   remove(key) {
     if (tools.isEmpty(key)) {
       return
     }
-    localStorage.removeItem(key)
-  },
+    this.storage.removeItem(key)
+  }
+
   arrayAppend(key, value, callback = (source, target) => source === target) {
     if (type.isNotFunction(callback)) { return }
     let list = this.get(key)
@@ -40,7 +43,7 @@ export default {
     if (tools.isNotEmpty(target)) { return }
     list.push(value)
     this.set(key, list)
-  },
+  }
   arrayRemove(key, value, callback = (source, target) => source === target) {
     if (type.isNotFunction(callback)) { return }
     const list = this.get(key)
