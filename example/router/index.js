@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import basic from './basic'
 import layout from './layout'
 import form from './form'
-
+import common from './common'
 Vue.use(Router)
 
 export default new Router({
@@ -13,7 +13,7 @@ export default new Router({
     {
       path: '/',
       component: () => import('../Layout.vue'),
-      children: [...layout, ...form, ...basic]
+      children: [...layout, ...form, ...basic, ...common]
     }
   ]
 })

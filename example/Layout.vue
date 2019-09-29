@@ -19,6 +19,14 @@ export default {
     return {
       data: [
         {
+          label: 'Common 公共',
+          children: [
+            { label: 'Tools 常用工具', path: '/common/tools' },
+            { label: 'Type 类型判断', path: '/common/type' },
+            { label: 'Storage 数据存储', path: '/common/storage' },
+          ]
+        },
+        {
           label: 'Basic 基础',
           children: [
             { label: 'Row 行布局', path: '/basic/row' },

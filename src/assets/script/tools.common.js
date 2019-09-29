@@ -4,16 +4,16 @@ export default {
    * 校验：对象是否为空
    * @param {Object} target 目标
    */
-  isEmpty(target, strict = false) {
+  isEmpty(target) {
     if (target === null || target === undefined) { return true }
-    // if (strict === false) { return false }
-
-    if (type.isArray(target) && target.length === 0) { return true }
-    if (type.isObject(target) && Object.keys(target).length === 0) { return true }
     if (type.isString(target)) {
       const value = this.trim(target)
       return value === '' || value === 'null' || value === 'undefined'
     }
+
+    if (type.isArray(target) && target.length === 0) { return true }
+    if (type.isObject(target) && Object.keys(target).length === 0) { return true }
+
     return false
   },
   /**
@@ -82,7 +82,7 @@ export default {
       return index === -1 ? Promise.reject('not exist') : Promise.resolve(target.splice(index, 1))
     }
   },
-  clearProperty(target, strict) {
+  clearProperty(target) {
     if (type.isObject(target)) {
       for (const key in target) {
         if (this.isEmpty(target[key])) {
@@ -194,10 +194,10 @@ export default {
     return window.top.location.host === window.location.host
   },
   /**
-   * 获取 Url 参数
-   * @param {String} key 参数名
-   */
-  urlParam({ target, key } = { target: window.location.search }) {
+  * 获取 Url 参数
+  * @param {String} key 参数名
+  */
+  urlParam(key, target = window.location.search) {
     let result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
     result = result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '"$1":"$2"')
     const params = JSON.parse(`{${result}}`)

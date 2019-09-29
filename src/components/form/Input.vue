@@ -135,7 +135,7 @@ export default {
       if (this.type === 'number') {
         return Number(value)
       }
-      return this.$type.isArray(this.value) ? value.split(',') : value
+      return this.$type.isArray(this.value) ? value : value.split(',')
     },
     initValue(value) {
       if (this.$type.isObject(value)) {
