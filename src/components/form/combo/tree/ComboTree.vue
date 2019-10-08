@@ -7,11 +7,20 @@
     :field-value="fieldValue"
     :multiple="multiple"
     :placeholder="placeholder"
+    :readonly="readonly"
     ref="combo"
     v-model="value__"
   >
     <template #options>
-      <me-tree :border="border" :data="data" :expanded-node-click="false" :node-key="fieldValue" @click-node="onClickNode" ref="tree"></me-tree>
+      <me-tree
+        :border="border"
+        :data="data"
+        :expanded-level="expandedLevel"
+        :expanded-node-click="false"
+        :node-key="fieldValue"
+        @click-node="onClickNode"
+        ref="tree"
+      ></me-tree>
     </template>
   </me-combo-select>
 </template>
@@ -21,11 +30,14 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboTree',
+  props: {
+    expandedLevel: { type: Number }
+  },
   watch: {
     value(value) { this.value__ = [...value] }
   },
   created() {
-    this.value__ = [...this.value]
+    this.value__ = [...(this.value || [])]
   },
   methods: {
     onClickNode(row, index) {

@@ -7,6 +7,7 @@
     :field-value="fieldValue"
     :multiple="multiple"
     :placeholder="placeholder"
+    :readonly="readonly"
     @change-status="onChangeStatus"
     ref="combo"
     v-model="value__"
@@ -31,7 +32,7 @@ export default {
     value(value) { this.value__ = [...value] }
   },
   created() {
-    this.value__ = [...this.value]
+    this.value__ = [...(this.value || [])]
   },
   methods: {
     onClickRow(row, index) {

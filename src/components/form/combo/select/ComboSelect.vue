@@ -1,6 +1,5 @@
 ﻿<template>
   <div :class="classes">
-    <div>value={{value}}---value__={{value__}}</div>
     <me-input
       :clearable="clearable || readonly__"
       :disabled="disabled"
@@ -47,7 +46,7 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboSelect',
-  props: { readonly: Boolean, index: Number },
+  props: { index: Number },
   components: {
 
     [Option.name]: Option
@@ -67,7 +66,7 @@ export default {
   },
   computed: {
     classes() {
-      return ['me-combo']
+      return ['me-combo', 'me-flex']
     },
     iconSuffix() {
       return this.status ? this.$config.icon.angle_down_fill : this.$config.icon.angle_up_fill
