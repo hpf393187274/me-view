@@ -76,7 +76,9 @@ export default {
 ```html
 
 <div class="me-row">
-  <me-input icon-prefix="icon-user" clearable icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
+  <me-input icon-prefix="icon-user" clearable  placeholder="请输入姓名"></me-input>
+  <me-line-v></me-line-v>
+  <me-input clearable icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
 </div>
 <script>
 export default {
