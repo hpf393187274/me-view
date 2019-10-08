@@ -14,11 +14,13 @@
       ref="target"
       v-model="currentValue"
     />
-    <div class="me-row input-icon" ref="prefix" style="left: 5px;">
-      <slot name="prefix">
+
+    <slot name="prefix">
+      <div class="me-row input-icon" ref="prefix" style="left: 5px;">
         <me-icon :disabled="disabled" @click="clickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
-      </slot>
-    </div>
+      </div>
+    </slot>
+
     <div class="me-row input-icon" ref="suffix" style="right: 5px;">
       <me-icon :disabled="disabled" @click="reset" v-if="clearable" v-show="active">{{$config.icon.clear}}</me-icon>
       <slot name="suffix">
@@ -33,6 +35,16 @@ const types = ['text', 'number', 'email', 'password']
 export default {
   name: 'MeInput',
   props: {
+    required: { type: Boolean },
+    type: { type: String, default: 'text', validator: value => types.includes(value) },
+    value: { type: [Number, String, Array], default: '' },
+    min: { type: Number, default: 0 },
+    max: { type: Number, default: 1000000 },
+    minLength: { type: Number, default: 0 },
+    maxLength: { type: Number, default: 0 },
+    iconPrefix: String,
+    iconSuffix: String,
+    pattern: { type: String },
     readonly: Boolean
   },
   data() {
@@ -57,7 +69,7 @@ export default {
   computed: {
     classes() {
       return [
-        'me-row me-input',
+        'me-row me-flex me-input',
         {
           'me-readonly': this.readonly,
           'me-disabled': this.disabled,
@@ -94,18 +106,6 @@ export default {
       }
       return { status: false }
     }
-  },
-  props: {
-    required: { type: Boolean },
-    type: { type: String, default: 'text', validator: value => types.includes(value) },
-    value: { type: [Number, String, Array], default: '' },
-    min: { type: Number, default: 0 },
-    max: { type: Number, default: 1000000 },
-    minLength: { type: Number, default: 0 },
-    maxLength: { type: Number, default: 0 },
-    iconPrefix: String,
-    iconSuffix: String,
-    pattern: { type: String }
   },
   watch: {
     value(newValue) {

@@ -1,6 +1,5 @@
 <template>
   <div :class="classes">
-    {{checkedDirectly}}
     <template v-if="$slots.header">
       <div class="me-row table-toolbar">
         <slot name="header" />
