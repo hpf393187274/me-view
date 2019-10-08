@@ -2,7 +2,7 @@ import Input from './Input'
 import Checkbox from './Checkbox'
 import Button from './Button'
 import combo from './combo'
-import Item from './Item'
+import FromItem from './FromItem'
 export default [
-  Input, Checkbox, Button, ...combo, Item
+  Input, Checkbox, Button, ...combo, FromItem
 ]
