@@ -106,8 +106,10 @@ export default {
 | blur-input-before   | 文本框失焦 `之前`   | 当前文本值 |
 | blur-input-after    | 文本框失焦 `之后`   | 当前文本值 |
 
-## Input Slot
+<!--
+ ## Input Slot
 | 名称   | 描述     |
 | ------ | -------- |
 | prefix | 前置图标 |
 | suffix | 前置图标 |
+-->    

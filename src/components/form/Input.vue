@@ -14,14 +14,13 @@
       ref="target"
       v-model="currentValue"
     />
-
-    <slot name="prefix">
-      <div class="me-row input-icon" ref="prefix" style="left: 5px;">
+    <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="boolean(iconPrefix)">
+      <slot name="prefix">
         <me-icon :disabled="disabled" @click="clickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
-      </div>
-    </slot>
+      </slot>
+    </div>
 
-    <div class="me-row input-icon" ref="suffix" style="right: 5px;">
+    <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="clearable || boolean(iconSuffix)">
       <me-icon :disabled="disabled" @click="reset" v-if="clearable" v-show="active">{{$config.icon.clear}}</me-icon>
       <slot name="suffix">
         <me-icon :disabled="disabled" @click="clickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
@@ -62,8 +61,8 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.left += this.$refs.prefix.offsetWidth
-      this.right += this.$refs.suffix.offsetWidth
+      this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
+      this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
     })
   },
   computed: {
