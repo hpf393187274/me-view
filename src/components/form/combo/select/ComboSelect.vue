@@ -48,7 +48,6 @@ export default {
   name: 'MeComboSelect',
   props: { index: Number },
   components: {
-
     [Option.name]: Option
   },
   data() {

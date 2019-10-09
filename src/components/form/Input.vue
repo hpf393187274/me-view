@@ -14,13 +14,13 @@
       ref="target"
       v-model="currentValue"
     />
-    <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="boolean(iconPrefix)">
+    <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="boolean(iconPrefix) || $slots.prefix">
       <slot name="prefix">
         <me-icon :disabled="disabled" @click="clickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
       </slot>
     </div>
 
-    <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="clearable || boolean(iconSuffix)">
+    <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="clearable || boolean(iconSuffix) || $slots.suffix">
       <me-icon :disabled="disabled" @click="reset" v-if="clearable" v-show="active">{{$config.icon.clear}}</me-icon>
       <slot name="suffix">
         <me-icon :disabled="disabled" @click="clickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
@@ -134,7 +134,7 @@ export default {
       if (this.type === 'number') {
         return Number(value)
       }
-      return this.$type.isArray(this.value) ? value : value.split(',')
+      return value
     },
     initValue(value) {
       if (this.$type.isObject(value)) {

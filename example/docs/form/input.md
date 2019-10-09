@@ -4,9 +4,9 @@
 ## 基础用法
 ::: demo `clearable` 可清除的
 ```html
-
+结果：{{form}}
 <me-column>
-  <me-input clearable placeholder="请输入姓名"></me-input>
+  <me-input clearable placeholder="请输入姓名" v-model="form.userName"></me-input>
   <me-input clearable readonly placeholder="我是只读的"></me-input>
   <me-input clearable disabled placeholder="我是禁用的"></me-input>
 </me-column>
@@ -14,6 +14,9 @@
 export default {
   data() {
     return {
+      form : {
+        userName:''
+      }
     }
   }
 }

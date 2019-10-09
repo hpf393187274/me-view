@@ -6,8 +6,9 @@
 ```html
 
 <div class="me-column">
-  <me-combo-select :data="data"></me-combo-select>
-  <me-combo-select clearable :data="data"></me-combo-select>
+
+  <me-combo-select clearable :data="data" v-model="form.province"></me-combo-select>
+  <me-combo-select  :data="data" v-model="form.province"></me-combo-select>
   <me-combo-select :data="data" readonly value="1"></me-combo-select>
   <me-combo-select :data="data" readonly value="2"></me-combo-select>
   <me-combo-select :data="data" disabled value="3"></me-combo-select>
@@ -16,6 +17,10 @@
 export default {
   data() {
     return {
+      form: {
+        provinces: ['1'],
+        province:''
+      },
       data: [
         { label: '山西省', value: '1' },
         { label: '陕西省', value: '2' },
@@ -33,9 +38,9 @@ export default {
 ## 多选用法
 ::: demo `multiple` 多选的 `checkbox`
 ```html
-
+结果：{{form}}
 <div class="me-column">
-  <me-combo-select :data="data" multiple :value="['1']"></me-combo-select>
+  <me-combo-select :data="data" multiple v-model="form.provinces"></me-combo-select>
   <me-combo-select :data="data" multiple disabled :value="['2']"></me-combo-select>
   <me-combo-select :data="data" multiple :value="['1', '2']"></me-combo-select>
 </div>
@@ -44,6 +49,7 @@ export default {
 export default {
   data() {
     return {
+      
       data: [
         { label: '山西省', value: '1' },
         { label: '陕西省', value: '2' },
