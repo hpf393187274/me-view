@@ -1,5 +1,5 @@
 ﻿<template>
-  <div :class="classes" :title="invalid.message" @mouseenter="disabled === false && (active = true)" @mouseleave="active = false">
+  <div :class="classes" :title="invalid.message" @mouseenter="onMouseenter" @mouseleave="onMouseleave">
     <input
       :disabled="disabled"
       :max="max"
@@ -12,7 +12,7 @@
       @click="clickInput"
       class="me-flex input-inner"
       ref="target"
-      v-model="currentValue"
+      v-model.lazy.trim="currentValue"
     />
     <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="boolean(iconPrefix) || $slots.prefix">
       <slot name="prefix">
@@ -21,7 +21,7 @@
     </div>
 
     <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="clearable || boolean(iconSuffix) || $slots.suffix">
-      <me-icon :disabled="disabled" @click="reset" v-if="clearable" v-show="active">{{$config.icon.clear}}</me-icon>
+      <me-icon :disabled="disabled" @click="reset" v-if="disabled === false && clearable" v-show="active">{{$config.icon.clear}}</me-icon>
       <slot name="suffix">
         <me-icon :disabled="disabled" @click="clickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
       </slot>
@@ -33,6 +33,9 @@
 const types = ['text', 'number', 'email', 'password']
 export default {
   name: 'MeInput',
+  model: {
+    props: 'value', event: 'change'
+  },
   props: {
     required: { type: Boolean },
     type: { type: String, default: 'text', validator: value => types.includes(value) },
@@ -88,8 +91,7 @@ export default {
       return value
     },
     paddingRight() {
-      let value =
-        this.clearable === true && (value += 10)
+      let value = this.clearable === true && (value += 10)
       return value
     },
     pattern__() {
@@ -122,12 +124,17 @@ export default {
     }
   },
   methods: {
+    onMouseenter() {
+      if (this.disabled || this.readonly) { return }
+      this.active = true
+    },
+    onMouseleave() {
+      if (this.disabled || this.readonly) { return }
+      this.blur()
+      this.active = false
+    },
     updateValue(value) {
-      // if (this.$type.isArray(this.value)) {
-      //   return
-      // }
       const newValue = this.convertValue(value)
-      this.$emit('input', newValue)
       this.$emit('change', newValue)
     },
     convertValue(value) {
@@ -166,6 +173,9 @@ export default {
     },
     focus() {
       this.$refs.target.focus()
+    },
+    blur() {
+      this.$refs.target.blur()
     },
     clickSuffix() {
       this.$emit('click-suffix-before', this.currentValue)
