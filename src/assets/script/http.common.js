@@ -46,7 +46,7 @@ const http = {
    * @param {Object} param.request 请求拦截器
    * @param {Object} param.response 响应拦截器
    */
-  initIinterceptor({ request, response } = { request: defaultRequest, response: defaultResponse }) {
+  initInterceptor({ request, response } = { request: defaultRequest, response: defaultResponse }) {
     instance.interceptors.request.use(request.resolve, request.reject)
     instance.interceptors.response.use(response.resolve, response.reject)
   },
@@ -56,7 +56,7 @@ const http = {
    * @param {Function} param.resolve 成功的
    * @param {Function} param.failure 失败的
    */
-  initIinterceptorRequest({ resolve, reject } = defaultRequest) {
+  initInterceptorRequest({ resolve, reject } = defaultRequest) {
     instance.interceptors.request.use(resolve, reject)
   },
 
@@ -66,7 +66,7 @@ const http = {
    * @param {Function} param.resolve 成功的
    * @param {Function} param.reject 失败的
    */
-  initIinterceptorResponse({ resolve, reject } = defaultResponse) {
+  initInterceptorResponse({ resolve, reject } = defaultResponse) {
     instance.interceptors.response.use(resolve, reject)
   },
   /**
@@ -158,5 +158,5 @@ const http = {
     return basal({ url, method, params, data, ...config })
   }
 }
-http.initIinterceptor()
+http.initInterceptor()
 export default http

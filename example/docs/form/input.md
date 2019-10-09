@@ -6,9 +6,9 @@
 ```html
 
 <me-column>
-  <me-input style="width:500px;" clearable placeholder="请输入姓名"></me-input>
-  <me-input style="width:500px;" clearable readonly placeholder="我是只读的"></me-input>
-  <me-input style="width:500px;" clearable disabled placeholder="我是禁用的"></me-input>
+  <me-input clearable placeholder="请输入姓名"></me-input>
+  <me-input clearable readonly placeholder="我是只读的"></me-input>
+  <me-input clearable disabled placeholder="我是禁用的"></me-input>
 </me-column>
 <script>
 export default {
