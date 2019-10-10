@@ -1,5 +1,5 @@
 ﻿<template>
-  <div :class="classes" :title="invalid.message">
+  <div :class="classes">
     <input
       :disabled="disabled"
       :max="max"
@@ -71,15 +71,14 @@ export default {
   },
   computed: {
     showClear() {
-      return this.disabled === false && this.readonly === false && this.clearable
+      return this.disabled === false && this.clearable
     },
     classes() {
       return [
         'me-row me-flex me-input',
         {
           'me-readonly': this.readonly,
-          'me-disabled': this.disabled,
-          'input-invalid': this.invalid.status
+          'me-disabled': this.disabled
         },
       ]
     },
@@ -103,13 +102,6 @@ export default {
       this.type === 'number' && (value = '[0-0]+')
       this.type === 'email' && (value = '^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$')
       return value
-    },
-
-    invalid() {
-      if (this.required && this.$tools.isEmpty(this.currentValue)) {
-        return { status: true, message: '内容不能为空' }
-      }
-      return { status: false }
     }
   },
   watch: {
@@ -191,15 +183,15 @@ export default {
       this.$emit('focus-input', this.currentValue)
       this.$emit('focus-input-after', this.currentValue)
     },
-    // onMouseenter() {
-    //   if (this.disabled || this.readonly) { return }
-    //   this.active = true
-    // },
-    // onMouseleave() {
-    //   if (this.disabled || this.readonly) { return }
-    //   this.blur()
-    //   this.active = false
-    // }
+    onMouseenter() {
+      if (this.disabled) { return }
+      this.active = true
+    },
+    onMouseleave() {
+      if (this.disabled) { return }
+      // this.blur()
+      this.active = false
+    }
   }
 }
 </script>
