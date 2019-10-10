@@ -1,23 +1,23 @@
 ﻿<template>
   <div :class="classes">
     <me-input
-      :clearable="clearable || readonly__"
+      :clearable="clearable"
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly__"
-      @blur-input="blurInput"
-      @click-input="clickInput"
+      @blur-input="onBlurInput"
+      @click-input="onClickInput"
       ref="input"
       v-model="label__"
     >
       <template #suffix>
-        <me-icon :disabled="disabled" @click="clickSuffix" @mouseout="closable=true" @mouseover="mouseoverOther">{{iconSuffix}}</me-icon>
+        <me-icon :disabled="disabled" @click="onClickSuffix" @mouseout="closable=true" @mouseover="onMouseoverOther">{{iconSuffix}}</me-icon>
       </template>
     </me-input>
     <div
       :style="{'z-index': status? 10000 : 0}"
       @mouseout="closable=true"
-      @mouseover="mouseoverOther"
+      @mouseover="onMouseoverOther"
       class="me-column me-border combo-options"
       v-show="status"
     >
@@ -32,7 +32,7 @@
           :key="item[fieldValue]"
           :multiple="multiple"
           :selected="isSelected(item[fieldValue])"
-          @click="clickOption"
+          @click="onClickOption"
           v-for="(item,index) in data"
         />
       </slot>
@@ -73,7 +73,7 @@ export default {
   },
   watch: {
     status(value) {
-      value && this.focusInput()
+      value && this.onFocusInput()
       this.$emit('change-status', value)
     },
     value() {
@@ -112,11 +112,11 @@ export default {
       const list = this.multiple ? this.valueMultiple : [this.valueSingle]
       return list.findIndex(item => value === item[this.fieldValue]) !== -1
     },
-    clickSuffix() {
+    onClickSuffix() {
       this.status = !this.status
     },
-    clickInput() {
-      this.readonly__ && this.clickSuffix()
+    onClickInput() {
+      this.readonly__ && this.onClickSuffix()
     },
     selectSingle(data) {
       this.status = false
@@ -147,24 +147,23 @@ export default {
         .finally(() => {
           this.$emit('input', [...this.value__])
         })
-
     },
-    clickOption(item, index) {
+    onClickOption(item, index) {
       const data = { ...item, index }
       this.$emit('click-option-before', item, index)
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
       this.$emit('click-option', item, index)
       this.$emit('click-option-after', item, index)
     },
-    blurInput() {
+    onBlurInput() {
       this.closable && (this.status = false)
     },
-    focusInput() {
+    onFocusInput() {
       this.$refs.input.focus()
     },
-    mouseoverOther() {
+    onMouseoverOther() {
       this.closable = false
-      this.focusInput()
+      this.onFocusInput()
     }
   }
 }
