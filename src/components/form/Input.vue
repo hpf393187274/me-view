@@ -1,5 +1,5 @@
 ﻿<template>
-  <div :class="classes" :title="invalid.message" @mouseenter="onMouseenter" @mouseleave="onMouseleave">
+  <div :class="classes" :title="invalid.message">
     <input
       :disabled="disabled"
       :max="max"
@@ -8,22 +8,23 @@
       :readonly="readonly"
       :style="styles"
       :type="type"
-      @blur="blurInput"
-      @click="clickInput"
+      @blur="onBlurInput"
+      @click="onClickInput"
+      @focus="onFocusInput"
       class="me-flex input-inner"
       ref="target"
       v-model.lazy.trim="currentValue"
     />
     <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="boolean(iconPrefix) || $slots.prefix">
       <slot name="prefix">
-        <me-icon :disabled="disabled" @click="clickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
+        <me-icon :disabled="disabled" @click="onClickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
       </slot>
     </div>
 
-    <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="clearable || boolean(iconSuffix) || $slots.suffix">
-      <me-icon :disabled="disabled" @click="reset" v-if="disabled === false && clearable" v-show="active">{{$config.icon.clear}}</me-icon>
+    <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="showClear || boolean(iconSuffix) || $slots.suffix">
+      <me-icon :disabled="disabled" @click="onReset" v-if="showClear">{{$config.icon.clear}}</me-icon>
       <slot name="suffix">
-        <me-icon :disabled="disabled" @click="clickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
+        <me-icon :disabled="disabled" @click="onClickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
       </slot>
     </div>
   </div>
@@ -69,6 +70,9 @@ export default {
     })
   },
   computed: {
+    showClear() {
+      return this.disabled === false && this.readonly === false && this.clearable
+    },
     classes() {
       return [
         'me-row me-flex me-input',
@@ -124,15 +128,6 @@ export default {
     }
   },
   methods: {
-    onMouseenter() {
-      if (this.disabled || this.readonly) { return }
-      this.active = true
-    },
-    onMouseleave() {
-      if (this.disabled || this.readonly) { return }
-      this.blur()
-      this.active = false
-    },
     updateValue(value) {
       const newValue = this.convertValue(value)
       this.$emit('change', newValue)
@@ -158,15 +153,15 @@ export default {
     /**
      * 重置
      */
-    reset() {
+    onReset() {
       this.currentValue = this.resetValue
     },
-    clickInput() {
+    onClickInput() {
       this.$emit('click-input-before', this.currentValue)
       this.$emit('click-input', this.currentValue)
       this.$emit('click-input-after', this.currentValue)
     },
-    clickPrefix() {
+    onClickPrefix() {
       this.$emit('click-prefix-before', this.currentValue)
       this.$emit('click-prefix', this.currentValue)
       this.$emit('click-prefix-after', this.currentValue)
@@ -177,16 +172,34 @@ export default {
     blur() {
       this.$refs.target.blur()
     },
-    clickSuffix() {
+    onClickSuffix() {
       this.$emit('click-suffix-before', this.currentValue)
       this.$emit('click-suffix', this.currentValue)
       this.$emit('click-suffix-after', this.currentValue)
     },
-    blurInput() {
+    onBlurInput() {
+      // if (this.disabled || this.readonly) { return }
+      // this.active = false
       this.$emit('blur-input-before', this.currentValue)
       this.$emit('blur-input', this.currentValue)
       this.$emit('blur-input-after', this.currentValue)
-    }
+    },
+    onFocusInput() {
+      // if (this.disabled || this.readonly) { return }
+      // this.active = true
+      this.$emit('focus-input-before', this.currentValue)
+      this.$emit('focus-input', this.currentValue)
+      this.$emit('focus-input-after', this.currentValue)
+    },
+    // onMouseenter() {
+    //   if (this.disabled || this.readonly) { return }
+    //   this.active = true
+    // },
+    // onMouseleave() {
+    //   if (this.disabled || this.readonly) { return }
+    //   this.blur()
+    //   this.active = false
+    // }
   }
 }
 </script>
