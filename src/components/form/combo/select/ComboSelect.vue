@@ -24,15 +24,16 @@
       <slot name="options">
         <me-combo-option
           :checkbox="checkbox"
+          :checked="isSelected(item[fieldValue])"
           :data="item"
           :disabled="disabled"
           :field-label="fieldLabel"
           :field-value="fieldValue"
+          :highlight="highlight"
           :index="index"
           :key="item[fieldValue]"
           :multiple="multiple"
-          :selected="isSelected(item[fieldValue])"
-          @click="onClickOption"
+          @click-option="onClickOption"
           v-for="(item,index) in data"
         />
       </slot>
@@ -85,14 +86,14 @@ export default {
   },
   methods: {
     findItem(value) {
-      return this.data.find(item => item[this.fieldValue] === value)
+      return this.data.find(item => Reflect.get(item, this.fieldValue) === value)
     },
     initValueSingle() {
       const data = this.findItem(this.value)
       if (this.$tools.isEmpty(data)) { return }
       Object.assign(this.valueSingle, data)
-      this.label__ = data[this.fieldLabel] || ''
-      this.value__ = data[this.fieldValue] || ''
+      this.label__ = Reflect.get(data, this.fieldLabel) || ''
+      this.value__ = Reflect.get(data, this.fieldValue) || ''
     },
     initValueMultiple() {
       this.$type.isNotArray(this.label__) && (this.label__ = [])
@@ -101,11 +102,11 @@ export default {
       this.$tools.clearEmpty(this.value__)
       if (this.$tools.isEmpty(this.value)) { return }
       const list = this.$type.isArray(this.value) ? [...this.value] : [this.value]
-      this.valueMultiple = this.data.filter(item => list.includes(item[this.fieldValue]))
+      this.valueMultiple = this.data.filter(item => list.includes(Reflect.get(item, this.fieldValue)))
 
       for (const item of this.valueMultiple) {
-        this.label__.push(item[this.fieldLabel])
-        this.value__.push(item[this.fieldValue])
+        this.label__.push(Reflect.get(item, this.fieldLabel))
+        this.value__.push(Reflect.get(item, this.fieldValue))
       }
     },
     initValue() {
@@ -113,7 +114,7 @@ export default {
     },
     isSelected(value) {
       const list = this.multiple ? this.valueMultiple : [this.valueSingle]
-      return list.findIndex(item => value === item[this.fieldValue]) !== -1
+      return list.findIndex(item => value === Reflect.get(item, this.fieldValue)) !== -1
     },
     onClickSuffix() {
       this.status = !this.status
@@ -123,8 +124,8 @@ export default {
     },
     selectSingle(data) {
       this.status = false
-      this.label__ = data[this.fieldLabel]
-      this.value__ = data[this.fieldValue]
+      this.label__ = Reflect.get(data, this.fieldLabel)
+      this.value__ = Reflect.get(data, this.fieldValue)
       this.valueSingle = { ...data }
       this.$emit('change', this.value__)
     },
@@ -134,8 +135,8 @@ export default {
       this.$tools.arrayRemove(this.valueMultiple, index).catch(error => { console.error(error) })
     },
     handleMultiplPush(data) {
-      this.label__.push(data[this.fieldLabel])
-      this.value__.push(data[this.fieldValue])
+      this.label__.push(Reflect.get(data, this.fieldLabel))
+      this.value__.push(Reflect.get(data, this.fieldValue))
       this.valueMultiple.push({ ...data })
     },
     selectMultiple(data) {

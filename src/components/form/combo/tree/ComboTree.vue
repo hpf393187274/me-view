@@ -5,6 +5,7 @@
     :disabled="disabled"
     :field-label="fieldLabel"
     :field-value="fieldValue"
+    :highlight="highlight"
     :multiple="multiple"
     :placeholder="placeholder"
     :readonly="readonly"
@@ -17,6 +18,7 @@
         :data="data"
         :expanded-level="expandedLevel"
         :expanded-node-click="false"
+        :highlight="highlight"
         :node-key="fieldValue"
         @click-node="onClickNode"
         ref="tree"
@@ -44,7 +46,7 @@ export default {
   },
   methods: {
     onClickNode(row, index) {
-      this.$refs.combo.clickOption(row, index)
+      this.$refs.combo.onClickOption(row, index)
       this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }
   }

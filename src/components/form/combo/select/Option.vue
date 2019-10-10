@@ -1,6 +1,7 @@
 <template>
-  <div :class="classes" @click="handleClick">
-    <me-checkbox v-if="multiple && checkbox" v-model="selected__" />
+  <div :class="classes" @click="onHandleClick">
+    <me-checkbox v-if="multiple && checkbox" v-model="checked__" />
+    {{checked__}}
     <slot :data="data">
       <span class="combo-option-inner">{{data[fieldLabel]}}</span>
     </slot>
@@ -10,35 +11,35 @@
 export default {
   name: 'MeComboOption',
   props: {
-    selected: Boolean,
+    checked: Boolean,
     index: Number,
+    highlight: Boolean,
     data: { type: Object, default() { return {} } },
     fieldLabel: { type: String, default: 'label' }
   },
   data() {
     return {
-      selected__: this.selected
+      checked__: this.checked
     }
   },
   watch: {
-    selected(value) {
-      this.selected__ = value
+    checked(value) {
+      this.checked__ = value
     }
   },
   computed: {
     classes() {
       return [
         'me-row combo-option',
-        { 'combo-option-selected': this.selected__ }
+        { 'is-selected': this.highlight && this.checked__ }
       ]
     },
   },
   methods: {
-    handleClick() {
-      if (this.disabled === false) {
-        this.multiple && (this.selected__ = !this.selected__)
-        this.$emit('click', this.data, this.index)
-      }
+    onHandleClick() {
+      if (this.disabled === true) { return }
+      this.checked__ = this.checked__ === true ? false : true
+      this.$emit('click-option', this.data, this.index)
     }
   }
 }
