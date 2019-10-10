@@ -1,14 +1,6 @@
 <template>
   <label class="me-checkbox">
-    <input
-      :disabled="disabled"
-      @change="$emit('change')"
-      @click.stop="click(!currentValue)"
-      class="checkbox-inner"
-      ref="checkbox"
-      type="checkbox"
-      v-model="currentValue"
-    />
+    <input :disabled="disabled" @change="onChange" @click="onClick" class="checkbox-inner" ref="checkbox" type="checkbox" v-model="value__" />
     <span v-if="label">{{ label }}</span>
   </label>
 </template>
@@ -16,9 +8,12 @@
 <script>
 export default {
   name: 'MeCheckbox',
+  model: {
+    props: 'value', event: 'change'
+  },
   data() {
     return {
-      currentValue: this.value
+      value__: this.value
     }
   },
   props: {
@@ -32,19 +27,20 @@ export default {
   },
   watch: {
     value(newValue) {
-      this.currentValue = newValue
-    },
-    currentValue(newValue) {
-      this.$emit('input', newValue)
+      this.value__ = newValue
     },
     checkedHalf(newValue) {
       this.$refs.checkbox.indeterminate = newValue
     }
   },
   methods: {
-    click(value) {
-      this.currentValue = value
-      this.$emit('click', value)
+    onChange(event) {
+      const checked = event.target.checked
+      this.$emit('change', checked)
+    },
+    onClick(event) {
+      const checked = event.target.checked
+      this.$emit('click-checkbox', checked)
     }
   }
 }
