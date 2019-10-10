@@ -28,6 +28,9 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboTable',
+  model: {
+    props: 'value', event: 'change'
+  },
   watch: {
     value(value) { this.value__ = [...value] }
   },
@@ -37,7 +40,7 @@ export default {
   methods: {
     onClickRow(row, index) {
       this.$refs.combo.clickOption(row, index)
-      this.$emit('input', this.multiple ? [...this.value__] : this.value__)
+      this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     },
     onChangeStatus(value) {
       if (value) {

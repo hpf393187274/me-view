@@ -46,6 +46,9 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboSelect',
+  model: {
+    props: 'value', event: 'change'
+  },
   props: { index: Number },
   components: {
     [Option.name]: Option
@@ -123,7 +126,7 @@ export default {
       this.label__ = data[this.fieldLabel]
       this.value__ = data[this.fieldValue]
       this.valueSingle = { ...data }
-      this.$emit('input', this.value__)
+      this.$emit('change', this.value__)
     },
     handleMultipleRemove(index) {
       this.$tools.arrayRemove(this.label__, index).catch(error => { console.error(error) })
@@ -145,7 +148,7 @@ export default {
           console.error(message)
         })
         .finally(() => {
-          this.$emit('input', [...this.value__])
+          this.$emit('change', [...this.value__])
         })
     },
     onClickOption(item, index) {

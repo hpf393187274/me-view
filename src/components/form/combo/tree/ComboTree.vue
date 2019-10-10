@@ -30,6 +30,9 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboTree',
+  model: {
+    props: 'value', event: 'change'
+  },
   props: {
     expandedLevel: { type: Number }
   },
@@ -42,7 +45,7 @@ export default {
   methods: {
     onClickNode(row, index) {
       this.$refs.combo.clickOption(row, index)
-      this.$emit('input', this.multiple ? [...this.value__] : this.value__)
+      this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }
   }
 }
