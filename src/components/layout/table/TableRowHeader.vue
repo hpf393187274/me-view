@@ -2,7 +2,7 @@
   <div class="me-column table-header">
     <div :style="stylesRow" class="me-row table-row">
       <div class="me-row me-center table-column" v-if="checkbox">
-        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerCheckbox" v-model="checked__" />
+        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click-checkbox="onClickCheckbox" v-model="checked__" />
       </div>
       <div :class="classColumn" :key="item.label" v-for="item in columns">
         <span class="table-column-inner">{{item.label}}</span>
@@ -24,6 +24,9 @@ export default {
       scrollbarWidth: 0
     }
   },
+  watch: {
+    checked__(value) { this.$emit('update:checked', value) }
+  },
   computed: {
     stylesRow() {
       if (this.hasScrollbar) {
@@ -39,6 +42,9 @@ export default {
     })
   },
   methods: {
+    onClickCheckbox(value) {
+      this.$emit('click-checkbox', value)
+    },
     init() {
       this.hasScrollbar = this.existScrollbar()
       this.hasScrollbar && (this.scrollbarWidth = this.getScrollbarWidth())

@@ -20,10 +20,5 @@ export default {
     return {
       checked__: this.checked
     }
-  },
-  methods: {
-    handlerCheckbox(value) {
-      this.$emit('click-checkbox', value)
-    }
   }
 }

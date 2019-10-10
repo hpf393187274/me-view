@@ -9,8 +9,8 @@
     <me-table-row-header
       :center="center"
       :checkbox="checkbox"
-      :checked="checkedHeader"
       :checked-half="checkedHalf"
+      :checked.sync="checkedHeader"
       :columns="columns"
       :multiple="multiple"
       :width="width__"
@@ -23,13 +23,12 @@
         :checkbox="checkbox"
         :checked="checkedBody"
         :checked-directly="checkedDirectly"
-        :class="{'row-selected': active === item[nodeKey]}"
         :columns="columns"
         :data="item"
+        :highlight="highlight"
         :index="index"
         :key="item[nodeKey]"
         :width="width__"
-        @click-checkbox="onCheckboxBody"
         @click-column="onColumn"
         @click-row="onRow"
         v-for="(item,index) in data"
@@ -53,7 +52,8 @@ export default {
     index: Number,
     nodeKey: { type: String, default: 'id' },
     field: { type: String, default: '' },
-    data: { type: Array, default: () => [] }
+    data: { type: Array, default: () => [] },
+    highlight: Boolean
   },
   computed: {
     classes() {
@@ -63,7 +63,6 @@ export default {
       ]
     },
     styleBody() {
-      // hasScrollbar
       return {
         width: `calc( 100% - 20px )`
       }
@@ -87,15 +86,14 @@ export default {
   },
   data() {
     return {
-      active: '',
       columns: [],
       checkedHeader: this.checked,
       checkedBody: this.checked,
       checkedHalf: false,
       checkedBodyNumber: 0,
       checkedRows: [],
-      checkedSingleNode: null,
-      checkedSingleRow: null,
+      selectedNodeOld: null,
+      selectedData: null,
       width__: '100%'
     }
   },
@@ -124,9 +122,8 @@ export default {
      */
     handlerCheckboxHeader(value) {
       this.checkedHalf = false
-      this.checkedHeader = this.checkedBody = value
+      this.checkedBody = value
       this.checkedBodyNumber = value ? this.length : 0
-
       this.$tools.clearEmpty(this.checkedRows)
       value && this.checkedRows.push(...this.data)
     },
@@ -134,30 +131,25 @@ export default {
      * 如果单选，则记录选择的节点，并清除上一次选择
      */
     handleCheckedSingleNode(data, node) {
-      if (this.checkedSingleNode !== null) {
-        this.checkedSingleNode.setChecked(false)
+      if (this.$type.isObject(this.selectedNodeOld)) {
+        if (this.selectedNodeOld !== node) {
+          this.selectedNodeOld.setChecked(false)
+        }
       }
-      this.checkedSingleNode = node
-      this.checkedSingleRow = data
-    },
-    /**
-     * 点击 Body Row checkbox
-     */
-    onCheckboxBody(value, row, index, node) {
-      if (this.multiple) {
-        this.checkedBodyNumber += value ? 1 : -1
-        value ? this.appendCheckedRows(row) : this.removeCheckedRows(row)
-      } else {
-        this.checkedBodyNumber = value ? 1 : 0
-        this.handleCheckedSingleNode(row, node)
-      }
-      this.$emit('click-checkbox', value, row, index, node)
+      this.selectedNodeOld = node
+      this.selectedData = data
     },
     /**
      * 点击 Row
      */
-    onRow(row, index, node) {
-      this.active = row[this.nodeKey]
+    onRow(checked, row, index, node) {
+      if (this.multiple) {
+        this.checkedBodyNumber += checked ? 1 : -1
+        checked ? this.appendCheckedRows(row) : this.removeCheckedRows(row)
+      } else {
+        this.checkedBodyNumber = checked ? 1 : 0
+        this.handleCheckedSingleNode(row, node)
+      }
       this.$emit('click-row', row, index, node)
     },
     /**
