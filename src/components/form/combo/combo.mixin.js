@@ -1,10 +1,14 @@
 export default {
+  model: {
+    props: 'value', event: 'change'
+  },
   props: {
     data: { type: Array, default() { return [] } },
     highlight: Boolean,
-    fieldValue: { type: String, default: 'value' },
     readonly: Boolean,
+    placeholder: String,
     fieldLabel: { type: String, default: 'label' },
+    fieldValue: { type: String, default: 'value' },
     value: { type: [String, Array] }
   },
   data() {

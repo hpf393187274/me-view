@@ -6,27 +6,27 @@ export default {
      * 全选 and 半选
      */
     getCheckedNumber() {
-      let allCheckedNumber = 0
+      let checkedNumber = 0
       let checkedHalfNumber = 0
       for (const node of this.getChildrenNodeList()) {
-        node.isAllChecked() && allCheckedNumber++
+        node.isAllChecked() && checkedNumber++
         node.isHalfChecked() && checkedHalfNumber++
       }
-      this.setAllCheckedNumber(allCheckedNumber)
+      this.setAllCheckedNumber(checkedNumber)
       this.checkedHalfNumber = checkedHalfNumber
-      return { allCheckedNumber, checkedHalfNumber }
+      return { checkedNumber, checkedHalfNumber }
     },
     /**
      * 变更父级
      */
     alterParent() {
-      const { allCheckedNumber, checkedHalfNumber } = this.getCheckedNumber()
+      const { checkedNumber, checkedHalfNumber } = this.getCheckedNumber()
       if (this.checkedStrictly) {
-        this.allChecked = allCheckedNumber === this.nodeNumber
+        this.allChecked = checkedNumber === this.nodeNumber
         if (checkedHalfNumber > 0) {
           this.checkedHalf = true
         } else {
-          this.checkedHalf = allCheckedNumber > 0 && allCheckedNumber < this.nodeNumber
+          this.checkedHalf = checkedNumber > 0 && checkedNumber < this.nodeNumber
         }
       }
       this.$emit('alter-parent')

@@ -22,7 +22,11 @@
         :node-key="fieldValue"
         @click-node="onClickNode"
         ref="tree"
-      ></me-tree>
+      >
+        <template #node-label="{data}">
+          <slot :data="data" name="node-label" />
+        </template>
+      </me-tree>
     </template>
   </me-combo-select>
 </template>
@@ -32,9 +36,6 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboTree',
-  model: {
-    props: 'value', event: 'change'
-  },
   props: {
     expandedLevel: { type: Number }
   },
@@ -46,6 +47,7 @@ export default {
   },
   methods: {
     onClickNode(row, index) {
+      console.log('onClickNode', '->', row, ' index=', index)
       this.$refs.combo.onClickOption(row, index)
       this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }

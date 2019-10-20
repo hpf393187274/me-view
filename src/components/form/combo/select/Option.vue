@@ -1,7 +1,6 @@
 <template>
   <div :class="classes" @click="onHandleClick">
     <me-checkbox v-if="multiple && checkbox" v-model="checked__" />
-    {{checked__}}
     <slot :data="data">
       <span class="combo-option-inner">{{data[fieldLabel]}}</span>
     </slot>

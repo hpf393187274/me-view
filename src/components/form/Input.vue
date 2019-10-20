@@ -47,6 +47,7 @@ export default {
     maxLength: { type: Number, default: 0 },
     iconPrefix: String,
     iconSuffix: String,
+    placeholder: String,
     pattern: { type: String },
     readonly: Boolean
   },

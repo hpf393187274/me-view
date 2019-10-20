@@ -2,9 +2,9 @@
   <div class="me-column me-tree" style="overflow: auto;">
     <me-tree-header
       :action="action"
-      :allCheckedNumber="allCheckedNumber"
       :checkbox="checkbox"
       :checked="allChecked"
+      :checked-number="checkedNumber"
       :checkedHalf="checkedHalf"
       :disabled="length === 0"
       :hasGrandson="hasGrandson"
@@ -15,7 +15,7 @@
       class="node-header"
       v-if="header"
     >
-      <template #node-label>
+      <template #node-header>
         <slot name="node-header" />
       </template>
     </me-tree-header>
@@ -24,15 +24,16 @@
         :action="action"
         :checkbox="checkbox"
         :checked="checkedChildren"
-        :checked-directly="checkedDirectly"
         :checked-strictly="checkedStrictly"
         :data="node"
+        :event-tree="eventTree"
         :expandable="expandable"
         :expanded-all="expandedAll"
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
-        :key="node[nodeKey]"
+        :key="node.primaryKey"
         :lazy="lazy"
+        :primary-key="node.primaryKey"
         :statistics="statistics"
         @alter-parent="alterParent"
         ref="treeNode"
@@ -51,7 +52,7 @@
 import treeIndex from '@components/mixins/tree'
 import treeCommon from '@components/mixins/tree/common'
 import treeInner from './common.mixin'
-import EventTree from './EventTree'
+import Vue from 'vue'
 export default {
   name: 'MeTree',
   mixins: [treeCommon, treeIndex, treeInner],
@@ -61,7 +62,8 @@ export default {
   },
   data() {
     return {
-      hasGrandson: false
+      hasGrandson: false,
+      eventTree: new Vue()
     }
   },
   computed: {
@@ -70,31 +72,27 @@ export default {
     }
   },
   created() {
+    this.initPrimaryKey(this.data)
     this.$nextTick(() => {
       this.hasGrandson = this.getHasGrandson()
       // 点击节点
-      EventTree.$on('click-node', (data, node) => {
-        this.$emit('click-node', data, node)
-      })
-      EventTree.$on('click-node-branch', (data, node) => {
-        this.$emit('click-node-branch', data, node)
-      })
-      EventTree.$on('click-node-leaf', (data, node) => {
-        this.$emit('click-node-leaf', data, node)
-      })
+      this.handlerOn('click-node')
+      this.handlerOn('click-node-branch')
+      this.handlerOn('click-node-leaf')
 
       // 移出节点
-      EventTree.$on('remove-node', (data, node) => {
-        this.$emit('remove-node', data, node)
-      })
+      this.handlerOn('remove-node')
 
       // 刷新节点
-      EventTree.$on('refresh-node', (data, node) => {
-        this.$emit('refresh-node', data, node)
-      })
+      this.handlerOn('refresh-node')
     })
   },
   methods: {
+    handlerOn(eventName) {
+      this.eventTree.$on(eventName, (...option) => {
+        this.$emit(eventName, ...option)
+      })
+    },
     getHasGrandson() {
       return this.getChildrenNodeList().some(node => node.isBranch() === true)
     },

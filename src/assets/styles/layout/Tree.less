@@ -3,10 +3,19 @@
 	.tree-node-header{ 
 		font-weight: bold;
 		background: @tree-header;
-		.tree-node-label {
-			font-size: 16px;
+		font-size: 16px;
+	}
+	.tree-node-label {
+		text-align: center;
+		min-width: 40px;
+		.tree-node-inner {
+			overflow: hidden; /*自动隐藏文字*/
+			text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+			white-space: nowrap;/*强制不换行*/
+			padding: 12px 0px ;
 		}
 	}
+	
 	.tree-node-body {
 		.tree-node-item:hover {
 			cursor: pointer;
@@ -20,11 +29,7 @@
 		.tree-node-statistics {
 			color: rgba(170, 170, 170, 0.548);
 			margin: 0px 3px;
-			>span { margin: 0px 1px; }
-		}
-		.tree-node-label {
-			align-items: center;
-			height: 35px;
+			> span { margin: 0px 1px; }
 		}
 	}
 }

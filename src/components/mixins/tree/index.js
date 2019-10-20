@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       checkedHalf: false,
-      allCheckedNumber: 0,
+      checkedNumber: 0,
       checkedHalfNumber: 0,
       checkedChildren: this.checked,
     }
@@ -70,14 +70,14 @@ export default {
     * 设置全选的子节点个数
     * @param {Number} value 总数量 
     */
-    setAllCheckedNumber(value) { this.allCheckedNumber = value },
+    setAllCheckedNumber(value) { this.checkedNumber = value },
     /**
      * 获取子节点集合
      */
     getChildrenNodeList() {
       const treeNode = this.$refs.treeNode
       if (this.$tools.isEmpty(treeNode)) { return [] }
-      return [treeNode].flat()
+      return [...treeNode]
     },
     /**
      * 获取 TreeNode

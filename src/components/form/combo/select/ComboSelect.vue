@@ -19,7 +19,8 @@
       @mouseout="closable=true"
       @mouseover="onMouseoverOther"
       class="me-column me-border combo-options"
-      v-show="status"
+      v-if="rendered"
+      v-show="data && data.length > 0 && status"
     >
       <slot name="options">
         <me-combo-option
@@ -47,21 +48,24 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboSelect',
-  model: {
-    props: 'value', event: 'change'
-  },
-  props: { index: Number },
   components: {
     [Option.name]: Option
   },
   data() {
     return {
       status: false,
+      rendered: false,
       valueSingle: {},
       valueMultiple: [],
       readonly__: this.readonly || this.multiple,
       /** input 失焦 移入 body 区域 */
       closable: true
+    }
+  },
+  mounted() {
+    if (this.rendered) {
+      this.rendered = false
+      this.$nextTick(() => { this.rendered = true })
     }
   },
   created() {
@@ -77,7 +81,10 @@ export default {
   },
   watch: {
     status(value) {
-      value && this.onFocusInput()
+      if (value) {
+        this.rendered = true
+        this.onFocusInput()
+      }
       this.$emit('change-status', value)
     },
     value() {

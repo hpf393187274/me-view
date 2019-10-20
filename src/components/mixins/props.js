@@ -30,15 +30,10 @@ export default {
   // width: { type: String, default: '100%' },
   checkbox: Boolean,
   checked: Boolean,
-  placeholder: String,
   /**
    * 严格的选择：默认：true, false 父子联动互不干涉
    */
   checkedStrictly: { type: Boolean, default: true },
-  /**
-   *  开启后：checked and selected 保持一致
-   */
-  checkedDirectly: { type: Boolean, default: true },
   /**
    * 滚动条
    */
@@ -63,7 +58,7 @@ export default {
    * 尾部样式
    */
   footerClass: { type: String, default: null },
-
+  primaryKey: String,
   /**
    * 形状
    */

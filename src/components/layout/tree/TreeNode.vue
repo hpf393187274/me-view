@@ -1,19 +1,21 @@
 <template>
-  <div class="me-column tree-node-body">
-    <div :style="styleIndent" class="me-row tree-node-item">
+  <div class="tree-node-body">
+    <div :style="styleIndent" :title="data.label" class="me-row tree-node-item">
       <me-icon @click="doExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
-      <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox" />
+      <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click-checkbox="clickCheckbox" v-if="checkbox" />
       <div @click="onClickLabel" class="me-row me-flex tree-node-label">
-        <slot :data="getData()" name="node-label">{{data.label}}</slot>
+        <slot :data="getData()" name="node-label">
+          <span class="tree-node-inner">{{data.label}}</span>
+        </slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
-        <span>{{allCheckedNumber}}</span>
+        <span>{{checkedNumber}}</span>
         <span>/</span>
         <span>{{nodeNumber}}</span>
       </div>
       <div class="em-center tree-node-action" v-if="action">
         <me-link @click="removeCurrentNode">移除</me-link>
-        <me-link @click="refreshChildrenNode" v-if="lazy">刷新</me-link>
+        <me-link @click="handlerEvent('refresh-node')" v-if="lazy">刷新</me-link>
       </div>
     </div>
     <div class="tree-node-children" v-if="renderFirst" v-show="expanded__">
@@ -21,17 +23,18 @@
         :action="action"
         :checkbox="checkbox"
         :checked="checkedChildren || data.checked === true"
-        :checked-directly="checkedDirectly"
         :checked-strictly="checkedStrictly"
         :data="node"
+        :event-tree="eventTree"
         :expandable="expandable"
         :expanded-all="expandedAll"
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
         :indent="indent__ + 1"
-        :key="node[nodeKey]"
+        :key="node.primaryKey"
         :lazy="lazy"
         :level=" level + 1 "
+        :primary-key="node.primaryKey"
         :statistics="statistics"
         @alter-parent="alterParent"
         ref="treeNode"
@@ -49,15 +52,16 @@
 import treeIndex from '@components/mixins/tree'
 import treeCommon from '@components/mixins/tree/common'
 import treeInner from './common.mixin'
-import EventTree from './EventTree'
 export default {
   name: 'MeTreeNode',
   mixins: [treeCommon, treeIndex, treeInner],
   props: {
     data: { type: Object, default() { return {} } },
+    eventTree: Object,
     level: { type: Number, default: 1 }
   },
   created() {
+    this.data && this.initPrimaryKey(this.data.children)
     this.renderFirst = this.nodeBranch && (this.expandable === false || this.expandedAll || this.expandedLevel >= this.level)
   },
   watch: {
@@ -118,13 +122,7 @@ export default {
      */
     removeCurrentNode() {
       this.$parent.removeChildrenNode(this)
-      EventTree.$emit('remove-node', this.getData())
-    },
-    /**
-     * 刷新子节点
-     */
-    refreshChildrenNode() {
-      EventTree.$emit('refresh-node', this.getData(), this)
+      this.handlerEvent('remove-node')
     },
 
     /**
@@ -175,23 +173,16 @@ export default {
       if (this.nodeBranch && this.expandedNodeClick) {
         this.doExpanded()
       }
-      const data = this.getData()
-      this.handlerClickNode(data, this)
+      this.handlerEvent('click-node')
       if (this.nodeLeaf) {
-        this.handlerClickNodeLeaf(data, this)
+        this.handlerEvent('click-node-leaf')
       }
       if (this.nodeBranch) {
-        this.handlerClickNodeBranch(data, this)
+        this.handlerEvent('click-node-branch')
       }
     },
-    handlerClickNode(data, node) {
-      EventTree.$emit('click-node', data, node)
-    },
-    handlerClickNodeBranch(data, node) {
-      EventTree.$emit('click-node-branch', data, node)
-    },
-    handlerClickNodeLeaf(data, node) {
-      EventTree.$emit('click-node-leaf', data, node)
+    handlerEvent(eventName) {
+      this.eventTree.$emit(eventName, this.getData(), this.primaryKey, this)
     }
   }
 }

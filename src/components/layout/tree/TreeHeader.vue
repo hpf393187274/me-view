@@ -1,12 +1,12 @@
 <template>
   <div class="me-column tree-node-header">
     <div :style="{'padding-left': `${indent__}em`}" class="me-row tree-node-item">
-      <me-checkbox :checkedHalf="checkedHalf" :disabled="disabled" :value="allChecked" @click="clickCheckbox(!allChecked)" v-if="checkbox"/>
+      <me-checkbox :checkedHalf="checkedHalf" :disabled="disabled" :value="allChecked" @click-checkbox="clickCheckbox" v-if="checkbox" />
       <div class="me-row me-flex tree-node-label">
         <slot name="node-label">{{label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
-        <span>{{allCheckedNumber}}</span>
+        <span>{{checkedNumber}}</span>
         <span>/</span>
         <span>{{nodeNumber}}</span>
       </div>
@@ -15,7 +15,7 @@
         <me-link @click="refreshChildrenNode" v-if="lazy">刷新</me-link>
       </div>
     </div>
-    <me-line-h/>
+    <me-line-h />
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
     hasGrandson: Boolean,
     checkedHalf: Boolean,
     nodeNumber: { type: Number, default: 0 },
-    allCheckedNumber: { type: Number, default: 0 }
+    checkedNumber: { type: Number, default: 0 }
   },
   computed: {
     indent__() {

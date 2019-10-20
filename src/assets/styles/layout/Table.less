@@ -6,12 +6,16 @@
 @table-body-row-even:#F8F8F9;
 @table-body-hover: #ebf7ff;
 @table-body-active: #ebf7ff;
+
 .@{PREFIX}-table {
 	color: @table-color;
 	overflow: auto;
 	height: 100%;
 	width: 100%;
-	font-size: 12px;
+	font-size: 13px;
+	.is-selected {
+		background-color: @table-body-active !important;
+	}
 	.table-toolbar{
 		padding: 3px;
 	}
@@ -21,8 +25,12 @@
 	.table-column {
 		align-items: center;
 		min-width: 40px;
+		border-right: 1px solid @table-border;
 		.table-column-inner {
-			margin: 5px 10px;
+			margin: 5px;
+			overflow: hidden; /*自动隐藏文字*/
+			text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+			white-space: nowrap;/*强制不换行*/
 		}
 	}
 	.table-header {
@@ -45,18 +53,5 @@
 				background-color: @table-body-hover;
 			}
 		}
-		.table-row.row-selected {
-			background-color: @table-body-active;
-		}
-	}
-}
-
-.@{PREFIX}-table-border {
-	border: 1px solid @table-border;
-	.table-row {
-		border-bottom: 1px solid @table-border;
-	}
-	.table-column {
-		border-right: 1px solid @table-border;
 	}
 }
