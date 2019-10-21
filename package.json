@@ -1,6 +1,6 @@
 {
   "name": "me-view",
-  "version": "1.0.25",
+  "version": "1.0.29",
   "private": false,
   "main": "dist/lib/index.common.js",
   "scripts": {
@@ -10,11 +10,11 @@
     "package-theme": "vue-cli-service build --dest dist/theme --target lib --name index ./src/index.js",
     "package-example": "vue-cli-service build --dest dist/example --target lib --name index ./src/example.js",
     "npm-publish": "npm publish",
-    "lint": "vue-cli-service lint",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
+    "@vue/babel-preset-jsx": "^1.1.1",
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "echarts": "^4.2.1",
@@ -31,6 +31,10 @@
     "@vue/cli-service": "^3.6.0",
     "autoprefixer": "^9.5.1",
     "babel-eslint": "^10.0.1",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-vue-jsx": "^3.7.0",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "less": "^3.9.0",
@@ -38,7 +42,6 @@
     "markdown-it": "^8.4.2",
     "markdown-it-anchor": "^5.2.4",
     "markdown-it-container": "^2.0.0",
-    "me-view": "^1.0.11",
     "postcss": "^7.0.16",
     "postcss-loader": "^3.0.0",
     "transliteration": "^2.1.3",
@@ -84,14 +87,14 @@
     "last 2 versions"
   ],
   "description": "## Project setup ``` npm install ```",
-  "registry": "http://10.130.36.239:9002/repository/npm-hosted/",
+  "registry": "http://192.168.204.198:9002/repository/npm-hosted/",
   "author": "hpf393187274",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/hpf393187274/me-view/issues"
   },
   "publishConfig": {
-    "registry": "http://10.130.36.239:9002/repository/npm-hosted/"
+    "registry": "http://192.168.204.198:9002/repository/npm-hosted/"
   },
   "homepage": "https://github.com/hpf393187274/me-view#readme"
 }

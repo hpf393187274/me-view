@@ -5,8 +5,14 @@
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
-  <me-tree :data="data"/>
+  <me-tree :data="data" />
 </template>
+------
+<template>
+  <me-tree :data="data" header></me-tree>
+</template>
+
+
 <script>
 export default {
   data() {
@@ -40,7 +46,7 @@ export default {
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
-  <me-tree :data="data" checkbox />
+  <me-tree :data="data" checkbox header/>
 </template>
 <script>
 export default {
@@ -112,7 +118,6 @@ export default {
 | ------------------- | --------------------------------------- | :-----: | :----: | ------------ |
 | statistics          | 是否显示统计                            | Boolean | false  | true, false  |
 | checkbox            | 是否显示复选框                          | Boolean | false  | true, false  |
-| checked-directly    | 开启后：checked and selected 互动       | Boolean |  true  | true, false  |
 | checked-strictly    | 是否严格模式- false 父子联动互不干涉    | Boolean |  true  | true, false  |
 | checked             | 是否选中                                | Boolean | false  | true, false  |
 | lazy                | 是否懒加载                              | Boolean | false  | true, false  |

@@ -6,21 +6,14 @@
 ```html
 
 <me-column>
-  <me-combo-table :data="data"></me-combo-table>
-  <me-combo-table :data="data" border></me-combo-table>
+  <me-combo-table :data="data1"></me-combo-table>
+  <me-combo-table :data="data1" border></me-combo-table>
 </me-column>
 <script>
 export default {
   data() {
     return {
-      data3: [
-        { title: '山西省', id: '1' },
-        { title: '陕西省', id: '2' },
-        { title: '四川省', id: '3' },
-        { title: '河南省', id: '4' },
-        { title: '江苏省', id: '5' }
-      ],
-      data: [
+      data1: [
         { label: '山西省', value: '1' },
         { label: '陕西省', value: '2' },
         { label: '四川省', value: '3' },
@@ -42,24 +35,20 @@ export default {
 ## 多选用法
 ::: demo `multiple` 多选的 `checkbox`
 ```html
-
 <me-column>
-  <me-combo-table :data="data" multiple value="陕西省"></me-combo-table>
-  <me-combo-table :data="data" multiple border value="河南省"></me-combo-table>
-  <me-combo-table :data="data" multiple :value="['陕西省', '四川省']"></me-combo-table>
-  <me-combo-table :data="data" multiple disabled :value="[{ label: '山西省', value: '1' }, { label: '陕西省', value: '2' }]"></me-combo-table>
+  <me-combo-table border :data="data2" multiple value="陕西省"></me-combo-table>
+  <me-combo-table :data="data2" multiple border value="河南省"></me-combo-table>
+  <me-combo-table :data="data2" multiple :value="['陕西省', '四川省']"></me-combo-table>
+  <me-combo-table :data="data2" multiple disabled :value="[{ label: '山西省', value: '1' }, { label: '陕西省', value: '2' }]"></me-combo-table>
 </me-column>
 
 <script>
 export default {
   data() {
     return {
-      data: [
+      data2: [
         { label: '山西省', value: '1' },
-        { label: '陕西省', value: '2' },
-        { label: '四川省', value: '3' },
-        { label: '河南省', value: '4' },
-        { label: '江苏省', value: '5' }
+        { label: '陕西省', value: '2' }
       ]
     }
   }

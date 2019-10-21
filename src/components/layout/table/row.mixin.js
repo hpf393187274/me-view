@@ -1,6 +1,6 @@
 export default {
   props: {
-    columns: { type: Array, default: () => ([]) }
+    columns: { type: Array, default: () => [] }
   },
   computed: {
     classColumn() {

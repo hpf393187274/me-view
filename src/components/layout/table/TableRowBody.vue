@@ -1,28 +1,43 @@
 <template>
   <div :class="clesses" @click="handlerRow">
-    <div class="me-row me-center table-column" v-if="checkbox">
-      <me-checkbox v-model="checked__" />
-    </div>
-    <div :class="classColumn" :key="item.label" @click="handlerColumn(item,index)" v-for="(item, index) in columns">
-      <span class="table-column-inner">{{data[item.field]}}</span>
-    </div>
+    <slot :data="data">
+      <me-table-column center v-if="checkbox" width="40px">
+        <me-checkbox v-model="checked__" />
+      </me-table-column>
+      <me-table-column :data="data" :key="item.field" v-bind="item" v-for="item in columns" />
+    </slot>
   </div>
 </template>
 <script>
 import RowMixin from './row.mixin'
+import TableColumn from './TableColumn'
+let idSeed = 1
 export default {
   name: 'MeTableRowBody',
   mixins: [RowMixin],
+  components: {
+    [TableColumn.name]: TableColumn
+  },
   props: {
-    index: Number,
+    indexRow: Number,
     data: { type: Object, default: () => ({}) },
-    highlight: Boolean
+    renderMethod: Function,
+    highlight: Boolean,
+    columns: Array
+  },
+  data() {
+    return {
+      id__: null
+    }
+  },
+  created() {
+    this.id__ = `me-table-row_${idSeed++}`
   },
   computed: {
     clesses() {
       return [
         'me-row me-flex table-row',
-        { 'row-selected': this.highlight && this.checked__ }
+        { 'is-selected': this.highlight && this.checked__ }
       ]
     }
   },

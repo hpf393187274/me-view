@@ -4,8 +4,8 @@
       <img height="60" src="/logo.png" /> Me-View
     </div>
     <me-line-h />
-    <div class="me-row me-flex" style="overflow: auto;">
-      <me-tree :data="data" :expandable="false" @click-node-leaf="handleClick" style="min-width:240px;" />
+    <div class="me-row me-flex" style="overflow: auto; ">
+      <me-tree :data="data" :expandable="false" @click-node-leaf="handleClick" style="width:240px;" />
       <me-line-v />
       <div class="me-row me-flex" style="overflow: auto; padding:5px 10px;">
         <router-view />
@@ -22,6 +22,14 @@ export default {
           label: 'Common 公共',
           children: [
             { label: 'Tools 常用工具', path: '/common/tools' },
+            { label: 'Type 类型判断', path: '/common/type' },
+            { label: 'Storage 数据存储', path: '/common/storage' },
+          ]
+        },
+        {
+          label: 'Common 公共',
+          children: [
+            { label: 'Tools 常用工具ssssssssssssssssssssssssssssssssssssssssssss', path: '/common/tools' },
             { label: 'Type 类型判断', path: '/common/type' },
             { label: 'Storage 数据存储', path: '/common/storage' },
           ]

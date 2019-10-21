@@ -6,10 +6,10 @@
 ```html
 
 <div class="me-column">
-
+  {{form}}
   <me-combo-select clearable :data="data" v-model="form.province"></me-combo-select>
   <me-combo-select  :data="data" v-model="form.province"></me-combo-select>
-  <me-combo-select :data="data" readonly value="1"></me-combo-select>
+  <me-combo-select :data="data" readonly highlight value="1"></me-combo-select>
   <me-combo-select :data="data" readonly value="2"></me-combo-select>
   <me-combo-select :data="data" disabled value="3"></me-combo-select>
 </div>

@@ -25,7 +25,6 @@ module.exports = {
       .set('@example', resolve('example'))
       .set('@router', resolve('example/router'))
       .set('@docs', resolve('example/docs'))
-      .set('@styles', resolve('src/styles'))
 
     config.module.rule('md')
       .test(/\.md/)
@@ -61,9 +60,9 @@ module.exports = {
                   if (description) {
                     description = md.render(description)
                   }
-                  console.log('description', '-->', 'index = ', index, '-->', description)
+                  // console.log('description', '-->', 'index = ', index, '-->', description)
                   const content = tokens[index + 1].content
-                  console.log('content', '-->', 'index = ', index, '-->', content)
+                  // console.log('content', '-->', 'index = ', index, '-->', content)
                   return `<demo-block>
                     <template #source>${content}</template>
                     <div>${description}</div>

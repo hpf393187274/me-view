@@ -27,8 +27,29 @@
         <me-table-column field="title" label="标题"></me-table-column>
       </me-combo-table>
     </me-form-item>
+  </div>
+  <div class="me-row">
+    <me-form-item flex label="省份">
+      <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
+        <me-table-column field="id" label="主键"></me-table-column>
+        <me-table-column field="title" label="标题"></me-table-column>
+      </me-combo-table>
+    </me-form-item>
+    <me-form-item flex label="省份">
+      <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
+        <me-table-column field="id" label="主键"></me-table-column>
+        <me-table-column field="title" label="标题"></me-table-column>
+      </me-combo-table>
+    </me-form-item>
+  </div>
+  <div class="me-row">
+    <me-form-item flex label="行政区域1">
+      <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">
+        <template #node-label="{data}">{{data.title}}</template>
+      </me-combo-tree>
+    </me-form-item>
     <me-form-item flex label="行政区域">
-      <me-combo-tree readonly :data="regionList" :expanded-level="1"></me-combo-tree>
+      <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id"></me-combo-tree>
     </me-form-item>
   </div>
 </div>
@@ -46,19 +67,19 @@ export default {
       ],
       regionList:[
         {
-          id: '1', label: '陕西省', children: [
+          id: '1', label: '陕西省', title:'陕西', children: [
             {
-              id: '1-1', label: '西安市', children: [
-                { id: '1-1-1', label: '雁塔区' },
-                { id: '1-1-2', label: '长安区' }
+              id: '1-1', label: '西安市', title: '西安', children: [
+                { id: '1-1-1', label: '雁塔区', title: '雁塔' },
+                { id: '1-1-2', label: '长安区', title: '长安' }
               ]
             }
           ]
         },
         {
-          id: '2', label: '四川省', children: [
-            { id: '2-1', label: '成都市' },
-            { id: '2-2', label: '汶川市' }
+          id: '2', label: '四川省',title:'四川', children: [
+            { id: '2-1', label: '成都市', title: '成都' },
+            { id: '2-2', label: '汶川市', title: '汶川' }
           ]
         }
       ]
