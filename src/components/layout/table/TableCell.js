@@ -18,6 +18,7 @@ export default {
       render: this.$scopedSlots.default || this.$slots.default
     })
   },
+  render(h) { return h('div') },
   computed: {
     owner() {
       let parent = this.$parent;
