@@ -7,6 +7,7 @@ export default {
   TYPE_ARRAY: '[object Array]',
   TYPE_FUNCTION: '[object Function]',
   TYPE_String: '[object String]',
+  TYPE_REGEXP: '[object RegExp]',
   isBoolean(target) {
     var type = this.getType(target)
     return type === this.TYPE_BOOLEAN
@@ -104,6 +105,9 @@ export default {
    */
   getType(target) {
     return toString.call(target)
+  },
+  isRegExp(target) {
+    return this.getType(target) === this.TYPE_REGEXP
   },
   /**
    * Funciton：true

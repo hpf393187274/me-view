@@ -1,23 +1,19 @@
 <template>
   <div :class="clesses" @click="handlerRow">
     <slot :data="data">
-      <me-table-column center v-if="checkbox" width="40px">
+      <me-table-cell center v-if="checkbox" width="40px">
         <me-checkbox v-model="checked__" />
-      </me-table-column>
-      <me-table-column :data="data" :key="item.field" v-bind="item" v-for="item in columns" />
+      </me-table-cell>
+      <me-table-cell :data="data" :key="item.field" v-bind="item" v-for="item in columns" />
     </slot>
   </div>
 </template>
 <script>
 import RowMixin from './row.mixin'
-import TableColumn from './TableColumn'
 let idSeed = 1
 export default {
   name: 'MeTableRowBody',
   mixins: [RowMixin],
-  components: {
-    [TableColumn.name]: TableColumn
-  },
   props: {
     indexRow: Number,
     data: { type: Object, default: () => ({}) },
@@ -51,10 +47,10 @@ export default {
     },
     handlerRow() {
       this.checked__ = this.checked__ === true ? false : true
-      this.$emit('click-row', this.checked__, this.data, this.index, this)
+      this.$emit('click-row', this.checked__, this.data, this.indexRow, this)
     },
     handlerColumn({ field }, index) {
-      this.$emit('click-column', this.data[field], index, this.data, this.index)
+      this.$emit('click-column', this.data[field], index, this.data, this.indexRow)
     }
   }
 }

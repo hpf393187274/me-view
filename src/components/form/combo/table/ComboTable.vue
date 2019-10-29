@@ -13,7 +13,7 @@
     v-model="value__"
   >
     <template #options>
-      <me-table :border="border" :data="data" :highlight="highlight" @click-row="onClickRow" ref="table">
+      <me-table :border="border" :data="data" :highlight="highlight" :multiple="multiple" @click-row="onClickRow">
         <slot />
       </me-table>
     </template>
@@ -25,12 +25,11 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboTable',
-
   watch: {
-    value(value) { this.value__ = [...value] }
+    value(value) { this.value__ = value }
   },
   created() {
-    this.value__ = [...(this.value || [])]
+    this.value__ = this.value
   },
   methods: {
     onClickRow(row, index) {

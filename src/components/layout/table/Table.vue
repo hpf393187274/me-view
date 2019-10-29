@@ -1,20 +1,21 @@
 <template>
   <div :class="classes">
-    <div v-show="false">
+    <div v-if="$slots.default" v-show="false">
       <slot />
     </div>
     <template v-if="$slots.header">
-      <div class="me-row table-toolbar">
+      <div class="me-row table-toolbar" v-if="$slots.header">
         <slot name="header" />
       </div>
+      <me-line-h />
     </template>
-    <me-line-h />
     <me-table-row-header
       :center="center"
       :checkbox="checkbox"
       :checked-half="checkedHalf"
       :checked.sync="checkedHeader"
       :columns="columns__"
+      :data-length="data.length"
       :multiple="multiple"
       :width="width__"
       @click-checkbox="handlerCheckboxHeader"
@@ -28,17 +29,21 @@
         :columns="columns__"
         :data="item"
         :highlight="highlight"
+        :index-row="index"
         :key="item.primaryKey"
         :primary-key="item.primaryKey"
         :width="width__"
         @click-column="onColumn"
         @click-row="onRow"
-        v-for="item in data"
+        v-for="(item,index) in data"
       />
     </div>
-    <div class="me-row table-toolbar" v-if="$slots.footer">
-      <slot name="footer" />
-    </div>
+    <template v-if="$slots.footer">
+      <me-line-h />
+      <div class="me-row table-toolbar" v-if="$slots.footer">
+        <slot name="footer" />
+      </div>
+    </template>
   </div>
 </template>
 <script>
@@ -99,9 +104,7 @@ export default {
     this.checkedBodyNumber = this.checked ? this.length : 0
   },
   mounted() {
-    this.$nextTick(() => {
-      this.width__ = this.$el.offsetWidth
-    })
+    this.$nextTick(() => { this.width__ = this.$el.offsetWidth })
   },
   methods: {
     /**
@@ -152,6 +155,7 @@ export default {
         this.checkedBodyNumber = checked ? 1 : 0
         this.handleCheckedSingleNode(row, node)
       }
+      console.log('table onRow', '->item', row, 'index=', index)
       this.$emit('click-row', row, index, node)
     },
     /**

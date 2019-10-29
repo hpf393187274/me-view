@@ -23,22 +23,22 @@
     </me-form-item>
     <me-form-item flex label="省份">
       <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
-        <me-table-column field="id" label="主键"></me-table-column>
-        <me-table-column field="title" label="标题"></me-table-column>
+        <me-table-cell field="id" label="主键"></me-table-cell>
+        <me-table-cell field="title" label="标题"></me-table-cell>
       </me-combo-table>
     </me-form-item>
   </div>
   <div class="me-row">
     <me-form-item flex label="省份">
       <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
-        <me-table-column field="id" label="主键"></me-table-column>
-        <me-table-column field="title" label="标题"></me-table-column>
+        <me-table-cell field="id" label="主键"></me-table-cell>
+        <me-table-cell field="title" label="标题"></me-table-cell>
       </me-combo-table>
     </me-form-item>
     <me-form-item flex label="省份">
       <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
-        <me-table-column field="id" label="主键"></me-table-column>
-        <me-table-column field="title" label="标题"></me-table-column>
+        <me-table-cell field="id" label="主键"></me-table-cell>
+        <me-table-cell field="title" label="标题"></me-table-cell>
       </me-combo-table>
     </me-form-item>
   </div>

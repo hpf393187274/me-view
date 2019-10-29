@@ -18,6 +18,9 @@
 	}
 	.table-toolbar{
 		padding: 3px;
+		> * {
+			margin: 0px 5px;
+		}
 	}
 	.table-row {
 		min-height: 40px;
@@ -25,6 +28,7 @@
 	.table-column {
 		align-items: center;
 		min-width: 40px;
+		flex-wrap: wrap;
 		border-right: 1px solid @table-border;
 		.table-column-inner {
 			margin: 5px;
@@ -40,7 +44,8 @@
 	}
 	.table-body {
 		background: @table-body;
-		overflow: auto;
+		overflow-y:  visible;
+		overflow-x: visible;
 		.table-row {
 			&:nth-child(odd){
 				background: @table-body-row-odd;

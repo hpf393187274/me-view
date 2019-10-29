@@ -6,71 +6,38 @@
 ```html
 
 <me-column>
-  <me-input style="width:500px;" label="用户名" clearable placeholder="请输入姓名"></me-input>
-  <me-input style="width:500px;" label="用户名" clearable readonly placeholder="我是只读的"></me-input>
-  <me-input style="width:500px;" label="用户名" clearable disabled placeholder="我是禁用的"></me-input>
+  <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">
+    <template #node-label="{data}">{{data.title}}--{{data.id}}</template>
+  </me-combo-tree>
+  <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">
+   
+  </me-combo-tree>
+  <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">
+   
+  </me-combo-tree>
 </me-column>
 <script>
 export default {
   data() {
     return {
-    }
-  }
-}
-</script>
-```
-:::
-
-## 图标显示
-
-### 普通模式
-
-::: demo `icon-prefix` 前置图标 `icon-suffix` 后置图标
-```html
-
-<me-input style="width:500px;" icon-prefix="icon-user" icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
-```
-:::
-
-### Solt 模式
-
-::: demo `label` 设置标签 `clearable` 可清除的
-```html
-
-<me-input style="width:500px;" icon-prefix="icon-user" icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
-
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
-```
-:::
-
-### Type 模式
-
-::: demo `label` 设置标签 `clearable` 可清除的
-```html
-
-<me-input style="width:500px;" placeholder="我是文本" type="text"></me-input>
-<me-input style="width:500px;" placeholder="我是密码" type="password"></me-input>
-<me-input style="width:500px;" placeholder="我是数字" type="number"></me-input>
-<me-input style="width:500px;" placeholder="我是数字" type="email" value="hpf393187274@163.com"></me-input>
-<script>
-export default {
-  data() {
-    return {
+      regionList:[
+        {
+          id: '1', label: '陕西省', title:'陕西', children: [
+            {
+              id: '1-1', label: '西安市', title: '西安', children: [
+                { id: '1-1-1', label: '雁塔区', title: '雁塔' },
+                { id: '1-1-2', label: '长安区', title: '长安' }
+              ]
+            }
+          ]
+        },
+        {
+          id: '2', label: '四川省',title:'四川', children: [
+            { id: '2-1', label: '成都市', title: '成都' },
+            { id: '2-2', label: '汶川市', title: '汶川' }
+          ]
+        }
+      ]
     }
   }
 }

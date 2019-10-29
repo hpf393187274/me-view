@@ -9,12 +9,12 @@ export default {
     placeholder: String,
     fieldLabel: { type: String, default: 'label' },
     fieldValue: { type: String, default: 'value' },
-    value: { type: [String, Array] }
+    value: { type: [String, Array, Object] }
   },
   data() {
     return {
-      value__: '',
-      label__: ''
+      value__: this.multiple ? [] : '',
+      label__: this.multiple ? [] : ''
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
-  <button :class="classes" :disabled="disabled" :margin="margin" :style="styles" :title="label" @click="click">
+  <button :class="classes" :disabled="disabled" :margin="margin" @click.stop="click">
     <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
-    <span class="button-inner" v-if="$slots.default">
+    <span class="button-inner">
       <slot />
     </span>
   </button>
@@ -20,11 +20,6 @@ export default {
     radius() {
       let value = ''
       return value
-    },
-    styles() {
-      return {
-        // 'border-radius': this.radius
-      }
     },
     classes() {
       return [

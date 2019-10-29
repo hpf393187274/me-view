@@ -41,11 +41,11 @@ export default {
   /**
    * 标题
    */
-  label: { type: String, default: '' },
+  label: String,
   /**
    * 标题
    */
-  title: { type: String, default: '' },
+  title: String,
   /**
    * 头部样式
    */

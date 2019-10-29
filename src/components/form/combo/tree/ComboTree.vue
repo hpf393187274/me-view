@@ -40,10 +40,10 @@ export default {
     expandedLevel: { type: Number }
   },
   watch: {
-    value(value) { this.value__ = [...value] }
+    value(value) { this.value__ = value }
   },
   created() {
-    this.value__ = [...(this.value || [])]
+    this.value__ = this.value
   },
   methods: {
     onClickNode(row, index) {

@@ -1,5 +1,5 @@
 ﻿<template>
-  <div :class="classes">
+  <div class="me-combo me-flex">
     <me-input
       :clearable="clearable"
       :disabled="disabled"
@@ -65,16 +65,15 @@ export default {
   mounted() {
     if (this.rendered) {
       this.rendered = false
-      this.$nextTick(() => { this.rendered = true })
+      this.$nextTick(() => {
+        this.rendered = true
+      })
     }
   },
   created() {
     this.initValue()
   },
   computed: {
-    classes() {
-      return ['me-combo', 'me-flex']
-    },
     iconSuffix() {
       return this.status ? this.$config.icon.angle_down_fill : this.$config.icon.angle_up_fill
     }
@@ -103,10 +102,8 @@ export default {
       this.value__ = Reflect.get(data, this.fieldValue) || ''
     },
     initValueMultiple() {
-      this.$type.isNotArray(this.label__) && (this.label__ = [])
-      this.$type.isNotArray(this.value__) && (this.value__ = [])
-      this.$tools.clearEmpty(this.label__)
-      this.$tools.clearEmpty(this.value__)
+      this.label__ = []
+      this.value__ = []
       if (this.$tools.isEmpty(this.value)) { return }
       const list = this.$type.isArray(this.value) ? [...this.value] : [this.value]
       this.valueMultiple = this.data.filter(item => list.includes(Reflect.get(item, this.fieldValue)))
@@ -152,14 +149,13 @@ export default {
         .then(({ status, data, index }) => {
           status ? this_.handleMultipleRemove(index) : this_.handleMultiplPush(data)
         })
-        .catch(message => {
-          console.error(message)
-        })
+        .catch(message => { console.error(message) })
         .finally(() => {
           this.$emit('change', [...this.value__])
         })
     },
     onClickOption(item, index) {
+      console.log('onClickOption', '->item', item, 'index=', index)
       const data = { ...item, index }
       this.$emit('click-option-before', item, index)
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
@@ -170,7 +166,7 @@ export default {
       this.closable && (this.status = false)
     },
     onFocusInput() {
-      this.$refs.input.focus()
+      this.$refs.input.$emit('focus-input')
     },
     onMouseoverOther() {
       this.closable = false

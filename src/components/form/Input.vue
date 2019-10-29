@@ -8,12 +8,12 @@
       :readonly="readonly"
       :style="styles"
       :type="type"
-      @blur="onBlurInput"
-      @click="onClickInput"
-      @focus="onFocusInput"
+      @blur="$emit('blur-input', value__)"
+      @click.stop="$emit('click-input', value__)"
+      @focus="$emit('focus-input', value__)"
       class="me-flex input-inner"
       ref="target"
-      v-model.lazy.trim="currentValue"
+      v-model.trim.lazy="value__"
     />
     <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="boolean(iconPrefix) || $slots.prefix">
       <slot name="prefix">
@@ -55,8 +55,8 @@ export default {
     return {
       left: 8,
       right: 8,
-      currentValue: '',
-      resetValue: '',
+      value__: '',
+      valueReset: '',
       active: false,
       message: ''
     }
@@ -68,6 +68,8 @@ export default {
     this.$nextTick(() => {
       this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
       this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
+
+      this.$on('focus-input', this.onFocusInput)
     })
   },
   computed: {
@@ -90,13 +92,10 @@ export default {
       }
     },
     paddingLeft() {
-      let value = 10
-      this.clearable === true && (value += 10)
-      return value
+      return this.clearable ? 20 : 10
     },
     paddingRight() {
-      let value = this.clearable === true && (value += 10)
-      return value
+      return this.clearable ? 10 : 0
     },
     pattern__() {
       let value = this.pattern
@@ -107,11 +106,11 @@ export default {
   },
   watch: {
     value(newValue) {
-      this.currentValue = newValue
+      this.value__ = newValue
     },
-    currentValue(newValue, oldValue) {
+    value__(newValue, oldValue) {
       if (this.$refs.target.checkValidity() === false) {
-        this.currentValue = oldValue
+        this.value__ = oldValue
         return
       }
       this.updateValue(newValue)
@@ -122,67 +121,43 @@ export default {
   },
   methods: {
     updateValue(value) {
-      const newValue = this.convertValue(value)
-      this.$emit('change', newValue)
-    },
-    convertValue(value) {
-      if (this.type === 'number') {
-        return Number(value)
-      }
-      return value
+      this.$emit('change', this.type === 'number' ? Number(value) : value)
     },
     initValue(value) {
       if (this.$type.isObject(value)) {
-        this.currentValue = { ...value }
-        this.resetValue = { ...value }
+        this.value__ = { ...value }
+        this.valueReset = { ...value }
       } else if (this.$type.isArray(value)) {
-        this.currentValue = [...value]
-        this.resetValue = [...value]
+        this.value__ = [...value]
+        this.valueReset = [...value]
       } else {
-        this.currentValue = value
-        this.resetValue = value
+        this.value__ = value
+        this.valueReset = value
       }
     },
     /**
      * 重置
      */
     onReset() {
-      this.currentValue = this.resetValue
-    },
-    onClickInput() {
-      this.$emit('click-input-before', this.currentValue)
-      this.$emit('click-input', this.currentValue)
-      this.$emit('click-input-after', this.currentValue)
-    },
-    onClickPrefix() {
-      this.$emit('click-prefix-before', this.currentValue)
-      this.$emit('click-prefix', this.currentValue)
-      this.$emit('click-prefix-after', this.currentValue)
-    },
-    focus() {
-      this.$refs.target.focus()
-    },
-    blur() {
-      this.$refs.target.blur()
-    },
-    onClickSuffix() {
-      this.$emit('click-suffix-before', this.currentValue)
-      this.$emit('click-suffix', this.currentValue)
-      this.$emit('click-suffix-after', this.currentValue)
-    },
-    onBlurInput() {
-      // if (this.disabled || this.readonly) { return }
-      // this.active = false
-      this.$emit('blur-input-before', this.currentValue)
-      this.$emit('blur-input', this.currentValue)
-      this.$emit('blur-input-after', this.currentValue)
+      this.value__ = this.$tools.clone(this.valueReset, true)
     },
     onFocusInput() {
-      // if (this.disabled || this.readonly) { return }
-      // this.active = true
-      this.$emit('focus-input-before', this.currentValue)
-      this.$emit('focus-input', this.currentValue)
-      this.$emit('focus-input-after', this.currentValue)
+      this.$refs.target.focus()
+    },
+    onClickInput() {
+      this.$emit('click-input-before', this.value__)
+      this.$emit('click-input', this.value__)
+      this.$emit('click-input-after', this.value__)
+    },
+    onClickPrefix() {
+      this.$emit('click-prefix-before', this.value__)
+      this.$emit('click-prefix', this.value__)
+      this.$emit('click-prefix-after', this.value__)
+    },
+    onClickSuffix() {
+      this.$emit('click-suffix-before', this.value__)
+      this.$emit('click-suffix', this.value__)
+      this.$emit('click-suffix-after', this.value__)
     },
     onMouseenter() {
       if (this.disabled) { return }
@@ -190,7 +165,6 @@ export default {
     },
     onMouseleave() {
       if (this.disabled) { return }
-      // this.blur()
       this.active = false
     }
   }

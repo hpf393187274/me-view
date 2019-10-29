@@ -6,14 +6,13 @@
 ```html
 结果：{{form}}
 <me-column>
-  <me-input clearable placeholder="请输入姓名" v-model="form.userName"></me-input>
-  <me-input clearable readonly placeholder="我是只读的"></me-input>
-  <me-input clearable disabled placeholder="我是禁用的"></me-input>
+  <me-input clearable placeholder="请输入姓名" v-model="userName"></me-input>
 </me-column>
 <script>
 export default {
   data() {
     return {
+      userName:'',
       form : {
         userName:''
       }
@@ -24,62 +23,6 @@ export default {
 ```
 :::
 
-## 图标显示
-
-### 普通模式
-
-::: demo `icon-prefix` 前置图标 `icon-suffix` 后置图标
-```html
-
-<me-input style="width:500px;" icon-prefix="icon-user" icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
-```
-:::
-
-### Solt 模式
-
-::: demo `clearable` 可清除的
-```html
-
-<me-input style="width:500px;" icon-prefix="icon-user" icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
-
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
-```
-:::
-
-### Type 模式
-
-::: demo `clearable` 可清除的
-```html
-
-<me-input style="width:500px;" placeholder="我是文本" type="text"></me-input>
-<me-input style="width:500px;" placeholder="我是密码" type="password"></me-input>
-<me-input style="width:500px;" placeholder="我是数字" type="number"></me-input>
-<me-input style="width:500px;" placeholder="我是数字" type="email" value="hpf393187274@163.com"></me-input>
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
-```
-:::
 
 ## Input Attributes
 | 名称        | 描述                |  类型   | 默认值 | 可选值                 |

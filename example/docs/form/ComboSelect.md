@@ -6,50 +6,19 @@
 ```html
 
 <div class="me-column">
-  {{form}}
-  <me-combo-select clearable :data="data" v-model="form.province"></me-combo-select>
-  <me-combo-select  :data="data" v-model="form.province"></me-combo-select>
-  <me-combo-select :data="data" readonly highlight value="1"></me-combo-select>
-  <me-combo-select :data="data" readonly value="2"></me-combo-select>
-  <me-combo-select :data="data" disabled value="3"></me-combo-select>
+  <me-combo-select :data="data"  v-model="modelA"></me-combo-select>
+  <me-combo-select :data="data" readonly multiple v-model="modelB"></me-combo-select>
 </div>
 <script>
 export default {
   data() {
     return {
+      modelA:'1',
+      modelB:['河南省','2','3'],
       form: {
         provinces: ['1'],
         province:''
       },
-      data: [
-        { label: '山西省', value: '1' },
-        { label: '陕西省', value: '2' },
-        { label: '四川省', value: '3' },
-        { label: '河南省', value: '4' },
-        { label: '江苏省', value: '5' }
-      ]
-    }
-  }
-}
-</script>
-```
-:::
-
-## 多选用法
-::: demo `multiple` 多选的 `checkbox`
-```html
-结果：{{form}}
-<div class="me-column">
-  <me-combo-select :data="data" multiple v-model="form.provinces"></me-combo-select>
-  <me-combo-select :data="data" multiple disabled :value="['2']"></me-combo-select>
-  <me-combo-select :data="data" multiple :value="['1', '2']"></me-combo-select>
-</div>
-
-<script>
-export default {
-  data() {
-    return {
-      
       data: [
         { label: '山西省', value: '1' },
         { label: '陕西省', value: '2' },

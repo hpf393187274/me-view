@@ -1,26 +1,23 @@
 <template>
-  <div class="me-column table-header">
-    <div :style="stylesRow" class="me-row me-flex table-row">
-      <me-table-column center v-if="checkbox" width="40px">
+  <div class="table-header">
+    <div :style="stylesRow" class="me-row table-row">
+      <me-table-cell center v-if="checkbox" width="40px">
         <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click-checkbox="onClickCheckbox" v-model="checked__" />
-      </me-table-column>
-      <me-table-column :class="classColumn" :key="item.label" v-for="item in columns">
+      </me-table-cell>
+      <me-table-cell :class="classColumn" :key="item.label" :render="null" v-bind="item" v-for="item in columns">
         <span class="table-column-inner">{{item.label}}</span>
-      </me-table-column>
+      </me-table-cell>
     </div>
   </div>
 </template>
 <script>
 import RowMixin from './row.mixin'
-import TableColumn from './TableColumn'
 export default {
   name: 'MeTableRowHeader',
-  components: {
-    [TableColumn.name]: TableColumn
-  },
   mixins: [RowMixin],
   props: {
-    checkedHalf: Boolean
+    checkedHalf: Boolean,
+    dataLength: Number
   },
   data() {
     return {
@@ -29,7 +26,10 @@ export default {
     }
   },
   watch: {
-    checked__(value) { this.$emit('update:checked', value) }
+    checked__(value) { this.$emit('update:checked', value) },
+    dataLength() {
+      this.$nextTick(this.initScrollbar)
+    }
   },
   computed: {
     stylesRow() {
@@ -39,11 +39,8 @@ export default {
       return {}
     }
   },
-  mounted() {
-    this.$nextTick(this.initScrollbar)
-  },
   created() {
-    console.log(this.$parent)
+    this.$nextTick(this.initScrollbar)
   },
   methods: {
     onClickCheckbox(value) {
