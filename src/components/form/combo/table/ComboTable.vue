@@ -25,7 +25,7 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboTable',
-
+  props: { placeholder:String },
   watch: {
     value(value) { this.value__ = [...value] }
   },

@@ -8,7 +8,6 @@ export default {
   /**
    * 剧中
    */
-  center: Boolean,
   centerRow: Boolean,
   centerColumn: Boolean,
   /**

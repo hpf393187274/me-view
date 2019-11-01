@@ -48,6 +48,7 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboSelect',
+  props: { readonly: Boolean, index: Number, placeholder:String },
   components: {
     [Option.name]: Option
   },
