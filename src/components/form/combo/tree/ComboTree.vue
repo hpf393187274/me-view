@@ -38,7 +38,8 @@ export default {
   mixins: [ComboMixin],
   name: 'MeComboTree',
   props: {
-    expandedLevel: { type: Number }
+    expandedLevel: { type: Number },
+    placeholder:String
   },
   watch: {
     value(value) { this.value__ = value }
