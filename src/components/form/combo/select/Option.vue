@@ -12,6 +12,8 @@ export default {
   props: {
     checked: Boolean,
     index: Number,
+    multiple: Boolean,
+    checkbox: Boolean,
     highlight: Boolean,
     data: { type: Object, default() { return {} } },
     fieldLabel: { type: String, default: 'label' }

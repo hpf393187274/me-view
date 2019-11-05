@@ -6,7 +6,13 @@ export default {
     data: { type: Array, default() { return [] } },
     highlight: Boolean,
     readonly: Boolean,
+    disabled: Boolean,
+    clearable: Boolean,
+    checkbox: Boolean,
+    height: [String, Number],
+    border: Boolean,
     placeholder: String,
+    multiple: Boolean,
     fieldLabel: { type: String, default: 'label' },
     fieldValue: { type: String, default: 'value' },
     value: { type: [String, Array, Object] }

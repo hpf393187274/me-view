@@ -5,10 +5,15 @@ export default {
      * 展开所有
      */
     expandedAll: Boolean,
+
     /**
      * 可展开的
      */
     expandable: { type: Boolean, default: true },
+    /**
+     * 严格的选择：默认：true, false 父子联动互不干涉
+     */
+    checkedStrictly: { type: Boolean, default: true },
     /**
      * 展开级别：默认：0 表示不限制
      */

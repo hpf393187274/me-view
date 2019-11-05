@@ -5,6 +5,7 @@
     :disabled="disabled"
     :field-label="fieldLabel"
     :field-value="fieldValue"
+    :height="height"
     :highlight="highlight"
     :multiple="multiple"
     :placeholder="placeholder"
@@ -12,8 +13,8 @@
     ref="combo"
     v-model="value__"
   >
-    <template #options>
-      <me-table :border="border" :data="data" :highlight="highlight" :multiple="multiple" @click-row="onClickRow">
+    <template>
+      <me-table :border="border" :columns="columns" :data="data" :highlight="highlight" :multiple="multiple" @click-row="onClickRow">
         <slot />
       </me-table>
     </template>
@@ -25,6 +26,9 @@ import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboTable',
+  props: {
+    columns: { type: Array, default: () => [] },
+  },
   watch: {
     value(value) { this.value__ = value }
   },

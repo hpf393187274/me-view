@@ -8,4 +8,4 @@ const adapterComponent = path => {
     }
   }
 }
-export { adapterComponent }
+export { adapterComponent }  

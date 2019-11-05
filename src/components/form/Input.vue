@@ -38,17 +38,18 @@ export default {
     props: 'value', event: 'change'
   },
   props: {
-    required: { type: Boolean },
+    required: Boolean,
+    disabled: Boolean,
     type: { type: String, default: 'text', validator: value => types.includes(value) },
     value: { type: [Number, String, Array], default: '' },
-    min: { type: Number, default: 0 },
+    min: Number,
     max: { type: Number, default: 1000000 },
-    minLength: { type: Number, default: 0 },
-    maxLength: { type: Number, default: 0 },
+    minLength: Number,
+    maxLength: Number,
     iconPrefix: String,
     iconSuffix: String,
     placeholder: String,
-    pattern: { type: String },
+    pattern: String,
     readonly: Boolean
   },
   data() {

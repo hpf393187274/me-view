@@ -7,18 +7,9 @@
 ```html
 
 <me-column>
-  <me-combo-table :data="data" v-model="modelA" field-value="value" field-label="label">
-    <me-table-cell field="value" label="主键"></me-table-cell>
-    <me-table-cell field="label" label="标题"></me-table-cell>
-  </me-combo-table>
-  <me-combo-table :data="data" multiple v-model="modelB" field-value="value" field-label="label">
-    <me-table-cell field="value" label="主键">qq</me-table-cell>
-    <me-table-cell field="label" label="标题">ss</me-table-cell>
-  </me-combo-table>
-  <me-combo-table :data="data" multiple disabled field-value="value" field-label="label" :value="['陕西省', '四川省']" >
-    <me-table-cell field="value" label="主键"></me-table-cell>
-    <me-table-cell field="label" label="标题"></me-table-cell>
-  </me-combo-table>
+  <me-combo-table :data="data" v-model="modelA" field-value="value" :columns="columns" field-label="label"> </me-combo-table>
+  <me-combo-table :data="data" multiple v-model="modelB" field-value="value" :columns="columns" field-label="label"> </me-combo-table>
+  <me-combo-table :data="data" multiple disabled field-value="value" :columns="columns" field-label="label" v-model="modelC" > </me-combo-table>
 </me-column>
 <script>
 export default {
@@ -26,6 +17,11 @@ export default {
     return {
       modelA:'2',
       modelB:['4','6'],
+      modelC:['4','6'],
+      columns: [
+        { label:'编号', field: 'value'},
+        { label:'区域', field: 'label' }
+      ],
       data: [
         { label: '山西省', value: '1' },
         { label: '陕西省', value: '2' },

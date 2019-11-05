@@ -1,14 +1,12 @@
 {
   "name": "me-view",
-  "version": "1.0.36",
+  "version": "1.0.38",
   "private": false,
   "main": "dist/lib/index.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --dest dist/build",
     "package": "vue-cli-service build --dest dist/lib --target lib --name index ./src/index.js",
-    "package-theme": "vue-cli-service build --dest dist/theme --target lib --name index ./src/index.js",
-    "package-example": "vue-cli-service build --dest dist/example --target lib --name index ./src/example.js",
     "npm-publish": "npm publish",
     "lint": "vue-cli-service lint"
   },

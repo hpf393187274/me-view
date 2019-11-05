@@ -1,5 +1,5 @@
 <template>
-  <button :class="classes" :disabled="disabled" :margin="margin" @click.stop="click">
+  <button :class="classes" :disabled="disabled" :margin="margin" :style="{width:width}" @click.stop="click">
     <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
     <span class="button-inner">
       <slot />
@@ -12,6 +12,9 @@ export default {
   name: 'MeButton',
   props: {
     type: { type: String, default: 'default' },
+    disabled: Boolean,
+    width: String,
+    margin: String,
     shape: { type: String, default: 'default', validator: value => ['default', 'round', 'circle'].includes(value) },
     plain: Boolean,
     icon: String
@@ -38,7 +41,6 @@ export default {
   },
   methods: {
     click() {
-      console.log('click button 了一次')
       this.$emit('click')
     }
   }

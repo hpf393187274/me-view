@@ -7,7 +7,6 @@
 <template>
   <me-tree :data="data" />
 </template>
-------
 <template>
   <me-tree :data="data" header></me-tree>
 </template>

@@ -15,14 +15,13 @@
       </template>
     </me-input>
     <div
-      :style="{'z-index': status? 10000 : 0}"
+      :style="{'z-index': status? 10000 : 0,'height': height}"
       @mouseout="closable=true"
       @mouseover="onMouseoverOther"
       class="me-column me-border combo-options"
-      v-if="rendered"
       v-show="data && data.length > 0 && status"
     >
-      <slot name="options">
+      <slot>
         <me-combo-option
           :checkbox="checkbox"
           :checked="isSelected(item[fieldValue])"
@@ -155,7 +154,6 @@ export default {
         })
     },
     onClickOption(item, index) {
-      console.log('onClickOption', '->item', item, 'index=', index)
       const data = { ...item, index }
       this.$emit('click-option-before', item, index)
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)

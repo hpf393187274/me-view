@@ -2,7 +2,7 @@
   <div class="tree-node-body">
     <div :style="styleIndent" :title="data.label" class="me-row tree-node-item">
       <me-icon @click="doExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
-      <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click-checkbox="clickCheckbox" v-if="checkbox" />
+      <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox" v-if="checkbox" />
       <div @click="onClickLabel" class="me-row me-flex tree-node-label">
         <slot :data="getData()" name="node-label">
           <span class="tree-node-inner">{{data.label}}</span>

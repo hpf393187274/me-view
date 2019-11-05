@@ -5,6 +5,7 @@
     :disabled="disabled"
     :field-label="fieldLabel"
     :field-value="fieldValue"
+    :height="height"
     :highlight="highlight"
     :multiple="multiple"
     :placeholder="placeholder"
@@ -47,7 +48,6 @@ export default {
   },
   methods: {
     onClickNode(row, index) {
-      console.log('onClickNode', '->', row, ' index=', index)
       this.$refs.combo.onClickOption(row, index)
       this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }

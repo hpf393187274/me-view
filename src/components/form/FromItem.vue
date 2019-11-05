@@ -14,6 +14,8 @@ export default {
   name: 'MeFormItem',
   props: {
     required: { type: Boolean },
+    label: String,
+    flex: Boolean,
     labelStyle: { type: Object, default() { return {} } },
     readonly: Boolean
   },

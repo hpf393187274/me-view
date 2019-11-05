@@ -11,6 +11,13 @@
 <script>
 export default {
   name: 'MeIcon',
+  props: {
+    /**
+     * 标题
+     */
+    title: String,
+    disabled: Boolean
+  },
   methods: {
     handlerEvent(eventName) {
       this.disabled === false && this.$emit(eventName)

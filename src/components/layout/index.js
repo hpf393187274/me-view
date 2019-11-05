@@ -13,6 +13,8 @@ import tabs from './tabs'
 import Transfer from './Transfer'
 
 import paging from './paging'
+
+import Modal from './modal/index'
 export default [
-  Panel, Dialog, ...paging, ...tabs, ...tree, ...menu, Transfer, ...table
+  Panel, Dialog, ...paging, ...tabs, ...tree, ...menu, Transfer, ...table, Modal
 ]

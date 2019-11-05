@@ -4,6 +4,8 @@ export default {
    * 是否显示统计
    */
     statistics: Boolean,
+    label: String,
+    disabled: Boolean,
     /* 是否存在复选框 */
     checkbox: { type: Boolean, default: false },
     /* 是否默认选中 */

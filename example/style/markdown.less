@@ -114,9 +114,6 @@ table {
 }
 table {
   border: solid #ccc 1px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  border-radius: 6px;
 }
 table tr:hover {
   background: #fbf8e9;
@@ -129,8 +126,8 @@ table tr:hover {
 table td, .table th {
   border-left: 1px solid #ccc;
   border-top: 1px solid #ccc;
-  padding: 10px;
   text-align: left;
+  height: 50px;
 }
 
 table th {
@@ -148,20 +145,4 @@ table th {
 
 table td:first-child, table th:first-child {
   border-left: none;
-}
-
-table th:first-child {
-  border-radius: 6px 0 0 0;
-}
-table th:last-child {
-  border-radius: 0 6px 0 0;
-}
-table th:only-child{
-  border-radius: 6px 6px 0 0;
-}
-table tr:last-child td:first-child {
-  border-radius: 0 0 0 6px;
-}
-table tr:last-child td:last-child {
-  border-radius: 0 0 6px 0;
 }

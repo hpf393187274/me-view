@@ -1,62 +1,65 @@
-@table-border: #ebeef5;
+@table-border: rgb(141, 141, 141);
 @table-color: rgb(141, 141, 141);
-@table-header: #F8F8F9;
+@table-header:#4aacee;
 @table-body: #FFFFFF;
 @table-body-row-odd:#FFFFFF;
 @table-body-row-even:#F8F8F9;
 @table-body-hover: #ebf7ff;
-@table-body-active: #ebf7ff;
+@table-tr-active: #4aacee;
 
-.@{PREFIX}-table {
-	color: @table-color;
-	overflow: auto;
-	height: 100%;
-	width: 100%;
-	font-size: 13px;
-	.is-selected {
-		background-color: @table-body-active !important;
+.@{PREFIX}-table-container {
+	padding: 2px;
+	height: 100%;;
+	table{
+		width: 100%;
 	}
-	.table-toolbar{
-		padding: 3px;
+	table, thead, tbody , th, td {
+		table-layout: fixed !important;
+	}
+	th, td {
+		vertical-align: middle;
+		background: initial;
+	}
+	.table-toolbar {
+		padding: 5px 0px;
 		> * {
-			margin: 0px 5px;
+			margin-right: 10px;
 		}
 	}
-	.table-row {
-		min-height: 40px;
-	}
-	.table-column {
-		align-items: center;
-		min-width: 40px;
-		flex-wrap: wrap;
-		border-right: 1px solid @table-border;
-		.table-column-inner {
+
+	.table-wrapper {
+		border: 1px solid @table-border;
+		.checkbox {
+			text-align: center;
+			width: 30px !important;
+		}
+		.cell-inner {
 			margin: 5px;
 			overflow: hidden; /*自动隐藏文字*/
 			text-overflow: ellipsis;/*文字隐藏后添加省略号*/
 			white-space: nowrap;/*强制不换行*/
 		}
-	}
-	.table-header {
-		font-size: 16px;
-		font-weight: bold;
-		background: @table-header;
-	}
-	.table-body {
-		background: @table-body;
-		overflow-y:  visible;
-		overflow-x: visible;
-		.table-row {
-			&:nth-child(odd){
-				background: @table-body-row-odd;
+		.table-body { 
+			overflow: auto; 
+			tr {
+				&:nth-child(odd){ background-color: @table-body-row-odd !important; }
+				&:nth-child(even){ 	background-color: @table-body-row-even !important; }
+				&:hover {
+					background-color: @table-body-hover !important;
+				}
+				&.is-selected {
+					background-color: @table-tr-active !important;
+				}
 			}
-			&:nth-child(even){
-				background: @table-body-row-even;
-			}
-			&:hover{
-				cursor: pointer;
-				background-color: @table-body-hover;
+		}
+	
+		.table-header {
+			overflow: hidden;
+			background-color: @table-header;
+			tr {
+				background-color: @table-header;
 			}
 		}
 	}
+	
 }

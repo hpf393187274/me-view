@@ -1,45 +1,42 @@
 <template>
-  <div :class="classes">
-    <div v-if="$slots.default" v-show="false">
-      <slot />
-    </div>
+  <div :style="styleContainer" class="me-column me-table-container">
     <template v-if="$slots.header">
       <div class="me-row table-toolbar" v-if="$slots.header">
         <slot name="header" />
       </div>
-      <me-line-h />
     </template>
-    <me-table-row-header
-      :center="center"
-      :checkbox="checkbox"
-      :checked-half="checkedHalf"
-      :checked.sync="checkedHeader"
-      :columns="columns__"
-      :data-length="data.length"
-      :multiple="multiple"
-      :width="width__"
-      @click-checkbox="handlerCheckboxHeader"
-      ref="header"
-    />
-    <div class="table-body" ref="body">
-      <me-table-row-body
-        :center="center"
-        :checkbox="checkbox"
-        :checked="checkedBody"
-        :columns="columns__"
-        :data="item"
-        :highlight="highlight"
-        :index-row="index"
-        :key="item.primaryKey"
-        :primary-key="item.primaryKey"
-        :width="width__"
-        @click-column="onColumn"
-        @click-row="onRow"
-        v-for="(item,index) in data"
-      />
+    <div class="me-column me-flex table-wrapper" v-show="show">
+      <me-table-header :scroll-left="scrollLeft" :style="styleTHead">
+        <me-table-row
+          :center="center"
+          :checkbox="checkbox"
+          :checked="checkedHeader"
+          :checked-half="checkedHalf"
+          :columns="columns__"
+          :data-length="data.length"
+          :multiple="multiple"
+          @click-checkbox="handlerCheckboxHeader"
+          header
+        />
+      </me-table-header>
+
+      <me-table-body @scroll-body="onScrollBody" class="me-flex" ref="tableBody">
+        <me-table-row
+          :center="center"
+          :checkbox="checkbox"
+          :checked="checkedBody"
+          :columns="columns__"
+          :data="item"
+          :highlight="highlight"
+          :index="index"
+          :key="index"
+          :multiple="multiple"
+          @click-row="onRow"
+          v-for="(item,index) in data"
+        />
+      </me-table-body>
     </div>
     <template v-if="$slots.footer">
-      <me-line-h />
       <div class="me-row table-toolbar" v-if="$slots.footer">
         <slot name="footer" />
       </div>
@@ -47,28 +44,49 @@
   </div>
 </template>
 <script>
-import TableRowHeader from './TableRowHeader.vue'
-import TableRowBody from './TableRowBody.vue'
+import TableRow from './TableRow.vue'
+import TableHeader from './TableHeader.vue'
+import TableBody from './TableBody.vue'
+const scrollbarWidth = +function () {
+  var scrollDiv = document.createElement("div");
+  scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;';
+  document.body.appendChild(scrollDiv);
+  var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  document.body.removeChild(scrollDiv);
+  return scrollbarWidth;
+}()
+
 let idSeed = 1
 export default {
   name: 'MeTable',
   components: {
-    [TableRowHeader.name]: TableRowHeader,
-    [TableRowBody.name]: TableRowBody
+    [TableRow.name]: TableRow,
+    [TableHeader.name]: TableHeader,
+    [TableBody.name]: TableBody
   },
   props: {
     field: { type: String, default: '' },
     data: { type: Array, default: () => [] },
+    columns: { type: Array, default: () => [] },
+    center: Boolean,
+    checkbox: Boolean,
+    height: [Number, String],
+    multiple: Boolean,
+    width: [Number, String],
     highlight: Boolean
   },
   computed: {
-    classes() {
-      return [
-        'me-column me-table', { 'me-table-border': this.border }
-      ]
+    styleContainer() {
+      return {
+        'width': this.$type.isNumber(this.width) ? `${this.width}px` : this.width,
+        'height': this.$type.isNumber(this.height) ? `${this.height}px` : this.height
+      }
     },
-    styleBody() {
-      return { width: `calc( 100% - 20px )` }
+    styleTHead() {
+      if (this.scrollbarHas) {
+        return { width: `calc( 100% - ${this.scrollbarWidth}px )` }
+      }
+      return {}
     },
     length() {
       return this.$type.isArray(this.data) ? this.data.length : 0
@@ -77,50 +95,77 @@ export default {
   watch: {
     checkedBodyNumber(value) {
       if (this.length === 0 || value === 0) {
+        console.log('checkedBodyNumber ------------------')
         this.checkedHeader = this.checkedHalf = false
         return
       }
+      console.log('checkedBodyNumber ===========================')
       this.checkedHeader = this.length === value
       this.checkedHalf = this.length !== value
+    },
+    length() {
+      this.$nextTick(() => {
+        this.existScrollbar()
+      })
     }
   },
   data() {
     return {
       id__: '',
       columns__: [],
-      checkedHeader: this.checked,
+      scrollbarWidth: scrollbarWidth, checkedHeader: this.checked,
+      scrollbarHas: false,
       checkedBody: this.checked,
       checkedHalf: false,
       checkedBodyNumber: 0,
       checkedRows: [],
       selectedNodeOld: null,
       selectedData: null,
-      width__: '100%'
+      scrollLeft: 0,
+      show: true,
     }
   },
   created() {
     this.id__ = `me-table_${idSeed++}`
     this.initPrimaryKey(this.data)
     this.checkedBodyNumber = this.checked ? this.length : 0
+    // setTimeout(() => {
+    //   this.show = true
+    // }, 3000)
+  },
+  beforeUpdate() {
+    const _this = this
+    this.$nextTick(() => {
+      window.onload = function () {
+        _this.existScrollbar()
+      }
+    })
   },
   mounted() {
-    this.$nextTick(() => { this.width__ = this.$el.offsetWidth })
+    console.log('mounted')
+    this.handlerSlots()
+    const _this = this
+    this.$nextTick(() => {
+      window.onload = function () {
+        _this.existScrollbar()
+      }
+    })
   },
   methods: {
     /**
      * 追加：选中的行
      */
     appendCheckedRows(target) {
-      const primaryValue = Reflect.get(target, this.primaryKey)
-      const index = this.checkedRows.findIndex(item => primaryValue === Reflect.get(item, this.primaryKey))
+      const primaryValue = Reflect.get(target, 'primaryKey')
+      const index = this.checkedRows.findIndex(item => primaryValue === Reflect.get(item, 'primaryKey'))
       index === -1 && this.checkedRows.push(target)
     },
     /**
      * 移除：选中的行
      */
     removeCheckedRows(target) {
-      const primaryValue = Reflect.get(target, this.primaryKey)
-      this.$tools.arrayRemove(this.checkedRows, item => primaryValue === Reflect.get(item, this.primaryKey))
+      const primaryValue = Reflect.get(target, 'primaryKey')
+      this.$tools.arrayRemove(this.checkedRows, item => primaryValue === Reflect.get(item, 'primaryKey'))
     },
     /**
      * 点击 Header row checkbox
@@ -155,7 +200,6 @@ export default {
         this.checkedBodyNumber = checked ? 1 : 0
         this.handleCheckedSingleNode(row, node)
       }
-      console.log('table onRow', '->item', row, 'index=', index)
       this.$emit('click-row', row, index, node)
     },
     /**
@@ -163,6 +207,32 @@ export default {
      */
     onColumn(...value) {
       this.$emit('click-column', ...value)
+    },
+    existScrollbar() {
+      const target = this.$refs.tableBody.$el
+      this.scrollbarHas = target.scrollHeight > (target.innerHeight || target.clientHeight)
+      return target.scrollHeight > (target.innerHeight || target.clientHeight);
+    },
+    onScrollBody(scrollLeft) {
+      this.scrollLeft = scrollLeft
+    },
+    handlerSlots() {
+      const excludeSlots = ['header', 'footer']
+      const slotKeys = Reflect.ownKeys(this.$scopedSlots)
+      this.columns__ = [...this.columns]
+      if (this.$type.isArray(slotKeys) && slotKeys.length > 0) {
+        const newSlotKeys = slotKeys.filter(item => !(item.includes('$') || excludeSlots.includes(item)))
+        if (this.$type.isArray(newSlotKeys) && newSlotKeys.length > 0) {
+          console.log('newSlotKeys = ', newSlotKeys)
+
+          for (const column of this.columns__) {
+            if (newSlotKeys.includes(column.field)) {
+              const extended = Reflect.get(this.$scopedSlots, column.field)
+              Reflect.set(column, 'extended', extended)
+            }
+          }
+        }
+      }
     }
   }
 }

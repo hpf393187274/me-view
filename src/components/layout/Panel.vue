@@ -18,7 +18,8 @@ export default {
   name: 'MePanel',
   props: {
     line: Boolean,
-    icon: String
+    icon: String,
+    overflow: String
   }
 }
 </script>

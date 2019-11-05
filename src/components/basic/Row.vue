@@ -1,14 +1,11 @@
 <template>
   <div class="me-row">
-    <slot :data="data" />
+    <slot />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MeRow',
-  props: {
-    data: Object
-  }
+  name: 'MeRow'
 }
 </script>
