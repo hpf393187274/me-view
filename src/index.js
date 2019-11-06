@@ -10,7 +10,9 @@ import 'echarts/lib/component/legend'
 import { type, tools, local, session, http } from '@assets/script/common'
 import { components, mixins, config } from '@components/index'
 import watermark from '@assets/script/watermark'
-export { type, tools, local, session, http, watermark }
+
+import Dialog from '@components/layout/dialog/index'
+export { type, tools, local, session, http, watermark, Dialog }
 
 export default {
   install(Vue) {
@@ -21,6 +23,8 @@ export default {
 
     Vue.mixin(mixins)
     Vue.prototype.$config = config
+    Vue.prototype.$dialog = Dialog
+
     Vue.prototype.$watermark = watermark
     Vue.prototype.$type = type
     Vue.prototype.$tools = tools

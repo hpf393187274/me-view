@@ -1,5 +1,5 @@
 <template>
-  <div @click.self="value__=false" class="me-row me-center me-modal" v-if="value__">
+  <div class="me-row me-center me-modal" v-if="value__">
     <div :style="styles" class="me-column modal-container">
       <slot />
     </div>
@@ -9,7 +9,7 @@
 import Modal from '../modal.mixin'
 export default {
   name: 'MeModal',
-  mixins: [Modal],
+  mixins: [Modal]
 }
 </script>
 

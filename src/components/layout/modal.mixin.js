@@ -8,7 +8,7 @@ export default {
   },
   data() {
     return {
-      value__: this.value__
+      value__: this.value
     }
   },
   watch: {
@@ -25,6 +25,12 @@ export default {
         width: this.width,
         height: this.height
       }
+    }
+  },
+  methods: {
+    onCancel() {
+      this.value__ = false
+      this.$emit('cancel')
     }
   }
 }

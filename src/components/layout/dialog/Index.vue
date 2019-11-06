@@ -1,11 +1,11 @@
 
 <template>
-  <me-modal v-model="value__">
+  <me-modal :height="height" :width="width" @cancel="$emit('cancel')" v-model="value__">
     <div class="me-column me-flex me-dialog">
       <div class="me-row dialog-header">
         <slot name="header">
-          <span :class="{'me-cursor-move': moveable}" class="me-flex">{{label}}</span>
-          <me-icon @click="onCanel">icon-shanchu</me-icon>
+          <span :class="{'me-cursor-move': moveable}" class="me-flex">{{title}}</span>
+          <me-icon @click="onCancel">icon-shanchu</me-icon>
         </slot>
       </div>
       <me-line-h />
@@ -15,7 +15,7 @@
       <me-line-h />
       <div class="me-row dialog-footer">
         <slot name="footer">
-          <me-button @click="onCanel" width="80px">取 消</me-button>
+          <me-button @click="onCancel" width="80px">取 消</me-button>
           <me-button :disabled="btnDisabledConfirm" @click="onConfirm" type="primary" width="80px">确 定</me-button>
         </slot>
       </div>
@@ -25,12 +25,12 @@
 
 <script>
 
-import Modal from './modal.mixin'
+import Modal from '../modal.mixin'
 export default {
   name: 'MeDialog',
   mixins: [Modal],
   props: {
-    label: String
+    title: String
   },
   data() {
     return {
@@ -38,10 +38,6 @@ export default {
     }
   },
   methods: {
-    onCanel() {
-      this.value__ = false
-      this.$emit('canel')
-    },
     onConfirm() {
       this.btnDisabledConfirm = true
       setTimeout(() => { this.btnDisabledConfirm = false }, 1000)
@@ -55,8 +51,6 @@ export default {
   .dialog-header {
     align-items: center;
     padding: 15px 10px;
-    .dialog-label {
-    }
   }
   .dialog-body {
     padding: 5px;
@@ -66,9 +60,6 @@ export default {
     align-items: center;
     padding: 5px;
     justify-content: flex-end;
-    > * {
-      margin: 0px 10px;
-    }
   }
 }
 </style>

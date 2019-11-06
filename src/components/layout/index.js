@@ -1,7 +1,7 @@
 
 import Panel from './Panel'
 
-import Dialog from './Dialog'
+import Dialog from './dialog/index'
 
 import menu from './menu'
 import tree from './tree'
