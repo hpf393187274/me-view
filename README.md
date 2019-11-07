@@ -35,3 +35,5 @@ import 'me-view/dist/lib/index.css'
 Vue.use(MeView)
 
 ```
+
+[使用文档](https://github.com/hpf393187274/me-view-docs)
