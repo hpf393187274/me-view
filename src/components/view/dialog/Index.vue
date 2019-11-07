@@ -1,11 +1,11 @@
 
 <template>
-  <me-modal :height="height" :width="width" @cancel="$emit('cancel')" v-model="value__">
+  <me-modal :closable-modal="closableModal" :height="height" :width="width" @cancel="$emit('cancel')" v-model="value__">
     <div class="me-column me-flex me-dialog">
       <div class="me-row dialog-header">
         <slot name="header">
           <span :class="{'me-cursor-move': moveable}" class="me-flex">{{title}}</span>
-          <me-icon @click="onCancel">icon-shanchu</me-icon>
+          <me-icon @click="onCancel" v-if="closable">icon-shanchu</me-icon>
         </slot>
       </div>
       <me-line-h />
@@ -26,11 +26,13 @@
 <script>
 
 import Modal from '../modal.mixin'
+import { type } from 'os'
 export default {
   name: 'MeDialog',
   mixins: [Modal],
   props: {
-    title: String
+    title: String,
+    closable: { type: Boolean, default: true }
   },
   data() {
     return {

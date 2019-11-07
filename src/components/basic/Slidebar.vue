@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import Drag from '@components/mixins/drag'
+import Draggable from '@components/mixins/draggable'
 export default {
   name: 'MeSlidebar',
-  mixins: [Drag],
+  mixins: [Draggable],
   props: {
     layout: { type: String, default: 'center', validator: value => ['center', 'incircle'].includes(value) },
     length: { type: Number, default: 30 },

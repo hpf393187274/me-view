@@ -1,11 +1,11 @@
 
-import Basic from './basic'
-import Layout from './layout'
-import Form from './form'
+import basic from './basic'
+import view from './view'
+import form from './form'
 import mixins from './mixins'
 
 import config from './config'
 const components = [
-  ...Basic, ...Layout, ...Form
+  ...basic, ...view, ...form
 ]
 export { mixins, config, components }

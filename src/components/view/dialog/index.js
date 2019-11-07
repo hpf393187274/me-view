@@ -3,7 +3,11 @@ import Dialog from './basal'
 let dialogInstance
 
 const basal = (options = {}) => {
-  dialogInstance = dialogInstance || Dialog.newInstance()
+  dialogInstance = dialogInstance || Dialog.newInstance({
+    closable: false,
+    moveable: false,
+    closableModal: false
+  })
   const __options = Object.assign({
     onRemove() { dialogInstance = null }
   }, options)

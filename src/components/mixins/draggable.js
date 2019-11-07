@@ -3,6 +3,7 @@ export default {
     return {
       dragging: false,
       isClick: false,
+      position: { x: 0, y: 0 },
       pointStart: { x: 0, y: 0 },
       pointEnd: { x: 0, y: 0 },
       pointMin: { x: 0, y: 0 },
@@ -29,6 +30,8 @@ export default {
         event.clientY = event.touches[0].clientY;
         event.clientX = event.touches[0].clientX;
       }
+
+
       Object.assign(this.clientStart, { x: event.clientX, y: event.clientY })
       this.handlerDragStart && this.handlerDragStart()
     },
@@ -88,8 +91,11 @@ export default {
         this.pointEnd.y = this.pointMax.y
         flag = true
       }
-      // 若点位越界，则进行越界回调
-      flag && this.handlerBoundary && this.handlerBoundary()
+
+      if (flag && this.handlerBoundary) {
+        // 若点位越界，则进行越界回调
+        this.handlerBoundary()
+      }
     }
   }
 }

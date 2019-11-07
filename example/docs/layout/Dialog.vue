@@ -1,11 +1,17 @@
 <template>
   <div>
+    <h3>Modal</h3>
+    <me-modal v-model="statusModal">
+      <br />ssss
+      <br />ssss
+    </me-modal>
+    <me-button @click="statusModal=!statusModal">Modal</me-button>
     <h3>Dialog</h3>
     <me-dialog title="dialog" v-model="status">
       <br />ssss
       <br />ssss
     </me-dialog>
-    <me-button @click="status=!status">{{status?'隐藏':'显示'}}</me-button>
+    <me-button @click="status=!status">Dialog</me-button>
 
     <h3>Alert</h3>
     <me-button @click="onAlert1">我们都是好孩子</me-button>
@@ -17,6 +23,7 @@
 export default {
   data() {
     return {
+      statusModal: false,
       status: false,
     }
   },

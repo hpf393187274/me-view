@@ -11,7 +11,7 @@ import { type, tools, local, session, http } from '@assets/script/common'
 import { components, mixins, config } from '@components/index'
 import watermark from '@assets/script/watermark'
 
-import Dialog from '@components/layout/dialog/index'
+import Dialog from '@components/view/dialog/index'
 export { type, tools, local, session, http, watermark, Dialog }
 
 export default {

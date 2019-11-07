@@ -4,6 +4,8 @@ export default {
     center: Boolean,
     height: { type: String, default: '300px' },
     width: { type: String, default: '300px' },
+    closableModal: { type: Boolean, default: true },
+    draggable: Boolean,
     moveable: Boolean
   },
   data() {
@@ -17,14 +19,6 @@ export default {
     },
     value__(newValue) {
       this.$emit('input', newValue)
-    }
-  },
-  computed: {
-    styles() {
-      return {
-        width: this.width,
-        height: this.height
-      }
     }
   },
   methods: {

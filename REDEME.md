@@ -24,3 +24,13 @@ npm run test
 ```
 npm run lint
 ```
+
+``` js
+import Vue from 'vue'
+import MeView from 'me-view'
+
+import 'me-view/dist/lib/index.css'
+
+Vue.use(MeView)
+
+```
