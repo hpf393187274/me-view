@@ -29,9 +29,12 @@ npm run lint
 ``` js
 import Vue from 'vue'
 import MeView from 'me-view'
-
+// 加载 样式
 import 'me-view/dist/lib/index.css'
+// 加载 icon 
+import '//at.alicdn.com/t/font_1180504_afedrcmrmt.css'
 
+// 使用插件 me-view
 Vue.use(MeView)
 
 ```
