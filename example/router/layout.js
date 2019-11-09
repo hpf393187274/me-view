@@ -3,5 +3,6 @@ export default [
   { path: '/layout/paging', component: () => import( /* webpackChunkName: "example-layout" */ '@docs/layout/Paging.md') },
   { path: '/layout/tree', component: () => import( /* webpa ckChunkName: "example-layout" */'@docs/layout/Tree.md') },
   { path: '/layout/dialog', component: () => import( /* webpa ckChunkName: "example-layout" */'@docs/layout/Dialog.vue') },
+  { path: '/layout/message', component: () => import( /* webpa ckChunkName: "example-layout" */'@docs/layout/Message.vue') },
   { path: '/layout/transfer', component: () => import( /* webpackChunkName: "example-layout" */ '@docs/layout/Transfer.md') }
 ]

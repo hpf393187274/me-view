@@ -24,6 +24,23 @@ export default {
     return !this.isEmpty(target)
   },
   /**
+   * 转换为 Number
+   * @param {*} target 
+   */
+  convertToNumber(target) {
+    if (target) {
+      if (type.isNumber(target)) { return target }
+      if (type.isString(target)) {
+        const result = target.replace(/[^\d]+/, '')
+        if (this.isNotEmpty(result)) {
+          return Number(result)
+        }
+      }
+      throw new Error('convert to number error, target；' + target)
+    }
+    return target
+  },
+  /**
    * 去除字符串两边的空格
    * @param {String} target 目标字符串
    */

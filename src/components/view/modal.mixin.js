@@ -2,10 +2,11 @@ export default {
   props: {
     value: Boolean,
     center: Boolean,
-    height: { type: String, default: '300px' },
-    width: { type: String, default: '300px' },
+    modal: { type: Boolean, default: true },
+    classContainer: String,
+    top: { type: String, default: null },
+    left: { type: String, default: null },
     closableModal: { type: Boolean, default: true },
-    draggable: Boolean,
     moveable: Boolean
   },
   data() {

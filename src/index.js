@@ -12,6 +12,7 @@ import { components, mixins, config } from '@components/index'
 import watermark from '@assets/script/watermark'
 
 import Dialog from '@components/view/dialog/index'
+import Message from '@components/view/message/index'
 export { type, tools, local, session, http, watermark, Dialog }
 
 export default {
@@ -24,6 +25,7 @@ export default {
     Vue.mixin(mixins)
     Vue.prototype.$config = config
     Vue.prototype.$dialog = Dialog
+    Vue.prototype.$message = Message
 
     Vue.prototype.$watermark = watermark
     Vue.prototype.$type = type

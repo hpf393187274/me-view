@@ -7,7 +7,7 @@
     <div class="me-row me-flex" style="overflow: auto; ">
       <me-tree :data="data" :expandable="false" @click-node-leaf="handleClick" style="width:240px;" />
       <me-line-v />
-      <div class="me-row me-flex" style="overflow: auto; padding:5px 10px;">
+      <div class="me-column me-flex" style="overflow: auto; padding:5px 10px;">
         <router-view />
       </div>
     </div>
@@ -66,6 +66,7 @@ export default {
             { label: 'Paging 分页', path: '/layout/paging' },
             { label: 'Tree 树型控件', path: '/layout/tree' },
             { label: 'Dialog 对话框', path: '/layout/dialog' },
+            { label: 'Message 提示', path: '/layout/message' },
             { label: 'Transfer 穿梭框', path: '/layout/transfer' }
           ]
         }

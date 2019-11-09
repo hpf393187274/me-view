@@ -1,0 +1,19 @@
+@message-border: #4aacee;
+@message-shadow: #a5b0b8;
+@message-header:#4aacee;
+
+.@{PREFIX}-message {
+  margin: 5px;
+  height: 50px;
+	border-color: @message-border;
+	box-shadow: 0 1px 6px @message-shadow;
+	.iconfont {
+		font-size: 20px !important;
+    margin: 0px 10px;
+	}
+  .info { color: rgb(135, 137, 204); }
+	.success{ color: rgb(76, 201, 76); }
+	.warning{ color: rgb(202, 202, 67); }
+	.error { color: rgb(233, 139, 85); }
+	.loading { color: rgb(61, 224, 11); }
+}

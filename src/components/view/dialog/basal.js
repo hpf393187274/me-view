@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Dialog from './Index.vue'
 import Button from '@components/form/Button'
-
+import Icon from '@components/basic/Icon'
 Dialog.newInstance = (options = {}) => {
-  const dialog = new Vue({
+  const instance = new Vue({
     data() {
       return Object.assign({}, options, {
         width: '416px',
@@ -14,22 +14,22 @@ Dialog.newInstance = (options = {}) => {
         render: null,
         title: '',
         icon: '',
-        message: null,
+        content: null,
         okText: '确认',
         cancelText: '取消',
-        showCancel: false,
-        loading: false,
-        buttonLoading: false,
-        resolve: null,
-        reject: null,
         closable: false
       })
     },
     methods: {
       show(options = {}) {
+
+
+        const onRemove = Reflect.get(options, 'onRemove')
+        Reflect.deleteProperty(options, 'onRemove')
         for (const key in options) {
           Reflect.set(this, key, Reflect.get(options, key))
         }
+        modal.$parent.onRemove = onRemove;
       },
       destroy() {
         this.$destroy();
@@ -48,13 +48,14 @@ Dialog.newInstance = (options = {}) => {
     },
     render(h) {
       let renderFooter = []
-      if (this.type === 'Confirm') {
+      if (this.type === 'confirm') {
         renderFooter.push(
           h(Button, {
             props: { width: '80px' },
             on: { click: this.onCancel }
           }, this.cancelText)
         )
+
       }
 
       renderFooter.push(
@@ -66,18 +67,22 @@ Dialog.newInstance = (options = {}) => {
       return h(Dialog,
         {
           props: Object.assign({}, this.$data, { value: true }),
-          on: {
-            cancel: this.onCancel
-          },
-          scopedSlots: {
-            footer: () => renderFooter
-          }
+          on: { cancel: this.onCancel },
+          scopedSlots: { footer: () => renderFooter }
         },
-        [this.render ? this.render(h) : h('div', this.message)]
+        [
+          h('div', {
+            class: 'me-row me-flex'
+          }, [
+            h('div', [h(Icon, { class: this.type }, this.icon)]),
+            this.render ? this.render(h) : h('div', this.content)
+          ])
+        ]
       )
     }
   })
-  window.document.body.appendChild(dialog.$mount().$el)
-  return dialog
+  window.document.body.appendChild(instance.$mount().$el)
+  const modal = instance.$children[0];
+  return instance
 }
 export default Dialog

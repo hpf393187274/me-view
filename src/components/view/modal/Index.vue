@@ -1,16 +1,55 @@
 <template>
-  <div @click.self="onClick" class="me-row me-center me-modal" v-if="value__">
-    <div :style="styles" @mousedown="onMouseDown" class="me-column modal-container">
-      <slot />
+  <div @click.self="onClick" class="me-row me-center me-modal" v-if="modal" v-show="value__">
+    <div :class="classContainer" :style="styles" @mousedown="onMouseDown" class="me-column modal-container" ref="target">
+      <slot>
+        <me-button @click="onCancel">关闭</me-button>
+      </slot>
     </div>
+  </div>
+  <div
+    :class="classContainer"
+    :style="styles"
+    @mousedown="onMouseDown"
+    class="me-column modal-container"
+    ref="target"
+    v-else
+    v-show="value__"
+  >
+    <slot>
+      <me-button @click="onCancel">关闭</me-button>
+    </slot>
   </div>
 </template>
 <script>
 import Modal from '../modal.mixin'
 import Draggable from '@components/mixins/draggable'
+import { tools } from '@assets/script/common'
 export default {
   name: 'MeModal',
   mixins: [Modal, Draggable],
+  props: {
+    height: String,
+    width: String,
+  },
+  data() {
+    return {
+      width__: tools.convertToNumber(this.width),
+      height__: tools.convertToNumber(this.height),
+    }
+  },
+  watch: {
+    width(newValue) {
+      this.width__ = tools.convertToNumber(newValue)
+    },
+    height(newValue) {
+      this.height__ = tools.convertToNumber(newValue)
+    },
+    value__(newValue) {
+      if (newValue) {
+        this.initPointMax()
+      }
+    }
+  },
   methods: {
     onClick() {
       if (this.closableModal === true) {
@@ -23,30 +62,61 @@ export default {
       this.position = { ...this.pointEnd }
     },
     initPosition() {
-      this.position = { x: 500, y: 200 }
-      Object.assign(this.pointStart, this.position)
-    }
-  },
-  computed: {
-    styles() {
-      return {
-        width: this.width,
-        height: this.height,
-        cursor: 'pointer',
-        left: `${this.position.x}px`,
-        top: `${this.position.y}px`
+      Object.assign(this.position, {
+        x: (this.containerMax.x - this.width__) / 2,
+        y: (this.containerMax.y - this.height__) / 2
+      })
+      if (this.left) {
+        Reflect.set(this.position, 'x', tools.convertToNumber(this.left))
       }
+      if (this.top) {
+        Reflect.set(this.position, 'y', tools.convertToNumber(this.top))
+      }
+      Object.assign(this.pointStart, this.position)
+    },
+    initPointMax() {
+      this.$nextTick(() => {
+        var target = this.$refs.target
+        this.width__ = target.scrollWidth
+        this.height__ = target.scrollHeight
+
+        this.initPosition()
+
+        Object.assign(this.pointMax, {
+          x: this.containerMax.x - this.width__, y: this.containerMax.y - this.height__
+        })
+      })
     }
   },
   mounted() {
     this.$nextTick(() => {
       var container = window.document.body
-      Object.assign(this.pointMax, {
+      Object.assign(this.containerMax, {
         x: container.scrollWidth, y: container.scrollHeight
       })
-      this.initPosition()
+      this.pointMax = { ...this.containerMax }
+      if (this.value__) {
+        // 创建就显示的 场景
+        this.initPointMax()
+      }
     })
   },
+  computed: {
+    styles() {
+      const styleBasal = {
+        width: this.width,
+        height: this.height,
+        left: `${this.position.x}px`,
+        top: `${this.position.y}px`
+      }
+      if (this.modal === false) {
+        Object.assign(styleBasal, {
+          position: 'fixed'
+        })
+      }
+      return styleBasal
+    }
+  }
 }
 </script>
 
@@ -58,12 +128,12 @@ export default {
   left: 0px;
   top: 0px;
   background: rgba(216, 216, 216, 0.4);
-  z-index: 10;
-  .modal-container {
-    background-color: aliceblue;
-    z-index: 20;
-    color: black;
-    position: absolute;
-  }
+  z-index: 0;
+}
+.modal-container {
+  z-index: 100;
+  cursor: pointer;
+  position: absolute;
+  background: #ffffff;
 }
 </style>

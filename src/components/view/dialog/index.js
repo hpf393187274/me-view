@@ -1,28 +1,28 @@
 import Dialog from './basal'
 
-let dialogInstance
+let instance
 
 const basal = (options = {}) => {
-  dialogInstance = dialogInstance || Dialog.newInstance({
+  instance = instance || Dialog.newInstance({
     closable: false,
     moveable: false,
     closableModal: false
   })
   const __options = Object.assign({
-    onRemove() { dialogInstance = null }
+    onRemove() { instance = null }
   }, options)
-  return dialogInstance.show(__options)
+  return instance.show(__options)
 }
 
 Dialog.alert = (options = {}) => {
   return basal(Object.assign({ title: '提示' }, options, {
-    type: 'Alert'
+    type: 'alert', icon: 'icon-info'
   }))
 }
 
 Dialog.confirm = (options = {}) => {
   return basal(Object.assign({ title: '确认' }, options, {
-    type: 'Confirm'
+    type: 'confirm', icon: 'icon-xunwen'
   }))
 }
 export default Dialog

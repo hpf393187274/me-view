@@ -2,7 +2,7 @@
   <i
     :class="`iconfont ${$slots.default[0].text} me-icon`"
     :title="title"
-    @click="handlerEvent('click')"
+    @click.self="handlerEvent('click')"
     @mouseout="handlerEvent('mouseout')"
     @mouseover="handlerEvent('mouseover')"
   />

@@ -1,4 +1,5 @@
 export default {
+  props: { draggable: Boolean },
   data() {
     return {
       dragging: false,
@@ -7,6 +8,7 @@ export default {
       pointStart: { x: 0, y: 0 },
       pointEnd: { x: 0, y: 0 },
       pointMin: { x: 0, y: 0 },
+      containerMax: { x: 0, y: 0 },
       pointMax: { x: 0, y: 0 },
       clientStart: { x: 0, y: 0 },
       clientEnd: { x: 0, y: 0 }
@@ -14,7 +16,7 @@ export default {
   },
   methods: {
     onMouseDown(event) {
-      if (this.disabled) { return }
+      if (this.draggable === false) { return }
       event.preventDefault();
       this.onDragStart(event);
       window.addEventListener('mousemove', this.onDragging);
@@ -30,8 +32,6 @@ export default {
         event.clientY = event.touches[0].clientY;
         event.clientX = event.touches[0].clientX;
       }
-
-
       Object.assign(this.clientStart, { x: event.clientX, y: event.clientY })
       this.handlerDragStart && this.handlerDragStart()
     },
@@ -50,7 +50,11 @@ export default {
         y: this.pointStart.y + (this.clientEnd.y - this.clientStart.y)
       })
       this.verifyPointEnd()
-      this.handlerDragging && this.handlerDragging()
+      if (this.handlerDragging) {
+        this.handlerDragging()
+      } else {
+        throw new Error('handlerDragging is not function')
+      }
     },
     onDragEnd() {
       if (this.dragging === false) { return }
@@ -63,7 +67,12 @@ export default {
         if (this.isClick === false) {
           this.verifyPointEnd()
           Object.assign(this.pointStart, { x: this.pointEnd.x, y: this.pointEnd.y })
-          this.handlerDragEnd && this.handlerDragEnd()
+
+          if (this.handlerDragEnd) {
+            this.handlerDragEnd()
+          } else {
+            throw new Error('handlerDragEnd is not function')
+          }
         }
       }, 0);
       window.removeEventListener('mousemove', this.onDragging);
