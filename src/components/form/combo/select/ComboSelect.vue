@@ -14,43 +14,41 @@
         <me-icon :disabled="disabled" @click="onClickSuffix" @mouseout="closable=true" @mouseover="onMouseoverOther">{{iconSuffix}}</me-icon>
       </template>
     </me-input>
-    <div
-      :style="{'z-index': status? 10000 : 0,'height': height}"
-      @mouseout="closable=true"
-      @mouseover="onMouseoverOther"
-      class="me-column me-border combo-options"
-      v-show="data && data.length > 0 && status"
-    >
-      <slot>
-        <me-combo-option
-          :checkbox="checkbox"
-          :checked="isSelected(item[fieldValue])"
-          :data="item"
-          :disabled="disabled"
-          :field-label="fieldLabel"
-          :field-value="fieldValue"
-          :highlight="highlight"
-          :index="index"
-          :key="item[fieldValue]"
-          :multiple="multiple"
-          @click-option="onClickOption"
-          v-for="(item,index) in data"
-        />
-      </slot>
-    </div>
+    <transition appear name="transition-drop">
+      <div
+        :style="{'z-index': status? 10000 : 0,'height': height}"
+        @mouseout="closable=true"
+        @mouseover="onMouseoverOther"
+        class="me-column me-border combo-options"
+        v-show="data && data.length > 0 && status"
+      >
+        <slot>
+          <me-combo-option
+            :checkbox="checkbox"
+            :checked="isSelected(item[fieldValue])"
+            :data="item"
+            :disabled="disabled"
+            :field-label="fieldLabel"
+            :field-value="fieldValue"
+            :highlight="highlight"
+            :index="index"
+            :key="item[fieldValue]"
+            :multiple="multiple"
+            @click-option="onClickOption"
+            v-for="(item,index) in data"
+          />
+        </slot>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
-import Option from './Option'
 import ComboMixin from '../combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeComboSelect',
-  props: { readonly: Boolean, index: Number, placeholder:String },
-  components: {
-    [Option.name]: Option
-  },
+  props: { readonly: Boolean, index: Number, placeholder: String },
   data() {
     return {
       status: false,

@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" @click="onHandleClick">
+  <div :class="classes" @click.self="onHandleClick">
     <me-checkbox v-if="multiple && checkbox" v-model="checked__" />
     <slot :data="data">
       <span class="combo-option-inner">{{data[fieldLabel]}}</span>

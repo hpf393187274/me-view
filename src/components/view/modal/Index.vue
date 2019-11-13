@@ -128,10 +128,10 @@ export default {
   left: 0px;
   top: 0px;
   background: rgba(216, 216, 216, 0.4);
-  z-index: 0;
+  z-index: 10000;
 }
 .modal-container {
-  z-index: 100;
+  z-index: 9999;
   cursor: pointer;
   position: absolute;
   background: #ffffff;

@@ -1,5 +1,5 @@
 import '@assets/styles/common.less'
-
+import '@assets/styles/icon.css'
 import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/chart/bar'
