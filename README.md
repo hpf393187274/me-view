@@ -38,5 +38,3 @@ import '//at.alicdn.com/t/font_1180504_afedrcmrmt.css'
 Vue.use(MeView)
 
 ```
-
-[使用文档](https://github.com/hpf393187274/me-view-docs)
