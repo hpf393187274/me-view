@@ -1,5 +1,5 @@
 export default {
-  props: { draggable: Boolean },
+  props: { draggable: { type: Boolean, default: true }, },
   data() {
     return {
       dragging: false,

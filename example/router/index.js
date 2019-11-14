@@ -1,19 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import basic from './basic'
-import layout from './layout'
-import form from './form'
-import common from './common'
+import { local } from '@/index'
 Vue.use(Router)
+// 动态获取路由： 根据目录结构
+let routeList = require.context('../../example/docs/', true, /.md$/).keys()
+local.set('routeList', routeList)
 
-export default new Router({
-  // mode: 'history',
+const children = routeList.flatMap(item => {
+  const __path = item.replace('./', '/').replace('.md', '')
+  const filePath = item.replace('./', '')
+  return {
+    path: __path,
+    component: () => import( /* webpackChunkName: "example-basic" */ `@docs/${filePath}`)
+  }
+})
+const router = new Router({
+  mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
-      component: () => import('../Layout.vue'),
-      children: [...layout, ...form, ...basic, ...common]
+      component: () => import('../layout/index.vue'),
+      children: [...children]
     }
   ]
 })
+export default router

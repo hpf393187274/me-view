@@ -1,6 +1,6 @@
 
 <template>
-  <me-modal :left="left" :modal="false" :top="top" :width="width" v-model="value__">
+  <me-modal :draggable="draggable" :left="left" :modal="false" :top="top" :width="width" v-model="value__">
     <me-message-item :key="item.primaryKey" @remove="onRemove" v-bind="item" v-for="item in list" />
   </me-modal>
 </template>
@@ -16,6 +16,7 @@ export default {
   },
   props: {
     list: Array,
+    draggable: { type: Boolean },
     top: String,
     left: String,
     width: { type: String, default: '300px' }

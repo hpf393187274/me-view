@@ -15,6 +15,9 @@ import Dialog from '@components/view/dialog/index'
 import Message from '@components/view/message/index'
 export { type, tools, local, session, http, watermark, Dialog }
 
+const componentsList = require.context('./components/', true, /index.js$/).keys()
+local.set('componentsList', componentsList)
+
 export default {
   install(Vue) {
     for (const item of components) {

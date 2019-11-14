@@ -1,6 +1,7 @@
 const path = require('path')
 const md = require('markdown-it')(); // 引入markdown-it
 const slugify = require('transliteration').slugify; // 引入transliteration中的slugify方法
+const mdContainer = require('markdown-it-container');
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
@@ -11,7 +12,10 @@ module.exports = {
     'vue-echarts',
     'resize-detector'
   ],
-
+  devServer: {
+    port: 9000,
+    disableHostCheck: true
+  },
   chainWebpack: config => {
     config
       // Interact with entry points
@@ -46,32 +50,22 @@ module.exports = {
               permalinkBefore: true // 在标题前创建锚点
             }
           ],
-          [
-            require('markdown-it-container'), 'demo',
-            {
-              validate: function (params) {
-                return params.trim().match(/^demo\s+(.*)$/)
-              },
-              render(tokens, index) {
-                const m = tokens[index].info.trim().match(/^demo\s*(.*)$/);
-                if (tokens[index].nesting === 1) {
-                  let description = m && m.length > 1 ? m[1] : '';
-                  // const content = tokens[index + 1].type === 'fence' ? tokens[index + 1].content : '';
-                  if (description) {
-                    description = md.render(description)
-                  }
-                  // console.log('description', '-->', 'index = ', index, '-->', description)
-                  const content = tokens[index + 1].content
-                  // console.log('content', '-->', 'index = ', index, '-->', content)
-                  return `<demo-block>
-                    <template #source>${content}</template>
-                    <div>${description}</div>
-                  `
-                }
-                return '</demo-block>';
+          [mdContainer, 'tip'],
+          [mdContainer, 'warning'],
+          [mdContainer, 'demo', {
+            validate(params) {
+              return params.trim().match(/^demo\s*(.*)$/);
+            },
+            render(tokens, idx) {
+              const m = tokens[idx].info.trim().match(/^demo\s*(.*)$/);
+              if (tokens[idx].nesting === 1) {
+                const description = m && m.length > 1 ? m[1] : '';
+                const renderDescription = md.render(description)
+                return `<me-demo-block><template #description>${renderDescription}</template>`
               }
+              return '</me-demo-block>';
             }
-          ]
+          }]
         ]
       })
   }

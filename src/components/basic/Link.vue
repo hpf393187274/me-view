@@ -1,5 +1,5 @@
 <template>
-  <a :class="class__" @click="disabled === false && $emit('click')" href="javascript:void(0)">
+  <a :class="class__" @click="onClick" href="javascript:void(0)">
     <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
     <slot />
   </a>
@@ -9,11 +9,23 @@
 export default {
   name: 'MeLink',
   props: {
-    icon: String
+    icon: String,
+    target: { type: String, default: '_blank', validator: value => ['_blank', '_parent', '_self', '_top'].includes(value) },
+    url: String
   },
   computed: {
     class__() {
       return ['me-link', { 'link-border': this.border }]
+    }
+  },
+  methods: {
+    onClick() {
+      if (this.disabled) { return }
+      if (this.$tools.isEmpty(this.url)) {
+        this.$emit('click')
+        return
+      }
+      window.open(this.url, this.target)
     }
   }
 }
