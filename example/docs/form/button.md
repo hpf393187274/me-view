@@ -1,89 +1,93 @@
 
 # Button 按钮
 
+<style lang="less">
+.me-btn {
+  margin: 5px;
+}
+</style>
+
 ### 基础用法
-::: demo `type` 按钮类别 `plain` 简介按钮 `shape` 形状
+
+::: demo `type` 按钮类型
 ```html
-
-<me-row>
-  <me-button type="default">default</me-button>
-  <me-button type="primary">primary</me-button>
-  <me-button type="info">info</me-button>
-  <me-button type="success">success</me-button>
-  <me-button type="warning">warning</me-button>
-  <me-button type="error">error</me-button>
-</me-row>
-
-<me-row>
-  <me-button plain type="default">default</me-button>
-  <me-button plain type="primary">primary</me-button>
-  <me-button plain type="info">info</me-button>
-  <me-button plain type="success">primary</me-button>
-  <me-button plain type="warning">warning</me-button>
-  <me-button plain type="error">error</me-button>
-</me-row>
-
-<me-row>
-  <me-button shape="round" type="default" icon="icon-sousuo">default</me-button>
-  <me-button shape="round" type="primary" icon="icon-icon_exchange">primary</me-button>
-  <me-button shape="round" type="info" icon="icon-more">info</me-button>
-  <me-button shape="round" type="success" icon="icon-shezhi">success</me-button>
-  <me-button shape="round" type="warning" icon="icon-xiazai">warning</me-button>
-  <me-button shape="round" type="error" icon="icon-shezhi">error</me-button>
-</me-row>
-
-<me-row>
-  <me-button shape="circle" type="default" icon="icon-sousuo"></me-button>
-  <me-button shape="circle" type="primary" icon="icon-icon_exchange"></me-button>
-  <me-button shape="circle" type="info" icon="icon-more"></me-button>
-  <me-button shape="circle" type="success" icon="icon-shezhi"></me-button>
-  <me-button shape="circle" type="warning" icon="icon-xiazai"></me-button>
-  <me-button shape="circle" type="error" icon="icon-shezhi"></me-button>
-</me-row>
-
+<template>
+  <me-row>
+    <me-button v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+  </me-row>
+  <me-row>
+    <me-button disabled v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+  </me-row>
+</template>
+<script>
+export default {
+  data() {
+    return { 
+      types: [
+        'default', 'primary', 'info', 'success', 'warning', 'error'
+      ]
+    }
+  }
+}
+</script>
 ```
 :::
 
-### 禁用状态
-::: demo `disabled` 禁用
+### 简单用法
+
+::: demo `type` 按钮类型 `plain` 简单按钮
 ```html
+<template>
+  <me-row>
+    <me-button plain v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+  </me-row>
+  <me-row>
+    <me-button disabled v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+  </me-row>
+</template>
+<script>
+export default {
+  data() {
+    return { 
+      types: [
+        'default', 'primary', 'info', 'success', 'warning', 'error'
+      ]
+    }
+  }
+}
+</script>
+```
+:::
 
-<me-row>
-  <me-button disabled type="default">default</me-button>
-  <me-button disabled type="primary">primary</me-button>
-  <me-button disabled type="info">info</me-button>
-  <me-button disabled type="success">success</me-button>
-  <me-button disabled type="warning">warning</me-button>
-  <me-button disabled type="error">error</me-button>
-</me-row>
+### 形状用法
 
-<me-row>
-  <me-button disabled plain type="default">default</me-button>
-  <me-button disabled plain type="primary">primary</me-button>
-  <me-button disabled plain type="info">info</me-button>
-  <me-button disabled plain type="success">primary</me-button>
-  <me-button disabled plain type="warning">warning</me-button>
-  <me-button disabled plain type="error">error</me-button>
-</me-row>
-
-<me-row>
-  <me-button disabled shape="round" type="default" icon="icon-sousuo">default</me-button>
-  <me-button disabled shape="round" type="primary" icon="icon-icon_exchange">primary</me-button>
-  <me-button disabled shape="round" type="info" icon="icon-more">info</me-button>
-  <me-button disabled shape="round" type="success" icon="icon-shezhi">success</me-button>
-  <me-button disabled shape="round" type="warning" icon="icon-xiazai">warning</me-button>
-  <me-button disabled shape="round" type="error" icon="icon-shezhi">error</me-button>
-</me-row>
-
-<me-row>
-  <me-button disabled shape="circle" type="default" icon="icon-sousuo"></me-button>
-  <me-button disabled shape="circle" type="primary" icon="icon-icon_exchange"></me-button>
-  <me-button disabled shape="circle" type="info" icon="icon-more"></me-button>
-  <me-button disabled shape="circle" type="success" icon="icon-shezhi"></me-button>
-  <me-button disabled shape="circle" type="warning" icon="icon-xiazai"></me-button>
-  <me-button disabled shape="circle" type="error" icon="icon-shezhi"></me-button>
-</me-row>
-
+::: demo `type` 按钮类别 `plain` 简介按钮 `shape` 形状
+```html
+<template>
+  <me-row>
+    <me-button shape="round" v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+  </me-row>
+   <me-row>
+    <me-button disabled shape="round" v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+  </me-row>
+  <me-row>
+    <me-button shape="circle" v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+  </me-row>
+  <me-row>
+    <me-button disabled shape="circle" v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+  </me-row>
+</template>
+<script>
+export default {
+  data() {
+    return { 
+      types: [
+        'default', 'primary', 'info', 'success', 'warning', 'error'
+      ]
+    }
+  }
+}
+</script>
 ```
 :::
 

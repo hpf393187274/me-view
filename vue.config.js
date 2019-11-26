@@ -60,8 +60,7 @@ module.exports = {
               const m = tokens[idx].info.trim().match(/^demo\s*(.*)$/);
               if (tokens[idx].nesting === 1) {
                 const description = m && m.length > 1 ? m[1] : '';
-                const renderDescription = md.render(description)
-                return `<me-demo-block><template #description>${renderDescription}</template>`
+                return `<me-demo-block><template #description>${md.render(description)}</template>`
               }
               return '</me-demo-block>';
             }
