@@ -1,7 +1,5 @@
 
-import select from './select'
-import tree from './tree'
-import table from './table'
-export default [
-  ...select, ...tree, ...table
-]
+import ComboSelect from './select'
+import ComboTree from './tree'
+import ComboTable from './table'
+export { ComboSelect, ComboTree, ComboTable }

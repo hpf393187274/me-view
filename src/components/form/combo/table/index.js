@@ -1,5 +1,3 @@
 
 import ComboTable from './ComboTable'
-export default [
-  ComboTable
-]
+export default ComboTable

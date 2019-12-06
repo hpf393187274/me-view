@@ -11,15 +11,15 @@
       ref="leftTree"
     >
       <template #node-label="{data}">
-        <slot :data="data" name="node-label"/>
+        <slot :data="data" name="node-label" />
       </template>
     </me-tree>
     <div class="me-column me-center transfer-center">
       <slot name="center">
-        <me-button :disabled="disabledRight" @click="moveToRightAll" icon="icon-angle-double-right" label="全部向右"/>
-        <me-button :disabled="disabledRight" @click="moveToRight" icon="icon-angle-right" label="向右"/>
-        <me-button :disabled="disabledLeft" @click="moveToLeft" icon="icon-angle-left" label="向左"/>
-        <me-button :disabled="disabledLeft" @click="moveToLeftAll" icon="icon-angle-double-left" label="全部向左"/>
+        <me-button :disabled="disabledRight" @click="moveToRightAll" icon="icon-angles_strong_right" label="全部向右" />
+        <me-button :disabled="disabledRight" @click="moveToRight" icon="icon-angle_strong_right" label="向右" />
+        <me-button :disabled="disabledLeft" @click="moveToLeft" icon="icon-angle_strong_left" label="向左" />
+        <me-button :disabled="disabledLeft" @click="moveToLeftAll" icon="icon-angles_strong_left" label="全部向左" />
       </slot>
     </div>
     <me-tree
@@ -33,7 +33,7 @@
       ref="rightTree"
     >
       <template #node-label="{data}">
-        <slot :data="data" name="node-label"/>
+        <slot :data="data" name="node-label" />
       </template>
     </me-tree>
   </div>

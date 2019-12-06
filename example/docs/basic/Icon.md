@@ -4,6 +4,10 @@
   margin: 5px;
   height: 100px;
   width: 150px;
+  cursor: pointer;
+  border: 1px solid #0099ff;
+  justify-content: center !important;
+	align-items: center !important;
   .me-icon {
     font-size: 30px !important;
   }
@@ -16,6 +20,7 @@
   }
 }
 </style>
+
 ## 字体图标
 
 
@@ -24,7 +29,7 @@
 ```html
 <template>
 <div class="me-row me-wrap">
-  <div v-for="item in list" class="me-column me-border item" :key="item">
+  <div v-for="item in list" class="me-column item" :data-clipboard-text="item" :key="item" @click="$copy('.item')">
     <div class="me-flex me-row me-center icon"><me-icon>{{item}}</me-icon></div>
     <div class="me-row me-center title" :title="item">{{item}}</div>
   </div>
@@ -49,7 +54,7 @@ export default {
 ```html
 <template>
 <div class="me-row me-wrap">
-  <div v-for="item in list" class="me-column me-center me-border item" :key="item">
+  <div v-for="item in list" class="me-column item" :data-clipboard-text="item" :key="item" @click="$copy('.item')">
     <div class="me-flex me-row me-center icon"><me-icon>{{item}}</me-icon></div>
     <div class="me-row me-center title" :title="item">{{item}}</div>
   </div>
@@ -77,7 +82,7 @@ export default {
 ```html
 <template>
 <div class="me-row me-wrap">
-  <div v-for="item in list" class="me-column me-center me-border item" :key="item">
+  <div v-for="item in list" class="me-column item" :data-clipboard-text="item" :key="item" @click="$copy('.item')">
     <div class="me-flex me-row me-center icon"><me-icon>{{item}}</me-icon></div>
     <div class="title" :title="item">{{item}}</div>
   </div>
@@ -106,7 +111,7 @@ export default {
 ```html
 <template>
 <div class="me-row me-wrap">
-  <div v-for="item in list" class="me-column me-center me-border item" :key="item">
+  <div v-for="item in list" class="me-column item" :data-clipboard-text="item" :key="item" @click="$copy('.item')">
     <div class="me-flex me-row me-center icon"><me-icon>{{item}}</me-icon></div>
     <div class="me-row me-center title" :title="item">{{item}}</div>
   </div>

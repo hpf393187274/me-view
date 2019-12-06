@@ -7,13 +7,13 @@ export default {
    */
   angle_up: 'icon-angle-up',
   angle_up_double: 'icon-angle-double-up',
-  angle_up_fill: 'icon-sort-up',
+  angle_up_fill: 'icon-triangle_fill_up',
   /**
    * 角度：下
    */
   angle_down: 'icon-angle-down',
   angle_down_double: 'icon-angle-double-down',
-  angle_down_fill: 'icon-sort-down',
+  angle_down_fill: 'icon-triangle_fill_down',
   /**
    * 角度：左
    */

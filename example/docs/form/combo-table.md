@@ -7,9 +7,8 @@
 ```html
 
 <me-column>
-  <me-combo-table :data="data" v-model="modelA" field-value="value" :columns="columns" field-label="label"> </me-combo-table>
-  <me-combo-table :data="data" multiple v-model="modelB" field-value="value" :columns="columns" field-label="label"> </me-combo-table>
-  <me-combo-table :data="data" multiple disabled field-value="value" :columns="columns" field-label="label" v-model="modelC" > </me-combo-table>
+  <me-combo-table :data="data"  field-value="value" :columns="columns" field-label="label"> 
+  </me-combo-table>
 </me-column>
 <script>
 export default {

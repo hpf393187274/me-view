@@ -5,22 +5,18 @@
   "main": "dist/lib/index.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --dest dist/build",
     "package": "vue-cli-service build --dest dist/lib --target lib --name index ./src/index.js",
-    "npm-publish": "npm publish",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
-    "echarts": "^4.2.1",
-    "grunt": "^1.0.4",
     "highlight.js": "^9.15.8",
     "vue": "^2.6.10",
-    "vue-echarts": "^4.0.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
+    "grunt": "^1.0.4",
     "@vue/cli-plugin-babel": "^3.6.0",
     "@vue/cli-plugin-eslint": "^3.6.0",
     "@vue/cli-service": "^3.6.0",

@@ -2,7 +2,7 @@
   <div class="me-row me-center me-paging">
     <span :class="itemClass()" @click="--currentPage" title="上一页">
       <template v-if="boolean(prevText)">{{prevText}}</template>
-      <me-icon v-else>icon-fenye-shangyiye</me-icon>
+      <me-icon v-else>icon-angle_left</me-icon>
     </span>
     <div class="me-row me-center me-flex">
       <template v-for="value in visibleLeft">
@@ -19,7 +19,7 @@
     </div>
     <span :class="itemClass()" @click="++currentPage" title="下一页">
       <template v-if="boolean(nextText)">{{nextText}}</template>
-      <me-icon v-else>icon-fenye-xiayiye</me-icon>
+      <me-icon v-else>icon-angle_right</me-icon>
     </span>
     <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{`${currentPage} / ${pageNumber}`}}</span>
     <span :class="itemClass()">共 {{total}} 条</span>

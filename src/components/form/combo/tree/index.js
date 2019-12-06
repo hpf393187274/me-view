@@ -1,6 +1,4 @@
 
 import ComboTree from './ComboTree'
-export default [
-  ComboTree
-]
+export default ComboTree
 

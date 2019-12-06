@@ -7,7 +7,6 @@
       :checked-number="checkedNumber"
       :checkedHalf="checkedHalf"
       :disabled="length === 0"
-      :hasGrandson="hasGrandson"
       :label="label"
       :lazy="lazy"
       :nodeNumber="nodeNumber"
@@ -52,17 +51,22 @@
 import treeIndex from '@components/mixins/tree'
 import treeCommon from '@components/mixins/tree/common'
 import treeInner from './common.mixin'
+import TreeHeader from './TreeHeader'
+import TreeNode from './TreeNode'
 import Vue from 'vue'
 export default {
   name: 'MeTree',
   mixins: [treeCommon, treeIndex, treeInner],
+  components: {
+    [TreeHeader.name]: TreeHeader,
+    [TreeNode.name]: TreeNode
+  },
   props: {
     data: { type: Array, default() { return [] } },
     header: Boolean
   },
   data() {
     return {
-      hasGrandson: false,
       eventTree: new Vue()
     }
   },
@@ -74,7 +78,6 @@ export default {
   created() {
     this.initPrimaryKey(this.data)
     this.$nextTick(() => {
-      this.hasGrandson = this.getHasGrandson()
       // 点击节点
       this.handlerOn('click-node')
       this.handlerOn('click-node-branch')
@@ -92,9 +95,6 @@ export default {
       this.eventTree.$on(eventName, (...option) => {
         this.$emit(eventName, ...option)
       })
-    },
-    getHasGrandson() {
-      return this.getChildrenNodeList().some(node => node.isBranch() === true)
     },
     getCheckedData({ leaf = true, ...param } = {}) {
       return this.getCheckedChildren({ leaf, ...param })

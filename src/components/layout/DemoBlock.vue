@@ -229,7 +229,7 @@ export default {
       try {
         target = eval(`(${this.codepen.script.replace(/^export\s+default\s+/, '')})`)
       } catch (error) {
-        console.error('markdown -> DemoBlock -> compileComponent：', error)
+        console.error('DemoBlock -> compileComponent：', error)
       }
       const Component = Vue.extend({
         template: `<div>${this.codepen.html}</div>`,

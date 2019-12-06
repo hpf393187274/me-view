@@ -1,29 +1,16 @@
 ﻿<template>
-  <me-combo-select
-    :clearable="clearable"
-    :data="data"
-    :disabled="disabled"
-    :field-label="fieldLabel"
-    :field-value="fieldValue"
-    :height="height"
-    :highlight="highlight"
-    :multiple="multiple"
-    :placeholder="placeholder"
-    :readonly="readonly"
-    ref="combo"
-    v-model="value__"
-  >
-    <template>
-      <me-table :border="border" :columns="columns" :data="data" :highlight="highlight" :multiple="multiple" @click-row="onClickRow">
-        <slot />
-      </me-table>
-    </template>
-  </me-combo-select>
+  <me-combo ref="combo" v-bind="$props">
+    <me-table :border="border" :columns="columns" :data="data" :highlight="highlight" :multiple="multiple" @click-row="onClickRow">
+      <slot />
+    </me-table>
+  </me-combo>
 </template>
 
 <script>
 import ComboMixin from '../combo.mixin'
+import Combo from '../Combo'
 export default {
+  components: { [Combo.name]: Combo },
   mixins: [ComboMixin],
   name: 'MeComboTable',
   props: {

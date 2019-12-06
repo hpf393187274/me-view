@@ -217,7 +217,7 @@ export default {
       this.scrollLeft = scrollLeft
     },
     handlerSlots() {
-      const excludeSlots = ['header', 'footer']
+      const excludeSlots = ['header', 'footer', 'default']
       const slotKeys = Reflect.ownKeys(this.$scopedSlots)
       this.columns__ = [...this.columns]
       if (this.$type.isArray(slotKeys) && slotKeys.length > 0) {

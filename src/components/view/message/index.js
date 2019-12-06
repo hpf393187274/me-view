@@ -1,4 +1,5 @@
 import Message from './basal'
+import { type, tools } from '@assets/script/common'
 
 let instance
 const basal = (options = {}) => {
@@ -8,27 +9,42 @@ const basal = (options = {}) => {
 }
 
 Message.info = (options = {}) => {
+  if (type.isString(options)) {
+    options = { content: options }
+  }
   return basal(Object.assign({}, options, {
     type: 'info', icon: 'icon-info'
   }))
 }
 
 Message.success = (options = {}) => {
+  if (type.isString(options)) {
+    options = { content: options }
+  }
   return basal(Object.assign({}, options, {
     type: 'success', icon: 'icon-success'
   }))
 }
 Message.warning = (options = {}) => {
+  if (type.isString(options)) {
+    options = { content: options }
+  }
   return basal(Object.assign({}, options, {
     type: 'warning', icon: 'icon-warning'
   }))
 }
 Message.error = (options = {}) => {
+  if (type.isString(options)) {
+    options = { content: options }
+  }
   return basal(Object.assign({}, options, {
     type: 'error', icon: 'icon-error'
   }))
 }
 Message.loading = (options = {}) => {
+  if (type.isString(options)) {
+    options = { content: options }
+  }
   return basal(Object.assign({}, options, {
     type: 'loading', icon: 'icon-loading'
   }))

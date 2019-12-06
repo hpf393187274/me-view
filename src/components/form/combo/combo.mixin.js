@@ -10,6 +10,7 @@ export default {
     clearable: Boolean,
     checkbox: Boolean,
     height: [String, Number],
+    index: Number,
     border: Boolean,
     placeholder: String,
     multiple: Boolean,

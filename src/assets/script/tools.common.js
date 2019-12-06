@@ -74,6 +74,9 @@ export default {
     }
     return result
   },
+  /**
+   * 生成 UUID
+   */
   UUId() {
     var s = [];
     var hexDigits = "0123456789abcdef";
@@ -85,6 +88,11 @@ export default {
     s[8] = s[13] = s[18] = s[23] = "-";
     return s.join('');
   },
+  /**
+   * 数组元素移出
+   * @param {Array} target 
+   * @param {Function or Number} condition 
+   */
   arrayRemove(target, condition) {
     if (type.isNotArray(target)) { return Promise.reject('target is not Array') }
 
@@ -99,15 +107,6 @@ export default {
       return index === -1 ? Promise.reject('not exist') : Promise.resolve(target.splice(index, 1))
     }
   },
-  clearProperty(target) {
-    if (type.isObject(target)) {
-      for (const key in target) {
-        if (this.isEmpty(target[key])) {
-          Reflect.deleteProperty(target, key)
-        }
-      }
-    }
-  },
   /**
    * 
    * @param {Array | Object} target 清空目标内容
@@ -119,7 +118,7 @@ export default {
 
     if (type.isObject(target)) {
       for (const key of Object.keys(target)) {
-        delete target[key]
+        Reflect.deleteProperty(target, key)
       }
     }
   },
@@ -195,7 +194,7 @@ export default {
     if (type.isObject(target)) {
       const newTarget = { ...target }
       // 排除掉不用的属性
-      for (const key of exclude) { delete newTarget[key] }
+      for (const key of exclude) { Reflect.deleteProperty(newTarget, key) }
       // 排除掉不用的属性
       return newTarget
     }
@@ -216,8 +215,7 @@ export default {
   */
   urlParam(key, target = window.location.search) {
     let result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
-    result = result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '"$1":"$2"')
-    const params = JSON.parse(`{${result}}`)
-    return this.isEmpty(key) ? params : params[key]
+    const params = JSON.parse(result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '{"$1":"$2"}'))
+    return this.isEmpty(key) ? params : Reflect.get(params, key)
   }
 }

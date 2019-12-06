@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import Dialog from './Index.vue'
-import Button from '@components/form/Button'
+import Dialog from './Dialog'
+import Button from '@components/form/button'
 import Icon from '@components/basic/Icon'
 Dialog.newInstance = (options = {}) => {
   const instance = new Vue({

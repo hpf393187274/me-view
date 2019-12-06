@@ -81,7 +81,7 @@ export default {
   },
   computed: {
     iconExpanded() {
-      return this.expanded__ ? 'icon-sort-down' : 'icon-caret-right'
+      return this.expanded__ ? 'icon-triangle_fill_down' : 'icon-triangle_fill_right'
     },
     nodeLeaf() {
       /* 判断当前节点是否为最后一个节点 */

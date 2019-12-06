@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Message from './Index.vue'
+import Message from './Message'
 import { tools } from '@assets/script/common'
 Message.newInstance = (options = {}) => {
   const instance = new Vue({
@@ -25,7 +25,7 @@ Message.newInstance = (options = {}) => {
           tools.arrayRemove(this.list, 0)
         }
 
-        Reflect.set(options, 'content', Reflect.get(options, 'content') + '_' + new Date().getTime())
+        // Reflect.set(options, 'content', Reflect.get(options, 'content') + '_' + new Date().getTime())
         this.list.push({ ...options, primaryKey: tools.UUId() })
         modal.$parent.onRemove = onRemove;
       },

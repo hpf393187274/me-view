@@ -1,20 +1,13 @@
 
-import Panel from './Panel'
-
+import Panel from './panel/index'
 import Dialog from './dialog/index'
-
-import menu from './menu'
-import tree from './tree'
-
-
-import table from './table'
-import tabs from './tabs'
-
-import Transfer from './Transfer'
-
-import paging from './paging'
-
+import Menu from './menu/index'
+import Tree from './tree/index'
+import Table from './table/index'
+import Tabs from './tabs/index'
+import Transfer from './transfer/index'
+import Paging from './paging/index'
 import Modal from './modal/index'
 export default [
-  Panel, Dialog, ...paging, ...tabs, ...tree, ...menu, Transfer, ...table, Modal
+  Panel, Dialog, Paging, Tabs, Tree, Menu, Transfer, Table, Modal
 ]

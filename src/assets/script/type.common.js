@@ -8,10 +8,20 @@ export default {
   TYPE_FUNCTION: '[object Function]',
   TYPE_String: '[object String]',
   TYPE_REGEXP: '[object RegExp]',
+  /**
+   * 校验：Boolean：true
+   * @param target 
+   * @returns {Boolean}
+   */
   isBoolean(target) {
     var type = this.getType(target)
     return type === this.TYPE_BOOLEAN
   },
+  /**
+   * 校验：Boolean：false
+   * @param target 
+   * @returns {Boolean}
+   */
   isNotBoolean(target) {
     return this.isBoolean(target)
   },

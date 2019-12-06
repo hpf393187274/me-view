@@ -1,9 +1,9 @@
 <template>
   <div :class="classes" @click.self="onHandleClick">
-    <me-checkbox v-if="multiple && checkbox" v-model="checked__" />
-    <slot :data="data">
-      <span class="combo-option-inner">{{data[fieldLabel]}}</span>
-    </slot>
+    <me-checkbox v-if="checkbox" v-model="checked__" />
+    <span class="combo-option-inner">
+      <slot>{{data[fieldLabel]}}</slot>
+    </span>
   </div>
 </template>
 <script>
@@ -12,9 +12,10 @@ export default {
   props: {
     checked: Boolean,
     index: Number,
-    multiple: Boolean,
     checkbox: Boolean,
     highlight: Boolean,
+    value: String,
+    label: String,
     data: { type: Object, default() { return {} } },
     fieldLabel: { type: String, default: 'label' }
   },
@@ -22,6 +23,9 @@ export default {
     return {
       checked__: this.checked
     }
+  },
+  created() {
+    this.__data = this.data ? this.data : { value: this.value, label: this.label }
   },
   watch: {
     checked(value) {

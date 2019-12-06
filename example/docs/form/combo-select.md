@@ -1,13 +1,13 @@
 
 # ComboSelect 组合框
 
+
 ## 基础用法
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的
 ```html
 
 <div class="me-column">
-  <me-combo-select :data="data"  v-model="modelA"></me-combo-select>
-  <me-combo-select :data="data" readonly multiple v-model="modelB"></me-combo-select>
+  <me-combo-select :data="data" v-model="modelA"> </me-combo-select>
 </div>
 <script>
 export default {

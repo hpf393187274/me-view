@@ -25,7 +25,6 @@ export default {
   name: 'MeTreeHeader',
   mixins: [treeCommon],
   props: {
-    hasGrandson: Boolean,
     checkedHalf: Boolean,
     nodeNumber: { type: Number, default: 0 },
     checkedNumber: { type: Number, default: 0 }

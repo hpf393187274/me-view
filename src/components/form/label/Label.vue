@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: 'MeFormItem',
+  name: 'MeLabel',
   props: {
     required: { type: Boolean },
     label: String,
@@ -26,7 +26,7 @@ export default {
   computed: {
     classes() {
       return [
-        'me-row me-form-item me-cross-center',
+        'me-row me-label me-cross-center',
         {
           'me-flex': this.flex
         }

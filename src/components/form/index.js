@@ -1,8 +1,9 @@
-import Input from './Input'
-import Checkbox from './Checkbox'
-import Button from './Button'
-import combo from './combo'
-import FromItem from './FromItem'
+import Input from './input/index'
+import Checkbox from './checkbox/index'
+import Button from './button/index'
+import { ComboSelect, ComboTable, ComboTree } from './combo/index'
+import Label from './label/index'
+
 export default [
-  Input, Checkbox, Button, ...combo, FromItem
+  Input, Checkbox, Button, Label, ComboSelect, ComboTree, ComboTable
 ]

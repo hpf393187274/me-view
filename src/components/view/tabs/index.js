@@ -1,6 +1,6 @@
 
 import Tabs from './Tabs'
 import TabPane from './TabPane'
-export default [
-  Tabs, TabPane
-]
+
+Tabs.TabPane = TabPane
+export default Tabs
