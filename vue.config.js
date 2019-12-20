@@ -8,10 +8,7 @@ function resolve(dir) {
 module.exports = {
   lintOnSave: undefined,
   runtimeCompiler: true,
-  transpileDependencies: [
-    'vue-echarts',
-    'resize-detector'
-  ],
+  transpileDependencies: ['resize-detector'],
   devServer: {
     port: 9000,
     disableHostCheck: true

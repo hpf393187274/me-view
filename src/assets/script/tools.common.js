@@ -17,6 +17,15 @@ export default {
     return false
   },
   /**
+   * 是空数组
+   * @param {Array} target 
+   */
+  isEmptyArray(target) {
+    if (type.isArray(target) && target.length === 0) { return true }
+    return false
+  },
+
+  /**
    * 校验：对象是否为空
    * @param {Object} target 目标
    */

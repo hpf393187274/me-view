@@ -8,9 +8,9 @@
       :readonly="readonly"
       :style="styles"
       :type="type"
-      @blur="$emit('blur-input', value__)"
-      @click.stop="$emit('click-input', value__)"
-      @focus="$emit('focus-input', value__)"
+      @blur="handleBlur"
+      @click.stop="handleClick"
+      @focus="handleFocus"
       class="me-flex input-inner"
       ref="target"
       v-model.trim.lazy="value__"
@@ -56,10 +56,10 @@ export default {
     return {
       left: 8,
       right: 8,
-      value__: '',
+      value__: null,
       valueReset: '',
-      active: false,
-      message: ''
+      validateError: false,
+      active: false
     }
   },
   created() {
@@ -69,7 +69,6 @@ export default {
     this.$nextTick(() => {
       this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
       this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
-
       this.$on('focus-input', this.onFocusInput)
     })
   },
@@ -82,7 +81,8 @@ export default {
         'me-row me-flex me-input',
         {
           'me-readonly': this.readonly,
-          'me-disabled': this.disabled
+          'me-disabled': this.disabled,
+          'me-input-error': this.validateError
         },
       ]
     },
@@ -115,6 +115,9 @@ export default {
         return
       }
       this.updateValue(newValue)
+      if (oldValue) {
+        this.$emit('on-label-change', this.value__)
+      }
     },
     change(value) {
       this.updateValue(value)
@@ -141,6 +144,16 @@ export default {
      */
     onReset() {
       this.value__ = this.$tools.clone(this.valueReset, true)
+    },
+    handleFocus() {
+      this.$emit('on-blur', this.value__)
+    },
+    handleBlur() {
+      this.$emit('on-blur', this.value__)
+      this.$emit('on-label-blur', this.value__)
+    },
+    handleClick() {
+      this.$emit('on-click', this.value__)
     },
     onFocusInput() {
       this.$refs.target.focus()

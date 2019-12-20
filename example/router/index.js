@@ -20,6 +20,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      redirect: '/guide/install',
       component: () => import('../layout/index.vue'),
       children: [...children]
     }

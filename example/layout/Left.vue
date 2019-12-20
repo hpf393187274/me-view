@@ -8,6 +8,14 @@ export default {
     return {
       data: [
         {
+          label: '开发指南',
+          children: [
+            { label: '安装', path: '/guide/install' },
+            { label: '快速上手', path: '/guide/easystart' },
+
+          ]
+        },
+        {
           label: 'Common 公共',
           children: [
             { label: 'Tools 常用工具', path: '/common/tools' },

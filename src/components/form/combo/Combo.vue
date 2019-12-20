@@ -30,10 +30,10 @@
 
 <script>
 import ComboMixin from './combo.mixin'
+import Emitter from '@components/mixins/emitter'
 export default {
-  mixins: [ComboMixin],
+  mixins: [ComboMixin, Emitter],
   name: 'MeCombo',
-
   data() {
     return {
       status: false,
@@ -52,6 +52,7 @@ export default {
         this.rendered = true
       })
     }
+
   },
   created() {
     this.initValue()
@@ -74,6 +75,15 @@ export default {
     }
   },
   methods: {
+    handlerLabelEvent() {
+      const input = this.$refs.input
+      if (input) {
+        input.$on('on-label-blur', () => {
+          // this.
+        })
+      }
+
+    },
     findItem(value) {
       return this.data.find(item => Reflect.get(item, this.fieldValue) === value)
     },

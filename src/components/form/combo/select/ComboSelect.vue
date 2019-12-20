@@ -19,7 +19,7 @@ export default {
     columns: { type: Array, default: () => [] },
   },
   watch: {
-    value(value) { this.value__ = value }
+    value(value) { this.value__ = value },
   },
   created() {
     this.value__ = this.value

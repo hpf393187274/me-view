@@ -4,60 +4,104 @@
 ### 基础用法
 ::: demo `label` 设置标签 `clearable` 可清除的
 ```html
-
-<div class="me-column">
-  <div class="me-row">
-    <me-label flex label="姓名">
-      <me-input clearable placeholder="请输入姓名"></me-input>
-    </me-label>
-    <me-label flex label="年龄">
-      <me-input clearable placeholder="请输入年龄"></me-input>
-    </me-label>
-  </div>
-  <div class="me-row">
-    <me-label flex label="性别">
-      <me-combo-select readonly :data="sexList" clearable placeholder="请选择性别">
-        <me-combo-option>男</me-combo-option>
-        <me-combo-option>女</me-combo-option>
-      </me-combo-select>
-    </me-label>
-    <me-label flex label="省份">
-      <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
-        <me-table-cell field="id" label="主键"></me-table-cell>
-        <me-table-cell field="title" label="标题"></me-table-cell>
-      </me-combo-table>
-    </me-label>
-  </div>
-  <div class="me-row">
-    <me-label flex label="省份">
-      <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
-        <me-table-cell field="id" label="主键"></me-table-cell>
-        <me-table-cell field="title" label="标题"></me-table-cell>
-      </me-combo-table>
-    </me-label>
-    <me-label flex label="省份">
-      <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
-        <me-table-cell field="id" label="主键"></me-table-cell>
-        <me-table-cell field="title" label="标题"></me-table-cell>
-      </me-combo-table>
-    </me-label>
-  </div>
-  <div class="me-row">
-    <me-label flex label="行政区域1">
-      <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">
-        <template #node-label="{data}">{{data.title}}</template>
-      </me-combo-tree>
-    </me-label>
-    <me-label flex label="行政区域">
-      <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id"></me-combo-tree>
-    </me-label>
-  </div>
-</div>
+<template>
+  <me-form ref="from" :rules="rules">
+    <div class="me-row">
+      <me-label flex required label="姓名" prop="name">
+        <me-input clearable placeholder="请输入姓名" v-model="form.name"></me-input>
+      </me-label>
+      <!-- <me-label flex label="年龄" prop="age">
+        <me-input clearable placeholder="请输入年龄" v-model="form.age"></me-input>
+      </me-label> -->
+    </div>
+    <!-- <div class="me-row">
+      <me-label flex label="性别" prop="sex">
+        <me-combo-select readonly :data="sexList" v-model="form.sex" clearable placeholder="请选择性别">
+        </me-combo-select>
+      </me-label>
+      <me-label flex label="省份">
+        <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
+          <me-table-cell field="id" label="主键"></me-table-cell>
+          <me-table-cell field="title" label="标题"></me-table-cell>
+        </me-combo-table>
+      </me-label>
+    </div>
+    <div class="me-row">
+      <me-label flex label="省份">
+        <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
+          <me-table-cell field="id" label="主键"></me-table-cell>
+          <me-table-cell field="title" label="标题"></me-table-cell>
+        </me-combo-table>
+      </me-label>
+      <me-label flex label="省份">
+        <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
+          <me-table-cell field="id" label="主键"></me-table-cell>
+          <me-table-cell field="title" label="标题"></me-table-cell>
+        </me-combo-table>
+      </me-label>
+    </div>
+    <div class="me-row">
+      <me-label flex label="行政区域1">
+        <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">
+          <template #node-label="{data}">{{data.title}}</template>
+        </me-combo-tree>
+      </me-label>
+      <me-label flex label="行政区域">
+        <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id"></me-combo-tree>
+      </me-label>
+    </div> -->
+    <div class="me-row me-center">
+      <me-button type="primary" @click="confirm">确 定</me-button>
+      <me-button @click="reset">重 置</me-button>
+    </div>
+  </me-form>
+</template>
 <script>
 export default {
+  methods:{
+    confirm(){
+      this.$refs.from.validate(valid => {
+        if (valid) {
+            this.$message.success('表单校验成功');
+        } else {
+            this.$message.error('表单校验失败!');
+        }
+      })
+    },
+    reset(){}
+  },
   data() {
     return {
-      sexList:[ { label: '男', value: '1' },{ label: '女', value: '0' }],
+      form: {
+        name: '张',
+        sex: '1',
+        age: 12
+      },
+      rules: {
+        name: [
+          { required: true, message: '姓名不能为空' },
+          { 
+            asyncValidator(rule,value,callback) {
+              if(value.length <= 1){ callback(new Error('长度必须大于1位'))}
+              else {callback()}
+            }
+          }
+        ],
+        age: [
+          { required: true, message: '年龄不能为空' },
+          { type:'number', message: '年龄必须为数字' },
+          { type:'number', min:10, max:100, message: '年龄不能小于10岁，不能大于100岁' }
+        ],
+        sex: [
+          { required: true, message: '性别不能为空' },
+          { type: 'enum', message:'性别必须是 男 或 女', enum:['1','0']}
+        ]
+      },
+      sexList:[ 
+        { label: '男', value: '1' },
+        { label: '女', value: '0' },
+        { label: '未知', value: '-1' }
+      ],
       provinceList:[
         { title: '山西省', id: '1' },
         { title: '陕西省', id: '2' },
@@ -90,27 +134,6 @@ export default {
 ```
 :::
 
-### 图标显示
-
-
-::: demo `icon-prefix` 前置图标 `icon-suffix` 后置图标
-```html
-
-<div class="me-row">
-  <me-input icon-prefix="icon-user" clearable  placeholder="请输入姓名"></me-input>
-  <me-line-v></me-line-v>
-  <me-input clearable icon-suffix="icon-sousuo" placeholder="请输入姓名"></me-input>
-</div>
-<script>
-export default {
-  data() {
-    return {
-    }
-  }
-}
-</script>
-```
-:::
 
 
 ### Form Attributes
