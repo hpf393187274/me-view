@@ -6,50 +6,47 @@
 ```html
 <template>
   <me-form ref="from" :rules="rules">
+  <pre>{{form}}</pre>
     <div class="me-row">
       <me-label flex required label="姓名" prop="name">
         <me-input clearable placeholder="请输入姓名" v-model="form.name"></me-input>
       </me-label>
-      <!-- <me-label flex label="年龄" prop="age">
+      <me-label flex label="年龄" prop="age">
         <me-input clearable placeholder="请输入年龄" v-model="form.age"></me-input>
-      </me-label> -->
+      </me-label>
     </div>
-    <!-- <div class="me-row">
+    <div class="me-row">
       <me-label flex label="性别" prop="sex">
         <me-combo-select readonly :data="sexList" v-model="form.sex" clearable placeholder="请选择性别">
         </me-combo-select>
       </me-label>
       <me-label flex label="省份">
-        <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
-          <me-table-cell field="id" label="主键"></me-table-cell>
-          <me-table-cell field="title" label="标题"></me-table-cell>
+        <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
         </me-combo-table>
       </me-label>
     </div>
     <div class="me-row">
       <me-label flex label="省份">
-        <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
-          <me-table-cell field="id" label="主键"></me-table-cell>
-          <me-table-cell field="title" label="标题"></me-table-cell>
+        <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
+      
         </me-combo-table>
       </me-label>
       <me-label flex label="省份">
-        <me-combo-table readonly :data="provinceList" field-value="id" field-label="title">
-          <me-table-cell field="id" label="主键"></me-table-cell>
-          <me-table-cell field="title" label="标题"></me-table-cell>
+        <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
+
         </me-combo-table>
       </me-label>
     </div>
     <div class="me-row">
       <me-label flex label="行政区域1">
-        <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">
+        <me-combo-tree readonly  :data="regionList" :expanded-level="1" field-value="id">
           <template #node-label="{data}">{{data.title}}</template>
         </me-combo-tree>
       </me-label>
       <me-label flex label="行政区域">
         <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id"></me-combo-tree>
       </me-label>
-    </div> -->
+    </div>
     <div class="me-row me-center">
       <me-button type="primary" @click="confirm">确 定</me-button>
       <me-button @click="reset">重 置</me-button>
@@ -68,13 +65,15 @@ export default {
         }
       })
     },
-    reset(){}
+    reset(){
+      this.$refs.from.reset()
+    }
   },
   data() {
     return {
       form: {
         name: '张',
-        sex: '1',
+        sex: '-1',
         age: 12
       },
       rules: {
@@ -108,6 +107,10 @@ export default {
         { title: '四川省', id: '3' },
         { title: '河南省', id: '4' },
         { title: '江苏省', id: '5' }
+      ],
+      columnsRegion: [
+        { label:'编号', field: 'id'},
+        { label:'名称', field: 'title' },
       ],
       regionList:[
         {

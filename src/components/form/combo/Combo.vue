@@ -5,8 +5,8 @@
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly__"
-      @blur-input="onBlurInput"
-      @click-input="onClickInput"
+      @on-blur="handlerBlurInput"
+      @on-click="handlerClickInput"
       ref="input"
       v-model="label__"
     >
@@ -52,10 +52,11 @@ export default {
         this.rendered = true
       })
     }
-
+    this.listenerUpward('MeLabel', 'on-label-reset', value => this.initValue(value))
   },
   created() {
-    this.initValue()
+    this.initValue(this.value)
+    this.listenerParent('on-select', this.handlerClickOption)
   },
   computed: {
     iconSuffix() {
@@ -70,35 +71,29 @@ export default {
       }
       this.$emit('change-status', value)
     },
-    value() {
-      this.initValue()
+    value(newValue) {
+      this.initValue(newValue)
+    },
+    value__(newValue) {
+      this.dispatchParent('MeLabel', 'on-label-change', newValue)
     }
   },
   methods: {
-    handlerLabelEvent() {
-      const input = this.$refs.input
-      if (input) {
-        input.$on('on-label-blur', () => {
-          // this.
-        })
-      }
-
-    },
     findItem(value) {
       return this.data.find(item => Reflect.get(item, this.fieldValue) === value)
     },
-    initValueSingle() {
-      const data = this.findItem(this.value)
+    initValueSingle(value) {
+      const data = this.findItem(value)
       if (this.$tools.isEmpty(data)) { return }
       Object.assign(this.valueSingle, data)
       this.label__ = Reflect.get(data, this.fieldLabel) || ''
       this.value__ = Reflect.get(data, this.fieldValue) || ''
     },
-    initValueMultiple() {
+    initValueMultiple(value) {
       this.label__ = []
       this.value__ = []
-      if (this.$tools.isEmpty(this.value)) { return }
-      const list = this.$type.isArray(this.value) ? [...this.value] : [this.value]
+      if (this.$tools.isEmpty(value)) { return }
+      const list = this.$type.isArray(value) ? [...value] : [value]
       this.valueMultiple = this.data.filter(item => list.includes(Reflect.get(item, this.fieldValue)))
 
       for (const item of this.valueMultiple) {
@@ -106,8 +101,8 @@ export default {
         this.value__.push(Reflect.get(item, this.fieldValue))
       }
     },
-    initValue() {
-      this.multiple ? this.initValueMultiple() : this.initValueSingle()
+    initValue(value) {
+      this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
     },
     isSelected(value) {
       const list = this.multiple ? this.valueMultiple : [this.valueSingle]
@@ -116,7 +111,7 @@ export default {
     onClickSuffix() {
       this.status = !this.status
     },
-    onClickInput() {
+    handlerClickInput() {
       this.readonly__ && this.onClickSuffix()
     },
     selectSingle(data) {
@@ -147,14 +142,14 @@ export default {
           this.$emit('change', [...this.value__])
         })
     },
-    onClickOption(item, index) {
+    handlerClickOption(item, index) {
       const data = { ...item, index }
       this.$emit('click-option-before', item, index)
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
       this.$emit('click-option', item, index)
       this.$emit('click-option-after', item, index)
     },
-    onBlurInput() {
+    handlerBlurInput() {
       this.closable && (this.status = false)
     },
     onFocusInput() {

@@ -16,7 +16,7 @@ export default {
     multiple: Boolean,
     fieldLabel: { type: String, default: 'label' },
     fieldValue: { type: String, default: 'value' },
-    value: { type: [String, Array, Object] }
+    value: { type: [String, Array] }
   },
   data() {
     return {

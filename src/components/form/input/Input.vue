@@ -32,8 +32,10 @@
 
 <script>
 const types = ['text', 'number', 'email', 'password']
+import Emitter from '@components/mixins/emitter'
 export default {
   name: 'MeInput',
+  mixins: [Emitter],
   model: {
     props: 'value', event: 'change'
   },
@@ -58,7 +60,7 @@ export default {
       right: 8,
       value__: null,
       valueReset: '',
-      validateError: false,
+      validateStatus: '',
       active: false
     }
   },
@@ -70,6 +72,12 @@ export default {
       this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
       this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
       this.$on('focus-input', this.onFocusInput)
+
+      this.listenerUpward('MeLabel', 'on-label-status', status => { this.validateStatus = status })
+
+      this.handlerLableEvent(() => {
+        this.listenerUpward('MeLabel', 'on-label-reset', value => { this.value__ = value })
+      })
     })
   },
   computed: {
@@ -82,7 +90,7 @@ export default {
         {
           'me-readonly': this.readonly,
           'me-disabled': this.disabled,
-          'me-input-error': this.validateError
+          'me-input-error': this.validateStatus === 'error'
         },
       ]
     },
@@ -115,9 +123,9 @@ export default {
         return
       }
       this.updateValue(newValue)
-      if (oldValue) {
-        this.$emit('on-label-change', this.value__)
-      }
+      this.handlerLableEvent(() => {
+        this.dispatchParent('MeLabel', 'on-label-change', this.value__)
+      })
     },
     change(value) {
       this.updateValue(value)
@@ -126,6 +134,13 @@ export default {
   methods: {
     updateValue(value) {
       this.$emit('change', this.type === 'number' ? Number(value) : value)
+    },
+    /**
+     * MeInput
+     */
+    handlerLableEvent(callback = () => { }) {
+      if (this.existParentComponent(['MeCombo'])) { return }
+      callback && callback.call(this)
     },
     initValue(value) {
       if (this.$type.isObject(value)) {
@@ -150,18 +165,15 @@ export default {
     },
     handleBlur() {
       this.$emit('on-blur', this.value__)
-      this.$emit('on-label-blur', this.value__)
+      this.handlerLableEvent(() => {
+        this.dispatchParent('MeLabel', 'on-label-blur', this.value__)
+      })
     },
     handleClick() {
       this.$emit('on-click', this.value__)
     },
     onFocusInput() {
       this.$refs.target.focus()
-    },
-    onClickInput() {
-      this.$emit('click-input-before', this.value__)
-      this.$emit('click-input', this.value__)
-      this.$emit('click-input-after', this.value__)
     },
     onClickPrefix() {
       this.$emit('click-prefix-before', this.value__)

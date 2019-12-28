@@ -1,7 +1,7 @@
 ﻿<template>
-  <me-combo ref="combo" v-bind="$props">
+  <me-combo ref="combo" v-bind="$props" v-model="value__">
     <div class="me-column">
-      <me-combo-option :data="item" :index="index" :key="item[fieldValue]" @click-option="onClickRow" v-for="(item,index) in data" />
+      <me-combo-option :data="item" :index="index" :key="item[fieldValue]" @click-option="handlerSelect" v-for="(item,index) in data" />
     </div>
   </me-combo>
 </template>
@@ -25,8 +25,8 @@ export default {
     this.value__ = this.value
   },
   methods: {
-    onClickRow(row, index) {
-      this.$refs.combo.onClickOption(row, index)
+    handlerSelect(row, index) {
+      this.$emit('on-select', row, index)
       this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }
   }

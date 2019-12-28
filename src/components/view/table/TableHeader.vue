@@ -15,6 +15,11 @@ export default {
     scrollLeft(newValue) {
       this.$el.scrollLeft = newValue
     }
+  },
+  data() {
+    return {
+      hasScrollbar: false
+    }
   }
 }
 </script>

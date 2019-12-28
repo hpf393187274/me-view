@@ -1,5 +1,6 @@
 <template>
   <div :style="styleContainer" class="me-column me-table-container">
+    {{scrollbarHas}}
     <template v-if="$slots.header">
       <div class="me-row table-toolbar" v-if="$slots.header">
         <slot name="header" />
@@ -20,7 +21,7 @@
         />
       </me-table-header>
 
-      <me-table-body @scroll-body="onScrollBody" class="me-flex" ref="tableBody">
+      <me-table-body @scroll-body="handlerScrollBody" class="me-flex" ref="tableBody">
         <me-table-row
           :center="center"
           :checkbox="checkbox"
@@ -146,6 +147,7 @@ export default {
     this.handlerSlots()
     const _this = this
     this.$nextTick(() => {
+      _this.existScrollbar()
       window.onload = function () {
         _this.existScrollbar()
       }
@@ -213,7 +215,7 @@ export default {
       this.scrollbarHas = target.scrollHeight > (target.innerHeight || target.clientHeight)
       return target.scrollHeight > (target.innerHeight || target.clientHeight);
     },
-    onScrollBody(scrollLeft) {
+    handlerScrollBody(scrollLeft) {
       this.scrollLeft = scrollLeft
     },
     handlerSlots() {

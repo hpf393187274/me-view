@@ -26,6 +26,11 @@ export default {
     })
   },
   methods: {
+    reset() {
+      for (const field of this.fields) {
+        field.reset()
+      }
+    },
     validate(callback = () => { }) {
       if (type.isNotFunction(callback)) {
         console.warn('me-from.validate', '->', 'param is net function')

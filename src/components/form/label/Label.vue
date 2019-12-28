@@ -8,7 +8,7 @@
       <slot>
         <div class="me-row me-cross-center label-content-slot">请在插巢填充元素</div>
       </slot>
-      <div class="label-content-error" v-show="validateError">{{validateMessage}}</div>
+      <div class="label-content-error" v-show="validateStatus==='error'">{{validateMessage}}</div>
     </div>
   </div>
 </template>
@@ -35,12 +35,12 @@ export default {
     return {
       required__: this.required,
       validateMessage: '',
-      validateError: false,
+      validateStatus: '',
       FormInstance: null,
       rulesForm: {},
       rules__: [],
-      formElement: null,
-      value__: ''
+      valueCurrent: '',
+      valueDefault: null,
     }
   },
   created() {
@@ -56,26 +56,30 @@ export default {
   },
   mounted() {
     if (this.prop) {
-      this.dispatch('MeForm', 'on-label-add', this)
+      this.dispatchParent('MeForm', 'on-label-add', this)
+      this.bindFormInstance()
     }
     this.bindFormElement()
-    this.bindFormInstance()
   },
   beforeDestroy() {
-    this.dispatch('MeForm', 'on-label-remove', this)
+    this.dispatchParent('MeForm', 'on-label-remove', this)
   },
   methods: {
     bindEventToFormElement() {
-      if (!this.formElement) { return }
-      this.formElement.$off('on-label-blur', this.validate)
-      this.formElement.$on('on-label-blur', this.validate)
-      this.formElement.$off('on-label-change', this.validate)
-      this.formElement.$on('on-label-change', this.validate)
+      this.$off('on-label-blur', this.validate)
+      this.$on('on-label-blur', this.validate)
+      this.$off('on-label-change', this.handlerElementChange)
+      this.$on('on-label-change', this.handlerElementChange)
+    },
+    handlerElementChange(value) {
+      if (!this.valueDefault) {
+        Reflect.set(this, 'valueDefault', value)
+      }
+      this.valueCurrent = value
+      this.validate('')
     },
     bindFormElement() {
       if (tools.isEmptyArray(this.$children)) { return }
-      const elementList = ['MeInput', 'MeComboSelect', 'MeComboTable', 'MeComboTree']
-      this.formElement = this.$children.find(item => elementList.includes(item.$options.name))
       this.bindEventToFormElement()
     },
     bindFormInstance() {
@@ -101,28 +105,28 @@ export default {
         this.setRules(ruleProp)
       }
     },
+    setValidateInfo(status, message) {
+      this.validateStatus = status
+      this.validateMessage = message
+      this.$emit('on-label-status', status)
+    },
     /**
      * 校验表单元素
      */
     validate(trigger, callback = () => { }) {
-      if (this.formElement) {
-        const _this = this
-        const validator = new Validator({ [this.prop]: this.rules__ })
-        validator.validate({ [this.prop]: this.formElement.value }, { firstFields: true }).then(() => {
-          _this.validateError = false
-          _this.formElement && (_this.formElement.validateError = false)
-          _this.validateMessage = ''
-          callback(true)
-        }).catch(({ errors }) => {
-          _this.validateError = true
-          _this.formElement && (_this.formElement.validateError = true)
-          _this.validateMessage = errors[0].message
-          callback(false)
-        })
-      } else {
-        console.warn('There are no form elements in the MeLabel.')
+      const _this = this
+      const validator = new Validator({ [this.prop]: this.rules__ })
+      validator.validate({ [this.prop]: this.valueCurrent }, { firstFields: true }).then(() => {
+        _this.setValidateInfo('success')
         callback(true)
-      }
+      }).catch(({ errors }) => {
+        _this.setValidateInfo('error', errors[0].message)
+        callback(false)
+      })
+    },
+    reset() {
+      console.log(`reset -> 当前值：${this.valueCurrent}, 默认值：${this.valueDefault}`)
+      this.$emit('on-label-reset', this.valueDefault)
     }
   }
 }

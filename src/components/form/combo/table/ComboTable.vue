@@ -1,5 +1,5 @@
 ﻿<template>
-  <me-combo ref="combo" v-bind="$props">
+  <me-combo ref="combo" v-bind="$props" v-model="value__">
     <me-table :border="border" :columns="columns" :data="data" :highlight="highlight" :multiple="multiple" @click-row="onClickRow">
       <slot />
     </me-table>
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     onClickRow(row, index) {
-      this.$refs.combo.onClickOption(row, index)
+      this.$emit('on-select', row, index)
       this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }
   }

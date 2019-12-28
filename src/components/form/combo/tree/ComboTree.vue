@@ -1,5 +1,5 @@
 ﻿<template>
-  <me-combo ref="combo" v-bind="$props">
+  <me-combo ref="combo" v-bind="$props" v-model="value__">
     <me-tree
       :border="border"
       :data="data"
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     onClickNode(row, index) {
-      this.$refs.combo.onClickOption(row, index)
+      this.$emit('on-select', row, index)
       this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }
   }
