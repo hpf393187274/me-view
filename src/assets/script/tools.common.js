@@ -226,5 +226,13 @@ export default {
     let result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
     const params = JSON.parse(result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '{"$1":"$2"}'))
     return this.isEmpty(key) ? params : Reflect.get(params, key)
+  },
+  /**
+   * 首字母变大写
+   * @param {String} target 
+   */
+  firstCharUpperCase(target) {
+    if (this.isEmpty(target)) { return '' }
+    return target.slice(0, 1).toUpperCase() + target.slice(1)
   }
 }
