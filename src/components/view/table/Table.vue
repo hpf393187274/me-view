@@ -1,6 +1,5 @@
 <template>
   <div :style="styleContainer" class="me-column me-table-container">
-    {{scrollbarHas}}
     <template v-if="$slots.header">
       <div class="me-row table-toolbar" v-if="$slots.header">
         <slot name="header" />
@@ -12,11 +11,11 @@
           :center="center"
           :checkbox="checkbox"
           :checked="checkedHeader"
-          :checked-half="checkedHalf"
+          :checked-half="checkedHeaderHalf"
           :columns="columns__"
           :data-length="data.length"
           :multiple="multiple"
-          @click-checkbox="handlerCheckboxHeader"
+          @checked-change="handlerCheckboxHeader"
           header
         />
       </me-table-header>
@@ -25,14 +24,14 @@
         <me-table-row
           :center="center"
           :checkbox="checkbox"
-          :checked="checkedBody"
           :columns="columns__"
           :data="item"
           :highlight="highlight"
           :index="index"
           :key="index"
           :multiple="multiple"
-          @click-row="onRow"
+          @checked-change="handlerCheckedChange"
+          @click-row="handlerClickRow"
           v-for="(item,index) in data"
         />
       </me-table-body>
@@ -69,6 +68,7 @@ export default {
     field: { type: String, default: '' },
     data: { type: Array, default: () => [] },
     columns: { type: Array, default: () => [] },
+    checked: { type: Boolean, default: false },
     center: Boolean,
     checkbox: Boolean,
     height: [Number, String],
@@ -96,13 +96,11 @@ export default {
   watch: {
     checkedBodyNumber(value) {
       if (this.length === 0 || value === 0) {
-        console.log('checkedBodyNumber ------------------')
-        this.checkedHeader = this.checkedHalf = false
+        this.checkedHeader = this.checkedHeaderHalf = false
         return
       }
-      console.log('checkedBodyNumber ===========================')
       this.checkedHeader = this.length === value
-      this.checkedHalf = this.length !== value
+      this.checkedHeaderHalf = this.length !== value
     },
     length() {
       this.$nextTick(() => {
@@ -116,23 +114,16 @@ export default {
       columns__: [],
       scrollbarWidth: scrollbarWidth, checkedHeader: this.checked,
       scrollbarHas: false,
-      checkedBody: this.checked,
-      checkedHalf: false,
+      checkedHeaderHalf: false,
+      checkedRows: new Map(),
       checkedBodyNumber: 0,
-      checkedRows: [],
       selectedNodeOld: null,
-      selectedData: null,
       scrollLeft: 0,
       show: true,
     }
   },
   created() {
     this.id__ = `me-table_${idSeed++}`
-    this.initPrimaryKey(this.data)
-    this.checkedBodyNumber = this.checked ? this.length : 0
-    // setTimeout(() => {
-    //   this.show = true
-    // }, 3000)
   },
   beforeUpdate() {
     const _this = this
@@ -154,61 +145,45 @@ export default {
     })
   },
   methods: {
-    /**
-     * 追加：选中的行
-     */
-    appendCheckedRows(target) {
-      const primaryValue = Reflect.get(target, 'primaryKey')
-      const index = this.checkedRows.findIndex(item => primaryValue === Reflect.get(item, 'primaryKey'))
-      index === -1 && this.checkedRows.push(target)
-    },
-    /**
-     * 移除：选中的行
-     */
-    removeCheckedRows(target) {
-      const primaryValue = Reflect.get(target, 'primaryKey')
-      this.$tools.arrayRemove(this.checkedRows, item => primaryValue === Reflect.get(item, 'primaryKey'))
+    getSelectedData() {
+      const result = []
+      this.checkedRows.forEach(value => {
+        result.push(value)
+      })
+      return result
     },
     /**
      * 点击 Header row checkbox
      */
     handlerCheckboxHeader(value) {
-      this.checkedHalf = false
-      this.checkedBody = value
-      this.checkedBodyNumber = value ? this.length : 0
-      this.$tools.clearEmpty(this.checkedRows)
-      value && this.checkedRows.push(...this.data)
-    },
-    /**
-     * 如果单选，则记录选择的节点，并清除上一次选择
-     */
-    handleCheckedSingleNode(data, node) {
-      if (this.$type.isObject(this.selectedNodeOld)) {
-        if (this.selectedNodeOld !== node) {
-          this.selectedNodeOld.setChecked(false)
+      this.checkedHeaderHalf = false
+      this.checkedRows.clear()
+      if (value === true) {
+        for (const item of this.data) {
+          const primaryValue = Reflect.get(item, 'primaryKey')
+          this.checkedRows.set(primaryValue, item)
         }
       }
-      this.selectedNodeOld = node
-      this.selectedData = data
+      this.checkedBodyNumber = this.checkedRows.size
+      this.$emit('header-checked-change', value)
+    },
+    handlerCheckedChange(checked, row) {
+      if (this.multiple !== true) {
+        this.checkedRows.clear()
+      }
+      const primaryValue = Reflect.get(row, 'primaryKey')
+      if (checked === true) {
+        this.checkedRows.set(primaryValue, row)
+      } else {
+        this.checkedRows.delete(primaryValue)
+      }
+      this.checkedBodyNumber = this.checkedRows.size
     },
     /**
      * 点击 Row
      */
-    onRow(checked, row, index, node) {
-      if (this.multiple) {
-        this.checkedBodyNumber += checked ? 1 : -1
-        checked ? this.appendCheckedRows(row) : this.removeCheckedRows(row)
-      } else {
-        this.checkedBodyNumber = checked ? 1 : 0
-        this.handleCheckedSingleNode(row, node)
-      }
+    handlerClickRow(row, index, node) {
       this.$emit('click-row', row, index, node)
-    },
-    /**
-     * 点击 Column
-     */
-    onColumn(...value) {
-      this.$emit('click-column', ...value)
     },
     existScrollbar() {
       const target = this.$refs.tableBody.$el
@@ -226,7 +201,6 @@ export default {
         const newSlotKeys = slotKeys.filter(item => !(item.includes('$') || excludeSlots.includes(item)))
         if (this.$type.isArray(newSlotKeys) && newSlotKeys.length > 0) {
           console.log('newSlotKeys = ', newSlotKeys)
-
           for (const column of this.columns__) {
             if (newSlotKeys.includes(column.field)) {
               const extended = Reflect.get(this.$scopedSlots, column.field)

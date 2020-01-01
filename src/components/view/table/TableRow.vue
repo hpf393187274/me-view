@@ -2,13 +2,13 @@
   <tr :class="clesses" @click.stop="handlerRow">
     <template v-if="header">
       <me-table-cell-h class="checkbox" v-if="checkbox">
-        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="onClickCheckbox" v-model="checked__" />
+        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerClickCheckbox" v-model="checked__" />
       </me-table-cell-h>
       <me-table-cell-h :key="column.label" :label="column.label" :width="column.width" v-for="column in columns" />
     </template>
     <template v-else>
       <me-table-cell-d class="checkbox" v-if="checkbox">
-        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="onClickCheckbox" v-model="checked__" />
+        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerClickCheckbox" v-model="checked__" />
       </me-table-cell-d>
       <me-table-cell-d :data="data" :key="column.field" v-bind="column" v-for="column in columns" />
     </template>
@@ -25,12 +25,12 @@ export default {
   },
   props: {
     index: Number,
-    header: Boolean,
+    header: { type: Boolean, default: false },
     data: { type: Object, default: () => ({}) },
     renderMethod: Function,
     highlight: Boolean,
     checkedHalf: Boolean,
-    checked: Boolean,
+    checked: { type: Boolean, default: false },
     checkbox: Boolean,
     dataLength: Number,
     multiple: Boolean,
@@ -40,6 +40,9 @@ export default {
     return {
       checked__: this.checked
     }
+  },
+  created() {
+    this.initPrimaryKey(this.data)
   },
   watch: {
     checked(value) { this.checked__ = value }
@@ -60,19 +63,32 @@ export default {
       ]
     }
   },
+  mounted() {
+    if (this.header !== true) {
+      this.listenerUpward('MeTable', 'header-checked-change', value => {
+        this.checked__ = value
+      })
+    }
+  },
   methods: {
     setChecked(value) {
       this.checked__ = value
     },
     handlerRow() {
+      this.handlerCheckedChange()
       if (this.header === false) {
-        this.checked__ = this.checked__ === true ? false : true
-        this.$emit('click-row', this.checked__, this.data, this.index, this)
+        this.$emit('click-row', this.data, this.index, this)
       }
     },
-    onClickCheckbox(value) {
-      this.$emit('click-checkbox', value)
-      this.handlerRow()
+    handlerClickCheckbox() {
+      this.handlerCheckedChange()
+      this.$emit('click-checkbox', this.data, this.index, this)
+    },
+    handlerCheckedChange() {
+      console.log('===================', this.checked__ === true ? false : true)
+      this.checked__ = this.checked__ === true ? false : true
+
+      this.$emit('checked-change', this.checked__, this.data, this)
     }
   }
 }
