@@ -165,3 +165,22 @@ export default {
 ```
 :::
 
+
+
+
+## Dialog Attributes
+| 名称      | 描述   |  类型   | 默认值 | 可选值      |
+| --------- | ------ | :-----: | :----: | ----------- |
+| title     | 标题   | String  |   -    | -           |
+| width     | 宽度   | String  | false  | true, false |
+| height    | 高度   | String  | false  | true, false |
+| draggable | 可拖拽 | Boolean |  true  | true, false |
+| closable  | 可关闭 | Boolean |  true  | true, false |
+
+## Dialog Events
+| 名称 | 描述 | 参数  |
+| ---- | ---- | :---: |
+
+## Dialog Slot
+| 名称 | 描述 |
+| ---- | ---- |

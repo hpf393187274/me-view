@@ -51,6 +51,7 @@ export default {
         {
           label: 'Layout 布局',
           children: [
+            { label: 'Panel 面板', path: '/layout/panel' },
             { label: 'Table 表格', path: '/layout/table' },
             { label: 'Paging 分页', path: '/layout/paging' },
             { label: 'Tree 树型控件', path: '/layout/tree' },

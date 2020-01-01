@@ -58,9 +58,11 @@
 
 ```html
 <template>
-  <me-table height="400px" checkbox multiple :data="data" :columns="columns" highlight>
+  <div>
+  <me-table ref="tableList" height="400px" checkbox multiple :data="data" :columns="columns" highlight>
     <template #header>
       <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
+      <me-button plain type="primary" @click="handlerTableSelectedData">获取选中表格数据</me-button>
       <me-button plain type="primary" @click="handlerData">变更数据</me-button>
       <me-button plain type="primary" icon="icon-minus-square">批量删除</me-button>
     </template>
@@ -71,11 +73,14 @@
       <me-button>test</me-button>
     </template>
   </me-table>
+ 
+  </div>
 </template>
 <script>
   export default {
     data() {
       return {
+        checkedRows:[],
         columns: [
           { label:'编号', field: 'id'},
           { label:'测试', field: 'test' },
@@ -99,6 +104,12 @@
     methods: {
       handlerData () {
         this.data.push(...this.data1)
+      },
+      handlerTableSelectedData(){
+        if(this.$refs.tableList){
+          const result = this.$refs.tableList.getSelectedData()
+          console.log('handlerTableSelectedData=========》', result)
+        }
       }
     }
   }
