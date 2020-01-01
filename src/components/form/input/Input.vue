@@ -32,10 +32,8 @@
 
 <script>
 const types = ['text', 'number', 'email', 'password']
-import Emitter from '@components/mixins/emitter'
 export default {
   name: 'MeInput',
-  mixins: [Emitter],
   model: {
     props: 'value', event: 'change'
   },

@@ -14,10 +14,8 @@
 </template>
 <script>
 import { type, tools } from '@assets/script/common'
-import Emitter from '@components/mixins/emitter'
 import Validator from 'async-validator'
 export default {
-  mixins: [Emitter],
   name: 'MeLabel',
   props: {
     rules: {

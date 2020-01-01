@@ -30,9 +30,8 @@
 
 <script>
 import ComboMixin from './combo.mixin'
-import Emitter from '@components/mixins/emitter'
 export default {
-  mixins: [ComboMixin, Emitter],
+  mixins: [ComboMixin],
   name: 'MeCombo',
   data() {
     return {
