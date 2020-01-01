@@ -3,7 +3,7 @@
     <div :class="headerClass" class="me-row header">
       <me-icon v-if="icon">{{icon}}</me-icon>
       <slot name="header">
-        <span class="me-flex">{{ label }}</span>
+        <span class="me-flex">{{ title }}</span>
       </slot>
     </div>
     <me-line-h />
@@ -17,6 +17,7 @@
 export default {
   name: 'MePanel',
   props: {
+    title: String,
     line: Boolean,
     icon: String,
     overflow: String
