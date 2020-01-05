@@ -15,7 +15,7 @@ export default {
     /**
      * 标题
      */
-    title: String,
+    title: { type: String, default: '' },
     disabled: Boolean
   },
   methods: {

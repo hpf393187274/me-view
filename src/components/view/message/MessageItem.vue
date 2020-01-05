@@ -8,18 +8,22 @@
           <span>{{content}}</span>
         </div>
       </slot>
-      <me-icon @click="$emit('remove', primaryKey)" v-if="closable">icon-shanchu</me-icon>
+      <me-icon @click="$emit('remove', primaryKey)" v-if="closable">icon-cross</me-icon>
     </div>
   </transition>
 </template>
 
 <script>
-
+import MeIcon from '../../basic/Icon'
 export default {
   name: 'MeMessageItem',
+  components: {
+    MeIcon
+  },
   props: {
     icon: String,
     content: String,
+    primaryKey: String,
     type: String,
     duration: { type: Number, default: 2 },
     closable: { type: Boolean, default: true }

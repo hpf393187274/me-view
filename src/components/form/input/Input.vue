@@ -167,6 +167,12 @@ export default {
         this.dispatchParent('MeLabel', 'on-label-blur', this.value__)
       })
     },
+    setValue(value) {
+      this.value__ = value
+    },
+    getValue() {
+      return this.value__
+    },
     handleClick() {
       this.$emit('on-click', this.value__)
     },

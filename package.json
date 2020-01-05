@@ -1,6 +1,6 @@
 {
   "name": "me-view",
-  "version": "1.0.51",
+  "version": "1.0.55",
   "private": false,
   "main": "dist/lib/index.common.js",
   "scripts": {

@@ -1,13 +1,18 @@
 import { tools, type } from '@assets/script/common'
-function broadcast(componentName, eventName, params) {
-  this.$children.forEach(child => {
-    const name = child.$options.name;
 
+function findChildren(componentName, callback = () => { }) {
+  const children = this.$children
+  if (!children || children.length === 0) { return }
+  this.$children.forEach(child => {
+    const name = child.$options.name
     if (name === componentName) {
-      child.$emit.apply(child, [eventName].concat(params))
+      try {
+        callback && callback(child)
+      } catch (error) {
+        console.error(`组件 ${name} 执行 callback error, message：${error}`)
+      }
     } else {
-      // todo 如果 params 是空数组，接收到的会是 undefined
-      broadcast.apply(child, [componentName, eventName].concat([params]))
+      findChildren.call(child, componentName, callback)
     }
   })
 }
@@ -43,6 +48,9 @@ export default {
   existParentComponent(componentNames) {
     const parent = this.findParentComponent(componentNames)
     return this.$tools.isNotEmpty(parent)
+  },
+  findChildrenComponent(componentName, callback = () => { }) {
+    findChildren.call(this, componentName, callback)
   },
   findParentComponent(componentNames) {
     if (this.$tools.isEmptyArray(componentNames)) {
@@ -86,8 +94,5 @@ export default {
       parent.$off.call(parent, eventName, callback);
       parent.$on.call(parent, eventName, callback);
     }
-  },
-  broadcast(componentName, eventName, params) {
-    broadcast.call(this, componentName, eventName, params);
   }
 }

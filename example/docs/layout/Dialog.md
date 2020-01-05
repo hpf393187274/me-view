@@ -7,7 +7,7 @@
 ```html
 <template>
   <div>
-    <me-dialog title="dialog" v-model="status">
+    <me-dialog title="dialog" v-model="status" @confirm="status = false">
       <br />ssss
       <br />ssss
     </me-dialog>
@@ -18,8 +18,6 @@
 export default {
   data() {
     return {
-      statusModalTrue: false,
-      statusModalFalse: false,
       status: false,
     }
   }
@@ -165,8 +163,33 @@ export default {
 ```
 :::
 
+### Prompt 用法
+::: demo `data` 数据 `border` 边框
 
-
+```html
+<template>
+  <me-button @click="onHandler">请输入</me-button>
+</template>
+<script>
+export default {
+  methods: {
+    onHandler() {
+      this.$dialog.prompt({
+        content: '请输入文件夹名称',
+        rules:[ { required: true, message: '文件夹名称不能为空' }],
+        ok(value) {
+          this.$message.info(`输入的内容为：${value}`)
+        },
+        cancel() {
+          this.$message.error('点击了取消')
+        }
+      })
+    }
+  }
+}
+</script>
+```
+:::
 
 ## Dialog Attributes
 | 名称      | 描述   |  类型   | 默认值 | 可选值      |
@@ -178,8 +201,10 @@ export default {
 | closable  | 可关闭 | Boolean |  true  | true, false |
 
 ## Dialog Events
-| 名称 | 描述 | 参数  |
-| ---- | ---- | :---: |
+| 名称    | 描述     | 参数  |
+| ------- | -------- | :---: |
+| confirm | 事件确定 |   -   |
+| cancel  | 事件取消 |   -   |
 
 ## Dialog Slot
 | 名称 | 描述 |

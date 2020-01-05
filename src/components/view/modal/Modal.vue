@@ -1,8 +1,8 @@
 <template>
-  <div @click.self="onClick" class="me-row me-center me-modal" v-if="modal" v-show="value__">
+  <div @click.self="handlerClick" class="me-row me-center me-modal" v-if="modal" v-show="value__">
     <div :class="classContainer" :style="styles" @mousedown="onMouseDown" class="me-column modal-container" ref="target">
       <slot>
-        <me-button @click="onCancel">关闭</me-button>
+        <me-button @click="handlerCancel">关闭</me-button>
       </slot>
     </div>
   </div>
@@ -16,17 +16,19 @@
     v-show="value__"
   >
     <slot>
-      <me-button @click="onCancel">关闭</me-button>
+      <me-button @click="handlerCancel">关闭</me-button>
     </slot>
   </div>
 </template>
 <script>
 import Modal from '../modal.mixin'
-import Draggable from '@components/mixins/draggable'
-import { tools } from '@assets/script/common'
+import Draggable from '../../mixins/draggable'
+import { tools } from '../../../assets/script/common'
+import MeButton from '../../form/button/'
 export default {
   name: 'MeModal',
   mixins: [Modal, Draggable],
+  components: { MeButton },
   props: {
     height: String,
     width: String,
@@ -51,9 +53,9 @@ export default {
     }
   },
   methods: {
-    onClick() {
+    handlerClick() {
       if (this.closableModal === true) {
-        this.onCancel()
+        this.handlerCancel()
       }
     },
     handlerDragging() { this.handlerDrag() },

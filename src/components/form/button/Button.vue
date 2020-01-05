@@ -8,8 +8,10 @@
 </template>
 
 <script>
+import MeIcon from '../../basic/Icon'
 export default {
   name: 'MeButton',
+  components: { MeIcon },
   props: {
     type: { type: String, default: 'default' },
     disabled: Boolean,

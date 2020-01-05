@@ -12,7 +12,7 @@
     <div class="me-row dialog-header">
       <slot name="header">
         <span :class="{'me-cursor-move': moveable}" class="me-flex">{{title}}</span>
-        <me-icon @click="onCancel" v-if="closable">icon-shanchu</me-icon>
+        <me-icon @click="handlerCancel" v-if="closable">icon-cross</me-icon>
       </slot>
     </div>
     <me-line-h />
@@ -22,8 +22,8 @@
     <me-line-h />
     <div @mousedown.stop class="me-row dialog-footer">
       <slot name="footer">
-        <me-button @click="onCancel" width="80px">取 消</me-button>
-        <me-button :disabled="btnDisabledConfirm" @click="onConfirm" type="primary" width="80px">确 定</me-button>
+        <me-button @click="handlerCancel" width="80px">取 消</me-button>
+        <me-button :disabled="btnDisabledConfirm" @click="handlerConfirm" type="primary" width="80px">确 定</me-button>
       </slot>
     </div>
   </me-modal>
@@ -32,11 +32,16 @@
 <script>
 
 import Modal from '../modal.mixin'
+import MeModal from '../../view/modal'
+import MeButton from '../../form/button'
+import MeIcon from '../../basic/Icon'
+import MeLineH from '../../basic/LineH'
 export default {
   name: 'MeDialog',
+  components: { MeButton, MeIcon, MeLineH, MeModal },
   mixins: [Modal],
   props: {
-    title: String,
+    title: { type: String, default: '' },
     height: { type: String, default: '300px' },
     width: { type: String, default: '300px' },
     draggable: { type: Boolean, default: true },
@@ -48,7 +53,7 @@ export default {
     }
   },
   methods: {
-    onConfirm() {
+    handlerConfirm() {
       this.btnDisabledConfirm = true
       setTimeout(() => { this.btnDisabledConfirm = false }, 1000)
       this.$emit('confirm')

@@ -39,7 +39,7 @@ export default {
       return new Promise(resolve => {
         let count = 0;
         for (const field of this.fields) {
-          field.validate('', valid => {
+          field.validate(valid => {
             if (++count === length) {
               resolve(valid);
               type.isFunction(callback) && callback(valid)

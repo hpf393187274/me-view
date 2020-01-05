@@ -1,33 +1,30 @@
 import Vue from 'vue'
 import Message from './Message'
-import { tools } from '@assets/script/common'
+import { tools } from '../../../assets/script/common'
 Message.newInstance = (options = {}) => {
   const instance = new Vue({
     data() {
-      return Object.assign({
-        list: []
-      }, options, {
+      return {
         width: '416px',
         capacity: 10,
-        top: '30px'
-      })
-    },
-    computed: {
-      length() {
-        return this.list.length
+        top: '30px',
+        ...(options || {})
       }
     },
     methods: {
       show(options = {}) {
         const onRemove = Reflect.get(options, 'onRemove')
         Reflect.deleteProperty(options, 'onRemove')
-        if (this.length >= this.capacity) {
-          tools.arrayRemove(this.list, 0)
+
+        const message = this.$refs.message
+        if (message) {
+          if (message.container.length >= this.capacity) {
+            tools.arrayRemove(message.container, 0)
+          }
+          message.container.push({ ...options, primaryKey: tools.UUId() })
         }
 
-        // Reflect.set(options, 'content', Reflect.get(options, 'content') + '_' + new Date().getTime())
-        this.list.push({ ...options, primaryKey: tools.UUId() })
-        modal.$parent.onRemove = onRemove;
+        modal.$parent.onRemove = onRemove
       },
       destroy() {
         this.$destroy();
@@ -40,8 +37,10 @@ Message.newInstance = (options = {}) => {
       }
     },
     render(h) {
+      const { top, width } = this.$data
       return h(Message, {
-        props: Object.assign({ value: true, list: this.list }, this.$data),
+        ref: 'message',
+        props: { value: true, top, width },
         on: {
           destroy: this.destroy
         }

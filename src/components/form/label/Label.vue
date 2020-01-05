@@ -64,17 +64,18 @@ export default {
   },
   methods: {
     bindEventToFormElement() {
-      this.$off('on-label-blur', this.validate)
-      this.$on('on-label-blur', this.validate)
+      this.$off('on-label-blur', this.handlerElementBlur)
+      this.$on('on-label-blur', this.handlerElementBlur)
       this.$off('on-label-change', this.handlerElementChange)
       this.$on('on-label-change', this.handlerElementChange)
     },
+    handlerElementBlur() { this.validate() },
     handlerElementChange(value) {
       if (!this.valueDefault) {
         Reflect.set(this, 'valueDefault', value)
       }
       this.valueCurrent = value
-      this.validate('')
+      this.validate()
     },
     bindFormElement() {
       if (tools.isEmptyArray(this.$children)) { return }
@@ -111,15 +112,17 @@ export default {
     /**
      * 校验表单元素
      */
-    validate(trigger, callback = () => { }) {
+    validate(callback = () => { }) {
       const _this = this
       const validator = new Validator({ [this.prop]: this.rules__ })
       validator.validate({ [this.prop]: this.valueCurrent }, { firstFields: true }).then(() => {
         _this.setValidateInfo('success')
         callback(true)
       }).catch(({ errors }) => {
-        _this.setValidateInfo('error', errors[0].message)
-        callback(false)
+        if (errors) {
+          _this.setValidateInfo('error', errors[0].message)
+          callback(false)
+        }
       })
     },
     reset() {

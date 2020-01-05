@@ -1,18 +1,19 @@
 
 <template>
   <me-modal :draggable="draggable" :left="left" :modal="false" :top="top" :width="width" v-model="value__">
-    <me-message-item :key="item.primaryKey" @remove="onRemove" v-bind="item" v-for="item in list" />
+    <me-message-item :key="item.primaryKey" :primary-key="item.primaryKey" @remove="handlerRemove" v-bind="item" v-for="item in container" />
   </me-modal>
 </template>
 
 <script>
 import Modal from '../modal.mixin'
-import MessageItem from './MessageItem'
-import { tools } from '@assets/script/common'
+import MeMessageItem from './MessageItem'
+import { tools } from '../../../assets/script/common'
+import MeModal from '../modal'
 export default {
   mixins: [Modal],
   components: {
-    [MessageItem.name]: MessageItem
+    MeModal, MeMessageItem
   },
   props: {
     list: Array,
@@ -21,11 +22,16 @@ export default {
     left: String,
     width: { type: String, default: '300px' }
   },
+  data() {
+    return {
+      container: []
+    }
+  },
   methods: {
-    onRemove(key) {
-      tools.arrayRemove(this.list, item => item.primaryKey === key)
+    handlerRemove(key) {
+      tools.arrayRemove(this.container, item => item.primaryKey === key)
         .then(() => {
-          if (this.list.length === 0) {
+          if (this.container.length === 0) {
             this.value__ = false
             this.$emit('destroy')
           }
@@ -33,7 +39,6 @@ export default {
         .catch(error => {
           console.log(error)
         })
-
     }
   }
 }

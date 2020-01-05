@@ -1,13 +1,29 @@
 import Vue from 'vue'
-import Dialog from './Dialog'
-import Button from '@components/form/button'
 import Icon from '@components/basic/Icon'
+
+import Button from '@components/form/button'
+import Label from '@components/form/label'
+import Input from '@components/form/input'
+
+import Modal from '@components/view/modal'
+import Dialog from './Dialog'
+
+import methods from '@components/mixins/methods'
+
 Dialog.newInstance = (options = {}) => {
   const instance = new Vue({
+    mixins: [{ methods }],
+    components: {
+      [Modal.name]: Modal,
+      [Button.name]: Button,
+      [Icon.name]: Icon,
+      [Label.name]: Label,
+      [Input.name]: Input
+    },
     data() {
       return Object.assign({}, options, {
         width: '416px',
-        type: { type: String },
+        type: '',
         height: '200px',
         ok: null,
         cancel: null,
@@ -17,13 +33,13 @@ Dialog.newInstance = (options = {}) => {
         content: null,
         okText: '确认',
         cancelText: '取消',
-        closable: false
+        closable: false,
+        rules: [],
+        value: ''
       })
     },
     methods: {
       show(options = {}) {
-
-
         const onRemove = Reflect.get(options, 'onRemove')
         Reflect.deleteProperty(options, 'onRemove')
         for (const key in options) {
@@ -37,8 +53,17 @@ Dialog.newInstance = (options = {}) => {
         this.onRemove();
       },
       onOk() {
-        this.destroy()
-        this.ok && this.ok()
+        if (this.$refs.label) {
+          this.$refs.label.validate(valid => {
+            if (valid === true) {
+              this.destroy()
+              this.ok && this.ok(this.value)
+            }
+          })
+        } else {
+          this.destroy()
+          this.ok && this.ok(this.value)
+        }
       },
       onCancel() {
         this.destroy()
@@ -48,33 +73,32 @@ Dialog.newInstance = (options = {}) => {
     },
     render(h) {
       let renderFooter = []
-      if (this.type === 'confirm') {
+      if (['prompt', 'confirm'].includes(this.type)) {
         renderFooter.push(
-          h(Button, {
+          h('me-button', {
             props: { width: '80px' },
             on: { click: this.onCancel }
           }, this.cancelText)
         )
-
       }
 
       renderFooter.push(
-        h(Button, {
+        h('me-button', {
           props: { type: 'primary', width: '80px' },
           on: { click: this.onOk }
         }, this.okText)
       )
+
+      const { title, closable, width, height } = this.$data
       return h(Dialog,
         {
-          props: Object.assign({}, this.$data, { value: true }),
+          props: { title, width, height, closable, value: true },
           on: { cancel: this.onCancel },
           scopedSlots: { footer: () => renderFooter }
         },
         [
-          h('div', {
-            class: 'me-row me-flex'
-          }, [
-            h('div', [h(Icon, { class: this.type }, this.icon)]),
+          h('div', { class: 'me-row me-flex' }, [
+            h('div', [h('me-icon', this.icon)]),
             this.render ? this.render(h) : h('div', this.content)
           ])
         ]

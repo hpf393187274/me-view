@@ -23,7 +23,7 @@ export default {
     }
   },
   methods: {
-    onCancel() {
+    handlerCancel() {
       this.value__ = false
       this.$emit('cancel')
     }

@@ -9,7 +9,7 @@ import Dialog from '@components/view/dialog/index'
 import Message from '@components/view/message/index'
 
 import Clipboard from 'clipboard'
-export { type, tools, local, session, http, watermark, Dialog }
+export { type, tools, local, session, http, watermark, Dialog, Message }
 
 const componentsList = require.context('./components/', true, /index.js$/).keys()
 local.set('componentsList', componentsList)
