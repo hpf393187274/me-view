@@ -19,7 +19,7 @@ export default {
     disabled: Boolean
   },
   methods: {
-    handlerEvent(eventName) {
+    handlerEvent (eventName) {
       this.disabled === false && this.$emit(eventName)
     }
   }

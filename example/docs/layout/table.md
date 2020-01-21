@@ -5,7 +5,7 @@
 
 ```html
 <template>
-  <me-table height="400px" :data="data" :columns="columns">
+  <me-table has-index height="400px" :data="data" :columns="columns">
     <template #header>
       <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
       <me-button plain type="primary" @click="handlerData">变更数据</me-button>

@@ -1,11 +1,11 @@
 
 export default {
-  data() {
+  data () {
     return {
 
     }
   },
-  mounted() {
+  mounted () {
     // this.$refs.combo
   }
 }

@@ -19,7 +19,7 @@ export default {
     value: { type: Number, default: 0 },
     size: { type: Number, default: 100 }
   },
-  data() {
+  data () {
     return {
       value__: 0,
       axisValue: 0,
@@ -28,23 +28,23 @@ export default {
     }
   },
   watch: {
-    value() {
+    value () {
       if (this.dragging === false) {
         this.initPosition()
       }
     },
-    position() {
+    position () {
       this.$emit('input', this.value__)
     }
   },
   computed: {
-    halfLength() {
+    halfLength () {
       return this.length / 2
     },
-    halfWidth() {
+    halfWidth () {
       return this.width
     },
-    classes() {
+    classes () {
       return [
         'me-slidebar',
         {
@@ -55,37 +55,37 @@ export default {
         }
       ]
     },
-    styles() {
+    styles () {
       return {
         'justify-content': 'center',
         'border-radius': `${this.halfWidth}px`,
-        [this.vertical ? 'width' : 'height']: `${this.width}px`,
+        [this.vertical ? 'width' : 'height']: `${this.width}px`
       }
     },
-    stylesBtn() {
+    stylesBtn () {
       return {
         'border-radius': `${this.halfWidth}px`,
         [this.vertical ? 'height' : 'width']: `${this.length}px`,
         [this.vertical ? 'top' : 'left']: `${this.positionBtn}px`
       }
     },
-    stylesAxis() {
+    stylesAxis () {
       return {
         'border-radius': `${this.halfWidth}px`,
         [this.vertical ? 'height' : 'width']: `${this.position}px`
       }
     },
-    positionBtn() {
+    positionBtn () {
       if (this.layout === 'center') {
         return this.position - this.halfLength
       }
       return this.position
     },
-    containerLength() {
+    containerLength () {
       return this.vertical ? this.pointMax.y : this.pointMax.x
     }
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       if (this.layout === 'center') {
         Object.assign(this.pointMax, {
@@ -102,20 +102,20 @@ export default {
     })
   },
   methods: {
-    handlerDrag() {
+    handlerDrag () {
       const { x, y } = this.pointEnd
       this.position = this.vertical ? y : x
       this.value__ = this.calculateValue()
     },
-    calculateValue() {
+    calculateValue () {
       return Math.round(this.position * this.size / this.containerLength)
     },
-    calculatePosition() {
+    calculatePosition () {
       return Math.round(this.value * this.containerLength / this.size)
     },
-    handlerDragging() { this.handlerDrag() },
-    handlerDragEnd() { this.handlerDrag() },
-    initPosition() {
+    handlerDragging () { this.handlerDrag() },
+    handlerDragEnd () { this.handlerDrag() },
+    initPosition () {
       this.position = this.calculatePosition()
       this.verifyPointEnd()
       this.value__ = this.value

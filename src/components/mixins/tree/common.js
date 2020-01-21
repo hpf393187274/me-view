@@ -19,14 +19,14 @@ export default {
      */
     action: Boolean
   },
-  data() {
+  data () {
     return {
       allChecked: this.checked || (this.data && this.data.checked === true)
     }
   },
   methods: {
-    handleClick(...param) {
-      this.$emit.apply(this, ['click', ...param])
+    handleClick (...param) {
+      this.$emit('click', param)
     }
   }
 }

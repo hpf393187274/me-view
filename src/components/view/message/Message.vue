@@ -22,13 +22,13 @@ export default {
     left: String,
     width: { type: String, default: '300px' }
   },
-  data() {
+  data () {
     return {
       container: []
     }
   },
   methods: {
-    handlerRemove(key) {
+    handlerRemove (key) {
       tools.arrayRemove(this.container, item => item.primaryKey === key)
         .then(() => {
           if (this.container.length === 0) {

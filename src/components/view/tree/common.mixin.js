@@ -5,7 +5,7 @@ export default {
      * 获取子节点选中个数
      * 全选 and 半选
      */
-    getCheckedNumber() {
+    getCheckedNumber () {
       let checkedNumber = 0
       let checkedHalfNumber = 0
       for (const node of this.getChildrenNodeList()) {
@@ -19,7 +19,7 @@ export default {
     /**
      * 变更父级
      */
-    alterParent() {
+    alterParent () {
       const { checkedNumber, checkedHalfNumber } = this.getCheckedNumber()
       if (this.checkedStrictly) {
         this.allChecked = checkedNumber === this.nodeNumber
@@ -32,7 +32,7 @@ export default {
       this.$emit('alter-parent')
     },
 
-    getCheckedChildren({ leaf = true, tree = false, ...param } = {}) {
+    getCheckedChildren ({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []
       for (const node of this.getChildrenNodeList()) {
         if (node.notHazyChecked()) { continue }
@@ -46,7 +46,7 @@ export default {
       }
       return childrenList
     },
-    clearCheckedNode() {
+    clearCheckedNode () {
       for (const node of this.getChildrenNodeList()) {
         if (node.notHazyChecked()) { continue }
         node.clearCheckedNode()
@@ -54,7 +54,7 @@ export default {
       }
       this.setAllChecked(false)
     },
-    setAllChecked(value, deep = false) {
+    setAllChecked (value, deep = false) {
       this.allChecked = value
       this.checkedHalf = false
       deep && this.alterChildrenNodeChecked(value)
@@ -63,7 +63,7 @@ export default {
       * 变更子节点状态
       * @param {Boolean} value 状态
       */
-    alterChildrenNodeChecked(value) {
+    alterChildrenNodeChecked (value) {
       if (this.checkedStrictly === false) { return }
       this.setAllCheckedNumber(value ? this.nodeNumber : 0)
       this.$nextTick(function () {
@@ -77,7 +77,7 @@ export default {
     /**
      * 移除选中的节点
      */
-    removeCheckedNode() {
+    removeCheckedNode () {
       for (const node of this.getChildrenNodeList()) {
         if (node.notHazyChecked()) { continue }
 
@@ -95,7 +95,7 @@ export default {
       }
       this.setAllChecked(false)
     },
-    pushData(data) {
+    pushData (data) {
       if (this.$tools.isEmpty(data)) { return }
       for (const item of [data].flat()) {
         const node = this.findNode(this.defaultFilter(item))
@@ -112,7 +112,7 @@ export default {
           this.data.children.push(item)
           continue
         }
-        if (this.$type.isArray(item.children) && item.children.length != 0) {
+        if (this.$type.isArray(item.children) && item.children.length !== 0) {
           // 存在子节点
           node.pushData(item.children)
         }

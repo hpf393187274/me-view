@@ -1,5 +1,5 @@
 export default {
-  addStyle() {
+  addStyle () {
     return {
       margin: this.margin,
       padding: this.padding

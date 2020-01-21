@@ -190,17 +190,17 @@
 
 <script type="text/babel">
 import Vue from 'vue'
-function stripScript(content) {
+function stripScript (content) {
   const result = content.match(/<(script)>([\s\S]+)<\/\1>/)
   return result && result[2] ? result[2].trim() : ''
 }
 
-function stripStyle(content) {
+function stripStyle (content) {
   const result = content.match(/<(style)\s*>([\s\S]+)<\/\1>/)
   return result && result[2] ? result[2].trim() : ''
 }
 
-function stripTemplate(content) {
+function stripTemplate (content) {
   content = content.trim()
   if (!content) {
     return content
@@ -210,7 +210,7 @@ function stripTemplate(content) {
 
 export default {
   name: 'MeDemoBlock',
-  data() {
+  data () {
     return {
       codepen: {
         script: '',
@@ -224,10 +224,10 @@ export default {
   },
 
   methods: {
-    compileComponent() {
+    compileComponent () {
       let target = {}
       try {
-        target = eval(`(${this.codepen.script.replace(/^export\s+default\s+/, '')})`)
+        target = this.eval(`(${this.codepen.script.replace(/^export\s+default\s+/, '')})`)
       } catch (error) {
         console.error('DemoBlock -> compileComponent：', error)
       }
@@ -243,7 +243,7 @@ export default {
   },
 
   computed: {
-    lang() {
+    lang () {
       return '' // this.$route.path.split('/')[1]
     },
 
@@ -251,23 +251,23 @@ export default {
     //   return compoLang.filter(config => config.lang === this.lang)[0]['demo-block']
     // },
 
-    blockClass() {
+    blockClass () {
       return '' // `demo-${this.lang} demo-${this.$router.currentRoute.path.split('/').pop()}`
     },
 
-    iconClass() {
+    iconClass () {
       return this.isExpanded ? 'el-icon-caret-top' : 'el-icon-caret-bottom'
     },
 
-    controlText() {
+    controlText () {
       return this.isExpanded ? '隐藏 Code' : '显示 Code'
     },
 
-    codeArea() {
+    codeArea () {
       return this.$el.getElementsByClassName('meta')[0]
     },
 
-    codeAreaHeight() {
+    codeAreaHeight () {
       if (this.$el.getElementsByClassName('default').length > 0) {
         return this.$el.getElementsByClassName('default')[0].clientHeight +
           this.$el.getElementsByClassName('highlight')[0].clientHeight + 20
@@ -277,12 +277,12 @@ export default {
   },
 
   watch: {
-    isExpanded(val) {
+    isExpanded (val) {
       this.codeArea.style.height = val ? `${this.codeAreaHeight + 1}px` : '0'
     }
   },
 
-  created() {
+  created () {
     this.$nextTick(() => {
       const slotDefault = this.$slots.default
       if (slotDefault && slotDefault[0]) {
@@ -304,7 +304,7 @@ export default {
     })
   },
 
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       let highlight = this.$el.getElementsByClassName('highlight')[0]
       if (this.$el.getElementsByClassName('default').length === 0) {

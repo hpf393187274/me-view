@@ -11,7 +11,7 @@ export default {
   model: {
     props: 'value', event: 'change'
   },
-  data() {
+  data () {
     return {
       value__: this.value
     }
@@ -23,24 +23,24 @@ export default {
     value: Boolean
   },
   computed: {
-    styles() {
+    styles () {
       return {}
     }
   },
   watch: {
-    value(newValue) {
+    value (newValue) {
       this.value__ = newValue
     },
-    value__(newValue) {
+    value__ (newValue) {
       console.log('watch', '->', 'onChange', newValue)
       this.$emit('change', newValue)
     },
-    checkedHalf(newValue) {
+    checkedHalf (newValue) {
       this.$refs.checkbox.indeterminate = newValue
     }
   },
   methods: {
-    onClick(event) {
+    onClick (event) {
       const checked = event.target.checked
       this.$emit('click', checked)
     }

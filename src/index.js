@@ -1,7 +1,17 @@
 import '@assets/styles/common.less'
 import '@assets/styles/icon.css'
 
-import { type, tools, local, session, http } from '@assets/script/common'
+import {
+  type,
+  tools,
+  local,
+  session,
+  http,
+  IndexedDB,
+  indexedDB,
+  CustomError
+} from '@assets/script/common'
+
 import { components, mixins, config } from '@components/index'
 import watermark from '@assets/script/watermark'
 
@@ -9,13 +19,26 @@ import Dialog from '@components/view/dialog/index'
 import Message from '@components/view/message/index'
 
 import Clipboard from 'clipboard'
-export { type, tools, local, session, http, watermark, Dialog, Message }
+
+export {
+  type,
+  tools,
+  local,
+  session,
+  http,
+  watermark,
+  Dialog,
+  Message,
+  IndexedDB,
+  indexedDB,
+  CustomError
+}
 
 const componentsList = require.context('./components/', true, /index.js$/).keys()
 local.set('componentsList', componentsList)
 
 export default {
-  install(Vue) {
+  install (Vue) {
     for (const item of components) {
       Vue.component(item.name, item)
     }

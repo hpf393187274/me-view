@@ -22,11 +22,11 @@ export default {
     icon: String
   },
   computed: {
-    radius() {
+    radius () {
       let value = ''
       return value
     },
-    classes() {
+    classes () {
       return [
         'me-btn',
         'me-row',
@@ -42,7 +42,7 @@ export default {
     }
   },
   methods: {
-    click() {
+    click () {
       this.$emit('click')
     }
   }

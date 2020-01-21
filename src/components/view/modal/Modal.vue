@@ -31,39 +31,39 @@ export default {
   components: { MeButton },
   props: {
     height: String,
-    width: String,
+    width: String
   },
-  data() {
+  data () {
     return {
       width__: tools.convertToNumber(this.width),
-      height__: tools.convertToNumber(this.height),
+      height__: tools.convertToNumber(this.height)
     }
   },
   watch: {
-    width(newValue) {
+    width (newValue) {
       this.width__ = tools.convertToNumber(newValue)
     },
-    height(newValue) {
+    height (newValue) {
       this.height__ = tools.convertToNumber(newValue)
     },
-    value__(newValue) {
+    value__ (newValue) {
       if (newValue) {
         this.initPointMax()
       }
     }
   },
   methods: {
-    handlerClick() {
+    handlerClick () {
       if (this.closableModal === true) {
         this.handlerCancel()
       }
     },
-    handlerDragging() { this.handlerDrag() },
-    handlerDragEnd() { this.handlerDrag() },
-    handlerDrag() {
+    handlerDragging () { this.handlerDrag() },
+    handlerDragEnd () { this.handlerDrag() },
+    handlerDrag () {
       this.position = { ...this.pointEnd }
     },
-    initPosition() {
+    initPosition () {
       Object.assign(this.position, {
         x: (this.containerMax.x - this.width__) / 2,
         y: (this.containerMax.y - this.height__) / 2
@@ -76,7 +76,7 @@ export default {
       }
       Object.assign(this.pointStart, this.position)
     },
-    initPointMax() {
+    initPointMax () {
       this.$nextTick(() => {
         var target = this.$refs.target
         this.width__ = target.scrollWidth
@@ -90,7 +90,7 @@ export default {
       })
     }
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       var container = window.document.body
       Object.assign(this.containerMax, {
@@ -104,7 +104,7 @@ export default {
     })
   },
   computed: {
-    styles() {
+    styles () {
       const styleBasal = {
         width: this.width,
         height: this.height,

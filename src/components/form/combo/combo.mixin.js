@@ -3,7 +3,7 @@ export default {
     props: 'value', event: 'change'
   },
   props: {
-    data: { type: Array, default() { return [] } },
+    data: { type: Array, default () { return [] } },
     highlight: Boolean,
     readonly: Boolean,
     disabled: Boolean,
@@ -18,7 +18,7 @@ export default {
     fieldValue: { type: String, default: 'value' },
     value: { type: [String, Array] }
   },
-  data() {
+  data () {
     return {
       value__: this.multiple ? [] : '',
       label__: this.multiple ? [] : ''

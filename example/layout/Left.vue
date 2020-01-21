@@ -4,14 +4,14 @@
 <script>
 export default {
   name: 'LayoutLeft',
-  data() {
+  data () {
     return {
       data: [
         {
           label: '开发指南',
           children: [
             { label: '安装', path: '/guide/install' },
-            { label: '快速上手', path: '/guide/easystart' },
+            { label: '快速上手', path: '/guide/easystart' }
 
           ]
         },
@@ -20,7 +20,7 @@ export default {
           children: [
             { label: 'Tools 常用工具', path: '/common/tools' },
             { label: 'Type 类型判断', path: '/common/type' },
-            { label: 'Storage 数据存储', path: '/common/storage' },
+            { label: 'Storage 数据存储', path: '/common/storage' }
           ]
         },
         {
@@ -33,7 +33,7 @@ export default {
             { label: 'LineH 水平线', path: '/basic/line-h' },
             { label: 'LineV 垂直线', path: '/basic/line-v' },
             { label: 'Scrollbar 滚动条', path: '/basic/scrollbar' },
-            { label: 'Slidebar 滑动条', path: '/basic/slidebar' },
+            { label: 'Slidebar 滑动条', path: '/basic/slidebar' }
           ]
         },
         {
@@ -63,11 +63,11 @@ export default {
       ]
     }
   },
-  created() {
-    this.$local.get('routeList');
+  created () {
+    this.$local.get('routeList')
   },
   methods: {
-    handleClick({ path }) {
+    handleClick ({ path }) {
       this.$router.push(path)
     }
   }

@@ -1,6 +1,6 @@
 export default {
-  clear: 'icon-shanchu',
-  close: 'icon-shanchu',
+  clear: 'icon-cross',
+  close: 'icon-cross',
   more: 'icon-more',
   /**
    * 角度：上

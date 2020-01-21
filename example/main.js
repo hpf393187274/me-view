@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 new Vue({
   router,
   mounted: function () {
-    this.$watermark.set("me-view")
+    this.$watermark.set('me-view')
   },
   render: h => h(App)
 }).$mount('#app')

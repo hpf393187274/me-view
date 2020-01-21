@@ -15,17 +15,17 @@
 <script>
 export default {
   name: 'MeScrollbar',
-  data() {
+  data () {
     return {
       vertical: false,
       horizontal: false,
       value__: 0,
       sizeStep: 10,
       sizeV: 0,
-      sizeH: 0,
+      sizeH: 0
     }
   },
-  created() {
+  created () {
     this.$nextTick(() => {
       this.vertical = this.$refs.body.scrollHeight > this.$el.scrollHeight
       this.horizontal = this.$refs.body.scrollWidth > this.$el.scrollWidth
@@ -35,26 +35,25 @@ export default {
     })
   },
   computed: {
-    classes() {
+    classes () {
       return [
         'me-scrollbar'
       ]
     }
   },
   watch: {
-    value__(value) {
+    value__ (value) {
       this.$nextTick(() => {
         this.$refs.body.scrollTop = value
       })
     }
   },
   methods: {
-    handlerMousewheel(event) {
+    handlerMousewheel (event) {
       if (this.vertical === false) { return }
-      event.preventDefault();
+      event.preventDefault()
       const detail = event.deltaY ? -event.wheelDelta : event.detail
       this.value__ += detail > 0 ? this.sizeStep : -this.sizeStep
-
 
       if (this.value__ < 0) { this.value__ = 0 }
       if (this.value__ > this.sizeV) { this.value__ = this.sizeV }

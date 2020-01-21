@@ -33,53 +33,53 @@ export default {
     nodeKey: { type: String, default: 'id' },
     indent: { type: Number, default: 0 }
   },
-  data() {
+  data () {
     return {
       checkedHalf: false,
       checkedNumber: 0,
       checkedHalfNumber: 0,
-      checkedChildren: this.checked,
+      checkedChildren: this.checked
     }
   },
   computed: {
-    children() {
+    children () {
       return this.level ? this.data.children : this.data
     },
     /**
      * 获取当前节点的子节点个数
      */
-    nodeNumber() {
+    nodeNumber () {
       /* 获取当前节点的子节点数 */
       return this.$type.isArray(this.children) ? this.children.length : 0
-    },
+    }
   },
   methods: {
-    isAllChecked() {
+    isAllChecked () {
       return this.allChecked
     },
-    isHalfChecked() {
+    isHalfChecked () {
       return this.checkedHalf
     },
-    notChecked() {
+    notChecked () {
       return this.allChecked === false
     },
-    isHazyChecked() {
+    isHazyChecked () {
       return this.allChecked || this.checkedHalf
     },
-    notHazyChecked() {
+    notHazyChecked () {
       return this.isHazyChecked() === false
     },
-    isLeaf() { return this.nodeLeaf },
-    isBranch() { return this.nodeBranch },
+    isLeaf () { return this.nodeLeaf },
+    isBranch () { return this.nodeBranch },
     /**
     * 设置全选的子节点个数
-    * @param {Number} value 总数量 
+    * @param {Number} value 总数量
     */
-    setAllCheckedNumber(value) { this.checkedNumber = value },
+    setAllCheckedNumber (value) { this.checkedNumber = value },
     /**
      * 获取子节点集合
      */
-    getChildrenNodeList() {
+    getChildrenNodeList () {
       const treeNode = this.$refs.treeNode
       if (this.$tools.isEmpty(treeNode)) { return [] }
       return [...treeNode]
@@ -88,23 +88,23 @@ export default {
      * 获取 TreeNode
      * @param {Function} filter 过滤函数
      */
-    findNode(filter) {
+    findNode (filter) {
       if (this.$type.isNotFunction(filter)) { return }
       return this.getChildrenNodeList().find(node => filter(node.getData()))
     },
     /**
      * 获取 TreeNode
      * @param {String} key 实体 key
-     * @param {*} value 
+     * @param {*} value
      */
-    findNodeByKey(key = this.nodeKey, value) {
+    findNodeByKey (key = this.nodeKey, value) {
       return this.findNode(item => item[key] === value)
     },
     /**
      * 获取默认过滤器
      * @param {*} value 比对值
      */
-    defaultFilter(value) {
+    defaultFilter (value) {
       if (this.$type.isObjectOrArray(value)) {
         return item => item[this.nodeKey] === value[this.nodeKey]
       }
@@ -114,10 +114,8 @@ export default {
      * 移除子节点
      *  @param {Object} data 要移除的节点
      */
-    removeChildrenNode(node) {
+    removeChildrenNode (node) {
       this.$tools.arrayRemove(this.children, this.defaultFilter(node.getData()))
     }
   }
 }
-
-

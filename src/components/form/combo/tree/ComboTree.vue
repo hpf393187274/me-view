@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <me-combo ref="combo" v-bind="$props" v-model="value__">
     <me-tree
       :border="border"
@@ -29,13 +29,13 @@ export default {
     placeholder: String
   },
   watch: {
-    value(value) { this.value__ = value }
+    value (value) { this.value__ = value }
   },
-  created() {
+  created () {
     this.value__ = this.value
   },
   methods: {
-    onClickNode(row, index) {
+    onClickNode (row, index) {
       this.$emit('on-select', row, index)
       this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }

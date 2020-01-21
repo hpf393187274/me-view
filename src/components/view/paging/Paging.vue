@@ -39,27 +39,27 @@ export default {
     prevText: { type: String, default: '' },
     nextText: { type: String, default: '' },
     sizeSide: { type: Number, default: 2 },
-    sizeCenter: { type: Number, default: 5 },
+    sizeCenter: { type: Number, default: 5 }
   },
-  data() {
+  data () {
     return {
       currentPage: this.value
     }
   },
   computed: {
-    pageNumber() { return Math.ceil(this.total / this.pageSize) },
+    pageNumber () { return Math.ceil(this.total / this.pageSize) },
     /**
      * 两边最大占用
      */
-    maxSideOccupy() { return this.sizeSide * 2 },
+    maxSideOccupy () { return this.sizeSide * 2 },
     /**
      * 中间最大占用
      */
-    maxCenterOccupy() { return this.sizeCenter * 2 + 1 },
-    visibleLeft() {
+    maxCenterOccupy () { return this.sizeCenter * 2 + 1 },
+    visibleLeft () {
       return this.pageNumber > this.sizeSide ? this.sizeSide : this.pageNumber
     },
-    visibleRight() {
+    visibleRight () {
       const difference = this.pageNumber - this.sizeSide
       if (difference <= 0) { return [] }
       const size = difference > this.sizeSide ? this.sizeSide : difference
@@ -69,15 +69,15 @@ export default {
       }
       return result.sort((a, b) => a - b)
     },
-    maxCenter() {
+    maxCenter () {
       const difference = this.pageNumber - this.maxSideOccupy
       return difference > 0 ? this.pageNumber - this.sizeSide : 0
     },
-    minCenter() {
+    minCenter () {
       const difference = this.pageNumber - this.maxSideOccupy
       return difference > 0 ? 1 + this.sizeSide : 0
     },
-    start() {
+    start () {
       // 中间实际最大个数  小于 预期最大个数  => start = minCenter
       if (this.maxCenter - this.minCenter < this.maxCenterOccupy) { return this.minCenter }
       if (this.currentPage - this.minCenter <= this.sizeCenter) { return this.minCenter }
@@ -87,7 +87,7 @@ export default {
 
       return this.currentPage - this.sizeCenter
     },
-    end() {
+    end () {
       if (this.maxCenter - this.minCenter < this.maxCenterOccupy) { return this.maxCenter }
 
       if (this.maxCenter - this.currentPage <= this.sizeCenter) { return this.maxCenter }
@@ -96,7 +96,7 @@ export default {
 
       return this.currentPage + this.sizeCenter
     },
-    visibleCenter() {
+    visibleCenter () {
       if (this.maxCenter === 0 || this.minCenter === 0) { return [] }
       if (this.start === 0 || this.end === 0) { return [] }
       const result = []
@@ -107,21 +107,21 @@ export default {
     }
   },
   watch: {
-    currentPage(value) {
+    currentPage (value) {
       this.$emit('change', value)
     },
-    pageSize(value) {
+    pageSize (value) {
       this.$emit('change-page-size', value)
     }
   },
   methods: {
-    itemClass(value) {
+    itemClass (value) {
       return [
         'me-row me-center',
         { 'paging-border': this.border, 'paging-selected': value && this.currentPage === value }
       ]
     },
-    setCurrentPage(value) {
+    setCurrentPage (value) {
       if (value > this.pageNumber) {
         this.currentPage = this.pageNumber
       } else if (value < 1) {

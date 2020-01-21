@@ -2,10 +2,10 @@ import tools from './tools.common'
 import type from './type.common'
 
 export default class Storage {
-  constructor(storage) {
+  constructor (storage) {
     this.storage = tools.isEmpty(storage) ? window.localStorage : storage
   }
-  get(key) {
+  get (key) {
     if (tools.isEmpty(key)) {
       return null
     }
@@ -15,27 +15,27 @@ export default class Storage {
     }
     return JSON.parse(value)
   }
-  set(key, value) {
+  set (key, value) {
     if (tools.isEmpty(key) || tools.isEmpty(value)) {
       return
     }
     this.storage.setItem(key, JSON.stringify(value))
   }
-  clear() { }
+  clear () { }
 
-  remove(key) {
+  remove (key) {
     if (tools.isEmpty(key)) {
       return
     }
     this.storage.removeItem(key)
   }
 
-  arrayAppend(key, value, callback = (source, target) => source === target) {
+  arrayAppend (key, value, callback = (source, target) => source === target) {
     if (type.isNotFunction(callback)) { return }
     let list = this.get(key)
     if (tools.isEmpty(list)) {
       this.set(key, [value])
-      return;
+      return
     }
 
     const target = list.find(item => callback(item, value))
@@ -44,10 +44,10 @@ export default class Storage {
     list.push(value)
     this.set(key, list)
   }
-  arrayRemove(key, value, callback = (source, target) => source === target) {
+  arrayRemove (key, value, callback = (source, target) => source === target) {
     if (type.isNotFunction(callback)) { return }
     const list = this.get(key)
-    if (tools.isEmpty(list)) { return; }
+    if (tools.isEmpty(list)) { return }
 
     const index = list.findIndex(item => callback(item, value))
     if (index > -1) {

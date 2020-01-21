@@ -20,7 +20,7 @@ Dialog.newInstance = (options = {}) => {
       [Label.name]: Label,
       [Input.name]: Input
     },
-    data() {
+    data () {
       return Object.assign({}, options, {
         width: '416px',
         type: '',
@@ -39,20 +39,20 @@ Dialog.newInstance = (options = {}) => {
       })
     },
     methods: {
-      show(options = {}) {
+      show (options = {}) {
         const onRemove = Reflect.get(options, 'onRemove')
         Reflect.deleteProperty(options, 'onRemove')
         for (const key in options) {
           Reflect.set(this, key, Reflect.get(options, key))
         }
-        modal.$parent.onRemove = onRemove;
+        modal.$parent.onRemove = onRemove
       },
-      destroy() {
-        this.$destroy();
-        document.body.removeChild(this.$el);
-        this.onRemove();
+      destroy () {
+        this.$destroy()
+        document.body.removeChild(this.$el)
+        this.onRemove()
       },
-      onOk() {
+      onOk () {
         if (this.$refs.label) {
           this.$refs.label.validate(valid => {
             if (valid === true) {
@@ -65,13 +65,13 @@ Dialog.newInstance = (options = {}) => {
           this.ok && this.ok(this.value)
         }
       },
-      onCancel() {
+      onCancel () {
         this.destroy()
         this.cancel && this.cancel()
       },
-      onRemove() { }
+      onRemove () { }
     },
-    render(h) {
+    render (h) {
       let renderFooter = []
       if (['prompt', 'confirm'].includes(this.type)) {
         renderFooter.push(
@@ -98,7 +98,7 @@ Dialog.newInstance = (options = {}) => {
         },
         [
           h('div', { class: 'me-row me-flex' }, [
-            h('div', [h('me-icon', this.icon)]),
+            h('div', [h('me-icon', { class: 'icon-status' }, this.icon)]),
             this.render ? this.render(h) : h('div', this.content)
           ])
         ]
@@ -106,7 +106,7 @@ Dialog.newInstance = (options = {}) => {
     }
   })
   window.document.body.appendChild(instance.$mount().$el)
-  const modal = instance.$children[0];
+  const modal = instance.$children[0]
   return instance
 }
 export default Dialog

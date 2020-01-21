@@ -9,21 +9,21 @@ export default {
     closableModal: { type: Boolean, default: true },
     moveable: Boolean
   },
-  data() {
+  data () {
     return {
       value__: this.value
     }
   },
   watch: {
-    value(newValue) {
+    value (newValue) {
       this.value__ = newValue
     },
-    value__(newValue) {
+    value__ (newValue) {
       this.$emit('input', newValue)
     }
   },
   methods: {
-    handlerCancel() {
+    handlerCancel () {
       this.value__ = false
       this.$emit('cancel')
     }

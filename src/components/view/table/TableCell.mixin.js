@@ -15,22 +15,22 @@ export default {
     render: Function,
     extended: Function
   },
-  data() {
+  data () {
     return {
       index__: 1,
       width__: this.width
     }
   },
   watch: {
-    width__(newValue) {
+    width__ (newValue) {
       this.$emit('update:width', newValue)
     },
-    width(newValue) {
+    width (newValue) {
       this.width__ = newValue
     }
   },
   computed: {
-    styles() {
+    styles () {
       return {
         'width': this.$type.isNumber(this.width) ? `${this.width}px` : this.width
       }

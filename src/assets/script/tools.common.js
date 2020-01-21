@@ -4,7 +4,7 @@ export default {
    * 校验：对象是否为空
    * @param {Object} target 目标
    */
-  isEmpty(target) {
+  isEmpty (target) {
     if (target === null || target === undefined) { return true }
     if (type.isString(target)) {
       const value = this.trim(target)
@@ -18,9 +18,9 @@ export default {
   },
   /**
    * 是空数组
-   * @param {Array} target 
+   * @param {Array} target
    */
-  isEmptyArray(target) {
+  isEmptyArray (target) {
     if (type.isArray(target) && target.length === 0) { return true }
     return false
   },
@@ -29,14 +29,14 @@ export default {
    * 校验：对象是否为空
    * @param {Object} target 目标
    */
-  isNotEmpty(target) {
+  isNotEmpty (target) {
     return !this.isEmpty(target)
   },
   /**
    * 转换为 Number
-   * @param {*} target 
+   * @param {*} target
    */
-  convertToNumber(target) {
+  convertToNumber (target) {
     if (target) {
       if (type.isNumber(target)) { return target }
       if (type.isString(target)) {
@@ -53,7 +53,7 @@ export default {
    * 去除字符串两边的空格
    * @param {String} target 目标字符串
    */
-  trim(target) {
+  trim (target) {
     if (type.isString(target)) {
       return target.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
     }
@@ -64,7 +64,7 @@ export default {
    * @param {Object} target 目标对象
    * @param {String} key 不需要传递
    */
-  jsonToForm(target, key) {
+  jsonToForm (target, key) {
     if (type.isNotObjectOrArray(target)) { return {} }
     const getKey = (_key) => {
       return this.isEmpty(key) ? _key : `${key}[${_key}]`
@@ -86,41 +86,41 @@ export default {
   /**
    * 生成 UUID
    */
-  UUId() {
-    var s = [];
-    var hexDigits = "0123456789abcdef";
+  UUId () {
+    var s = []
+    var hexDigits = '0123456789abcdef'
     for (var i = 0; i < 36; i++) {
       s.push(hexDigits.substr(Math.floor(Math.random() * 0x10), 1))
     }
-    s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-    s[8] = s[13] = s[18] = s[23] = "-";
-    return s.join('');
+    s[14] = '4' // bits 12-15 of the time_hi_and_version field to 0010
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1) // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    s[8] = s[13] = s[18] = s[23] = '-'
+    return s.join('')
   },
   /**
    * 数组元素移出
-   * @param {Array} target 
-   * @param {Function or Number} condition 
+   * @param {Array} target
+   * @param {Function or Number} condition
    */
-  arrayRemove(target, condition) {
-    if (type.isNotArray(target)) { return Promise.reject('target is not Array') }
+  arrayRemove (target, condition) {
+    if (type.isNotArray(target)) { return Promise.reject(new Error('target is not Array')) }
 
     if (type.isNumber(condition)) {
-      if (condition < 0 || condition > target.length) { return Promise.reject('index 下标越界') }
+      if (condition < 0 || condition > target.length) { return Promise.reject(new Error('index 下标越界')) }
 
       return Promise.resolve(target.splice(condition, 1))
     }
 
     if (type.isFunction(condition)) {
       const index = target.findIndex(condition)
-      return index === -1 ? Promise.reject('not exist') : Promise.resolve(target.splice(index, 1))
+      return index === -1 ? Promise.reject(new Error('not exist')) : Promise.resolve(target.splice(index, 1))
     }
   },
   /**
-   * 
+   *
    * @param {Array | Object} target 清空目标内容
    */
-  clearEmpty(target) {
+  clearEmpty (target) {
     if (type.isArray(target)) {
       target.splice(0, target.length)
     }
@@ -136,16 +136,16 @@ export default {
    * then 存在
    * catch 不存在
    * params.status true 异常
-   * @param {Array} source 
-   * @param {Object} target 
-   * @param {Function} callback 
+   * @param {Array} source
+   * @param {Object} target
+   * @param {Function} callback
    */
-  includes(source, target, callback) {
+  includes (source, target, callback) {
     if (type.isNotArray(source)) {
-      return Promise.reject('source is not Array')
+      return Promise.reject(new Error('source is not Array'))
     }
     if (this.isEmpty(target)) {
-      return Promise.reject('target is Empty')
+      return Promise.reject(new Error('target is Empty'))
     }
     if (type.isNotFunction(callback)) {
       callback = (source, target) => source === target
@@ -162,7 +162,7 @@ export default {
    * @param {String} param.classify 获取类别
    * @param {Function} param.callback 执行的回调函数
    */
-  expendTime({ classify = "second", callback } = {}) {
+  expendTime ({ classify = 'second', callback } = {}) {
     const classifys = ['hour', 'minute', 'second']
     if (classifys.includes(classify) === false) {
       classify = 'second'
@@ -190,12 +190,12 @@ export default {
     return difference
   },
   /**
-   * 
-   * @param {Object | Array} target 
+   *
+   * @param {Object | Array} target
    * @param {Boolean} param.deep 是否深度克隆, 默认：false
    * @param {Array} param.exclude 是否深度克隆, 默认：false
    */
-  clone(target, { deep = false, exclude = [] } = {}) {
+  clone (target, { deep = false, exclude = [] } = {}) {
     if (type.isNotObjectOrArray(target)) { return target }
     if (deep === true) {
       return JSON.parse(JSON.stringify(target))
@@ -209,30 +209,38 @@ export default {
     }
     return target.flatMap(item => this.clone(item))
   },
-  sendRedirect(url) {
+  sendRedirect (url) {
     window.location.href = url
   },
   /**
    * 如果存在 iframe
    */
-  isSameHost() {
+  isSameHost () {
     return window.top.location.host === window.location.host
   },
   /**
   * 获取 Url 参数
   * @param {String} key 参数名
   */
-  urlParam(key, target = window.location.search) {
+  urlParam (key, target = window.location.search) {
     let result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
     const params = JSON.parse(result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '{"$1":"$2"}'))
     return this.isEmpty(key) ? params : Reflect.get(params, key)
   },
   /**
    * 首字母变大写
-   * @param {String} target 
+   * @param {String} target
    */
-  firstCharUpperCase(target) {
+  firstCharUpperCase (target) {
     if (this.isEmpty(target)) { return '' }
     return target.slice(0, 1).toUpperCase() + target.slice(1)
+  },
+  /**
+   * 首字母变小写
+   * @param {String} target
+   */
+  firstCharLowerCase (target) {
+    if (this.isEmpty(target)) { return '' }
+    return target.slice(0, 1).toLowerCase() + target.slice(1)
   }
 }

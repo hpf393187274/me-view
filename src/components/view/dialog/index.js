@@ -9,7 +9,7 @@ const basal = (options = {}) => {
     closableModal: false
   })
   const __options = Object.assign({
-    onRemove() { instance = null }
+    onRemove () { instance = null }
   }, options)
   return instance.show(__options)
 }
@@ -38,8 +38,9 @@ Dialog.prompt = (options = {}) => {
   }
 
   return basal(Object.assign({ title: '输入', height: '220px' }, options, {
-    type: 'prompt', icon: 'icon-xunwen',
-    render(h) {
+    type: 'prompt',
+    icon: 'icon-xunwen',
+    render (h) {
       const self = this
       return h('div', { class: 'me-flex' }, [
         h('div', { style: { 'margin-bottom': '10px' } }, [options.content]),
@@ -47,7 +48,7 @@ Dialog.prompt = (options = {}) => {
           h('me-input', {
             domProps: { value: self.value },
             on: {
-              change(value) { self.value = value }
+              change (value) { self.value = value }
             }
           })
         ])

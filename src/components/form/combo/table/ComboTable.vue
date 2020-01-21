@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <me-combo ref="combo" v-bind="$props" v-model="value__">
     <me-table :border="border" :columns="columns" :data="data" :highlight="highlight" :multiple="multiple" @click-row="onClickRow">
       <slot />
@@ -14,16 +14,16 @@ export default {
   mixins: [ComboMixin],
   name: 'MeComboTable',
   props: {
-    columns: { type: Array, default: () => [] },
+    columns: { type: Array, default: () => [] }
   },
   watch: {
-    value(value) { this.value__ = value }
+    value (value) { this.value__ = value }
   },
-  created() {
+  created () {
     this.value__ = this.value
   },
   methods: {
-    onClickRow(row, index) {
+    onClickRow (row, index) {
       this.$emit('on-select', row, index)
       this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }

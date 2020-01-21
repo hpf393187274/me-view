@@ -4,11 +4,11 @@ import { type } from '@assets/script/common'
 let instance
 const basal = (options = {}) => {
   if (!options.content) {
-    console.warn('Message type：${options.type} content is null or undefined')
+    console.warn(`Message type：${options.type} content is null or undefined`)
     return
   }
   instance = instance || Message.newInstance()
-  const __options = Object.assign({ onRemove() { instance = null } }, options)
+  const __options = Object.assign({ onRemove () { instance = null } }, options)
   return instance.show(__options)
 }
 

@@ -30,7 +30,7 @@ export default {
     checkedNumber: { type: Number, default: 0 }
   },
   computed: {
-    indent__() {
+    indent__ () {
       let value = 0
       if (this.$parent.data.every(item => this.$type.isArray(item.children) === false)) {
         return value
@@ -39,12 +39,12 @@ export default {
     }
   },
   watch: {
-    checked(newValue) {
+    checked (newValue) {
       this.allChecked = newValue
     }
   },
   methods: {
-    clickCheckbox(value) {
+    clickCheckbox (value) {
       this.allChecked = value
       this.$parent.setAllChecked(value, true)
     }

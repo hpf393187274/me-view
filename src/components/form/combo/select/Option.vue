@@ -16,34 +16,34 @@ export default {
     highlight: Boolean,
     value: String,
     label: String,
-    data: { type: Object, default() { return {} } },
+    data: { type: Object, default () { return {} } },
     fieldLabel: { type: String, default: 'label' }
   },
-  data() {
+  data () {
     return {
       checked__: this.checked
     }
   },
-  created() {
+  created () {
     this.__data = this.data ? this.data : { value: this.value, label: this.label }
   },
   watch: {
-    checked(value) {
+    checked (value) {
       this.checked__ = value
     }
   },
   computed: {
-    classes() {
+    classes () {
       return [
         'me-row combo-option',
         { 'is-selected': this.highlight && this.checked__ }
       ]
-    },
+    }
   },
   methods: {
-    onHandleClick() {
+    onHandleClick () {
       if (this.disabled === true) { return }
-      this.checked__ = this.checked__ === true ? false : true
+      this.checked__ = this.checked__ !== true
       this.$emit('click-option', this.data, this.index)
     }
   }

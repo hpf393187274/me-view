@@ -3,7 +3,7 @@ import Message from './Message'
 import { tools } from '../../../assets/script/common'
 Message.newInstance = (options = {}) => {
   const instance = new Vue({
-    data() {
+    data () {
       return {
         width: '416px',
         capacity: 10,
@@ -12,7 +12,7 @@ Message.newInstance = (options = {}) => {
       }
     },
     methods: {
-      show(options = {}) {
+      show (options = {}) {
         const onRemove = Reflect.get(options, 'onRemove')
         Reflect.deleteProperty(options, 'onRemove')
 
@@ -26,17 +26,17 @@ Message.newInstance = (options = {}) => {
 
         modal.$parent.onRemove = onRemove
       },
-      destroy() {
-        this.$destroy();
-        document.body.removeChild(this.$el);
-        this.onRemove();
+      destroy () {
+        this.$destroy()
+        document.body.removeChild(this.$el)
+        this.onRemove()
       },
-      onRemove() { },
-      renderMessage(h) {
+      onRemove () { },
+      renderMessage (h) {
         return h(Message, {})
       }
     },
-    render(h) {
+    render (h) {
       const { top, width } = this.$data
       return h(Message, {
         ref: 'message',
@@ -48,7 +48,7 @@ Message.newInstance = (options = {}) => {
     }
   })
   window.document.body.appendChild(instance.$mount().$el)
-  const modal = instance.$children[0];
+  const modal = instance.$children[0]
   return instance
 }
 export default Message

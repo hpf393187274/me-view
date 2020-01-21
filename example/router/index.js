@@ -11,7 +11,7 @@ const children = routeList.flatMap(item => {
   const filePath = item.replace('./', '')
   return {
     path: __path,
-    component: () => import( /* webpackChunkName: "example-basic" */ `@docs/${filePath}`)
+    component: () => import('@docs/' + filePath)
   }
 })
 const router = new Router({

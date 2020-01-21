@@ -56,21 +56,21 @@ export default {
   name: 'MeTreeNode',
   mixins: [treeCommon, treeIndex, treeInner],
   props: {
-    data: { type: Object, default() { return {} } },
+    data: { type: Object, default () { return {} } },
     eventTree: Object,
     level: { type: Number, default: 1 }
   },
-  created() {
+  created () {
     this.data && this.initPrimaryKey(this.data.children)
     this.renderFirst = this.nodeBranch && (this.expandable === false || this.expandedAll || this.expandedLevel >= this.level)
   },
   watch: {
-    checked(newValue) {
+    checked (newValue) {
       this.checkedChildren = newValue
       this.setAllChecked(newValue)
     }
   },
-  data() {
+  data () {
     return {
       expanded__: this.expandable === false || this.expandedAll || this.expandedLevel >= this.level,
       /**
@@ -80,22 +80,22 @@ export default {
     }
   },
   computed: {
-    iconExpanded() {
+    iconExpanded () {
       return this.expanded__ ? 'icon-triangle_fill_down' : 'icon-triangle_fill_right'
     },
-    nodeLeaf() {
+    nodeLeaf () {
       /* 判断当前节点是否为最后一个节点 */
       return this.nodeNumber === 0
     },
-    nodeBranch() {
+    nodeBranch () {
       return this.nodeNumber > 0
     },
-    styleIndent() {
+    styleIndent () {
       return {
         'padding-left': `${this.indent__}rem`
       }
     },
-    indent__() {
+    indent__ () {
       if (this.expandable && this.nodeLeaf) { return this.indent + 1 }
       return this.indent
     }
@@ -105,7 +105,7 @@ export default {
     * 点击 Checkbox
     * @param {Booelan} value 变更后的Checkbox 状态
     */
-    clickCheckbox(value) {
+    clickCheckbox (value) {
       this.setAllChecked(value)
       this.$emit('alter-parent')
       this.alterChildrenNodeChecked(value)
@@ -114,13 +114,13 @@ export default {
     /**
     * 获取节点数据
     */
-    getData({ deep = false, exclude = ['children'] } = {}) {
+    getData ({ deep = false, exclude = ['children'] } = {}) {
       return this.$tools.clone(this.data, { deep, exclude })
     },
     /**
      * 移除当前节点
      */
-    removeCurrentNode() {
+    removeCurrentNode () {
       this.$parent.removeChildrenNode(this)
       this.handlerEvent('remove-node')
     },
@@ -128,7 +128,7 @@ export default {
     /**
      * 展开子节点
      */
-    doExpanded() {
+    doExpanded () {
       if (this.expandable === false) { return }
       this.expanded__ = !this.expanded__
       if (this.renderFirst === false) {
@@ -140,12 +140,12 @@ export default {
     /**
      * 获取子节点个数
      */
-    getChildrenNodeNumber() { return this.nodeNumber },
+    getChildrenNodeNumber () { return this.nodeNumber },
     /**
      * 获取选中的叶子节点数据
      * @param {Boolean} param.leaf 是否包含叶子节点：默认：true
      */
-    getCheckedData({ filter, ...param } = {}) {
+    getCheckedData ({ filter, ...param } = {}) {
       const list = []
       if (this.nodeLeaf) {
         const resource = this.getData()
@@ -158,7 +158,7 @@ export default {
      * 获取选中的数据(TreeData)
      * @param {Boolean} param.leaf 是否包含叶子节点：默认：true
      */
-    getCheckedTreeData({ ...param } = {}) {
+    getCheckedTreeData ({ ...param } = {}) {
       if (this.allChecked) {
         return this.getData({ deep: true })
       }
@@ -169,7 +169,7 @@ export default {
       }
       return resource
     },
-    onClickLabel() {
+    onClickLabel () {
       if (this.nodeBranch && this.expandedNodeClick) {
         this.doExpanded()
       }
@@ -181,7 +181,7 @@ export default {
         this.handlerEvent('click-node-branch')
       }
     },
-    handlerEvent(eventName) {
+    handlerEvent (eventName) {
       this.eventTree.$emit(eventName, this.getData(), this.primaryKey, this)
     }
   }

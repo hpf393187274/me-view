@@ -10,5 +10,5 @@ export default {
   /**
    * 正则：手机号码
    */
-  cellphone: /^13\d{9}/,
+  cellphone: /^13\d{9}/
 }

@@ -14,12 +14,12 @@ export default {
     url: String
   },
   computed: {
-    class__() {
+    class__ () {
       return ['me-link', { 'link-border': this.border }]
     }
   },
   methods: {
-    onClick() {
+    onClick () {
       if (this.disabled) { return }
       if (this.$tools.isEmpty(this.url)) {
         this.$emit('click')

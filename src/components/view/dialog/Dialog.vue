@@ -47,13 +47,19 @@ export default {
     draggable: { type: Boolean, default: true },
     closable: { type: Boolean, default: true }
   },
-  data() {
+  data () {
     return {
       btnDisabledConfirm: false
     }
   },
+  watch: {
+    /**
+     * dialog 添加事件：显示 隐藏
+     */
+    value (newValue) { this.$emit(newValue === true ? 'dialog-show' : 'dialog-hide', newValue) }
+  },
   methods: {
-    handlerConfirm() {
+    handlerConfirm () {
       this.btnDisabledConfirm = true
       setTimeout(() => { this.btnDisabledConfirm = false }, 1000)
       this.$emit('confirm')

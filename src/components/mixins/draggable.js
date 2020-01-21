@@ -1,6 +1,6 @@
 export default {
-  props: { draggable: { type: Boolean, default: true }, },
-  data() {
+  props: { draggable: { type: Boolean, default: true } },
+  data () {
     return {
       dragging: false,
       isClick: false,
@@ -15,33 +15,33 @@ export default {
     }
   },
   methods: {
-    onMouseDown(event) {
+    onMouseDown (event) {
       if (this.draggable === false) { return }
-      event.preventDefault();
-      this.onDragStart(event);
-      window.addEventListener('mousemove', this.onDragging);
-      window.addEventListener('touchmove', this.onDragging);
-      window.addEventListener('mouseup', this.onDragEnd);
-      window.addEventListener('touchend', this.onDragEnd);
-      window.addEventListener('contextmenu', this.onDragEnd);
+      event.preventDefault()
+      this.onDragStart(event)
+      window.addEventListener('mousemove', this.onDragging)
+      window.addEventListener('touchmove', this.onDragging)
+      window.addEventListener('mouseup', this.onDragEnd)
+      window.addEventListener('touchend', this.onDragEnd)
+      window.addEventListener('contextmenu', this.onDragEnd)
     },
-    onDragStart(event) {
-      this.dragging = true;
-      this.isClick = true;
+    onDragStart (event) {
+      this.dragging = true
+      this.isClick = true
       if (event.type === 'touchstart') {
-        event.clientY = event.touches[0].clientY;
-        event.clientX = event.touches[0].clientX;
+        event.clientY = event.touches[0].clientY
+        event.clientX = event.touches[0].clientX
       }
       Object.assign(this.clientStart, { x: event.clientX, y: event.clientY })
       this.handlerDragStart && this.handlerDragStart()
     },
-    onDragging(event) {
+    onDragging (event) {
       if (this.dragging === false) { return }
-      this.isClick = false;
+      this.isClick = false
 
       if (event.type === 'touchmove') {
-        event.clientY = event.touches[0].clientY;
-        event.clientX = event.touches[0].clientX;
+        event.clientY = event.touches[0].clientY
+        event.clientX = event.touches[0].clientX
       }
 
       Object.assign(this.clientEnd, { x: event.clientX, y: event.clientY })
@@ -56,14 +56,14 @@ export default {
         throw new Error('handlerDragging is not function')
       }
     },
-    onDragEnd() {
+    onDragEnd () {
       if (this.dragging === false) { return }
       /*
          * 防止在 mouseup 后立即触发 click，导致滑块有几率产生一小段位移
          * 不使用 preventDefault 是因为 mouseup 和 click 没有注册在同一个 DOM 上
          */
       setTimeout(() => {
-        this.dragging = false;
+        this.dragging = false
         if (this.isClick === false) {
           this.verifyPointEnd()
           Object.assign(this.pointStart, { x: this.pointEnd.x, y: this.pointEnd.y })
@@ -74,14 +74,14 @@ export default {
             throw new Error('handlerDragEnd is not function')
           }
         }
-      }, 0);
-      window.removeEventListener('mousemove', this.onDragging);
-      window.removeEventListener('touchmove', this.onDragging);
-      window.removeEventListener('mouseup', this.onDragEnd);
-      window.removeEventListener('touchend', this.onDragEnd);
-      window.removeEventListener('contextmenu', this.onDragEnd);
+      }, 0)
+      window.removeEventListener('mousemove', this.onDragging)
+      window.removeEventListener('touchmove', this.onDragging)
+      window.removeEventListener('mouseup', this.onDragEnd)
+      window.removeEventListener('touchend', this.onDragEnd)
+      window.removeEventListener('contextmenu', this.onDragEnd)
     },
-    verifyPointEnd() {
+    verifyPointEnd () {
       const { x, y } = this.pointEnd
       let flag = false
       if (x < this.pointMin.x) {

@@ -12,11 +12,11 @@ export default {
   name: 'MeTableHeader',
   props: { scrollLeft: Number },
   watch: {
-    scrollLeft(newValue) {
+    scrollLeft (newValue) {
       this.$el.scrollLeft = newValue
     }
   },
-  data() {
+  data () {
     return {
       hasScrollbar: false
     }

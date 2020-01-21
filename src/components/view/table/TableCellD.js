@@ -8,18 +8,20 @@ export default {
     data: { type: Object, default: () => ({}) },
     render: Function
   },
-  created() {
+  created () {
     this.index__ = idSeed++
     this.id__ = `me-table-column_${this.index__}`
   },
-  render(h) {
+  render (h) {
     if (this.$slots.default) {
       // 渲染：普通默认插槽
       return this.renderRoot(h, this.$slots.default)
     }
     const params = {
-      data: this.data, value: this.fieldValue,
-      indexRow: this.indexRow, indexCell: this.indexCell
+      data: this.data,
+      value: this.fieldValue,
+      indexRow: this.indexRow,
+      indexCell: this.indexCell
     }
     // 渲染 extended
     if (this.$type.isFunction(this.extended)) {
@@ -39,17 +41,17 @@ export default {
         'class': 'cell-inner',
         attr: {
           'title': this.fieldValue
-        },
+        }
       }, this.fieldValue)
     ])
   },
   computed: {
-    fieldValue() {
+    fieldValue () {
       return Reflect.get(this.data, this.field)
     }
   },
   methods: {
-    renderRoot(h, children) {
+    renderRoot (h, children) {
       return h('td', {
         style: this.styles
       }, children)

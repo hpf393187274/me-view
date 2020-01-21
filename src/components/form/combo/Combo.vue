@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="me-combo me-flex">
     <me-input
       :clearable="clearable"
@@ -33,7 +33,7 @@ import ComboMixin from './combo.mixin'
 export default {
   mixins: [ComboMixin],
   name: 'MeCombo',
-  data() {
+  data () {
     return {
       status: false,
       rendered: false,
@@ -44,7 +44,7 @@ export default {
       closable: true
     }
   },
-  mounted() {
+  mounted () {
     if (this.rendered) {
       this.rendered = false
       this.$nextTick(() => {
@@ -53,42 +53,42 @@ export default {
     }
     this.listenerUpward('MeLabel', 'on-label-reset', value => this.initValue(value))
   },
-  created() {
+  created () {
     this.initValue(this.value)
     this.listenerParent('on-select', this.handlerClickOption)
   },
   computed: {
-    iconSuffix() {
+    iconSuffix () {
       return this.status ? this.$config.icon.angle_down_fill : this.$config.icon.angle_up_fill
     }
   },
   watch: {
-    status(value) {
-      if (value) {
+    status (newValue) {
+      if (newValue) {
         this.rendered = true
         this.onFocusInput()
       }
-      this.$emit('change-status', value)
+      this.$emit(newValue === true ? 'combo-content-show' : 'combo-content-hide', newValue)
     },
-    value(newValue) {
+    value (newValue) {
       this.initValue(newValue)
     },
-    value__(newValue) {
+    value__ (newValue) {
       this.dispatchParent('MeLabel', 'on-label-change', newValue)
     }
   },
   methods: {
-    findItem(value) {
+    findItem (value) {
       return this.data.find(item => Reflect.get(item, this.fieldValue) === value)
     },
-    initValueSingle(value) {
+    initValueSingle (value) {
       const data = this.findItem(value)
       if (this.$tools.isEmpty(data)) { return }
       Object.assign(this.valueSingle, data)
       this.label__ = Reflect.get(data, this.fieldLabel) || ''
       this.value__ = Reflect.get(data, this.fieldValue) || ''
     },
-    initValueMultiple(value) {
+    initValueMultiple (value) {
       this.label__ = []
       this.value__ = []
       if (this.$tools.isEmpty(value)) { return }
@@ -100,37 +100,37 @@ export default {
         this.value__.push(Reflect.get(item, this.fieldValue))
       }
     },
-    initValue(value) {
+    initValue (value) {
       this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
     },
-    isSelected(value) {
+    isSelected (value) {
       const list = this.multiple ? this.valueMultiple : [this.valueSingle]
       return list.findIndex(item => value === Reflect.get(item, this.fieldValue)) !== -1
     },
-    onClickSuffix() {
+    onClickSuffix () {
       this.status = !this.status
     },
-    handlerClickInput() {
+    handlerClickInput () {
       this.readonly__ && this.onClickSuffix()
     },
-    selectSingle(data) {
+    selectSingle (data) {
       this.status = false
       this.label__ = Reflect.get(data, this.fieldLabel)
       this.value__ = Reflect.get(data, this.fieldValue)
       this.valueSingle = { ...data }
       this.$emit('change', this.value__)
     },
-    handleMultipleRemove(index) {
+    handleMultipleRemove (index) {
       this.$tools.arrayRemove(this.label__, index).catch(error => { console.error(error) })
       this.$tools.arrayRemove(this.value__, index).catch(error => { console.error(error) })
       this.$tools.arrayRemove(this.valueMultiple, index).catch(error => { console.error(error) })
     },
-    handleMultiplPush(data) {
+    handleMultiplPush (data) {
       this.label__.push(Reflect.get(data, this.fieldLabel))
       this.value__.push(Reflect.get(data, this.fieldValue))
       this.valueMultiple.push({ ...data })
     },
-    selectMultiple(data) {
+    selectMultiple (data) {
       const this_ = this
       this.$tools.includes(this.valueMultiple, data, (source, target) => source[this.fieldValue] === target[this.fieldValue])
         .then(({ status, data, index }) => {
@@ -141,20 +141,20 @@ export default {
           this.$emit('change', [...this.value__])
         })
     },
-    handlerClickOption(item, index) {
+    handlerClickOption (item, index) {
       const data = { ...item, index }
       this.$emit('click-option-before', item, index)
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
       this.$emit('click-option', item, index)
       this.$emit('click-option-after', item, index)
     },
-    handlerBlurInput() {
+    handlerBlurInput () {
       this.closable && (this.status = false)
     },
-    onFocusInput() {
+    onFocusInput () {
       this.$refs.input.$emit('focus-input')
     },
-    onMouseoverOther() {
+    onMouseoverOther () {
       this.closable = false
       this.onFocusInput()
     }

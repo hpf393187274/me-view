@@ -11,7 +11,7 @@
 export default {
   name: 'MeTableBody',
   methods: {
-    onScroll() {
+    onScroll () {
       this.$emit('scroll-body', this.$el.scrollLeft)
     }
   }

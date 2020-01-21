@@ -10,38 +10,38 @@ export default {
   props: {
     rules: Object
   },
-  data() {
+  data () {
     return {
       fields: []
     }
   },
-  created() {
+  created () {
     this.$on('on-label-add', (field) => {
       field && this.fields.push(field)
-      return false;
+      return false
     })
     this.$on('on-label-remove', (field) => {
-      if (field.prop) this.fields.splice(this.fields.indexOf(field), 1);
-      return false;
+      if (field.prop) this.fields.splice(this.fields.indexOf(field), 1)
+      return false
     })
   },
   methods: {
-    reset() {
+    reset () {
       for (const field of this.fields) {
         field.reset()
       }
     },
-    validate(callback = () => { }) {
+    validate (callback = () => { }) {
       if (type.isNotFunction(callback)) {
         console.warn('me-from.validate', '->', 'param is net function')
       }
       const length = this.fields.length
       return new Promise(resolve => {
-        let count = 0;
+        let count = 0
         for (const field of this.fields) {
           field.validate(valid => {
             if (++count === length) {
-              resolve(valid);
+              resolve(valid)
               type.isFunction(callback) && callback(valid)
             }
           })

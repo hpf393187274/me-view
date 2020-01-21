@@ -46,50 +46,50 @@ export default {
   name: 'MeTransfer',
   mixins: [treeCommon, treeIndex],
   props: {
-    value: { type: Array, default() { return [] } },
-    data: { type: Array, default() { return [] } },
+    value: { type: Array, default () { return [] } },
+    data: { type: Array, default () { return [] } },
     leftLabel: { type: String, default: '来源' },
     rightLabel: { type: String, default: '目标' },
     showHeader: Boolean
   },
   watch: {
-    right(newValue) {
+    right (newValue) {
       this.$emit('input', newValue)
     }
   },
   computed: {
-    disabledLeft() {
+    disabledLeft () {
       return this.rightData.length === 0
     },
-    disabledRight() {
+    disabledRight () {
       return this.leftData.length === 0
     },
-    leftTree() {
+    leftTree () {
       return this.$refs.leftTree
     },
-    rightTree() {
+    rightTree () {
       return this.$refs.rightTree
     }
   },
-  data() {
+  data () {
     return {
       leftData: [...this.data],
-      rightData: [...this.value],
+      rightData: [...this.value]
     }
   },
   methods: {
-    moveToLeftAll() {
+    moveToLeftAll () {
       this.leftData.push(...this.rightData); this.rightData = []
     },
-    moveToLeft() {
+    moveToLeft () {
       this.leftTree.pushData(this.rightTree.getCheckedTreeData())
       this.rightTree.removeCheckedNode()
     },
-    moveToRight() {
+    moveToRight () {
       this.rightTree.pushData(this.leftTree.getCheckedTreeData())
       this.leftTree.removeCheckedNode()
     },
-    moveToRightAll() {
+    moveToRightAll () {
       this.rightData.push(...this.leftData); this.leftData = []
     }
   }

@@ -28,24 +28,24 @@ export default {
     duration: { type: Number, default: 2 },
     closable: { type: Boolean, default: true }
   },
-  data() {
+  data () {
     return { closeTimer: null }
   },
-  created() {
-    this.clearCloseTimer();
+  created () {
+    this.clearCloseTimer()
     this.closeTimer = setTimeout(() => {
       this.$emit('remove', this.primaryKey)
     }, this.duration * 1000)
   },
   methods: {
-    clearCloseTimer() {
+    clearCloseTimer () {
       if (this.closeTimer) {
-        clearTimeout(this.closeTimer);
-        this.closeTimer = null;
+        clearTimeout(this.closeTimer)
+        this.closeTimer = null
       }
     },
-    beforeDestroy() {
-      this.clearCloseTimer();
+    beforeDestroy () {
+      this.clearCloseTimer()
     }
   }
 }

@@ -26,10 +26,10 @@ export default {
     required: Boolean,
     label: String,
     flex: Boolean,
-    labelStyle: { type: Object, default() { return {} } },
+    labelStyle: { type: Object, default () { return {} } },
     readonly: Boolean
   },
-  data() {
+  data () {
     return {
       required__: this.required,
       validateMessage: '',
@@ -38,54 +38,54 @@ export default {
       rulesForm: {},
       rules__: [],
       valueCurrent: '',
-      valueDefault: null,
+      valueDefault: null
     }
   },
-  created() {
+  created () {
     this.setRules(this.rules)
   },
   computed: {
-    classes() {
+    classes () {
       return [
         'me-row me-label me-cross-start',
         { 'me-flex': this.flex }
       ]
     }
   },
-  mounted() {
+  mounted () {
     if (this.prop) {
       this.dispatchParent('MeForm', 'on-label-add', this)
       this.bindFormInstance()
     }
     this.bindFormElement()
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.dispatchParent('MeForm', 'on-label-remove', this)
   },
   methods: {
-    bindEventToFormElement() {
+    bindEventToFormElement () {
       this.$off('on-label-blur', this.handlerElementBlur)
       this.$on('on-label-blur', this.handlerElementBlur)
       this.$off('on-label-change', this.handlerElementChange)
       this.$on('on-label-change', this.handlerElementChange)
     },
-    handlerElementBlur() { this.validate() },
-    handlerElementChange(value) {
+    handlerElementBlur () { this.validate() },
+    handlerElementChange (value) {
       if (!this.valueDefault) {
         Reflect.set(this, 'valueDefault', value)
       }
       this.valueCurrent = value
       this.validate()
     },
-    bindFormElement() {
+    bindFormElement () {
       if (tools.isEmptyArray(this.$children)) { return }
       this.bindEventToFormElement()
     },
-    bindFormInstance() {
+    bindFormInstance () {
       this.FormInstance = this.findParentComponent(['MeForm'])
       this.bindFormRules(/* 解析表达元素 prop */)
     },
-    setRules(value) {
+    setRules (value) {
       if (tools.isEmpty(value)) { return }
       if (type.isArray(value) && value.length > 0) {
         this.rules__ = [...value]
@@ -94,7 +94,7 @@ export default {
         this.rules__ = [value]
       }
     },
-    bindFormRules() {
+    bindFormRules () {
       if (this.prop && this.FormInstance) {
         this.rulesForm = this.FormInstance.rules
         const ruleProp = Reflect.get(this.rulesForm, this.prop)
@@ -104,7 +104,7 @@ export default {
         this.setRules(ruleProp)
       }
     },
-    setValidateInfo(status, message) {
+    setValidateInfo (status, message) {
       this.validateStatus = status
       this.validateMessage = message
       this.$emit('on-label-status', status)
@@ -112,20 +112,22 @@ export default {
     /**
      * 校验表单元素
      */
-    validate(callback = () => { }) {
-      const _this = this
+    async validate (callback = () => { }) {
       const validator = new Validator({ [this.prop]: this.rules__ })
-      validator.validate({ [this.prop]: this.valueCurrent }, { firstFields: true }).then(() => {
-        _this.setValidateInfo('success')
-        callback(true)
-      }).catch(({ errors }) => {
+      try {
+        await validator.validate({ [this.prop]: this.valueCurrent }, { firstFields: true })
+        this.setValidateInfo('success')
+        const status = true
+        callback(status)
+      } catch (errors) {
         if (errors) {
-          _this.setValidateInfo('error', errors[0].message)
-          callback(false)
+          this.setValidateInfo('error', errors[0].message)
+          const status = false
+          callback(status)
         }
-      })
+      }
     },
-    reset() {
+    reset () {
       console.log(`reset -> 当前值：${this.valueCurrent}, 默认值：${this.valueDefault}`)
       this.$emit('on-label-reset', this.valueDefault)
     }

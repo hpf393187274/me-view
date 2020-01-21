@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <me-combo ref="combo" v-bind="$props" v-model="value__">
     <div class="me-column">
       <me-combo-option :data="item" :index="index" :key="item[fieldValue]" @click-option="handlerSelect" v-for="(item,index) in data" />
@@ -16,16 +16,16 @@ export default {
   mixins: [ComboMixin, ComboBaseMixin],
   name: 'MeComboSelect',
   props: {
-    columns: { type: Array, default: () => [] },
+    columns: { type: Array, default: () => [] }
   },
   watch: {
-    value(value) { this.value__ = value },
+    value (value) { this.value__ = value }
   },
-  created() {
+  created () {
     this.value__ = this.value
   },
   methods: {
-    handlerSelect(row, index) {
+    handlerSelect (row, index) {
       this.$emit('on-select', row, index)
       this.$emit('change', this.multiple ? [...this.value__] : this.value__)
     }

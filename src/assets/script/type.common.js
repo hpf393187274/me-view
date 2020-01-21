@@ -10,19 +10,19 @@ export default {
   TYPE_REGEXP: '[object RegExp]',
   /**
    * 校验：Boolean：true
-   * @param target 
+   * @param target
    * @returns {Boolean}
    */
-  isBoolean(target) {
+  isBoolean (target) {
     var type = this.getType(target)
     return type === this.TYPE_BOOLEAN
   },
   /**
    * 校验：Boolean：false
-   * @param target 
+   * @param target
    * @returns {Boolean}
    */
-  isNotBoolean(target) {
+  isNotBoolean (target) {
     return this.isBoolean(target)
   },
   /**
@@ -30,7 +30,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNumber(target) {
+  isNumber (target) {
     var type = this.getType(target)
     return type === this.TYPE_NUMBER
   },
@@ -39,7 +39,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotNumber(target) {
+  isNotNumber (target) {
     return !this.isNumber(target)
   },
   /**
@@ -47,7 +47,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isString(target) {
+  isString (target) {
     var type = this.getType(target)
     return type === this.TYPE_String
   },
@@ -56,7 +56,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotString(target) {
+  isNotString (target) {
     return !this.isString(target)
   },
   /**
@@ -64,7 +64,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isObjectOrArray(target) {
+  isObjectOrArray (target) {
     var type = this.getType(target)
     return type === this.TYPE_OBJECT || type === this.TYPE_ARRAY
   },
@@ -73,7 +73,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotObjectOrArray(target) {
+  isNotObjectOrArray (target) {
     return !this.isObjectOrArray(target)
   },
   /**
@@ -81,7 +81,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isObject(target) {
+  isObject (target) {
     return this.getType(target) === this.TYPE_OBJECT
   },
   /**
@@ -89,7 +89,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotObject(target) {
+  isNotObject (target) {
     return !this.isObject(target)
   },
   /**
@@ -97,7 +97,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isArray(target) {
+  isArray (target) {
     return this.getType(target) === this.TYPE_ARRAY
   },
   /**
@@ -105,7 +105,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotArray(target) {
+  isNotArray (target) {
     return !this.isArray(target)
   },
   /**
@@ -113,10 +113,10 @@ export default {
    * @param target 目标值
    * @returns {string}
    */
-  getType(target) {
+  getType (target) {
     return toString.call(target)
   },
-  isRegExp(target) {
+  isRegExp (target) {
     return this.getType(target) === this.TYPE_REGEXP
   },
   /**
@@ -124,7 +124,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isFunction(target) {
+  isFunction (target) {
     return this.getType(target) === this.TYPE_FUNCTION
   },
   /**
@@ -132,7 +132,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotFunction(target) {
+  isNotFunction (target) {
     return !this.isFunction(target)
   }
 }

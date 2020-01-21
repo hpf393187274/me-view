@@ -62,20 +62,20 @@ export default {
     [TreeNode.name]: TreeNode
   },
   props: {
-    data: { type: Array, default() { return [] } },
+    data: { type: Array, default () { return [] } },
     header: Boolean
   },
-  data() {
+  data () {
     return {
       eventTree: new Vue()
     }
   },
   computed: {
-    length() {
+    length () {
       return this.$type.isArray(this.data) ? this.data.length : 0
     }
   },
-  created() {
+  created () {
     this.initPrimaryKey(this.data)
     this.$nextTick(() => {
       // 点击节点
@@ -91,15 +91,15 @@ export default {
     })
   },
   methods: {
-    handlerOn(eventName) {
+    handlerOn (eventName) {
       this.eventTree.$on(eventName, (...option) => {
         this.$emit(eventName, ...option)
       })
     },
-    getCheckedData({ leaf = true, ...param } = {}) {
+    getCheckedData ({ leaf = true, ...param } = {}) {
       return this.getCheckedChildren({ leaf, ...param })
     },
-    getCheckedTreeData({ leaf = true } = {}) {
+    getCheckedTreeData ({ leaf = true } = {}) {
       return this.getCheckedChildren({ leaf, tree: true })
     }
   }
