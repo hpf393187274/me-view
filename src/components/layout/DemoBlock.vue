@@ -227,7 +227,7 @@ export default {
     compileComponent () {
       let target = {}
       try {
-        target = this.eval(`(${this.codepen.script.replace(/^export\s+default\s+/, '')})`)
+        target = window.eval(`(${this.codepen.script.replace(/^export\s+default\s+/, '')})`)
       } catch (error) {
         console.error('DemoBlock -> compileComponent：', error)
       }

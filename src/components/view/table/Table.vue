@@ -47,14 +47,6 @@
 import TableRow from './TableRow.vue'
 import TableHeader from './TableHeader.vue'
 import TableBody from './TableBody.vue'
-const scrollbarWidth = +function () {
-  var scrollDiv = document.createElement("div");
-  scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;';
-  document.body.appendChild(scrollDiv);
-  var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  document.body.removeChild(scrollDiv);
-  return scrollbarWidth;
-}()
 
 let idSeed = 1
 export default {
@@ -77,24 +69,24 @@ export default {
     highlight: Boolean
   },
   computed: {
-    styleContainer() {
+    styleContainer () {
       return {
         'width': this.$type.isNumber(this.width) ? `${this.width}px` : this.width,
         'height': this.$type.isNumber(this.height) ? `${this.height}px` : this.height
       }
     },
-    styleTHead() {
+    styleTHead () {
       if (this.scrollbarHas) {
         return { width: `calc( 100% - ${this.scrollbarWidth}px )` }
       }
       return {}
     },
-    length() {
+    length () {
       return this.$type.isArray(this.data) ? this.data.length : 0
     }
   },
   watch: {
-    checkedBodyNumber(value) {
+    checkedBodyNumber (value) {
       if (this.length === 0 || value === 0) {
         this.checkedHeader = this.checkedHeaderHalf = false
         return
@@ -102,30 +94,38 @@ export default {
       this.checkedHeader = this.length === value
       this.checkedHeaderHalf = this.length !== value
     },
-    length() {
+    length () {
       this.$nextTick(() => {
         this.existScrollbar()
       })
     }
   },
-  data() {
+  data () {
     return {
       id__: '',
       columns__: [],
-      scrollbarWidth: scrollbarWidth, checkedHeader: this.checked,
+      scrollbarWidth: 0,
+      checkedHeader: this.checked,
       scrollbarHas: false,
       checkedHeaderHalf: false,
       checkedRows: new Map(),
       checkedBodyNumber: 0,
       selectedNodeOld: null,
       scrollLeft: 0,
-      show: true,
+      show: true
     }
   },
-  created() {
+  created () {
+    if (idSeed === 1) {
+      var scrollDiv = document.createElement('div')
+      scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;'
+      document.body.appendChild(scrollDiv)
+      this.scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
+      document.body.removeChild(scrollDiv)
+    }
     this.id__ = `me-table_${idSeed++}`
   },
-  beforeUpdate() {
+  beforeUpdate () {
     const _this = this
     this.$nextTick(() => {
       window.onload = function () {
@@ -133,7 +133,7 @@ export default {
       }
     })
   },
-  mounted() {
+  mounted () {
     console.log('mounted')
     this.handlerSlots()
     const _this = this
@@ -145,7 +145,7 @@ export default {
     })
   },
   methods: {
-    getSelectedData() {
+    getSelectedData () {
       const result = []
       this.checkedRows.forEach(value => {
         result.push(value)
@@ -155,7 +155,7 @@ export default {
     /**
      * 点击 Header row checkbox
      */
-    handlerCheckboxHeader(value) {
+    handlerCheckboxHeader (value) {
       this.checkedHeaderHalf = false
       this.checkedRows.clear()
       if (value === true) {
@@ -167,7 +167,7 @@ export default {
       this.checkedBodyNumber = this.checkedRows.size
       this.$emit('header-checked-change', value)
     },
-    handlerCheckedChange(checked, row) {
+    handlerCheckedChange (checked, row) {
       if (this.multiple !== true) {
         this.checkedRows.clear()
       }
@@ -182,18 +182,18 @@ export default {
     /**
      * 点击 Row
      */
-    handlerClickRow(row, index, node) {
+    handlerClickRow (row, index, node) {
       this.$emit('click-row', row, index, node)
     },
-    existScrollbar() {
+    existScrollbar () {
       const target = this.$refs.tableBody.$el
       this.scrollbarHas = target.scrollHeight > (target.innerHeight || target.clientHeight)
-      return target.scrollHeight > (target.innerHeight || target.clientHeight);
+      return target.scrollHeight > (target.innerHeight || target.clientHeight)
     },
-    handlerScrollBody(scrollLeft) {
+    handlerScrollBody (scrollLeft) {
       this.scrollLeft = scrollLeft
     },
-    handlerSlots() {
+    handlerSlots () {
       const excludeSlots = ['header', 'footer', 'default']
       const slotKeys = Reflect.ownKeys(this.$scopedSlots)
       this.columns__ = [...this.columns]

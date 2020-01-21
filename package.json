@@ -65,6 +65,7 @@
     "rules": {
       "no-console": "off",
       "no-debugger": "off",
+      "no-eval": "off",
       "no-callback-literal": 0
     },
     "parserOptions": {
