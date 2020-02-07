@@ -10,12 +10,7 @@ td,th {
 	border: 1px solid @table-border !important;
 }
 .@{PREFIX}-table-container {
-	padding: 2px;
-	height: 100%;;
-	table{
-		width: 100%;
-	}
-	
+	table{ width: 100%; }
 	table,table td, .table th {
 		border: none;
 	}
@@ -28,16 +23,13 @@ td,th {
 	}
 	.table-toolbar {
 		padding: 5px 0px;
-		> * {
-			margin-right: 10px;
-		}
+		> * { margin-right: 10px; }
 	}
 
-
-
 	.table-wrapper {
-		border: 1px solid @table-border;
-		padding: 10px;
+		display: grid;
+		grid-template-rows: 45px auto;
+		overflow: auto;
 		.content-center {
 			text-align: center;
 			width: 50px !important;
@@ -49,7 +41,7 @@ td,th {
 			white-space: nowrap;/*强制不换行*/
 		}
 		.table-body { 
-			overflow: auto; 
+			overflow: auto;
 			tr {
 				&:nth-child(odd){ background-color: @table-body-row-odd !important; }
 				&:nth-child(even){ 	background-color: @table-body-row-even !important; }
@@ -63,7 +55,6 @@ td,th {
 		}
 	
 		.table-header {
-			overflow: hidden;
 			background-color: @table-header;
 			tr {
 				background-color: @table-header;

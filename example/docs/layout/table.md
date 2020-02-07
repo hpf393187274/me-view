@@ -5,8 +5,10 @@
 
 ```html
 <template>
-  <me-table has-index height="400px" :data="data" :columns="columns">
+  <me-table :height="height + 'px'"  has-index :data="data" :columns="columns">
     <template #header>
+      <me-button plain type="primary"  @click="height = height + 50"> + 50 </me-button>
+      <me-button plain type="primary"  @click="height = height - 50"> - 50 </me-button>
       <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
       <me-button plain type="primary" @click="handlerData">变更数据</me-button>
       <me-button plain type="primary" icon="icon-minus-square">批量删除</me-button>
@@ -23,6 +25,7 @@
   export default {
     data() {
       return {
+        height: 400,
         columns: [
           { label:'编号', field: 'id'},
           { label:'测试', field: 'test' },
@@ -52,14 +55,12 @@
 </script>
 ```
 :::
-
 ## 多功能用法
 ::: demo `data` 数据 `border` 边框
 
 ```html
 <template>
-  <div>
-  <me-table ref="tableList" height="400px" checkbox multiple :data="data" :columns="columns" highlight>
+  <me-table ref="tableList" checkbox multiple :data="data" :columns="columns" highlight>
     <template #header>
       <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
       <me-button plain type="primary" @click="handlerTableSelectedData">获取选中表格数据</me-button>
@@ -73,8 +74,6 @@
       <me-button>test</me-button>
     </template>
   </me-table>
- 
-  </div>
 </template>
 <script>
   export default {

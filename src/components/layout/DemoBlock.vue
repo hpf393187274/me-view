@@ -1,7 +1,7 @@
 <template>
-  <div :class="[blockClass, { 'hover': hovering }]" @mouseenter="hovering = true" @mouseleave="hovering = false" class="demo-block">
-    <div class="source" ref="source"></div>
-    <div class="meta" ref="meta">
+  <div :class="[ { 'hover': hovering }]" @mouseenter="hovering = true" @mouseleave="hovering = false" class="container">
+    <div class="container-view" ref="source"></div>
+    <div class="container-meta" ref="meta">
       <div class="description" v-if="$slots.description">
         <slot name="description" />
       </div>
@@ -10,185 +10,142 @@
       </div>
       <div class="highlight"></div>
     </div>
-    <div @click="isExpanded = !isExpanded" class="me-row me-center demo-block-control" ref="control">
-      <transition name="arrow-slide">
-        <i :class="[iconClass, { 'hovering': hovering }]"></i>
-      </transition>
+    <div @click="isExpanded = !isExpanded" class="me-row me-center container-control" ref="control">
       <transition name="text-slide">
         <span v-show="hovering">{{ controlText }}</span>
       </transition>
     </div>
   </div>
 </template>
-
-<style lang="less">
-.demo-block {
-  border: solid 1px #ebebeb;
-  border-radius: 3px;
-  transition: 0.2s;
-
-  &.hover {
-    box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
-      0 2px 4px 0 rgba(232, 237, 250, 0.5);
-  }
-
-  code {
-    font-family: Menlo, Monaco, Consolas, Courier, monospace;
-  }
-
-  .demo-button {
-    float: right;
-  }
-
-  .source {
-    padding: 24px;
-  }
-
-  .meta {
-    background-color: #fafafa;
-    border-top: solid 1px #eaeefb;
-    overflow: hidden;
-    height: 0;
-    transition: height 0.2s;
-  }
-  .default {
-    padding: 20px;
-    box-sizing: border-box;
+<style lang="scss" scoped>
+  .container {
     border: solid 1px #ebebeb;
     border-radius: 3px;
-    font-size: 14px;
-    line-height: 22px;
-    color: #666;
-    word-break: break-word;
-    margin: 10px;
-    background-color: #fff;
-
-    p {
-      margin: 0;
-      line-height: 26px;
+    transition: 0.2s;
+    .container-view {
+      padding: 15px;
+      // overflow: auto;
     }
-
-    code {
-      color: #5e6d82;
-      background-color: #e6effb;
-      margin: 0 4px;
-      display: inline-block;
-      padding: 1px 5px;
-      font-size: 12px;
-      border-radius: 3px;
-      height: 18px;
-      line-height: 18px;
-    }
-  }
-  .description {
-    padding: 20px;
-    box-sizing: border-box;
-    border: solid 1px #ebebeb;
-    border-radius: 3px;
-    font-size: 14px;
-    line-height: 22px;
-    color: #666;
-    word-break: break-word;
-    margin: 10px;
-    background-color: #fff;
-
-    p {
-      margin: 0;
-      line-height: 26px;
-    }
-
-    code {
-      color: #5e6d82;
-      background-color: #e6effb;
-      margin: 0 4px;
-      display: inline-block;
-      padding: 1px 5px;
-      font-size: 12px;
-      border-radius: 3px;
-      height: 18px;
-      line-height: 18px;
-    }
-  }
-
-  .highlight {
-    pre {
-      margin: 0;
-    }
-
-    code.hljs {
-      margin: 0;
-      border: none;
-      max-height: none;
-      border-radius: 0;
-
-      &::before {
-        content: none;
+    .container-control {
+      padding: 20px;
+      height: 14px;
+      font-size: 14px;
+      border-top: solid 1px #eaeefb;
+      background-color: #fff;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      color: #d3dce6;
+      cursor: pointer;
+      > span {
+        transform: translateX(-30px);
+        transition: 0.3s;
       }
-    }
-  }
-
-  .demo-block-control {
-    border-top: solid 1px #eaeefb;
-    height: 44px;
-    box-sizing: border-box;
-    background-color: #fff;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    text-align: center;
-    margin-top: -1px;
-    color: #d3dce6;
-    cursor: pointer;
-    position: relative;
-
-    &.is-fixed {
-      position: fixed;
-      bottom: 0;
-      width: 868px;
-    }
-
-    i {
-      font-size: 16px;
-      line-height: 44px;
-      transition: 0.3s;
-      &.hovering {
-        transform: translateX(-40px);
+      &:hover {
+        color: #409eff;
+        background-color: #f9fafc;
+      }
+      & .text-slide-enter,
+      & .text-slide-leave-active {
+        opacity: 0;
+        transform: translateX(10px);
       }
     }
 
-    > span {
-      position: absolute;
-      transform: translateX(-30px);
+    &.hover {
+      box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
+        0 2px 4px 0 rgba(232, 237, 250, 0.5);
+    }
+
+    code {
+      font-family: Menlo, Monaco, Consolas, Courier, monospace;
+    }
+
+    .container-meta {
+      background-color: #fafafa;
+      border-top: solid 1px #eaeefb;
+      overflow: hidden;
+      height: 0px;
+      transition: height 0.2s;
+    }
+    .default {
+      padding: 20px;
+      box-sizing: border-box;
+      border: solid 1px #ebebeb;
+      border-radius: 3px;
       font-size: 14px;
-      line-height: 44px;
-      transition: 0.3s;
-      display: inline-block;
-    }
+      line-height: 22px;
+      color: #666;
+      word-break: break-word;
+      margin: 10px;
+      background-color: #fff;
 
-    &:hover {
-      color: #409eff;
-      background-color: #f9fafc;
-    }
+      p {
+        margin: 0;
+        line-height: 26px;
+      }
 
-    & .text-slide-enter,
-    & .text-slide-leave-active {
-      opacity: 0;
-      transform: translateX(10px);
+      code {
+        color: #5e6d82;
+        background-color: #e6effb;
+        margin: 0 4px;
+        display: inline-block;
+        padding: 1px 5px;
+        font-size: 12px;
+        border-radius: 3px;
+        height: 18px;
+        line-height: 18px;
+      }
     }
-
-    .control-button {
-      line-height: 26px;
-      position: absolute;
-      top: 0;
-      right: 0;
+    .description {
+      padding: 20px;
+      box-sizing: border-box;
+      border: solid 1px #ebebeb;
+      border-radius: 3px;
       font-size: 14px;
-      padding-left: 5px;
-      padding-right: 25px;
+      line-height: 22px;
+      color: #666;
+      word-break: break-word;
+      margin: 10px;
+      background-color: #fff;
+
+      p {
+        margin: 0;
+        line-height: 26px;
+      }
+
+      code {
+        color: #5e6d82;
+        background-color: #e6effb;
+        margin: 0 4px;
+        display: inline-block;
+        padding: 1px 5px;
+        font-size: 12px;
+        border-radius: 3px;
+        height: 18px;
+        line-height: 18px;
+      }
+    }
+
+    .highlight {
+      pre {
+        margin: 0;
+      }
+
+      code.hljs {
+        margin: 0;
+        border: none;
+        max-height: none;
+        border-radius: 0;
+
+        &::before {
+          content: none;
+        }
+      }
     }
   }
-}
 </style>
 
-<script type="text/babel">
+<script>
 import Vue from 'vue'
 function stripScript (content) {
   const result = content.match(/<(script)>([\s\S]+)<\/\1>/)
@@ -205,7 +162,8 @@ function stripTemplate (content) {
   if (!content) {
     return content
   }
-  return content.replace(/<(script|style)[\s\S]+<\/\1>/g, '').trim()
+  content = content.replace(/<(script|style)[\s\S]+<\/\1>/g, '').trim()
+  return content.replace(/^(<template[\s]*>)|(<\/template>)$/g, '').trim()
 }
 
 export default {
@@ -232,7 +190,7 @@ export default {
         console.error('DemoBlock -> compileComponent：', error)
       }
       const Component = Vue.extend({
-        template: `<div>${this.codepen.html}</div>`,
+        template: `${this.codepen.html}`,
         mixins: [target]
       })
       const markedComponent = new Component().$mount()
@@ -243,36 +201,21 @@ export default {
   },
 
   computed: {
-    lang () {
-      return '' // this.$route.path.split('/')[1]
-    },
-
-    // langConfig() {
-    //   return compoLang.filter(config => config.lang === this.lang)[0]['demo-block']
-    // },
-
-    blockClass () {
-      return '' // `demo-${this.lang} demo-${this.$router.currentRoute.path.split('/').pop()}`
-    },
-
-    iconClass () {
-      return this.isExpanded ? 'el-icon-caret-top' : 'el-icon-caret-bottom'
-    },
-
     controlText () {
       return this.isExpanded ? '隐藏 Code' : '显示 Code'
     },
 
     codeArea () {
-      return this.$el.getElementsByClassName('meta')[0]
+      return this.$el.getElementsByClassName('container-meta')[0]
     },
 
     codeAreaHeight () {
-      if (this.$el.getElementsByClassName('default').length > 0) {
-        return this.$el.getElementsByClassName('default')[0].clientHeight +
-          this.$el.getElementsByClassName('highlight')[0].clientHeight + 20
+      const classDefault = this.$el.getElementsByClassName('default')
+      const classHighlight = this.$el.getElementsByClassName('highlight')
+      if (classDefault.length > 0) {
+        return classDefault[0].clientHeight + classHighlight[0].clientHeight + 20
       }
-      return this.$el.getElementsByClassName('highlight')[0].clientHeight
+      return classHighlight[0].clientHeight
     }
   },
 

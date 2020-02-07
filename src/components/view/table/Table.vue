@@ -1,11 +1,11 @@
 <template>
-  <div :style="styleContainer" class="me-column me-table-container">
+  <div :style="styleContainer" class="me-table-container me-column">
     <template v-if="$slots.header">
       <div class="me-row table-toolbar" v-if="$slots.header">
         <slot name="header" />
       </div>
     </template>
-    <div class="me-column me-flex table-wrapper" v-show="show">
+    <div class="me-flex table-wrapper" v-show="show">
       <me-table-header :scroll-left="scrollLeft" :style="styleTHead">
         <me-table-row
           :center="center"
@@ -19,8 +19,7 @@
           header
         />
       </me-table-header>
-
-      <me-table-body @scroll-body="handlerScrollBody" class="me-flex" ref="tableBody">
+      <me-table-body @scroll-render-v="handlerDifference" @scroll-body="handlerScrollBody" class="me-flex" ref="tableBody">
         <me-table-row
           :center="center"
           :checkbox="checkbox"
@@ -76,10 +75,7 @@ export default {
       }
     },
     styleTHead () {
-      if (this.scrollbarHas) {
-        return { width: `calc( 100% - ${this.scrollbarWidth}px )` }
-      }
-      return {}
+      return { 'padding-right': `${this.difference}px` }
     },
     length () {
       return this.$type.isArray(this.data) ? this.data.length : 0
@@ -93,58 +89,34 @@ export default {
       }
       this.checkedHeader = this.length === value
       this.checkedHeaderHalf = this.length !== value
-    },
-    length () {
-      this.$nextTick(() => {
-        this.existScrollbar()
-      })
     }
   },
   data () {
     return {
       id__: '',
       columns__: [],
-      scrollbarWidth: 0,
       checkedHeader: this.checked,
-      scrollbarHas: false,
       checkedHeaderHalf: false,
       checkedRows: new Map(),
       checkedBodyNumber: 0,
+      difference: 0,
       selectedNodeOld: null,
       scrollLeft: 0,
       show: true
     }
   },
   created () {
-    if (idSeed === 1) {
-      var scrollDiv = document.createElement('div')
-      scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;'
-      document.body.appendChild(scrollDiv)
-      this.scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
-      document.body.removeChild(scrollDiv)
-    }
     this.id__ = `me-table_${idSeed++}`
   },
-  beforeUpdate () {
-    const _this = this
-    this.$nextTick(() => {
-      window.onload = function () {
-        _this.existScrollbar()
-      }
-    })
-  },
-  mounted () {
+  async mounted () {
     console.log('mounted')
     this.handlerSlots()
-    const _this = this
-    this.$nextTick(() => {
-      _this.existScrollbar()
-      window.onload = function () {
-        _this.existScrollbar()
-      }
-    })
   },
   methods: {
+    handlerDifference ({ status, size }) {
+      console.log(`handlerDifference -> ${status} --- ${size}`)
+      this.difference = status ? size : 0
+    },
     getSelectedData () {
       const result = []
       this.checkedRows.forEach(value => {
@@ -184,11 +156,6 @@ export default {
      */
     handlerClickRow (row, index, node) {
       this.$emit('click-row', row, index, node)
-    },
-    existScrollbar () {
-      const target = this.$refs.tableBody.$el
-      this.scrollbarHas = target.scrollHeight > (target.innerHeight || target.clientHeight)
-      return target.scrollHeight > (target.innerHeight || target.clientHeight)
     },
     handlerScrollBody (scrollLeft) {
       this.scrollLeft = scrollLeft

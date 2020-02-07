@@ -3,7 +3,6 @@
 </template>
 <script>
 export default {
-  name: 'LayoutLeft',
   data () {
     return {
       data: [

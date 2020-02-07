@@ -10,11 +10,6 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'LayoutHeader'
-}
-</script>
 <style lang="less" scoped>
 .header {
   height: 60px;
