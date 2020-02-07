@@ -5,7 +5,6 @@
         <slot name="header" />
       </div>
     </template>
-    {{getSelectedData()}}
     <div class="me-flex table-wrapper" v-show="show">
       <me-table-header :scroll-left="scrollLeft" :style="styleTHead">
         <me-table-row
