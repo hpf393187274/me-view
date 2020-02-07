@@ -31,18 +31,21 @@ export default {
         { label:'测试', field: 'test' },
         { label:'操作', field: 'action' }
       ],
+      selectData: [
+
+      ],
       data: [
         { id: '1', label: '陕西省sssss'},
         { id: '2', label: '四川省'},
         { id: '3', label: '江苏省'},
-        { id: '2', label: '四川省'},
-        { id: '3', label: '江苏省'},
-        { id: '4', label: '河南省'},
-        { id: '5', label: '陕西省'},
-        { id: '6', label: '四川省'},
-        { id: '7', label: '江苏省'},
-        { id: '8', label: '河南省'},
-        { id: '4', label: '河南省'}
+        { id: '4', label: '四川省'},
+        { id: '5', label: '江苏省'},
+        { id: '6', label: '河南省'},
+        { id: '7', label: '陕西省'},
+        { id: '8', label: '四川省'},
+        { id: '9', label: '江苏省'},
+        { id: '10', label: '河南省'},
+        { id: '11', label: '河南省'}
       ]
     }
   },

@@ -132,6 +132,20 @@ export default {
     }
   },
   /**
+   * 迭代
+   * @param {Array|Object} target 目标
+   * @param {Function} callback 回调函数
+   */
+  forEach (target, callback) {
+    if (type.isArray(target) && target.length > 0 && type.isFunction(callback)) {
+      for (const item of target) { callback(item) }
+    }
+
+    if (type.isObject(target) && type.isFunction(callback)) {
+      for (const key in target) { callback(key, target[key]) }
+    }
+  },
+  /**
    * 是否存在于数组
    * then 存在
    * catch 不存在
@@ -163,8 +177,8 @@ export default {
    * @param {Function} param.callback 执行的回调函数
    */
   expendTime ({ classify = 'second', callback } = {}) {
-    const classifys = ['hour', 'minute', 'second']
-    if (classifys.includes(classify) === false) {
+    const classifyList = ['hour', 'minute', 'second']
+    if (classifyList.includes(classify) === false) {
       classify = 'second'
     }
     if (type.isNotFunction(callback)) { return 0 }

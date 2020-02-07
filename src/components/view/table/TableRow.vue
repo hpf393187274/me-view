@@ -1,15 +1,15 @@
 <template>
-  <tr :class="clesses" @click.stop="handlerRow">
+  <tr :class="clesses" @click.stop="handlerRow(!checked__)">
     <template v-if="header">
       <me-table-cell-h class="content-center" v-if="checkbox">
-        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerClickCheckbox" v-model="checked__" />
+        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerCheckedChange(!checked__)" v-model="checked__" />
       </me-table-cell-h>
       <me-table-cell-h class="content-center" v-if="hasIndex">序号</me-table-cell-h>
       <me-table-cell-h :key="column.label" :label="column.label" :width="column.width" v-for="column in columns" />
     </template>
     <template v-else>
       <me-table-cell-d class="content-center" v-if="checkbox">
-        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerClickCheckbox" v-model="checked__" />
+        <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerCheckedChange(!checked__)" v-model="checked__" />
       </me-table-cell-d>
       <me-table-cell-d class="content-center" v-if="hasIndex">{{index + 1}}</me-table-cell-d>
       <me-table-cell-d :data="data" :key="column.field" v-bind="column" v-for="column in columns" />
@@ -33,6 +33,8 @@ export default {
     renderMethod: Function,
     highlight: Boolean,
     checkedHalf: Boolean,
+    primaryField: String,
+    primaryKey: String,
     checked: { type: Boolean, default: false },
     checkbox: Boolean,
     dataLength: Number,
@@ -45,7 +47,12 @@ export default {
     }
   },
   created () {
-    this.initPrimaryKey(this.data)
+    if (this.header !== true) {
+      if (this.primaryField) {
+        this.initPrimaryValue()
+      }
+      this.dispatchUpward('MeTable', 'table-row-all-append', { key: this.getPrimaryValue(), value: this })
+    }
   },
   watch: {
     checked (value) { this.checked__ = value }
@@ -66,32 +73,29 @@ export default {
       ]
     }
   },
-  mounted () {
-    if (this.header !== true) {
-      this.listenerUpward('MeTable', 'header-checked-change', value => {
-        this.checked__ = value
-      })
-    }
+  beforeDestroy () {
+    this.dispatchUpward('MeTable', 'table-row-all-remove', { key: this.getPrimaryValue(), value: this })
   },
   methods: {
-    setChecked (value) {
-      this.checked__ = value
+    initPrimaryValue () {
+      const primaryValue = Reflect.get(this.data, this.primaryField)
+      if (primaryValue) {
+        Reflect.set(this.data, 'primarykey', primaryValue)
+      }
     },
-    handlerRow () {
-      this.handlerCheckedChange()
+    getPrimaryValue () {
+      return Reflect.get(this.data, 'primarykey')
+    },
+    handlerRow (checked) {
+      this.handlerCheckedChange(checked)
       if (this.header === false) {
         this.$emit('click-row', this.data, this.index, this)
       }
     },
-    handlerClickCheckbox () {
-      this.handlerCheckedChange()
-      this.$emit('click-checkbox', this.data, this.index, this)
-    },
-    handlerCheckedChange () {
-      console.log('===================', this.checked__ !== true)
-      this.checked__ = this.checked__ !== true
-
-      this.$emit('checked-change', this.checked__, this.data, this)
+    handlerCheckedChange (checked) {
+      this.checked__ = checked
+      this.dispatchUpward('MeTable', `table-row-checked-${checked}`, { key: this.getPrimaryValue(), value: this })
+      this.$emit('checked-change', checked, this.data, this)
     }
   }
 }

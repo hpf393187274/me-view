@@ -5,6 +5,7 @@
         <slot name="header" />
       </div>
     </template>
+    {{getSelectedData()}}
     <div class="me-flex table-wrapper" v-show="show">
       <me-table-header :scroll-left="scrollLeft" :style="styleTHead">
         <me-table-row
@@ -27,10 +28,9 @@
           :data="item"
           :highlight="highlight"
           :index="index"
-          :key="index"
+          :key="data[primaryField] || index"
           :multiple="multiple"
-          @checked-change="handlerCheckedChange"
-          @click-row="handlerClickRow"
+          :primary-field = "primaryField"
           v-for="(item,index) in data"
         />
       </me-table-body>
@@ -60,6 +60,8 @@ export default {
     data: { type: Array, default: () => [] },
     columns: { type: Array, default: () => [] },
     checked: { type: Boolean, default: false },
+    primaryField: { type: String, default: 'id' },
+    primaryKey: String,
     center: Boolean,
     checkbox: Boolean,
     height: [Number, String],
@@ -82,7 +84,7 @@ export default {
     }
   },
   watch: {
-    checkedBodyNumber (value) {
+    checkedNumber (value) {
       if (this.length === 0 || value === 0) {
         this.checkedHeader = this.checkedHeaderHalf = false
         return
@@ -98,7 +100,8 @@ export default {
       checkedHeader: this.checked,
       checkedHeaderHalf: false,
       checkedRows: new Map(),
-      checkedBodyNumber: 0,
+      allRows: new Map(),
+      checkedNumber: 0,
       difference: 0,
       selectedNodeOld: null,
       scrollLeft: 0,
@@ -107,55 +110,87 @@ export default {
   },
   created () {
     this.id__ = `me-table_${idSeed++}`
+    this.initAllRows()
   },
   async mounted () {
-    console.log('mounted')
     this.handlerSlots()
   },
   methods: {
+    initAllRows () {
+      this.allRows.clear()
+      this.listener('table-row-all-append', ({ key, value }) => this.allRows.set(key, value))
+      this.listener('table-row-all-remove', ({ key }) => this.allRows.delete(key))
+
+      this.listener('table-row-checked-true', ({ key, value }) => this.append(key, value))
+      this.listener('table-row-checked-false', ({ key }) => this.remove(key))
+    },
     handlerDifference ({ status, size }) {
-      console.log(`handlerDifference -> ${status} --- ${size}`)
       this.difference = status ? size : 0
+    },
+    append (key, value, refresh = true) {
+      this.checkedRows.set(key, value)
+      refresh && this.refresh()
+    },
+    remove (key, refresh = true) {
+      this.checkedRows.delete(key)
+      refresh && this.refresh()
+    },
+    refresh () {
+      this.checkedNumber = this.checkedRows.size
+    },
+    clear () { this.checkedRows.clear() },
+
+    removeRows (data = []) {
+      this.$tools.forEach(data, item => {
+        const primaryValue = this.$type.isObject(item) ? Reflect.get(item, this.primaryField) : item
+        const row = this.checkedRows.get(primaryValue)
+        if (row) {
+          row.handlerCheckedChange(false)
+        }
+      })
+      this.refresh()
     },
     getSelectedData () {
       const result = []
-      this.checkedRows.forEach(value => {
-        result.push(value)
-      })
+      this.checkedRows.forEach(value => result.push(value.data))
       return result
+    },
+    batchRemoveData (data = []) {
+      this.$tools.forEach(data, item1 => {
+        this.$tools.arrayRemove(this.data, item2 => {
+          return Reflect.get(item1, this.primaryField) === Reflect.get(item2, this.primaryField)
+        })
+      })
+      this.cancelSelected()
+    },
+    cancelSelected () {
+      this.checkedRows.forEach(row => row.handlerCheckedChange(false))
+      this.refresh()
+    },
+    /**
+     * 设置选中的数据
+     * @param {Array} data 数据
+     * @param {Boolean} clear 是否清楚原有数据，默认清除
+     */
+    setSelected (data = [], clear = true) {
+      clear && this.cancelSelected()
+      this.$tools.forEach(data, item => {
+        const primaryValue = this.$type.isObject(item) ? Reflect.get(item, this.primaryField) : item
+        const row = this.allRows.get(primaryValue)
+        if (row) {
+          row.handlerCheckedChange(true)
+        }
+      })
+      this.refresh()
     },
     /**
      * 点击 Header row checkbox
      */
-    handlerCheckboxHeader (value) {
+    handlerCheckboxHeader (status) {
       this.checkedHeaderHalf = false
-      this.checkedRows.clear()
-      if (value === true) {
-        for (const item of this.data) {
-          const primaryValue = Reflect.get(item, 'primaryKey')
-          this.checkedRows.set(primaryValue, item)
-        }
-      }
-      this.checkedBodyNumber = this.checkedRows.size
-      this.$emit('header-checked-change', value)
-    },
-    handlerCheckedChange (checked, row) {
-      if (this.multiple !== true) {
-        this.checkedRows.clear()
-      }
-      const primaryValue = Reflect.get(row, 'primaryKey')
-      if (checked === true) {
-        this.checkedRows.set(primaryValue, row)
-      } else {
-        this.checkedRows.delete(primaryValue)
-      }
-      this.checkedBodyNumber = this.checkedRows.size
-    },
-    /**
-     * 点击 Row
-     */
-    handlerClickRow (row, index, node) {
-      this.$emit('click-row', row, index, node)
+      this.clear()
+      this.allRows.forEach(value => value.handlerCheckedChange(status))
+      this.refresh()
     },
     handlerScrollBody (scrollLeft) {
       this.scrollLeft = scrollLeft

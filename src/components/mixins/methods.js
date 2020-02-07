@@ -72,7 +72,13 @@ export default {
   dispatchParent (componentName, eventName, params) {
     let parent = this.findParentComponent([componentName])
     if (parent) {
-      parent.$emit.apply(parent, [eventName].concat(params))
+      this.$emit.apply(parent, [eventName].concat(params))
+    }
+  },
+  dispatchUpward (componentName, eventName, params) {
+    let parent = this.findParentComponent([componentName])
+    if (parent) {
+      this.$emit.apply(parent, [eventName].concat(params))
     }
   },
   isComponentVue (target) {
@@ -87,6 +93,10 @@ export default {
       this.$off.call(parent, eventName, callback)
       this.$on.call(parent, eventName, callback)
     }
+  },
+  listener (eventName, callback) {
+    this.$off(eventName, callback)
+    this.$on(eventName, callback)
   },
   listenerParent (eventName, callback = () => { }) {
     let parent = this.$parent || this.$root
