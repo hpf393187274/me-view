@@ -131,15 +131,9 @@ export default {
       this.valueMultiple.push({ ...data })
     },
     selectMultiple (data) {
-      const this_ = this
-      this.$tools.includes(this.valueMultiple, data, (source, target) => source[this.fieldValue] === target[this.fieldValue])
-        .then(({ status, data, index }) => {
-          status ? this_.handleMultipleRemove(index) : this_.handleMultiplPush(data)
-        })
-        .catch(message => { console.error(message) })
-        .finally(() => {
-          this.$emit('change', [...this.value__])
-        })
+      const index = this.valueMultiple.findIndex(item => item[this.fieldValue] === data[this.fieldValue])
+      index >= 0 ? this.handleMultipleRemove(index) : this.handleMultiplPush(data)
+      this.$emit('change', [...this.value__])
     },
     handlerClickOption (item, index) {
       const data = { ...item, index }

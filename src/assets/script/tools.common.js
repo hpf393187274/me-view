@@ -103,17 +103,13 @@ export default {
    * @param {Function or Number} condition
    */
   arrayRemove (target, condition) {
-    if (type.isNotArray(target)) { return Promise.reject(new Error('target is not Array')) }
-
-    if (type.isNumber(condition)) {
-      if (condition < 0 || condition > target.length) { return Promise.reject(new Error('index 下标越界')) }
-
-      return Promise.resolve(target.splice(condition, 1))
-    }
-
-    if (type.isFunction(condition)) {
-      const index = target.findIndex(condition)
-      return index === -1 ? Promise.reject(new Error('not exist')) : Promise.resolve(target.splice(index, 1))
+    if (type.isArray(target)) {
+      if (type.isNumber(condition)) {
+        target.slice(condition, 1)
+      }
+      if (type.isFunction(condition)) {
+        target.slice(target.findIndex(condition), 1)
+      }
     }
   },
   /**
@@ -154,22 +150,11 @@ export default {
    * @param {Object} target
    * @param {Function} callback
    */
-  includes (source, target, callback) {
-    if (type.isNotArray(source)) {
-      return Promise.reject(new Error('source is not Array'))
+  includes (target, callback) {
+    if (type.isArray(target) && type.isFunction(callback)) {
+      return target.findIndex(callback) >= 0
     }
-    if (this.isEmpty(target)) {
-      return Promise.reject(new Error('target is Empty'))
-    }
-    if (type.isNotFunction(callback)) {
-      callback = (source, target) => source === target
-    }
-    const index = source.findIndex(item => callback(item, target))
-    if (index === -1) {
-      return Promise.resolve({ status: false, data: target })
-    } else {
-      return Promise.resolve({ status: true, data: source[index], index })
-    }
+    return false
   },
   /**
    * 计算函数执行时间：默认秒
