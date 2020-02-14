@@ -67,7 +67,7 @@
       <me-button plain type="primary" @click="removeSelectData">批量删除</me-button>
     </template>
     <template #action="{data}">
-      <me-input v-model="data.label" />
+      <me-button @click="removeRow(data)">删除</me-button>
     </template>
     <template #test>
       <me-button>test</me-button>
@@ -112,6 +112,15 @@
           const result = this.$refs.tableList.getSelectedData()
           console.log('handlerTableSelectedData=========》', result)
         }
+      },
+      removeRow (data) {
+        const tableList = this.$refs.tableList
+        this.$dialog.confirm({
+          content: '确定要删除当前行？',
+          ok() {
+            tableList.batchRemoveData([data])
+          }
+        })
       },
       removeSelectData(){
          const result = this.$refs.tableList.getSelectedData()
