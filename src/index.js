@@ -1,4 +1,5 @@
 import '@assets/styles/common.less'
+import '@assets/styles/index.scss'
 import '@assets/styles/icon.css'
 
 import {

@@ -8,6 +8,8 @@ import Tabs from './tabs/index'
 import Transfer from './transfer/index'
 import Paging from './paging/index'
 import Modal from './modal/index'
+
+const TabPane = Tabs.TabPane
 export default [
-  Panel, Dialog, Paging, Tabs, Tree, Menu, Transfer, Table, Modal
+  Panel, Dialog, Paging, Tabs, TabPane, Tree, Menu, Transfer, Table, Modal
 ]

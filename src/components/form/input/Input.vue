@@ -123,7 +123,7 @@ export default {
       }
       this.updateValue(newValue)
       this.handlerLableEvent(() => {
-        this.dispatchParent('MeLabel', 'on-label-change', this.value__)
+        this.dispatchUpward('MeLabel', 'on-label-change', this.value__)
       })
     },
     change (value) {
@@ -165,7 +165,7 @@ export default {
     handleBlur () {
       this.$emit('on-blur', this.value__)
       this.handlerLableEvent(() => {
-        this.dispatchParent('MeLabel', 'on-label-blur', this.value__)
+        this.dispatchUpward('MeLabel', 'on-label-blur', this.value__)
       })
     },
     setValue (value) {

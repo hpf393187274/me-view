@@ -1,101 +1,134 @@
-
+<style lang="scss" scoped>
+.tabs-container {
+  display: grid;
+  border: 1px solid rgb(245, 243, 243);
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 200px;
+  .tabs-title-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px,200px));
+    min-height: 35px;
+    margin-bottom: 2px;
+  }
+}
+</style>
+<template>
+  <div class="tabs-container">
+    <div class="tabs-title-wrap" :class="[`tabs-title-${mode}`]">
+      <me-tab-title :closable="analyzeClosable(item)" v-for="item in paneList" :key="item.name" :name="item.name">{{item.title}}</me-tab-title>
+    </div>
+    <slot />
+    <div class="me-empty" v-show="paneList.length === 0">暂无页签</div>
+  </div>
+</template>
 <script>
+import TabTitle from './TabTitle'
 export default {
-  name: 'MeTabs'
-  // props: {
-  //   type: {
-  //     type: String,
-  //     validator: function(value) {
-  //       return ['card', 'border-card'].findIndex(item => item === value) !== -1
-  //     }
-  //   },
-  //   /**
-  //    * 标签是否可关闭
-  //    * default：false
-  //    */
-  //   closable: { type: Boolean, default: false },
-  //   /**
-  //    * 标签是否可增加
-  //    * default：false
-  //    */
-  //   addable: { type: Boolean, default: false },
-  //   /**
-  //    * 标签是否同时可增加和关闭
-  //    * default：false
-  //    */
-  //   editable: { type: Boolean, default: false },
-  //   /**
-  //    * 标签的宽度是否自撑开
-  //    * default：false
-  //    */
-  //   stretch: { type: Boolean, default: false },
-  //   /**
-  //    * 选项卡所在位置
-  //    * default：'top'
-  //    */
-  //   tabPosition: {
-  //     type: String,
-  //     validator: function(value) {
-  //       return ['top', 'right', 'bottom', 'left'].includes(value)
-  //     },
-  //     default: 'top'
-  //   },
-  //   /**
-  //    * 切换标签之前的钩子，若返回 false 或者返回 Promise 且被 reject，则阻止切换。
-  //    * type: Function(activeName, oldActiveName)
-  //    */
-  //   beforeLeave: Function
-  // },
-  // methods: {
-  //   /**
-  //    * tab 被选中时触发
-  //    * 被选中的标签 tab 实例
-  //    */
-  //   tabClick(data) {
-  //     this.$emit('tab-click', data)
-  //   },
-  //   /**
-  //    * 点击 tab 移除按钮后触发
-  //    * 被删除的标签的 name
-  //    */
-  //   tabRemove(data) {
-  //     this.$emit('tab-remove', data)
-  //   },
-  //   /**
-  //    * 点击 tabs 的新增按钮后触发
-  //    */
-  //   tabAdd(data) {
-  //     this.$emit('tab-add', data)
-  //   },
-  //   /**
-  //    * 点击 tabs 的新增按钮或 tab 被关闭后触发
-  //    * (targetName, action)
-  //    */
-  //   edit(data) {
-  //     this.$emit('edit', data)
-  //   },
-  //   calcPaneInstances() {
-  //     let slotDefault = this.$scopedSlots.default
-  //     if (slotDefault && slotDefault instanceof Function) {
-  //       const paneSlots = slotDefault().filter(vnode => {
-  //         return (
-  //           vnode.tag &&
-  //           vnode.componentOptions &&
-  //           vnode.componentOptions.tag.includes('tab-pane')
-  //         )
-  //       })
-  //       for (const paneSlot of paneSlots) {
-  //         let pane = paneSlot.componentInstance
-  //         this.$slots.default = pane.$children[0].$vnode
-  //       }
-  //       console.log('=============')
-  //     }
-  //   }
-  // },
-  // mounted() {
-  //   // this.$nextTick(function () {
-  //   //   this.calcPaneInstances()
-  //   // })
-  // }
+  name: 'MeTabs',
+  components: { [TabTitle.name]: TabTitle },
+  props: {
+    active: String,
+    addable: Boolean,
+    closable: { type: Boolean, default: null },
+    mode: { type: String, default: 'line', validator: value => ['line', 'card'].includes(value) },
+    data: { type: Array, default () { return [] } }
+  },
+  data () {
+    return {
+      paneList: [],
+      nodeActive: null
+    }
+  },
+  created () {
+    this.handlerEvents()
+  },
+  async mounted () {
+    if (!this.active) {
+      setTimeout(() => {
+        if (!this.panelActivate) {
+          const [ first ] = this.paneList
+          this.nodeActive = first
+        }
+      }, 200)
+    }
+  },
+  watch: {
+    nodeActive (newValue, oldValue) {
+      if (newValue) {
+        console.log(`watch.nodeActive --- ${newValue.title}`)
+        newValue.nodeTitle.setActivated(true)
+        newValue.nodePane.setActivated(true)
+      }
+      if (oldValue) {
+        oldValue.nodeTitle.setActivated(false)
+        oldValue.nodePane.setActivated(false)
+      }
+    },
+    size () { return this.paneList.length }
+  },
+  methods: {
+    analyzeClosable ({ closable }) {
+      if (closable === null || closable === undefined) {
+        return this.closable
+      }
+      return closable
+    },
+    /**
+     * 处理自定义激活
+     */
+    handlerActiveCustom (target) {
+      const { nodePane, nodeTitle, name } = target
+      if (this.active && nodePane && nodeTitle && this.active === name) {
+        // 设置自定义激活
+        this.nodeActive = target
+      }
+    },
+    handlerCompare (item) {
+      return ({ name }) => name === item.name
+    },
+    handlerEvents () {
+      this.listener('tab-pane-add', item => {
+        const target = this.paneList.find(this.handlerCompare(item))
+        if (target) {
+          if (!target.nodePane) {
+            Reflect.set(target, 'nodePane', item.nodePane)
+          }
+          this.handlerActiveCustom(target)
+        } else {
+          this.paneList.push(item)
+        }
+      })
+      this.listener('tab-title-add', item => {
+        const target = this.paneList.find(this.handlerCompare(item))
+        if (target) {
+          if (!target.nodeTitle) {
+            Reflect.set(target, 'nodeTitle', item.nodeTitle)
+          }
+          this.handlerActiveCustom(target)
+        } else {
+          this.paneList.push(item)
+        }
+      })
+      this.listener('tab-click', item => {
+        this.nodeActive = this.paneList.find(this.handlerCompare(item))
+      })
+      this.listener('tab-close', item => {
+        let indexActive = this.$tools.arrayRemove(this.paneList, this.handlerCompare(item))
+        if (indexActive > -1) {
+          if (this.size === indexActive) {
+            indexActive = this.size - 1
+          }
+          this.nodeActive.nodePane.setRendered(false)
+          const newActive = this.paneList[indexActive]
+          if (newActive) {
+            this.nodeActive = this.paneList[indexActive]
+          } else {
+            this.nodeActive = null
+          }
+        }
+      })
+    }
+  }
 }
 </script>

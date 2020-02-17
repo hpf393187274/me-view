@@ -1,31 +1,53 @@
 
+<template>
+  <div class="tabs-content" v-if="rendered" v-show="activated">
+    <template v-if="type === 'frame'">
+      <iframe :id="name" :name="name" :title="title" :src="src" frameborder="0" width="100%" height="100%"></iframe>
+    </template>
+    <template v-else><slot/></template>
+  </div>
+</template>
+<style lang="scss" scoped>
+.tabs-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+</style>
 <script>
+import { tools } from '@assets/script/common'
 export default {
-  name: 'MeTabPane'
-  // props: {
-  //   /**
-  //    * 选项卡标题
-  //    */
-  //   label: String,
-  //   /**
-  //    * 是否禁用
-  //    * default：false
-  //    */
-  //   /**
-  //    * 与选项卡 activeName 对应的标识符，表示选项卡别名
-  //    * default：该选项卡在选项卡列表中的顺序值，如第一个选项卡则为'1'
-  //    */
-  //   nameNew: String,
-  //   /**
-  //    * 标签是否可关闭
-  //    * default：false
-  //    */
-  //   closable: { type: Boolean, default: false },
-  //   /**
-  //    * 标签是否延迟渲染
-  //    * default：false
-  //    */
-  //   lazy: { type: Boolean, default: false }
-  // }
+  name: 'MeTabPane',
+  props: {
+    title: String,
+    src: String,
+    closable: { type: Boolean, default: null },
+    name: String,
+    type: { type: String, default: 'panel', validator: value => ['panel', 'frame'].includes(value) }
+  },
+  data () {
+    return {
+      rendered: false,
+      name__: this.name || tools.UUId(),
+      activated: false
+    }
+  },
+  watch: {
+    activated (value) {
+      if (this.rendered === false && value === true) {
+        this.rendered = true
+      }
+    }
+  },
+  created () {
+    this.dispatchParent('tab-pane-add', this.getParams())
+  },
+  methods: {
+    setActivated (value) { this.activated = value },
+    setRendered (value) { this.rendered = value },
+    getParams () {
+      return { name: this.name__, title: this.title, nodePane: this }
+    }
+  }
 }
 </script>

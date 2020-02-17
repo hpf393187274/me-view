@@ -1,0 +1,9 @@
+
+@import "./variable";
+@import "./tabs";
+
+.me-grid-center {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}

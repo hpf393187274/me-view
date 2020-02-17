@@ -105,10 +105,13 @@ export default {
   arrayRemove (target, condition) {
     if (type.isArray(target)) {
       if (type.isNumber(condition)) {
-        target.slice(condition, 1)
+        target.splice(condition, 1)
+        return condition
       }
       if (type.isFunction(condition)) {
-        target.slice(target.findIndex(condition), 1)
+        const index = target.findIndex(condition)
+        target.splice(index, 1)
+        return index
       }
     }
   },

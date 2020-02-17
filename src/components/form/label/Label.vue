@@ -54,13 +54,13 @@ export default {
   },
   mounted () {
     if (this.prop) {
-      this.dispatchParent('MeForm', 'on-label-add', this)
+      this.dispatchUpward('MeForm', 'on-label-add', this)
       this.bindFormInstance()
     }
     this.bindFormElement()
   },
   beforeDestroy () {
-    this.dispatchParent('MeForm', 'on-label-remove', this)
+    this.dispatchUpward('MeForm', 'on-label-remove', this)
   },
   methods: {
     bindEventToFormElement () {

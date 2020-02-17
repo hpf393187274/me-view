@@ -69,8 +69,8 @@ export default {
     }
     return parent
   },
-  dispatchParent (componentName, eventName, params) {
-    let parent = this.findParentComponent([componentName])
+  dispatchParent (eventName, params) {
+    let parent = this.$parent || this.$root
     if (parent) {
       this.$emit.apply(parent, [eventName].concat(params))
     }

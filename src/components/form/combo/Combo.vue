@@ -74,7 +74,7 @@ export default {
       this.initValue(newValue)
     },
     value__ (newValue) {
-      this.dispatchParent('MeLabel', 'on-label-change', newValue)
+      this.dispatchUpward('MeLabel', 'on-label-change', newValue)
     }
   },
   methods: {
