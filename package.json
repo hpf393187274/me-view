@@ -83,14 +83,14 @@
     "last 2 versions"
   ],
   "description": "## Project setup ``` npm install ```",
-  "registry": "http://192.168.204.198:9002/repository/npm-hosted/",
+  "registry": "http://172.18.103.81:9002/repository/npm-hosted/",
   "author": "hpf393187274",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/hpf393187274/me-view/issues"
   },
   "publishConfig": {
-    "registry": "http://192.168.204.198:9002/repository/npm-hosted/"
+    "registry": "http://172.18.103.81:9002/repository/npm-hosted/"
   },
   "homepage": "https://github.com/hpf393187274/me-view#readme"
 }
