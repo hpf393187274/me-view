@@ -32,7 +32,7 @@ export default {
       }
     },
     validate (callback = () => { }) {
-      if (type.isNotFunction(callback)) {
+      if (type.notFunction(callback)) {
         console.warn('me-from.validate', '->', 'param is net function')
       }
       const length = this.fields.length

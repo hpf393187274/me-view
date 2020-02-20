@@ -31,7 +31,7 @@ export default class Storage {
   }
 
   arrayAppend (key, value, callback = (source, target) => source === target) {
-    if (type.isNotFunction(callback)) { return }
+    if (type.notFunction(callback)) { return }
     let list = this.get(key)
     if (tools.isEmpty(list)) {
       this.set(key, [value])
@@ -40,12 +40,12 @@ export default class Storage {
 
     const target = list.find(item => callback(item, value))
 
-    if (tools.isNotEmpty(target)) { return }
+    if (tools.notEmpty(target)) { return }
     list.push(value)
     this.set(key, list)
   }
   arrayRemove (key, value, callback = (source, target) => source === target) {
-    if (type.isNotFunction(callback)) { return }
+    if (type.notFunction(callback)) { return }
     const list = this.get(key)
     if (tools.isEmpty(list)) { return }
 

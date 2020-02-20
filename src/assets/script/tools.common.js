@@ -21,15 +21,17 @@ export default {
    * @param {Array} target
    */
   isEmptyArray (target) {
-    if (type.isArray(target) && target.length === 0) { return true }
-    return false
+    if (type.isArray(target)) {
+      return target.length === 0
+    }
+    throw new CustomEvent('target is not array.')
   },
 
   /**
    * 校验：对象是否为空
    * @param {Object} target 目标
    */
-  isNotEmpty (target) {
+  notEmpty (target) {
     return !this.isEmpty(target)
   },
   /**
@@ -41,7 +43,7 @@ export default {
       if (type.isNumber(target)) { return target }
       if (type.isString(target)) {
         const result = target.replace(/[^\d]+/, '')
-        if (this.isNotEmpty(result)) {
+        if (this.notEmpty(result)) {
           return Number(result)
         }
       }
@@ -65,7 +67,7 @@ export default {
    * @param {String} key 不需要传递
    */
   jsonToForm (target, key) {
-    if (type.isNotObjectOrArray(target)) { return {} }
+    if (type.notObjectOrArray(target)) { return {} }
     const getKey = (_key) => {
       return this.isEmpty(key) ? _key : `${key}[${_key}]`
     }
@@ -169,7 +171,7 @@ export default {
     if (classifyList.includes(classify) === false) {
       classify = 'second'
     }
-    if (type.isNotFunction(callback)) { return 0 }
+    if (type.notFunction(callback)) { return 0 }
     const begin = new Date().getTime()
     try {
       callback.call(this)
@@ -198,7 +200,7 @@ export default {
    * @param {Array} param.exclude 是否深度克隆, 默认：false
    */
   clone (target, { deep = false, exclude = [] } = {}) {
-    if (type.isNotObjectOrArray(target)) { return target }
+    if (type.notObjectOrArray(target)) { return target }
     if (deep === true) {
       return JSON.parse(JSON.stringify(target))
     }

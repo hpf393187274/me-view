@@ -9,5 +9,5 @@ export default {
     }
     return false
   },
-  boolean (value) { return tools.isNotEmpty(value) }
+  boolean (value) { return tools.notEmpty(value) }
 }

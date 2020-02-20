@@ -64,10 +64,8 @@ export default {
   },
   methods: {
     bindEventToFormElement () {
-      this.$off('on-label-blur', this.handlerElementBlur)
-      this.$on('on-label-blur', this.handlerElementBlur)
-      this.$off('on-label-change', this.handlerElementChange)
-      this.$on('on-label-change', this.handlerElementChange)
+      this.listener('on-label-blur', this.handlerElementBlur)
+      this.listener('on-label-change', this.handlerElementChange)
     },
     handlerElementBlur () { this.validate() },
     handlerElementChange (value) {
@@ -98,7 +96,7 @@ export default {
       if (this.prop && this.FormInstance) {
         this.rulesForm = this.FormInstance.rules
         const ruleProp = Reflect.get(this.rulesForm, this.prop)
-        if (this.$type.isNotArray(ruleProp)) {
+        if (this.$type.notArray(ruleProp)) {
           return
         }
         this.setRules(ruleProp)

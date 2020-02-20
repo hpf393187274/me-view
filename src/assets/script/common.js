@@ -4,6 +4,8 @@ import http from './http.common'
 import Storage from './storage.common'
 import regExp from './regExp.common'
 
+import Assert from './Assert.common'
+
 import IndexedDB from './database.common'
 const local = new Storage(window.localStorage)
 const session = new Storage(window.sessionStorage)
@@ -18,4 +20,5 @@ class CustomError extends Error {
   }
 }
 
-export { type, tools, http, local, session, regExp, IndexedDB, indexedDB, CustomError }
+window.CustomError = CustomError
+export { type, tools, http, local, session, regExp, IndexedDB, indexedDB, CustomError, Assert }

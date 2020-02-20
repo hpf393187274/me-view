@@ -67,7 +67,7 @@ export default {
       return [
         'me-row table-column',
         {
-          'me-flex': this.columns.findIndex(item => this.$tools.isNotEmpty(item.width)) === -1,
+          'me-flex': this.columns.findIndex(item => this.$tools.notEmpty(item.width)) === -1,
           'me-center': this.center
         }
       ]

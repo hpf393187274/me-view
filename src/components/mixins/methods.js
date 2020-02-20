@@ -28,7 +28,7 @@ export default {
    *
    * @param {String} value
    */
-  boolean (value) { return tools.isNotEmpty(value) },
+  boolean (value) { return tools.notEmpty(value) },
 
   initPrimaryKey (data) {
     if (type.isArray(data)) {
@@ -47,15 +47,14 @@ export default {
   },
   existParentComponent (componentNames) {
     const parent = this.findParentComponent(componentNames)
-    return this.$tools.isNotEmpty(parent)
+    return this.$tools.notEmpty(parent)
   },
   findChildrenComponent (componentName, callback = () => { }) {
     findChildren.call(this, componentName, callback)
   },
   findParentComponent (componentNames) {
     if (this.$tools.isEmptyArray(componentNames)) {
-      console.error(`组件(${this.$options.name}) 调用方法 findParentComponent 入参  is no array or empty array`)
-      return null
+      throw new CustomEvent(`组件(${this.$options.name}) 调用方法 findParentComponent 入参  is no array or empty array`)
     }
     let parent = this.$parent || this.$root
     let name = parent.$options.name

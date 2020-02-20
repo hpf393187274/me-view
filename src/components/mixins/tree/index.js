@@ -89,7 +89,7 @@ export default {
      * @param {Function} filter 过滤函数
      */
     findNode (filter) {
-      if (this.$type.isNotFunction(filter)) { return }
+      if (this.$type.notFunction(filter)) { return }
       return this.getChildrenNodeList().find(node => filter(node.getData()))
     },
     /**

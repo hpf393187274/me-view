@@ -22,7 +22,7 @@ export default {
    * @param target
    * @returns {Boolean}
    */
-  isNotBoolean (target) {
+  notBoolean (target) {
     return this.isBoolean(target)
   },
   /**
@@ -39,7 +39,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotNumber (target) {
+  notNumber (target) {
     return !this.isNumber(target)
   },
   /**
@@ -56,7 +56,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotString (target) {
+  notString (target) {
     return !this.isString(target)
   },
   /**
@@ -73,7 +73,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotObjectOrArray (target) {
+  notObjectOrArray (target) {
     return !this.isObjectOrArray(target)
   },
   /**
@@ -89,7 +89,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotObject (target) {
+  notObject (target) {
     return !this.isObject(target)
   },
   /**
@@ -105,7 +105,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotArray (target) {
+  notArray (target) {
     return !this.isArray(target)
   },
   /**
@@ -132,7 +132,7 @@ export default {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNotFunction (target) {
+  notFunction (target) {
     return !this.isFunction(target)
   }
 }
