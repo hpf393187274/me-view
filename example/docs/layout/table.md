@@ -124,7 +124,7 @@
       },
       removeSelectData(){
          const result = this.$refs.tableList.getSelectedData()
-         if(this.$type.isNotArray(result) || result.length < 1 ) {
+         if(this.$type.notArray(result) || result.length < 1 ) {
            this.$message.info('请选择要删除的数据！')
            return
          }

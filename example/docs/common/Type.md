@@ -23,16 +23,16 @@ type.isFunction(()->{}) // true
 | 方法名             | 描述               | 参数   | 返回值      |
 | ------------------ | ------------------ | ------ | ----------- |
 | isBoolean          | Boolean 类型       | target | true, false |
-| isNotBoolean       | 非 Boolean 类型    | target | true, false |
+| notBoolean       | 非 Boolean 类型    | target | true, false |
 | isNumber           | Number 类型        | target | true, false |
-| isNotNumber        | 非 Number 类型     | target | true, false |
+| notNumber        | 非 Number 类型     | target | true, false |
 | isString           | String 类型        | target | true, false |
-| isNotString        | 非 String 类型     | target | true, false |
+| notString        | 非 String 类型     | target | true, false |
 | isObjectOrArray    | Object or Array    | target | true, false |
-| isNotObjectOrArray | 非 Object or Array | target | true, false |
+| notObjectOrArray | 非 Object or Array | target | true, false |
 | isObject           | Object             | target | true, false |
-| isNotObject        | 非 Object          | target | true, false |
+| notObject        | 非 Object          | target | true, false |
 | isArray            | Array              | target | true, false |
-| isNotArray         | 非 Array           | target | true, false |
+| notArray         | 非 Array           | target | true, false |
 | isFunction         | Function           | target | true, false |
-| isNotFunction      | 非 Function        | target | true, false |
+| notFunction      | 非 Function        | target | true, false |
