@@ -1,14 +1,11 @@
-import tools from './tools.common'
-import type from './type.common'
+import { tools, Assert } from './common'
 
 export default class Storage {
   constructor (storage) {
     this.storage = tools.isEmpty(storage) ? window.localStorage : storage
   }
   get (key) {
-    if (tools.isEmpty(key)) {
-      return null
-    }
+    Assert.notEmpty(key, 'The key cannot be empty')
     const value = this.storage.getItem(key)
     if (tools.isEmpty(value)) {
       return null
@@ -16,40 +13,37 @@ export default class Storage {
     return JSON.parse(value)
   }
   set (key, value) {
-    if (tools.isEmpty(key) || tools.isEmpty(value)) {
-      return
-    }
+    Assert.notEmpty(key, 'The key cannot be empty')
+    Assert.notEmpty(value, 'The value cannot be empty')
     this.storage.setItem(key, JSON.stringify(value))
   }
   clear () { }
 
   remove (key) {
-    if (tools.isEmpty(key)) {
-      return
-    }
+    Assert.notEmpty(key, 'The key cannot be empty')
     this.storage.removeItem(key)
   }
 
-  arrayAppend (key, value, callback = (source, target) => source === target) {
-    if (type.notFunction(callback)) { return }
+  arrayAppend (key, value, callback) {
+    Assert.notEmpty(value, 'The value cannot be empty')
+    Assert.isFunction(callback, 'callback is not function')
+
     let list = this.get(key)
     if (tools.isEmpty(list)) {
       this.set(key, [value])
       return
     }
 
-    const target = list.find(item => callback(item, value))
-
-    if (tools.notEmpty(target)) { return }
-    list.push(value)
-    this.set(key, list)
+    if (list.findIndex(callback) === -1) {
+      list.push(value)
+      this.set(key, list)
+    }
   }
-  arrayRemove (key, value, callback = (source, target) => source === target) {
-    if (type.notFunction(callback)) { return }
+  arrayRemove (key, callback) {
+    Assert.isFunction(callback, 'callback is not function')
     const list = this.get(key)
     if (tools.isEmpty(list)) { return }
-
-    const index = list.findIndex(item => callback(item, value))
+    const index = list.findIndex(callback)
     if (index > -1) {
       list.splice(index, 1)
       this.set(key, list)

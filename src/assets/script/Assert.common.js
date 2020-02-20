@@ -35,4 +35,10 @@ export default class Assert {
       throw new CustomError(message)
     }
   }
+
+  static isFunction (target, message) {
+    if (type.notFunction(target)) {
+      throw new CustomError(message)
+    }
+  }
 }
