@@ -135,3 +135,22 @@
 </script>
 ```
 :::
+
+## Table Attributes
+| 名称      | 描述   |  类型   | 默认值 | 可选值      |
+| --------- | ------ | :-----: | :----: | ----------- |
+| title     | 标题   | String  |   -    | -           |
+| width     | 宽度   | String  | false  | true, false |
+| height    | 高度   | String  | false  | true, false |
+| draggable | 可拖拽 | Boolean |  true  | true, false |
+| closable  | 可关闭 | Boolean |  true  | true, false |
+
+## Table Events
+| 名称    | 描述     | 参数  |
+| ------- | -------- | :---: |
+| confirm | 事件确定 |   -   |
+| cancel  | 事件取消 |   -   |
+
+## Table Slot
+| 名称 | 描述 |
+| ---- | ---- |
