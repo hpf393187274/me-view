@@ -1,5 +1,5 @@
-import type from './type.common'
-export default {
+import type from './Type.class'
+class Tools {
   /**
    * 校验：对象是否为空
    * @param {Object} target 目标
@@ -15,7 +15,8 @@ export default {
     if (type.isObject(target) && Object.keys(target).length === 0) { return true }
 
     return false
-  },
+  }
+
   /**
    * 是空数组
    * @param {Array} target
@@ -25,7 +26,7 @@ export default {
       return target.length === 0
     }
     throw new CustomEvent('target is not array.')
-  },
+  }
 
   /**
    * 校验：对象是否为空
@@ -33,7 +34,8 @@ export default {
    */
   notEmpty (target) {
     return !this.isEmpty(target)
-  },
+  }
+
   /**
    * 转换为 Number
    * @param {*} target
@@ -50,7 +52,8 @@ export default {
       throw new Error('convert to number error, target；' + target)
     }
     return target
-  },
+  }
+
   /**
    * 去除字符串两边的空格
    * @param {String} target 目标字符串
@@ -60,7 +63,8 @@ export default {
       return target.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
     }
     return target
-  },
+  }
+
   /**
    * 序列号：Json to form
    * @param {Object} target 目标对象
@@ -84,7 +88,8 @@ export default {
       result[getKey(_key)] = value
     }
     return result
-  },
+  }
+
   /**
    * 生成 UUID
    */
@@ -98,7 +103,8 @@ export default {
     s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1) // bits 6-7 of the clock_seq_hi_and_reserved to 01
     s[8] = s[13] = s[18] = s[23] = '-'
     return s.join('')
-  },
+  }
+
   /**
    * 数组元素移出
    * @param {Array} target
@@ -116,7 +122,8 @@ export default {
         return index
       }
     }
-  },
+  }
+
   /**
    *
    * @param {Array | Object} target 清空目标内容
@@ -131,7 +138,8 @@ export default {
         Reflect.deleteProperty(target, key)
       }
     }
-  },
+  }
+
   /**
    * 迭代
    * @param {Array|Object} target 目标
@@ -145,7 +153,8 @@ export default {
     if (type.isObject(target) && type.isFunction(callback)) {
       for (const key in target) { callback(key, target[key]) }
     }
-  },
+  }
+
   /**
    * 是否存在于数组
    * then 存在
@@ -160,14 +169,15 @@ export default {
       return target.findIndex(callback) >= 0
     }
     return false
-  },
+  }
+
   /**
    * 计算函数执行时间：默认秒
    * @param {String} param.classify 获取类别
    * @param {Function} param.callback 执行的回调函数
    */
   expendTime ({ classify = 'second', callback } = {}) {
-    const classifyList = ['hour', 'minute', 'second']
+    const classifyList = [ 'hour', 'minute', 'second' ]
     if (classifyList.includes(classify) === false) {
       classify = 'second'
     }
@@ -192,7 +202,8 @@ export default {
       difference = Math.ceil(difference / 60)
     }
     return difference
-  },
+  }
+
   /**
    *
    * @param {Object | Array} target
@@ -212,25 +223,29 @@ export default {
       return newTarget
     }
     return target.flatMap(item => this.clone(item))
-  },
+  }
+
   sendRedirect (url) {
     window.location.href = url
-  },
+  }
+
   /**
    * 如果存在 iframe
    */
   isSameHost () {
     return window.top.location.host === window.location.host
-  },
+  }
+
   /**
   * 获取 Url 参数
   * @param {String} key 参数名
   */
   urlParam (key, target = window.location.search) {
-    let result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
+    const result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
     const params = JSON.parse(result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '{"$1":"$2"}'))
     return this.isEmpty(key) ? params : Reflect.get(params, key)
-  },
+  }
+
   /**
    * 首字母变大写
    * @param {String} target
@@ -238,7 +253,8 @@ export default {
   firstCharUpperCase (target) {
     if (this.isEmpty(target)) { return '' }
     return target.slice(0, 1).toUpperCase() + target.slice(1)
-  },
+  }
+
   /**
    * 首字母变小写
    * @param {String} target
@@ -248,3 +264,5 @@ export default {
     return target.slice(0, 1).toLowerCase() + target.slice(1)
   }
 }
+
+export default new Tools()

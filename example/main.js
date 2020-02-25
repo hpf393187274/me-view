@@ -4,12 +4,9 @@ import router from './router'
 import 'highlight.js/styles/color-brewer.css'
 import './style/markdown.less'
 import meView from '@/index'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 import MeDemo from './components/index'
 Vue.use(meView)
 Vue.use(MeDemo)
-Vue.use(ElementUI)
 Vue.config.productionTip = false
 new Vue({
   router,

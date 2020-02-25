@@ -1,4 +1,6 @@
-import { CustomError, type, tools } from './common'
+import CustomError from './CustomError.class'
+import type from './Type.class'
+import tools from './Tools.class'
 export default class Assert {
   static notEmpty (target, message) {
     if (tools.isEmpty(target)) {

@@ -36,6 +36,7 @@ export {
 }
 
 const componentsList = require.context('./components/', true, /index.js$/).keys()
+
 local.set('componentsList', componentsList)
 
 export default {

@@ -2,7 +2,7 @@
 import TableCell from './TableCell.mixin'
 export default {
   name: 'MeTableCellH',
-  mixins: [TableCell],
+  mixins: [ TableCell ],
   render (h) {
     if (this.$slots.default) {
       // 渲染：普通默认插槽
@@ -12,11 +12,11 @@ export default {
       { style: this.styles },
       [
         h('div', {
-          'class': 'cell-inner',
+          class: 'cell-inner',
           attrs: {
-            'title': this.label
+            title: this.label
           }
-        }, [this.label])
+        }, [ this.label ])
       ]
     )
   }

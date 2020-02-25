@@ -1,9 +1,11 @@
-import { tools, Assert } from './common'
 
-export default class Storage {
+import tools from './Tools.class'
+import Assert from './Assert.class'
+class Storage {
   constructor (storage) {
     this.storage = tools.isEmpty(storage) ? window.localStorage : storage
   }
+
   get (key) {
     Assert.notEmpty(key, 'The key cannot be empty')
     const value = this.storage.getItem(key)
@@ -12,11 +14,13 @@ export default class Storage {
     }
     return JSON.parse(value)
   }
+
   set (key, value) {
     Assert.notEmpty(key, 'The key cannot be empty')
     Assert.notEmpty(value, 'The value cannot be empty')
     this.storage.setItem(key, JSON.stringify(value))
   }
+
   clear () { }
 
   remove (key) {
@@ -28,9 +32,9 @@ export default class Storage {
     Assert.notEmpty(value, 'The value cannot be empty')
     Assert.isFunction(callback, 'callback is not function')
 
-    let list = this.get(key)
+    const list = this.get(key)
     if (tools.isEmpty(list)) {
-      this.set(key, [value])
+      this.set(key, [ value ])
       return
     }
 
@@ -39,6 +43,7 @@ export default class Storage {
       this.set(key, list)
     }
   }
+
   arrayRemove (key, callback) {
     Assert.isFunction(callback, 'callback is not function')
     const list = this.get(key)
@@ -50,3 +55,8 @@ export default class Storage {
     }
   }
 }
+
+const local = new Storage(window.localStorage)
+const session = new Storage(window.sessionStorage)
+
+export { local, session }

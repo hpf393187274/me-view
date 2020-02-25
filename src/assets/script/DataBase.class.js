@@ -1,5 +1,8 @@
-import { Assert, type } from './common'
-export default class IndexedDB {
+
+import Assert from './Assert.class'
+import type from './Type.class'
+
+export default class DataBase {
   constructor (name = 'me-view-database-default', version = 4) {
     this.dbName = name
     this.version = version
@@ -32,6 +35,7 @@ export default class IndexedDB {
     this.status = true
     this.db = upgrade === true ? event.target.result : request.result
   }
+
   /**
    * 获取表对象
    * @param {String} tableName 表名
@@ -41,8 +45,9 @@ export default class IndexedDB {
     if (!this.db) {
       await this.open()
     }
-    return this.db.transaction([tableName], mode).objectStore(tableName)
+    return this.db.transaction([ tableName ], mode).objectStore(tableName)
   }
+
   /**
    * 创建表，及索引
    * @param {Object} params { tableName="String-表名", keyPath="String-主键", index="Array-索引" }
@@ -79,6 +84,7 @@ export default class IndexedDB {
     await this.handlerResponse(request)
     console.log('数据添加成功')
   }
+
   /**
    * 保存，不存在，则新增，存在则更新
    * @param {String} tableName 表名
@@ -93,6 +99,7 @@ export default class IndexedDB {
     console.log('save', '->', '数据不存在，进行新增数据，data：', data)
     return this.add(tableName, data)
   }
+
   /**
    * 批量保存，不存在，则新增，存在则更新
    * @param {String} tableName 表名
@@ -101,7 +108,7 @@ export default class IndexedDB {
   async batchSave (tableName, list) {
     Assert.isArray(list, `需要一个数组：${list}`)
 
-    let promiseList = []
+    const promiseList = []
     for (const item of list) {
       promiseList.push(this.save(tableName, item))
     }
@@ -122,7 +129,7 @@ export default class IndexedDB {
   async batchRemove (tableName, values) {
     Assert.isArray(values, `需要一个数组：${values}`)
 
-    let promiseList = []
+    const promiseList = []
     for (const item of values) {
       promiseList.push(this.remove(tableName, item))
     }
@@ -197,7 +204,7 @@ export default class IndexedDB {
     Assert.notEmpty(value, '查询条件不能为空')
 
     const store = await this.__store(tableName)
-    let index = store.index(key)
+    const index = store.index(key)
     Assert.notEmpty(index, '索引不存在')
 
     const request = index.getAll(value)

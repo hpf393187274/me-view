@@ -1,24 +1,15 @@
-import type from './type.common'
-import tools from './tools.common'
+import type from './Type.class'
+import tools from './Tools.class'
 import http from './http.common'
-import Storage from './Storage.common'
+import { local, session } from './Storage.class'
 import regExp from './regExp.common'
 
-import Assert from './Assert.common'
+import Assert from './Assert.class'
 
-import IndexedDB from './IndexedDB.common'
-const local = new Storage(window.localStorage)
-const session = new Storage(window.sessionStorage)
-const indexedDB = new IndexedDB('me-view-database-default')
+import DataBase from './DataBase.class'
 
-class CustomError extends Error {
-  constructor (message) {
-    super(message)
-    console.error(message)
-    this.name = 'CustomError'
-    Error.captureStackTrace(this, this.constructor)
-  }
-}
+import CustomError from './CustomError.class'
+const dataBase = new DataBase('me-view-database-default')
 
 window.CustomError = CustomError
-export { type, tools, http, local, session, regExp, IndexedDB, indexedDB, CustomError, Assert }
+export { type, tools, http, local, session, regExp, DataBase, dataBase, CustomError, Assert }
