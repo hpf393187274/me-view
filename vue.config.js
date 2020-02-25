@@ -1,7 +1,5 @@
 const path = require('path')
-const fs = require('fs')
 const md = require('markdown-it')() // 引入markdown-it
-const slugify = require('transliteration').slugify // 引入transliteration中的slugify方法
 const mdContainer = require('markdown-it-container')
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -9,10 +7,20 @@ function resolve (dir) {
 module.exports = {
   lintOnSave: undefined,
   runtimeCompiler: true,
-  transpileDependencies: ['resize-detector'],
+  transpileDependencies: [ 'resize-detector' ],
   devServer: {
     port: 9000,
     disableHostCheck: true
+  },
+  css: {
+    loaderOptions: {
+      // 给 sass-loader 传递选项
+      sass: {
+        // @assets/ 是 src/assets 的别名
+        // 所以这里假设你有 `@assets/styles/variable` 这个文件
+        prependData: '@import "@assets/styles/variable.scss";'
+      }
+    }
   },
   chainWebpack: config => {
     config
@@ -43,14 +51,13 @@ module.exports = {
             require('markdown-it-anchor'),
             {
               level: 2, // 添加超链接锚点的最小标题级别, 如: #标题 不会添加锚点
-              slugify: slugify, // 自定义slugify, 我们使用的是将中文转为汉语拼音,最终生成为标题id属性
               permalink: true, // 开启标题锚点功能
               permalinkBefore: true // 在标题前创建锚点
             }
           ],
-          [mdContainer, 'tip'],
-          [mdContainer, 'warning'],
-          [mdContainer, 'demo', {
+          [ mdContainer, 'tip' ],
+          [ mdContainer, 'warning' ],
+          [ mdContainer, 'demo', {
             validate (params) {
               return params.trim().match(/^demo\s*(.*)$/)
             },
@@ -62,7 +69,7 @@ module.exports = {
               }
               return '</me-demo-block>'
             }
-          }]
+          } ]
         ]
       })
   }
