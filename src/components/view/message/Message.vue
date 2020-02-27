@@ -11,7 +11,7 @@ import MeMessageItem from './MessageItem'
 import { tools } from '../../../assets/script/common'
 import MeModal from '../modal'
 export default {
-  mixins: [Modal],
+  mixins: [ Modal ],
   components: {
     MeModal, MeMessageItem
   },
@@ -30,15 +30,10 @@ export default {
   methods: {
     handlerRemove (key) {
       tools.arrayRemove(this.container, item => item.primaryKey === key)
-        .then(() => {
-          if (this.container.length === 0) {
-            this.value__ = false
-            this.$emit('destroy')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      if (this.container.length === 0) {
+        this.value__ = false
+        this.$emit('destroy')
+      }
     }
   }
 }

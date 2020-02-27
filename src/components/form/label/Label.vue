@@ -19,7 +19,7 @@ export default {
   name: 'MeLabel',
   props: {
     rules: {
-      type: [Array, Object],
+      type: [ Array, Object ],
       validator: value => type.isObjectOrArray(value)
     },
     prop: String,
@@ -67,7 +67,9 @@ export default {
       this.listener('on-label-blur', this.handlerElementBlur)
       this.listener('on-label-change', this.handlerElementChange)
     },
-    handlerElementBlur () { this.validate() },
+    handlerElementBlur () {
+      this.validate()
+    },
     handlerElementChange (value) {
       if (!this.valueDefault) {
         Reflect.set(this, 'valueDefault', value)
@@ -80,16 +82,16 @@ export default {
       this.bindEventToFormElement()
     },
     bindFormInstance () {
-      this.FormInstance = this.findParentComponent(['MeForm'])
+      this.FormInstance = this.findParentComponent([ 'MeForm' ])
       this.bindFormRules(/* 解析表达元素 prop */)
     },
     setRules (value) {
       if (tools.isEmpty(value)) { return }
       if (type.isArray(value) && value.length > 0) {
-        this.rules__ = [...value]
+        this.rules__ = [ ...value ]
       }
       if (type.isObject(value)) {
-        this.rules__ = [value]
+        this.rules__ = [ value ]
       }
     },
     bindFormRules () {
@@ -110,20 +112,21 @@ export default {
     /**
      * 校验表单元素
      */
-    async validate (callback = () => { }) {
+    validate () {
       const validator = new Validator({ [this.prop]: this.rules__ })
-      try {
-        await validator.validate({ [this.prop]: this.valueCurrent }, { firstFields: true })
-        this.setValidateInfo('success')
-        const status = true
-        callback(status)
-      } catch (errors) {
-        if (errors) {
-          this.setValidateInfo('error', errors[0].message)
-          const status = false
-          callback(status)
-        }
-      }
+      const _this = this
+      return new Promise((resolve, reject) => {
+        validator.validate({ [this.prop]: this.valueCurrent }, { firstFields: true })
+          .then(() => {
+            _this.setValidateInfo('success')
+            resolve('success')
+          })
+          .catch(({ errors }) => {
+            const [ error ] = errors
+            _this.setValidateInfo('error', error.message)
+            reject(error.message)
+          })
+      })
     },
     reset () {
       console.log(`reset -> 当前值：${this.valueCurrent}, 默认值：${this.valueDefault}`)

@@ -43,7 +43,7 @@ Dialog.prompt = (options = {}) => {
     render (h) {
       const self = this
       return h('div', { class: 'me-flex' }, [
-        h('div', { style: { 'margin-bottom': '10px' } }, [options.content]),
+        h('div', { style: { 'margin-bottom': '10px' } }, [ options.content ]),
         h('me-label', { ref: 'label', class: 'me-row me-flex', props: { rules: self.rules } }, [
           h('me-input', {
             domProps: { value: self.value },

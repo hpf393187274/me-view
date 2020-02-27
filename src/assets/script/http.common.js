@@ -4,8 +4,8 @@ import Qs from 'qs'
  * 默认配置
  */
 const defaultConfig = {
-  'baseURL': '/',
-  'timeout': 10000,
+  baseURL: '/',
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     'X-Requested-With': 'XMLHttpRequest'

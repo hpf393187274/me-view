@@ -1,15 +1,14 @@
 import '@assets/styles/common.less'
 import '@assets/styles/index.scss'
 import '@assets/styles/icon.css'
-
 import {
   type,
   tools,
   local,
   session,
   http,
-  IndexedDB,
-  indexedDB,
+  Database,
+  database,
   CustomError
 } from '@assets/script/common'
 
@@ -30,8 +29,8 @@ export {
   watermark,
   Dialog,
   Message,
-  IndexedDB,
-  indexedDB,
+  Database,
+  database,
   CustomError
 }
 

@@ -5,7 +5,7 @@
 ::: demo `label` 设置标签 `clearable` 可清除的
 ```html
 <template>
-  <me-form ref="from" :rules="rules">
+  <me-form ref="form" :rules="rules">
   <pre>{{form}}</pre>
     <div class="me-row">
       <me-label flex required label="姓名" prop="name">
@@ -56,17 +56,16 @@
 <script>
 export default {
   methods:{
-    confirm(){
-      this.$refs.from.validate(valid => {
-        if (valid) {
-            this.$message.success('表单校验成功');
-        } else {
-            this.$message.error('表单校验失败!');
-        }
-      })
+    async confirm () {
+      try {
+        await this.$refs.form.validate()
+        this.$message.success('表单校验成功')
+      } catch {
+        this.$message.error('表单校验失败!')
+      }
     },
     reset(){
-      this.$refs.from.reset()
+      this.$refs.form.reset()
     }
   },
   data() {

@@ -69,15 +69,15 @@ export default {
     return parent
   },
   dispatchParent (eventName, params) {
-    let parent = this.$parent || this.$root
+    const parent = this.$parent || this.$root
     if (parent) {
-      this.$emit.apply(parent, [eventName].concat(params))
+      this.$emit.apply(parent, [ eventName ].concat(params))
     }
   },
   dispatchUpward (componentName, eventName, params) {
-    let parent = this.findParentComponent([componentName])
+    const parent = this.findParentComponent([ componentName ])
     if (parent) {
-      this.$emit.apply(parent, [eventName].concat(params))
+      this.$emit.apply(parent, [ eventName ].concat(params))
     }
   },
   isComponentVue (target) {
@@ -87,10 +87,10 @@ export default {
     return true
   },
   listenerUpward (componentName, eventName, callback) {
-    let parent = this.findParentComponent([componentName])
+    const parent = this.findParentComponent([ componentName ])
     if (parent) {
-      this.$off.call(parent, eventName, callback)
-      this.$on.call(parent, eventName, callback)
+      this.$off.apply(parent, [ eventName, callback ])
+      this.$on.apply(parent, [ eventName, callback ])
     }
   },
   listener (eventName, callback) {
@@ -98,10 +98,10 @@ export default {
     this.$on(eventName, callback)
   },
   listenerParent (eventName, callback = () => { }) {
-    let parent = this.$parent || this.$root
+    const parent = this.$parent || this.$root
     if (parent) {
-      this.$off.call(parent, eventName, callback)
-      this.$on.call(parent, eventName, callback)
+      this.$off.apply(parent, [ eventName, callback ])
+      this.$on.apply(parent, [ eventName, callback ])
     }
   }
 }

@@ -4,7 +4,6 @@
   </form>
 </template>
 <script>
-import { type } from '@assets/script/common'
 export default {
   name: 'MeForm',
   props: {
@@ -31,22 +30,10 @@ export default {
         field.reset()
       }
     },
-    validate (callback = () => { }) {
-      if (type.notFunction(callback)) {
-        console.warn('me-from.validate', '->', 'param is net function')
+    async validate () {
+      for (const field of this.fields) {
+        await field.validate()
       }
-      const length = this.fields.length
-      return new Promise(resolve => {
-        let count = 0
-        for (const field of this.fields) {
-          field.validate(valid => {
-            if (++count === length) {
-              resolve(valid)
-              type.isFunction(callback) && callback(valid)
-            }
-          })
-        }
-      })
     }
   }
 }
