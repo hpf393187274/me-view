@@ -56,7 +56,7 @@ import TreeNode from './TreeNode'
 import Vue from 'vue'
 export default {
   name: 'MeTree',
-  mixins: [treeCommon, treeIndex, treeInner],
+  mixins: [ treeCommon, treeIndex, treeInner ],
   components: {
     [TreeHeader.name]: TreeHeader,
     [TreeNode.name]: TreeNode

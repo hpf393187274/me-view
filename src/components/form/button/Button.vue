@@ -17,15 +17,11 @@ export default {
     disabled: Boolean,
     width: String,
     margin: String,
-    shape: { type: String, default: 'default', validator: value => ['default', 'round', 'circle'].includes(value) },
+    shape: { type: String, default: 'default', validator: value => [ 'default', 'round', 'circle' ].includes(value) },
     plain: Boolean,
     icon: String
   },
   computed: {
-    radius () {
-      let value = ''
-      return value
-    },
     classes () {
       return [
         'me-btn',

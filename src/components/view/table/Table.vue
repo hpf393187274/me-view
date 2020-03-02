@@ -63,16 +63,16 @@ export default {
     primaryKey: String,
     center: Boolean,
     checkbox: Boolean,
-    height: [Number, String],
+    height: [ Number, String ],
     multiple: Boolean,
-    width: [Number, String],
+    width: [ Number, String ],
     highlight: Boolean
   },
   computed: {
     styleContainer () {
       return {
-        'width': this.$type.isNumber(this.width) ? `${this.width}px` : this.width,
-        'height': this.$type.isNumber(this.height) ? `${this.height}px` : this.height
+        width: this.$type.isNumber(this.width) ? `${this.width}px` : this.width,
+        height: this.$type.isNumber(this.height) ? `${this.height}px` : this.height
       }
     },
     styleTHead () {
@@ -195,9 +195,9 @@ export default {
       this.scrollLeft = scrollLeft
     },
     handlerSlots () {
-      const excludeSlots = ['header', 'footer', 'default']
+      const excludeSlots = [ 'header', 'footer', 'default' ]
       const slotKeys = Reflect.ownKeys(this.$scopedSlots)
-      this.columns__ = [...this.columns]
+      this.columns__ = [ ...this.columns ]
       if (this.$type.isArray(slotKeys) && slotKeys.length > 0) {
         const newSlotKeys = slotKeys.filter(item => !(item.includes('$') || excludeSlots.includes(item)))
         if (this.$type.isArray(newSlotKeys) && newSlotKeys.length > 0) {

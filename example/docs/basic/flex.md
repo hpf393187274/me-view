@@ -1,6 +1,75 @@
-# Column 列布局
+# Flex 布局
 
-## border
+## 行布局
+
+### border
+::: demo 
+```html
+<template>
+<me-row style="height:100px">
+  <div 
+    class="me-row me-flex me-center" 
+    :style="styles(item)" 
+    v-for="(item,index) in list" :key="index">
+    {{item}}
+  </div>
+</me-row>
+</template>
+<script>
+export default {
+  data() {
+    return { 
+      list: ['#FF0000 ','#FF7F00','#FFFF00','#00FF00','#00FFFF','#0000FF','#8B00FF']
+    }
+  },
+  methods: {
+    styles(item){
+      return {
+        border: `5px solid ${item}`, color: item, margin: '5px'
+      }
+    }
+  }
+}
+</script>
+```
+:::
+
+
+### background-color
+::: demo 
+```html
+<template>
+<div class="me-row" style="height:100px">
+  <div 
+    class="me-row me-flex me-center" 
+    :style="styles(item)" 
+    v-for="(item,index) in list" :key="index">
+    {{item}}
+  </div>
+</div>
+</template>
+<script>
+export default {
+  data() {
+    return { 
+      list: ['#FF0000 ','#FF7F00','#FFFF00','#00FF00','#00FFFF','#0000FF','#8B00FF']
+    }
+  },
+  methods: {
+    styles(item){
+      return {
+        'background-color': item, color: '#FFFFFF', margin: '5px'
+      }
+    }
+  }
+}
+</script>
+```
+:::
+
+## Column 列布局
+
+### border
 ::: demo 
 ```html
 <template>
@@ -33,18 +102,18 @@ export default {
 :::
 
 
-## backgroundColor
+### backgroundColor
 ::: demo 
 ```html
 <template>
-<me-column>
+<div class="me-column">
   <div 
     class="me-row me-flex me-center" 
     :style="styles(item)" 
     v-for="(item,index) in list" :key="index">
     {{item}}
   </div>
-</me-column>
+</div>
 </template>
 <script>
 export default {

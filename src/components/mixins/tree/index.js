@@ -82,7 +82,7 @@ export default {
     getChildrenNodeList () {
       const treeNode = this.$refs.treeNode
       if (this.$tools.isEmpty(treeNode)) { return [] }
-      return [...treeNode]
+      return [ ...treeNode ]
     },
     /**
      * 获取 TreeNode

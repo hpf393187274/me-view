@@ -11,7 +11,6 @@ export default {
           children: [
             { label: '安装', path: '/guide/install' },
             { label: '快速上手', path: '/guide/easystart' }
-
           ]
         },
         {
@@ -19,18 +18,17 @@ export default {
           children: [
             { label: 'Tools 常用工具', path: '/common/tools' },
             { label: 'Type 类型判断', path: '/common/type' },
-            { label: 'Storage 数据存储', path: '/common/storage' }
+            { label: 'Storage 数据存储', path: '/common/storage' },
+            { label: 'Database 数据库存储', path: '/common/database' }
           ]
         },
         {
           label: 'Basic 基础',
           children: [
-            { label: 'Row 行布局', path: '/basic/row' },
-            { label: 'Column 列布局', path: '/basic/column' },
+            { label: 'Flex 布局', path: '/basic/flex' },
             { label: 'Icon 图标库', path: '/basic/icon' },
-            { label: 'Link 连接', path: '/basic/link' },
-            { label: 'LineH 水平线', path: '/basic/line-h' },
-            { label: 'LineV 垂直线', path: '/basic/line-v' },
+            { label: 'Link 链接', path: '/basic/link' },
+            { label: 'Line 线条', path: '/basic/line' },
             { label: 'Scrollbar 滚动条', path: '/basic/scrollbar' },
             { label: 'Slidebar 滑动条', path: '/basic/slidebar' }
           ]

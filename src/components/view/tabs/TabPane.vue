@@ -23,7 +23,7 @@ export default {
     src: String,
     closable: { type: Boolean, default: null },
     name: String,
-    type: { type: String, default: 'panel', validator: value => ['panel', 'frame'].includes(value) }
+    type: { type: String, default: 'panel', validator: value => [ 'panel', 'frame' ].includes(value) }
   },
   data () {
     return {

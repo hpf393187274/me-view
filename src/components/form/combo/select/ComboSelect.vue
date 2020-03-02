@@ -13,7 +13,7 @@ import Option from './Option'
 import Combo from '../Combo'
 export default {
   components: { [Combo.name]: Combo, [Option.name]: Option },
-  mixins: [ComboMixin, ComboBaseMixin],
+  mixins: [ ComboMixin, ComboBaseMixin ],
   name: 'MeComboSelect',
   props: {
     columns: { type: Array, default: () => [] }
@@ -27,7 +27,7 @@ export default {
   methods: {
     handlerSelect (row, index) {
       this.$emit('on-select', row, index)
-      this.$emit('change', this.multiple ? [...this.value__] : this.value__)
+      this.$emit('change', this.multiple ? [ ...this.value__ ] : this.value__)
     }
   }
 }

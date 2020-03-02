@@ -23,7 +23,7 @@
 import treeCommon from '@components/mixins/tree/common'
 export default {
   name: 'MeTreeHeader',
-  mixins: [treeCommon],
+  mixins: [ treeCommon ],
   props: {
     checkedHalf: Boolean,
     nodeNumber: { type: Number, default: 0 },

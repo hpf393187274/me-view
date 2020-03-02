@@ -9,14 +9,14 @@ export default {
     disabled: Boolean,
     clearable: Boolean,
     checkbox: Boolean,
-    height: [String, Number],
+    height: [ String, Number ],
     index: Number,
     border: Boolean,
     placeholder: String,
     multiple: Boolean,
     fieldLabel: { type: String, default: 'label' },
     fieldValue: { type: String, default: 'value' },
-    value: { type: [String, Array] }
+    value: { type: [ String, Array ] }
   },
   data () {
     return {

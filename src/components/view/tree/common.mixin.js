@@ -97,7 +97,7 @@ export default {
     },
     pushData (data) {
       if (this.$tools.isEmpty(data)) { return }
-      for (const item of [data].flat()) {
+      for (const item of [ data ].flat()) {
         const node = this.findNode(this.defaultFilter(item))
         if (this.$tools.isEmpty(node)) {
           if (this.$tools.isEmpty(this.level)) {

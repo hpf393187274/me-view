@@ -54,7 +54,7 @@ import treeCommon from '@components/mixins/tree/common'
 import treeInner from './common.mixin'
 export default {
   name: 'MeTreeNode',
-  mixins: [treeCommon, treeIndex, treeInner],
+  mixins: [ treeCommon, treeIndex, treeInner ],
   props: {
     data: { type: Object, default () { return {} } },
     eventTree: Object,
@@ -114,7 +114,7 @@ export default {
     /**
     * 获取节点数据
     */
-    getData ({ deep = false, exclude = ['children'] } = {}) {
+    getData ({ deep = false, exclude = [ 'children' ] } = {}) {
       return this.$tools.clone(this.data, { deep, exclude })
     },
     /**
@@ -165,7 +165,7 @@ export default {
       const resource = this.getData()
       const childrenList = this.getCheckedChildren({ ...param })
       if (childrenList.length !== 0) {
-        resource.children = [...childrenList]
+        resource.children = [ ...childrenList ]
       }
       return resource
     },

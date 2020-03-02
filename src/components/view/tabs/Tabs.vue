@@ -31,7 +31,7 @@ export default {
     active: String,
     addable: Boolean,
     closable: { type: Boolean, default: null },
-    mode: { type: String, default: 'line', validator: value => ['line', 'card'].includes(value) },
+    mode: { type: String, default: 'line', validator: value => [ 'line', 'card' ].includes(value) },
     data: { type: Array, default () { return [] } }
   },
   data () {

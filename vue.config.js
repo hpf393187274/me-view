@@ -5,6 +5,7 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 module.exports = {
+  publicPath: 'me-view',
   lintOnSave: undefined,
   runtimeCompiler: true,
   transpileDependencies: [ 'resize-detector' ],

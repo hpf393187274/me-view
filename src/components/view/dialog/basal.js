@@ -12,7 +12,7 @@ import methods from '@components/mixins/methods'
 
 Dialog.newInstance = (options = {}) => {
   const instance = new Vue({
-    mixins: [{ methods }],
+    mixins: [ { methods } ],
     components: {
       [Modal.name]: Modal,
       [Button.name]: Button,
@@ -72,8 +72,8 @@ Dialog.newInstance = (options = {}) => {
       onRemove () { }
     },
     render (h) {
-      let renderFooter = []
-      if (['prompt', 'confirm'].includes(this.type)) {
+      const renderFooter = []
+      if ([ 'prompt', 'confirm' ].includes(this.type)) {
         renderFooter.push(
           h('me-button', {
             props: { width: '80px' },
@@ -98,7 +98,7 @@ Dialog.newInstance = (options = {}) => {
         },
         [
           h('div', { class: 'me-row me-flex' }, [
-            h('div', [h('me-icon', { class: 'icon-status' }, this.icon)]),
+            h('div', [ h('me-icon', { class: 'icon-status' }, this.icon) ]),
             this.render ? this.render(h) : h('div', this.content)
           ])
         ]

@@ -118,11 +118,11 @@ export default class DataBase {
   /**
    * 删除数据
    * @param {String} tableName 表名
-   * @param {String} keyValue 主键值
+   * @param {String} value 主键值
    */
-  async remove (tableName, keyValue) {
+  async remove (tableName, value) {
     const store = await this.__store(tableName, 'readwrite')
-    await this.handlerResponse(store.delete(keyValue))
+    await this.handlerResponse(store.delete(value))
     console.log('数据删除成功')
   }
 

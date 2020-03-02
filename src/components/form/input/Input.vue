@@ -31,7 +31,7 @@
 </template>
 
 <script>
-const types = ['text', 'number', 'email', 'password']
+const types = [ 'text', 'number', 'email', 'password' ]
 export default {
   name: 'MeInput',
   model: {
@@ -42,7 +42,7 @@ export default {
     disabled: Boolean,
     clearable: Boolean,
     type: { type: String, default: 'text', validator: value => types.includes(value) },
-    value: { type: [Number, String, Array], default: '' },
+    value: { type: [ Number, String, Array ], default: '' },
     min: Number,
     max: { type: Number, default: 1000000 },
     minLength: Number,
@@ -138,7 +138,7 @@ export default {
      * MeInput
      */
     handlerLableEvent (callback = () => { }) {
-      if (this.existParentComponent(['MeCombo'])) { return }
+      if (this.existParentComponent([ 'MeCombo' ])) { return }
       callback && callback.call(this)
     },
     initValue (value) {
@@ -146,8 +146,8 @@ export default {
         this.value__ = { ...value }
         this.valueReset = { ...value }
       } else if (this.$type.isArray(value)) {
-        this.value__ = [...value]
-        this.valueReset = [...value]
+        this.value__ = [ ...value ]
+        this.valueReset = [ ...value ]
       } else {
         this.value__ = value
         this.valueReset = value

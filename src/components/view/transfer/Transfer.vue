@@ -44,7 +44,7 @@ import treeCommon from '@components/mixins/tree/common'
 import treeIndex from '@components/mixins/tree'
 export default {
   name: 'MeTransfer',
-  mixins: [treeCommon, treeIndex],
+  mixins: [ treeCommon, treeIndex ],
   props: {
     value: { type: Array, default () { return [] } },
     data: { type: Array, default () { return [] } },
@@ -73,8 +73,8 @@ export default {
   },
   data () {
     return {
-      leftData: [...this.data],
-      rightData: [...this.value]
+      leftData: [ ...this.data ],
+      rightData: [ ...this.value ]
     }
   },
   methods: {

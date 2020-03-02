@@ -191,12 +191,12 @@ export default {
       }
       const Component = Vue.extend({
         template: `${this.codepen.html}`,
-        mixins: [target]
+        mixins: [ target ]
       })
       const markedComponent = new Component().$mount()
       // 将挂载以后的子组件dom插入到父组件中
       // markedComponent.$el就是挂载后生成的渲染dom
-      this.$refs['source'].appendChild(markedComponent.$el)
+      this.$refs.source.appendChild(markedComponent.$el)
     }
   },
 
@@ -249,7 +249,7 @@ export default {
 
   mounted () {
     this.$nextTick(() => {
-      let highlight = this.$el.getElementsByClassName('highlight')[0]
+      const highlight = this.$el.getElementsByClassName('highlight')[0]
       if (this.$el.getElementsByClassName('default').length === 0) {
         highlight.style.width = '100%'
         highlight.borderRight = 'none'

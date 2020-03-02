@@ -1,19 +1,19 @@
 const watermark = {}
 
 const setWatermark = (str) => {
-  let id = '1.23452384164.123412416'
+  const id = '1.23452384164.123412416'
 
   if (document.getElementById(id) !== null) {
     document.body.removeChild(document.getElementById(id))
   }
 
   // 创建一个画布
-  let can = document.createElement('canvas')
+  const canvas = document.createElement('canvas')
   // 设置画布的长宽
-  can.width = 300
-  can.height = 150
+  canvas.width = 300
+  canvas.height = 150
 
-  let cans = can.getContext('2d')
+  const cans = canvas.getContext('2d')
   // 旋转角度
   cans.rotate(-15 * Math.PI / 180)
   cans.font = '18px Vedana'
@@ -24,9 +24,9 @@ const setWatermark = (str) => {
   // 设置在绘制文本时使用的当前文本基线
   cans.textBaseline = 'Middle'
   // 在画布上绘制填色的文本（输出的文本，开始绘制文本的X坐标位置，开始绘制文本的Y坐标位置）
-  cans.fillText(str, can.width / 8, can.height)
+  cans.fillText(str, canvas.width / 8, canvas.height)
 
-  let div = document.createElement('div')
+  const div = document.createElement('div')
   div.id = id
   div.style.pointerEvents = 'none'
   div.style.top = '10px'
@@ -35,7 +35,7 @@ const setWatermark = (str) => {
   div.style.zIndex = '100000'
   div.style.width = document.documentElement.clientWidth + 'px'
   div.style.height = document.documentElement.clientHeight + 'px'
-  div.style.background = 'url(' + can.toDataURL('image/png') + ') left top repeat'
+  div.style.background = 'url(' + canvas.toDataURL('image/png') + ') left top repeat'
   document.body.appendChild(div)
   return id
 }

@@ -25,7 +25,6 @@ export default {
       sizeH: 0
     }
   },
-  
   created () {
     this.$nextTick(() => {
       this.vertical = this.$refs.body.scrollHeight > this.$el.scrollHeight

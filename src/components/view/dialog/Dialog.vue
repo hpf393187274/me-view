@@ -39,7 +39,7 @@ import MeLineH from '../../basic/LineH'
 export default {
   name: 'MeDialog',
   components: { MeButton, MeIcon, MeLineH, MeModal },
-  mixins: [Modal],
+  mixins: [ Modal ],
   props: {
     title: { type: String, default: '' },
     height: { type: String, default: '300px' },

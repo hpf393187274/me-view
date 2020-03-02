@@ -6,10 +6,7 @@
 
 <script>
 export default {
-  name: 'MeLayout',
-  props: {
-
-  }
+  name: 'MeLayout'
 }
 </script>
 

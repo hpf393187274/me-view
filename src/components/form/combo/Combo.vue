@@ -31,7 +31,7 @@
 <script>
 import ComboMixin from './combo.mixin'
 export default {
-  mixins: [ComboMixin],
+  mixins: [ ComboMixin ],
   name: 'MeCombo',
   data () {
     return {
@@ -92,7 +92,7 @@ export default {
       this.label__ = []
       this.value__ = []
       if (this.$tools.isEmpty(value)) { return }
-      const list = this.$type.isArray(value) ? [...value] : [value]
+      const list = this.$type.isArray(value) ? [ ...value ] : [ value ]
       this.valueMultiple = this.data.filter(item => list.includes(Reflect.get(item, this.fieldValue)))
 
       for (const item of this.valueMultiple) {
@@ -104,7 +104,7 @@ export default {
       this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
     },
     isSelected (value) {
-      const list = this.multiple ? this.valueMultiple : [this.valueSingle]
+      const list = this.multiple ? this.valueMultiple : [ this.valueSingle ]
       return list.findIndex(item => value === Reflect.get(item, this.fieldValue)) !== -1
     },
     onClickSuffix () {
@@ -133,7 +133,7 @@ export default {
     selectMultiple (data) {
       const index = this.valueMultiple.findIndex(item => item[this.fieldValue] === data[this.fieldValue])
       index >= 0 ? this.handleMultipleRemove(index) : this.handleMultiplPush(data)
-      this.$emit('change', [...this.value__])
+      this.$emit('change', [ ...this.value__ ])
     },
     handlerClickOption (item, index) {
       const data = { ...item, index }

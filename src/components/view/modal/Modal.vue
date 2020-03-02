@@ -27,7 +27,7 @@ import { tools } from '../../../assets/script/common'
 import MeButton from '../../form/button/'
 export default {
   name: 'MeModal',
-  mixins: [Modal, Draggable],
+  mixins: [ Modal, Draggable ],
   components: { MeButton },
   props: {
     height: String,

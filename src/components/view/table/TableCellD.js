@@ -3,7 +3,7 @@ import TableCell from './TableCell.mixin'
 let idSeed = 1
 export default {
   name: 'MeTableCellD',
-  mixins: [TableCell],
+  mixins: [ TableCell ],
   props: {
     data: { type: Object, default: () => ({}) },
     render: Function
@@ -38,9 +38,9 @@ export default {
 
     return this.renderRoot(h, [
       h('div', {
-        'class': 'cell-inner',
+        class: 'cell-inner',
         attr: {
-          'title': this.fieldValue
+          title: this.fieldValue
         }
       }, this.fieldValue)
     ])

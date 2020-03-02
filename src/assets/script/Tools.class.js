@@ -173,10 +173,10 @@ class Tools {
 
   /**
    * 计算函数执行时间：默认秒
-   * @param {String} param.classify 获取类别
-   * @param {Function} param.callback 执行的回调函数
+   * @param {Function} callback 执行的回调函数
+   * @param {String} classify 获取类别 默认秒 = second, 'hour', 'minute', 'second'
    */
-  expendTime ({ classify = 'second', callback } = {}) {
+  expendTime (callback, classify = 'second') {
     const classifyList = [ 'hour', 'minute', 'second' ]
     if (classifyList.includes(classify) === false) {
       classify = 'second'
@@ -205,24 +205,23 @@ class Tools {
   }
 
   /**
-   *
-   * @param {Object | Array} target
+   * 克隆对象
+   * @param {Object} target
    * @param {Boolean} param.deep 是否深度克隆, 默认：false
    * @param {Array} param.exclude 是否深度克隆, 默认：false
    */
   clone (target, { deep = false, exclude = [] } = {}) {
-    if (type.notObjectOrArray(target)) { return target }
+    if (type.notObject(target)) {
+      return target
+    }
     if (deep === true) {
       return JSON.parse(JSON.stringify(target))
     }
-    if (type.isObject(target)) {
-      const newTarget = { ...target }
-      // 排除掉不用的属性
-      for (const key of exclude) { Reflect.deleteProperty(newTarget, key) }
-      // 排除掉不用的属性
-      return newTarget
-    }
-    return target.flatMap(item => this.clone(item))
+    const newTarget = { ...target }
+    // 排除掉不用的属性
+    for (const key of exclude) { Reflect.deleteProperty(newTarget, key) }
+    // 排除掉不用的属性
+    return newTarget
   }
 
   sendRedirect (url) {
@@ -233,14 +232,14 @@ class Tools {
    * 如果存在 iframe
    */
   isSameHost () {
-    return window.top.location.host === window.location.host
+    return top.location.host === window.location.host
   }
 
   /**
   * 获取 Url 参数
   * @param {String} key 参数名
   */
-  urlParam (key, target = window.location.search) {
+  urlParam (key, target = location.search) {
     const result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
     const params = JSON.parse(result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '{"$1":"$2"}'))
     return this.isEmpty(key) ? params : Reflect.get(params, key)

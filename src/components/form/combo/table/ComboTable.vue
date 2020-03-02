@@ -11,7 +11,7 @@ import ComboMixin from '../combo.mixin'
 import Combo from '../Combo'
 export default {
   components: { [Combo.name]: Combo },
-  mixins: [ComboMixin],
+  mixins: [ ComboMixin ],
   name: 'MeComboTable',
   props: {
     columns: { type: Array, default: () => [] }
@@ -25,7 +25,7 @@ export default {
   methods: {
     onClickRow (row, index) {
       this.$emit('on-select', row, index)
-      this.$emit('change', this.multiple ? [...this.value__] : this.value__)
+      this.$emit('change', this.multiple ? [ ...this.value__ ] : this.value__)
     }
   }
 }

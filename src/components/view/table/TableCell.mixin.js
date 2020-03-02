@@ -4,7 +4,7 @@ export default {
     editable: Boolean,
     sortable: Boolean,
     resizable: Boolean, /** 可调整的 */
-    width: [Number, String],
+    width: [ Number, String ],
     label: String,
     index: Number,
     field: String,
@@ -32,7 +32,7 @@ export default {
   computed: {
     styles () {
       return {
-        'width': this.$type.isNumber(this.width) ? `${this.width}px` : this.width
+        width: this.$type.isNumber(this.width) ? `${this.width}px` : this.width
       }
     }
   }

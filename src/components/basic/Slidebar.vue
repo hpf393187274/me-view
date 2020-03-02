@@ -9,9 +9,9 @@
 import Draggable from '@components/mixins/draggable'
 export default {
   name: 'MeSlidebar',
-  mixins: [Draggable],
+  mixins: [ Draggable ],
   props: {
-    layout: { type: String, default: 'center', validator: value => ['center', 'incircle'].includes(value) },
+    layout: { type: String, default: 'center', validator: value => [ 'center', 'incircle' ].includes(value) },
     length: { type: Number, default: 30 },
     width: { type: Number, default: 30 },
     hidden: Boolean,
