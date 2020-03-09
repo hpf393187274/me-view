@@ -24,12 +24,12 @@ export default class DataBase {
       return '数据库已存在'
     }
     if (Reflect.has(window, 'indexedDB') === false) {
-      console.log('不支持indexedDB...')
+      console.debug('不支持indexedDB...')
       window.indexedDB = window.mozIndexedDB || window.webkitIndexedDB
     }
     const request = window.indexedDB.open(this.dbName, this.version)
     const { upgrade, event } = await this.handlerResponse(request).catch((event) => {
-      console.log('数据库打开报错', event)
+      console.debug('数据库打开报错', event)
       this.status = false
     })
     this.status = true
@@ -82,7 +82,7 @@ export default class DataBase {
     const store = await this.__store(tableName, 'readwrite')
     const request = store.add({ ...data })
     await this.handlerResponse(request)
-    console.log('数据添加成功')
+    console.debug('数据添加成功')
   }
 
   /**
@@ -93,10 +93,10 @@ export default class DataBase {
   async save (tableName, data) {
     const exist = await this.exist(tableName, data)
     if (exist) {
-      console.log('save', '->', '数据已存在，进行更新数据，data：', data)
+      console.debug('save', '->', '数据已存在，进行更新数据，data：', data)
       return this.update(tableName, data)
     }
-    console.log('save', '->', '数据不存在，进行新增数据，data：', data)
+    console.debug('save', '->', '数据不存在，进行新增数据，data：', data)
     return this.add(tableName, data)
   }
 
@@ -123,7 +123,7 @@ export default class DataBase {
   async remove (tableName, value) {
     const store = await this.__store(tableName, 'readwrite')
     await this.handlerResponse(store.delete(value))
-    console.log('数据删除成功')
+    console.debug('数据删除成功')
   }
 
   async batchRemove (tableName, values) {
@@ -187,7 +187,7 @@ export default class DataBase {
 
     const store = await this.__store(tableName)
     const keyValue = type.isObject(value) ? Reflect.get(value, store.keyPath) : value
-    console.log(`${tableName} 执行 exist -> keyPath = ${store.keyPath}，keyValue = ${keyValue}`)
+    console.debug(`${tableName} 执行 exist -> keyPath = ${store.keyPath}，keyValue = ${keyValue}`)
     const request = store.get(keyValue)
     await this.handlerResponse(request)
     return !!request.result

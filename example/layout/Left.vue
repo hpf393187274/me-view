@@ -10,7 +10,7 @@ export default {
           label: '开发指南',
           children: [
             { label: '安装', path: '/guide/install' },
-            { label: '快速上手', path: '/guide/easystart' }
+            { label: '快速上手', path: '/guide/start' }
           ]
         },
         {

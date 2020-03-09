@@ -201,7 +201,7 @@ export default {
       if (this.$type.isArray(slotKeys) && slotKeys.length > 0) {
         const newSlotKeys = slotKeys.filter(item => !(item.includes('$') || excludeSlots.includes(item)))
         if (this.$type.isArray(newSlotKeys) && newSlotKeys.length > 0) {
-          console.log('newSlotKeys = ', newSlotKeys)
+          console.debug('newSlotKeys = ', newSlotKeys)
           for (const column of this.columns__) {
             if (newSlotKeys.includes(column.field)) {
               const extended = Reflect.get(this.$scopedSlots, column.field)

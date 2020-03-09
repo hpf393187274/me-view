@@ -10,7 +10,7 @@ Vue.use(MeDemo)
 Vue.config.productionTip = false
 new Vue({
   router,
-  mounted: function () {
+  mounted () {
     this.$watermark.set('me-view')
   },
   render: h => h(App)

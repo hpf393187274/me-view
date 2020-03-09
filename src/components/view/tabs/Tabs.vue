@@ -56,7 +56,7 @@ export default {
   watch: {
     nodeActive (newValue, oldValue) {
       if (newValue) {
-        console.log(`watch.nodeActive --- ${newValue.title}`)
+        console.debug(`watch.nodeActive --- ${newValue.title}`)
         newValue.nodeTitle.setActivated(true)
         newValue.nodePane.setActivated(true)
       }

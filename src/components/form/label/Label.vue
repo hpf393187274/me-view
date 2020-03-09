@@ -129,7 +129,7 @@ export default {
       })
     },
     reset () {
-      console.log(`reset -> 当前值：${this.valueCurrent}, 默认值：${this.valueDefault}`)
+      console.debug(`reset -> 当前值：${this.valueCurrent}, 默认值：${this.valueDefault}`)
       this.$emit('on-label-reset', this.valueDefault)
     }
   }

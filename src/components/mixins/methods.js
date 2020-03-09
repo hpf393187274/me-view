@@ -9,7 +9,7 @@ function findChildren (componentName, callback = () => { }) {
       try {
         callback && callback(child)
       } catch (error) {
-        console.error(`组件 ${name} 执行 callback error, message：${error}`)
+        console.debug(`组件 ${name} 执行 callback error, message：${error}`)
       }
     } else {
       findChildren.call(child, componentName, callback)

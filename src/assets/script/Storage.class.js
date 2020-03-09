@@ -6,11 +6,11 @@ class Storage {
     this.storage = tools.isEmpty(storage) ? window.localStorage : storage
   }
 
-  get (key) {
+  get (key, params = { }) {
     Assert.notEmpty(key, 'The key cannot be empty')
     const value = this.storage.getItem(key)
     if (tools.isEmpty(value)) {
-      return null
+      return params.default
     }
     return JSON.parse(value)
   }

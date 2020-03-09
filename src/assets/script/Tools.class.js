@@ -240,9 +240,16 @@ class Tools {
   * @param {String} key 参数名
   */
   urlParam (key, target = location.search) {
-    const result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
-    const params = JSON.parse(result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '{"$1":"$2"}'))
-    return this.isEmpty(key) ? params : Reflect.get(params, key)
+    if (this.isEmpty(target)) { return '' }
+    let result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
+    try {
+      result = result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '"$1":"$2"')
+      const params = JSON.parse(`{${result}}`)
+      return this.isEmpty(key) ? params : Reflect.get(params, key)
+    } catch (error) {
+      console.debug('tools.urlParam error：', error)
+      return ''
+    }
   }
 
   /**

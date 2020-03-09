@@ -1,11 +1,9 @@
 {
   "name": "me-view",
-  "version": "1.0.83",
+  "version": "1.1.0",
   "private": false,
   "main": "dist/lib/index.common.js",
   "scripts": {
-    "serve": "vue-cli-service serve --fix",
-    "build": "vue-cli-service build --dest dist",
     "package": "vue-cli-service build --dest dist/lib --target lib --name index ./src/index.js",
     "lint": "vue-cli-service lint"
   },
@@ -13,8 +11,9 @@
     "async-validator": "^3.2.3",
     "axios": "^0.18.1",
     "clipboard": "^2.0.4",
-    "highlight.js": "^9.17.1",
     "core-js": "^3.6.4",
+    "highlight.js": "^9.17.1",
+    "qs": "^6.9.1",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5"
   },
@@ -51,25 +50,6 @@
       "vue-cli-service lint",
       "git add"
     ]
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/standard"
-    ],
-    "rules": {
-      "no-console": "off",
-      "no-debugger": "off",
-      "no-eval": "off",
-      "no-callback-literal": 0
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
   },
   "postcss": {
     "plugins": {

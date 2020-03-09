@@ -32,7 +32,7 @@ export default {
       this.value__ = newValue
     },
     value__ (newValue) {
-      console.log('watch', '->', 'onChange', newValue)
+      console.debug('watch', '->', 'onChange', newValue)
       this.$emit('change', newValue)
     },
     checkedHalf (newValue) {

@@ -20,7 +20,7 @@ const database = new Database('me-view-database-default')
 // 保存数据
 database.save('schema_table', { id:'1', name: '张三', sex: '男', age: 25 })
   .then(() => {
-    console.log('本地数据保存成功')
+    console.debug('本地数据保存成功')
   })
   .catch((error) => {
     const { message } = error.currentTarget.error
@@ -29,7 +29,7 @@ database.save('schema_table', { id:'1', name: '张三', sex: '男', age: 25 })
 // 查询数据
 database.find('schema_table', '1')
   .then((data) => {
-    console.log('数据查询成功。', data)
+    console.debug('数据查询成功。', data)
   })
   .catch((error) => {
     const { message } = error.currentTarget.error

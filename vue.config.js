@@ -5,13 +5,20 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 module.exports = {
-  publicPath: 'me-view',
   lintOnSave: undefined,
   runtimeCompiler: true,
-  transpileDependencies: [ 'resize-detector' ],
   devServer: {
-    port: 9000,
-    disableHostCheck: true
+    port: 8000,
+    disableHostCheck: true,
+    proxy: {
+      '/portal/': {
+        // target: 'http://10.130.36.240:7091',
+        target: 'http://127.0.0.1:8081',
+        ws: false,
+        // 将主机标头的原点更改为目标URL~
+        changeOrigin: false
+      }
+    }
   },
   css: {
     loaderOptions: {

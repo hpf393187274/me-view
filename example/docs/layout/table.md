@@ -110,7 +110,7 @@
       getSelectedData(){
         if(this.$refs.tableList){
           const result = this.$refs.tableList.getSelectedData()
-          console.log('handlerTableSelectedData=========》', result)
+          console.debug('handlerTableSelectedData=========》', result)
         }
       },
       removeRow (data) {

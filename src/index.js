@@ -7,6 +7,8 @@ import {
   local,
   session,
   http,
+  Http,
+  Assert,
   Database,
   database,
   CustomError
@@ -26,6 +28,8 @@ export {
   local,
   session,
   http,
+  Http,
+  Assert,
   watermark,
   Dialog,
   Message,
@@ -64,6 +68,7 @@ export default {
     Vue.prototype.$type = type
     Vue.prototype.$tools = tools
     Vue.prototype.$local = local
+    Vue.prototype.$http = http
     Vue.prototype.$session = session
   }
 }

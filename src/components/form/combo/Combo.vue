@@ -121,9 +121,9 @@ export default {
       this.$emit('change', this.value__)
     },
     handleMultipleRemove (index) {
-      this.$tools.arrayRemove(this.label__, index).catch(error => { console.error(error) })
-      this.$tools.arrayRemove(this.value__, index).catch(error => { console.error(error) })
-      this.$tools.arrayRemove(this.valueMultiple, index).catch(error => { console.error(error) })
+      this.$tools.arrayRemove(this.label__, index).catch(error => { console.debug(error) })
+      this.$tools.arrayRemove(this.value__, index).catch(error => { console.debug(error) })
+      this.$tools.arrayRemove(this.valueMultiple, index).catch(error => { console.debug(error) })
     },
     handleMultiplPush (data) {
       this.label__.push(Reflect.get(data, this.fieldLabel))
