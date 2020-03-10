@@ -1,4 +1,6 @@
 import type from './Type.class'
+import Assert from './Assert.class'
+
 class Tools {
   /**
    * 校验：对象是否为空
@@ -250,6 +252,28 @@ class Tools {
       console.debug('tools.urlParam error：', error)
       return ''
     }
+  }
+
+  /**
+   * URl 格式化
+   * @param {String} url 地址
+   */
+  urlFormat (url) {
+    Assert.notEmpty(url, '参数 url 不能为空')
+    return url.replace(/:\/+/g, '**').replace(/\\+/g, '/').replace(/\/+|\\+/g, '/').replace('**', '://')
+  }
+
+  /**
+   * URL 绝对化
+   * @param {String} url 目标url
+   * @param {String} origin 默认当前环境
+   */
+  urlAbsolutize (url, origin = location.origin) {
+    Assert.notEmpty(url, '参数 url 不能为空')
+    if (url.startsWith('http://') === false && url.startsWith('https://') === false) {
+      return this.urlFormat(`${origin}/${url}`)
+    }
+    return this.urlFormat(url)
   }
 
   /**

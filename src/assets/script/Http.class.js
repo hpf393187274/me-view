@@ -137,6 +137,6 @@ export default class Http {
   }
 
   ajax ({ url, method = 'GET', params, data, config }) {
-    return this.instance({ url, method, params, data, ...config })
+    return this.instance({ ...config, url, method, params, data })
   }
 }
