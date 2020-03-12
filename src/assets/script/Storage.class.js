@@ -7,7 +7,8 @@ class Storage {
   }
 
   get (key, params = { }) {
-    Assert.notEmpty(key, 'The key cannot be empty')
+    console.debug(`storage.arrayAppend：key = ${key}`)
+    Assert.notEmpty(key, 'storage.get：key is empty')
     const value = this.storage.getItem(key)
     if (tools.isEmpty(value)) {
       return params.default
@@ -16,22 +17,24 @@ class Storage {
   }
 
   set (key, value) {
-    Assert.notEmpty(key, 'The key cannot be empty')
-    Assert.notEmpty(value, 'The value cannot be empty')
+    console.debug(`storage.set：key = ${key}，value = `, value)
+    Assert.notEmpty(key, 'storage.set：key is empty')
+    Assert.notEmpty(value, `storage.set：key = ${key}, value is empty`)
     this.storage.setItem(key, JSON.stringify(value))
   }
 
   clear () { }
 
   remove (key) {
-    Assert.notEmpty(key, 'The key cannot be empty')
+    console.debug(`storage.remove：key = ${key}`)
+    Assert.notEmpty(key, 'storage.remove：key is empty')
     this.storage.removeItem(key)
   }
 
   arrayAppend (key, value, callback) {
-    Assert.notEmpty(value, 'The value cannot be empty')
-    Assert.isFunction(callback, 'callback is not function')
-
+    console.debug(`storage.arrayAppend：key = ${key}，value = `, value)
+    Assert.notEmpty(key, 'storage.arrayAppend：key is empty')
+    Assert.isFunction(callback, `storage.arrayAppend: key = ${key} callback is not function`)
     const list = this.get(key)
     if (tools.isEmpty(list)) {
       this.set(key, [ value ])
@@ -45,7 +48,8 @@ class Storage {
   }
 
   arrayRemove (key, callback) {
-    Assert.isFunction(callback, 'callback is not function')
+    Assert.notEmpty(key, 'storage.arrayRemove：key is empty')
+    Assert.isFunction(callback, `storage.arrayRemove: key = ${key} callback is not function`)
     const list = this.get(key)
     if (tools.isEmpty(list)) { return }
     const index = list.findIndex(callback)
