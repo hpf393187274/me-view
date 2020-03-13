@@ -6,12 +6,12 @@ class Storage {
     this.storage = tools.isEmpty(storage) ? window.localStorage : storage
   }
 
-  get (key, params = { }) {
+  get (key, { defaultValue = undefined } = { }) {
     console.debug(`storage.arrayAppend：key = ${key}`)
     Assert.notEmpty(key, 'storage.get：key is empty')
     const value = this.storage.getItem(key)
     if (tools.isEmpty(value)) {
-      return params.default
+      return defaultValue
     }
     return JSON.parse(value)
   }
@@ -19,7 +19,6 @@ class Storage {
   set (key, value) {
     console.debug(`storage.set：key = ${key}，value = `, value)
     Assert.notEmpty(key, 'storage.set：key is empty')
-    Assert.notEmpty(value, `storage.set：key = ${key}, value is empty`)
     this.storage.setItem(key, JSON.stringify(value))
   }
 
@@ -35,10 +34,10 @@ class Storage {
     console.debug(`storage.arrayAppend：key = ${key}，value = `, value)
     Assert.notEmpty(key, 'storage.arrayAppend：key is empty')
     Assert.isFunction(callback, `storage.arrayAppend: key = ${key} callback is not function`)
+    if (tools.isEmpty(value)) { return }
     const list = this.get(key)
     if (tools.isEmpty(list)) {
-      this.set(key, [ value ])
-      return
+      return this.set(key, [ value ])
     }
 
     if (list.findIndex(callback) === -1) {
