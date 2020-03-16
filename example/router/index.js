@@ -7,14 +7,15 @@ const routeList = require.context('../../example/docs/', true, /.md$/).keys()
 local.set('routeList', routeList)
 
 const children = routeList.flatMap(item => {
-  const __path = item.replace('./', '/').replace('.md', '')
+  const path = item.replace('./', '/').replace('.md', '')
   const filePath = item.replace('./', '')
   return {
-    path: __path,
+    path,
     component: () => import('@docs/' + filePath)
   }
 })
-const router = new Router({
+
+export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -26,4 +27,3 @@ const router = new Router({
     }
   ]
 })
-export default router

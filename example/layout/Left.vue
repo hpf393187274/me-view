@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     handleClick ({ path }) {
-      this.$router.push(path)
+      this.$router.push(path).catch(error => { console.debug(error) })
     }
   }
 }
