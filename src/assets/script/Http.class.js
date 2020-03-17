@@ -1,5 +1,7 @@
 import axios from 'axios'
 import Qs from 'qs'
+import tools from './Tools.class'
+import { type } from './common'
 
 const defaultAction = {
   request: {
@@ -12,9 +14,11 @@ const defaultAction = {
   }
 }
 
-const CONFIG = {
-  defaultHeaders: {
-    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+const APP_FROM = 'application/x-www-form-urlencoded'
+const APP_JSON = 'application/json'
+const defaultConfig = {
+  headers: {
+    'Content-Type': APP_FROM,
     'X-Requested-With': 'XMLHttpRequest'
   },
   paramsSerializer (params) {
@@ -23,13 +27,14 @@ const CONFIG = {
   transformRequest: [
     (data, config) => {
       const contentType = Reflect.get(config, 'Content-Type')
-      if (contentType.includes('application/json')) {
-        console.debug('application/json -----------', JSON.stringify(data))
+      console.debug(`axios.transformRequest -> config['Content-Type'] = ${contentType}`)
+      if (contentType.includes(APP_JSON)) {
+        console.debug(`${APP_JSON} --------`, JSON.stringify(data))
         return JSON.stringify(data)
       }
 
-      if (contentType.includes('application/x-www-form-urlencoded')) {
-        console.debug('application/x-www-form-urlencoded-----------', Qs.stringify(data, { arrayFormat: 'repeat' }))
+      if (contentType.includes(APP_FROM)) {
+        console.debug(`${APP_FROM} -----------`, Qs.stringify(data, { arrayFormat: 'repeat' }))
         return Qs.stringify(data, { arrayFormat: 'repeat' })
       }
       return data
@@ -38,15 +43,34 @@ const CONFIG = {
 }
 
 export default class Http {
-  constructor ({ baseURL, timeout, headers }) {
-    this.initHttp({ baseURL, timeout, headers })
+  static APP_FROM = APP_FROM
+
+  static APP_JSON = APP_JSON
+
+  constructor ({ baseURL, timeout = 2000, headers = {} } = { }) {
+    Object.assign(defaultConfig, { baseURL, timeout })
+    if (type.notObject(defaultConfig.headers)) {
+      defaultConfig.headers = {}
+    }
+    Object.assign(defaultConfig.headers, headers)
+    console.debug('new Http config：', defaultConfig)
+    this.instance = axios.create({ ...defaultConfig })
+    this.name = tools.UUId()
+    console.debug('new Http -> name = ', this.name)
   }
 
-  initHttp ({ baseURL, timeout, headers } = { timeout: 1000, baseURL: '/' }) {
-    const { defaultHeaders, ...other } = CONFIG
-    const __headers = Object.assign({}, defaultHeaders, headers || {})
-    this.instance = axios.create({ baseURL, timeout, headers: __headers, ...other })
+  initHttp ({ baseURL, timeout = 2000, headers = {} } = { }) {
+    if (type.notObject(this.defaults.headers)) {
+      this.defaults.headers = {}
+    }
+    console.debug('Http.initHttp before -> name = ', this.defaults)
+    Object.assign(this.defaults, { baseURL, timeout })
+    Object.assign(this.defaults.headers, headers)
+    console.debug('Http.initHttp after -> name = ', this.defaults)
+    console.debug('Http.initHttp -> name = ', this.name)
   }
+
+  get defaults () { return this.instance.defaults }
 
   get interceptors () {
     return this.instance.interceptors

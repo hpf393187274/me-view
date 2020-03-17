@@ -25,8 +25,6 @@ Dialog.newInstance = (options = {}) => {
         width: '416px',
         type: '',
         height: '200px',
-        ok: null,
-        cancel: null,
         render: null,
         title: '',
         icon: '',
@@ -35,7 +33,9 @@ Dialog.newInstance = (options = {}) => {
         cancelText: '取消',
         closable: false,
         rules: [],
-        value: ''
+        value: '',
+        resolve: undefined,
+        reject: undefined
       })
     },
     methods: {
@@ -46,28 +46,31 @@ Dialog.newInstance = (options = {}) => {
           Reflect.set(this, key, Reflect.get(options, key))
         }
         modal.$parent.onRemove = onRemove
+
+        return new Promise((resolve, reject) => {
+          this.resolve = resolve
+          this.reject = reject
+        })
       },
       destroy () {
         this.$destroy()
         document.body.removeChild(this.$el)
         this.onRemove()
       },
-      onOk () {
-        if (this.$refs.label) {
-          this.$refs.label.validate(valid => {
-            if (valid === true) {
-              this.destroy()
-              this.ok && this.ok(this.value)
-            }
-          })
-        } else {
+      async handlerOk () {
+        try {
+          if (this.$refs.label) {
+            await this.$refs.label.validate()
+          }
           this.destroy()
-          this.ok && this.ok(this.value)
+          this.resolve(this.value)
+        } catch (error) {
+          console.log(error)
         }
       },
-      onCancel () {
+      handlerCancel () {
         this.destroy()
-        this.cancel && this.cancel()
+        this.reject('false')
       },
       onRemove () { }
     },
@@ -77,7 +80,7 @@ Dialog.newInstance = (options = {}) => {
         renderFooter.push(
           h('me-button', {
             props: { width: '80px' },
-            on: { click: this.onCancel }
+            on: { click: this.handlerCancel }
           }, this.cancelText)
         )
       }
@@ -85,7 +88,7 @@ Dialog.newInstance = (options = {}) => {
       renderFooter.push(
         h('me-button', {
           props: { type: 'primary', width: '80px' },
-          on: { click: this.onOk }
+          on: { click: this.handlerOk }
         }, this.okText)
       )
 
@@ -93,7 +96,7 @@ Dialog.newInstance = (options = {}) => {
       return h(Dialog,
         {
           props: { title, width, height, closable, value: true },
-          on: { cancel: this.onCancel },
+          on: { cancel: this.handlerCancel },
           scopedSlots: { footer: () => renderFooter }
         },
         [

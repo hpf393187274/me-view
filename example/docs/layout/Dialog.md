@@ -161,12 +161,7 @@ export default {
 export default {
   methods: {
     onHandler() {
-      this.$dialog.alert({
-        content: '我们都是好孩子',
-        render(h) {
-          return h('div', "我们都是好孩子22222222")
-        }
-      })
+      this.$dialog.alert('我们都是好孩子')
     }
   }
 }
@@ -187,19 +182,9 @@ export default {
 export default {
   methods: {
     onHandler() {
-      this.$dialog.confirm({
-        content: '请确认：你叫什么名字',
-        ok() {
-          this.$dialog.alert({
-            content: '点击了确认'
-          })
-        },
-        cancel() {
-          this.$dialog.alert({
-            content: '点击了取消'
-          })
-        }
-      })
+      this.$dialog.confirm('请确认：你叫什么名字')
+        .then(() => { this.$message.info('点击了确认') })
+        .catch(() => { this.$message.error('点击了取消') })
     }
   }
 }
@@ -212,22 +197,18 @@ export default {
 
 ```html
 <template>
-  <me-button @click="onHandler">请输入</me-button>
+  <me-button @click="handlerClick">请输入</me-button>
 </template>
 <script>
 export default {
   methods: {
-    onHandler() {
+    handlerClick() {
       this.$dialog.prompt({
         content: '请输入文件夹名称',
-        rules:[ { required: true, message: '文件夹名称不能为空' }],
-        ok(value) {
-          this.$message.info(`输入的内容为：${value}`)
-        },
-        cancel() {
-          this.$message.error('点击了取消')
-        }
+        rules:[ { required: true, message: '文件夹名称不能为空' }]
       })
+      .then(value => { this.$message.info(`输入的内容为：${value}`) })
+      .catch(() => { this.$message.error('点击了取消') })
     }
   }
 }

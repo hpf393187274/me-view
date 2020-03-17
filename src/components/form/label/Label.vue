@@ -68,14 +68,14 @@ export default {
       this.listener('on-label-change', this.handlerElementChange)
     },
     handlerElementBlur () {
-      this.validate()
+      this.validate().catch(() => {})
     },
     handlerElementChange (value) {
       if (!this.valueDefault) {
         Reflect.set(this, 'valueDefault', value)
       }
       this.valueCurrent = value
-      this.validate()
+      this.validate().catch(() => {})
     },
     bindFormElement () {
       if (tools.isEmptyArray(this.$children)) { return }

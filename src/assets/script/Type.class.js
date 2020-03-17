@@ -7,6 +7,7 @@ const TYPE_ARRAY = '[object Array]'
 const TYPE_FUNCTION = '[object Function]'
 const TYPE_STRING = '[object String]'
 const TYPE_REGEXP = '[object RegExp]'
+const TYPE_BLOB = '[object Blob]'
 
 class Type {
   /**
@@ -18,13 +19,18 @@ class Type {
     return toString.call(target)
   }
 
+  isBlog (target) {
+    const type = this.getType(target)
+    return type === TYPE_BLOB
+  }
+
   /**
    * 校验：Boolean：true
    * @param target
    * @returns {Boolean}
    */
   isBoolean (target) {
-    var type = this.getType(target)
+    const type = this.getType(target)
     return type === TYPE_BOOLEAN
   }
 

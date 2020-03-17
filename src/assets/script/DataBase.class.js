@@ -2,7 +2,7 @@
 import Assert from './Assert.class'
 import type from './Type.class'
 
-export default class DataBase {
+export default class Database {
   constructor (name = 'me-view-database-default', version = 4) {
     this.dbName = name
     this.version = version
