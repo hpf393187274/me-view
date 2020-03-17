@@ -5,6 +5,7 @@
     :draggable="draggable"
     :height="height"
     :width="width"
+    :z-index="zIndex"
     @cancel="$emit('cancel')"
     class-container="me-dialog"
     v-model="value__"
@@ -36,6 +37,7 @@ import MeModal from '../../view/modal'
 import MeButton from '../../form/button'
 import MeIcon from '../../basic/Icon'
 import MeLineH from '../../basic/LineH'
+let zIndex = 1000
 export default {
   name: 'MeDialog',
   components: { MeButton, MeIcon, MeLineH, MeModal },
@@ -49,8 +51,13 @@ export default {
   },
   data () {
     return {
+      zIndex,
       btnDisabledConfirm: false
     }
+  },
+  created () {
+    zIndex += 10
+    this.zIndex = zIndex
   },
   watch: {
     /**

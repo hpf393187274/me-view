@@ -1,6 +1,7 @@
 
 import Assert from './Assert.class'
 import type from './Type.class'
+import tools from './Tools.class'
 
 export default class Database {
   constructor (name = 'me-view-database-default', version = 4) {
@@ -77,6 +78,7 @@ export default class Database {
    * @param {Object} data 数据
    */
   async add (tableName, data) {
+    console.debug(`database.add --> tableName = ${tableName}, data = `, data)
     Assert.isObject(data, '添加的数据不是一个对象，data：' + JSON.stringify(data))
 
     const store = await this.__store(tableName, 'readwrite')
@@ -91,6 +93,7 @@ export default class Database {
    * @param {Object} data 数据
    */
   async save (tableName, data) {
+    console.debug(`database.save --> tableName = ${tableName}, data = `, data)
     const exist = await this.exist(tableName, data)
     if (exist) {
       console.debug('save', '->', '数据已存在，进行更新数据，data：', data)
@@ -105,7 +108,8 @@ export default class Database {
    * @param {String} tableName 表名
    * @param {Object} data 数据
    */
-  async batchSave (tableName, list) {
+  batchSave (tableName, list) {
+    console.debug(`database.batchSave --> tableName = ${tableName}, list = `, list)
     Assert.isArray(list, `需要一个数组：${list}`)
 
     const promiseList = []
@@ -121,12 +125,14 @@ export default class Database {
    * @param {String} value 主键值
    */
   async remove (tableName, value) {
+    console.debug(`database.remove --> tableName = ${tableName}, value = `, value)
     const store = await this.__store(tableName, 'readwrite')
     await this.handlerResponse(store.delete(value))
     console.debug('数据删除成功')
   }
 
   async batchRemove (tableName, values) {
+    console.debug(`database.batchRemove --> tableName = ${tableName}, values = `, values)
     Assert.isArray(values, `需要一个数组：${values}`)
 
     const promiseList = []
@@ -142,6 +148,7 @@ export default class Database {
    * @param {Object} data 数据 必须包含主键值
    */
   async update (tableName, data) {
+    console.debug(`database.update --> tableName = ${tableName}, data = `, data)
     Assert.isObject(data, '添加的数据不是一个对象，data：' + JSON.stringify(data))
 
     const store = await this.__store(tableName, 'readwrite')
@@ -168,6 +175,7 @@ export default class Database {
    * @param {String} value 主键值
    */
   async findOne (tableName, value) {
+    console.debug(`database.findOne --> tableName = ${tableName}, value = `, value)
     Assert.notEmpty(value, '主键值不存在')
 
     const store = await this.__store(tableName)
@@ -183,6 +191,7 @@ export default class Database {
    * @param {String} value 主键值 or 当前数据
    */
   async exist (tableName, value) {
+    console.debug(`database.exist --> tableName = ${tableName}, value = `, value)
     Assert.notEmpty(value, '参数不能为空')
 
     const store = await this.__store(tableName)
@@ -200,13 +209,17 @@ export default class Database {
    * @param {String} keyValue 主键值
    */
   async findList (tableName, key, value) {
-    Assert.notEmpty(key, '索引不能为空')
-    Assert.notEmpty(value, '查询条件不能为空')
+    console.debug(`database.findList --> tableName = ${tableName}, key = ${key}, value = `, value)
 
     const store = await this.__store(tableName)
+    if (tools.isEmpty(key)) {
+      const request = store.getAll()
+      await this.handlerResponse(request)
+      return request.result
+    }
+    Assert.notEmpty(value, '查询条件不能为空')
     const index = store.index(key)
     Assert.notEmpty(index, '索引不存在')
-
     const request = index.getAll(value)
     await this.handlerResponse(request)
     return request.result

@@ -1,5 +1,5 @@
 <template>
-  <div @click.self="handlerClick" class="me-row me-center me-modal" v-if="modal" v-show="value__">
+  <div @click.self="handlerClick" class="me-row me-center me-modal" :style="{ 'z-index': zIndex}" v-if="modal" v-show="value__">
     <div :class="classContainer" :style="styles" @mousedown="onMouseDown" class="me-column modal-container" ref="target">
       <slot>
         <me-button @click="handlerCancel">关闭</me-button>
@@ -31,6 +31,7 @@ export default {
   components: { MeButton },
   props: {
     height: String,
+    zIndex: { type: Number, default: 1000 },
     width: String
   },
   data () {
@@ -130,7 +131,6 @@ export default {
   left: 0px;
   top: 0px;
   background: rgba(216, 216, 216, 0.4);
-  z-index: 10000;
 }
 .modal-container {
   z-index: 9999;
