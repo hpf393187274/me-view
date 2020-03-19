@@ -1,7 +1,5 @@
-@scrollbar-base:rgb(243, 240, 240);
-@scrollbar: rgb(194, 191, 191);
-@scrollbar-hover: rgb(209, 209, 209);
-.@{PREFIX}-scrollbar {
+
+.#{$prefix}-scrollbar {
   position: relative;
   overflow: hidden;
   .scrollbar-body {

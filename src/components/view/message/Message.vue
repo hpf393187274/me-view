@@ -1,6 +1,6 @@
 
 <template>
-  <me-modal :z-index="100000" :draggable="draggable" :left="left" :modal="false" :top="top" :width="width" v-model="value__">
+  <me-modal background="none" :z-index="100000" :draggable="draggable" :left="left" :modal="false" :top="top" :width="width" v-model="value__">
     <me-message-item :key="item.primaryKey" :primary-key="item.primaryKey" @remove="handlerRemove" v-bind="item" v-for="item in container" />
   </me-modal>
 </template>

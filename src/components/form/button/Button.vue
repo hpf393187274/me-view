@@ -1,5 +1,5 @@
 <template>
-  <button :class="classes" :disabled="disabled" :margin="margin" :style="{width:width}" @click.stop="click" type="button">
+  <button :class="classes" :disabled="disabled" :margin="margin" :style="{ width}" @click.stop="click" type="button">
     <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
     <span class="button-inner">
       <slot />

@@ -1,20 +1,19 @@
 
-@input-border-error: @color-error;
 input[type=checkbox] {
 	vertical-align:middle;
 	cursor: pointer;
 }
 input::placeholder {
-	color: @color-placeholder;
+	color: $color-placeholder;
 }
-
 
 textarea {
 	resize: none;
 }
 
-.@{PREFIX}-input {
+.#{$prefix}-input {
 	min-height: 40px;
+	width: 150px;
 	position: relative;
 	.input-required {
 		color: red;
@@ -27,33 +26,33 @@ textarea {
 		width: 1px;
 		min-width: 50px;
 		outline: none;
-		border: 1px solid @color-border;
-		color: @color-font;
+		border: 1px solid $color-border;
+		color: $color-font;
 		border-radius: 5px;
 		padding-left: 5px;
 		padding-right: 5px;
 		&:focus {
-			border-color: @color-focus;
-			box-shadow:0 0 3px @color-focus;
+			border-color: $color-focus;
+			box-shadow:0 0 3px $color-focus;
 		}
 	}
 }
 
 
-.@{PREFIX}-input-error {
+.#{$prefix}-input-error {
 	.input-inner {
-		border-color: @input-border-error ;
+		border-color: $input-border-error ;
 		&:focus {
-			border-color: @input-border-error;
-			box-shadow:0 0 3px @input-border-error;
+			border-color: $input-border-error;
+			box-shadow:0 0 3px $input-border-error;
 		}
 	}
 }
 
-.@{PREFIX}-disabled.@{PREFIX}-input {
+.#{$prefix}-disabled.#{$prefix}-input {
 	.input-inner {
 		&:hover {
-			border-color: @color-disabled;
+			border-color: $color-disabled;
 			box-shadow: none;
 		}
 	}

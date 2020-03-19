@@ -17,7 +17,7 @@ class Storage {
   }
 
   set (key, value) {
-    console.debug(`storage.set：key = ${key}，value = `, value)
+    console.debug(`storage.set：key = ${key}`)
     Assert.notEmpty(key, 'storage.set：key is empty')
     this.storage.setItem(key, JSON.stringify(value))
   }

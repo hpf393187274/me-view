@@ -1,7 +1,7 @@
 
 <template>
   <transition appear name="move-up">
-    <div class="me-row me-cross-center me-message">
+    <div class="me-row me-cross-center me-message" :style="{ background }">
       <me-icon :class="type">{{icon}}</me-icon>
       <slot name="header">
         <div class="me-flex">
@@ -24,6 +24,7 @@ export default {
     icon: String,
     content: String,
     primaryKey: String,
+    background: { type: String, default: '#ffffff' },
     type: String,
     duration: { type: Number, default: 2 },
     closable: { type: Boolean, default: true }

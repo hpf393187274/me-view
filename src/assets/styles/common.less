@@ -1,63 +1,7 @@
 @import (reference) "config.less";
 
-html {
-	height: 100%;
-	padding: 5px;
-}
-
-body {
-	height: 100%;
-	margin: 0px;
-}
-
-
-.@{PREFIX}-cursor-move{
-	cursor: move;
-}
-.@{PREFIX}-cursor-pointer{
-	cursor: pointer;
-}
-#app {
-	height: 100%;
-	.flex(row);
-}
-
-
-.@{PREFIX}-empty {
-	.flex(row);
-	flex: 1;
-	justify-content:center;
-	align-items:center;
-	color: darkgray;
-}
-
-.@{PREFIX}-icon {
-	cursor: pointer;
-	align-self: center;
-	font-size: 16px;
-	margin: 0px;
-}
 @import "./custom.less";
 
 @import "./animation/index";
 
-@import "./layout.less";
-
-@import "./basic/Index.less";
-
-@import "./form/Index.less";
-
 @import "./layout/Index.less";
-
-
-.@{PREFIX}-disabled {
-	* {
-		cursor: not-allowed;
-	}
-}
-
-.@{PREFIX}-readonly {
-	* {
-		cursor: pointer;
-	}
-}

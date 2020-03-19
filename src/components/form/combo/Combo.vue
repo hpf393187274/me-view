@@ -7,6 +7,7 @@
       :readonly="readonly__"
       @on-blur="handlerBlurInput"
       @on-click="handlerClickInput"
+      :flex= flex
       ref="input"
       v-model="label__"
     >

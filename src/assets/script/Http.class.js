@@ -53,21 +53,21 @@ export default class Http {
       defaultConfig.headers = {}
     }
     Object.assign(defaultConfig.headers, headers)
-    console.debug('new Http config：', defaultConfig)
+    console.debug('Http.constructor --> config：', defaultConfig)
     this.instance = axios.create({ ...defaultConfig })
     this.name = tools.UUId()
-    console.debug('new Http -> name = ', this.name)
+    console.debug('Http.constructor --> name：', this.name)
   }
 
   initHttp ({ baseURL, timeout = 2000, headers = {} } = { }) {
     if (type.notObject(this.defaults.headers)) {
       this.defaults.headers = {}
     }
-    console.debug('Http.initHttp before -> name = ', this.defaults)
+    console.debug('Http.initHttp --> before defaults：', this.defaults)
     Object.assign(this.defaults, { baseURL, timeout })
     Object.assign(this.defaults.headers, headers)
-    console.debug('Http.initHttp after -> name = ', this.defaults)
-    console.debug('Http.initHttp -> name = ', this.name)
+    console.debug('Http.initHttp --> after defaults：', this.defaults)
+    console.debug('Http.initHttp --> name：', this.name)
   }
 
   get defaults () { return this.instance.defaults }

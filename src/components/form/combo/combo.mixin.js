@@ -14,6 +14,7 @@ export default {
     border: Boolean,
     placeholder: String,
     multiple: Boolean,
+    flex: Boolean,
     fieldLabel: { type: String, default: 'label' },
     fieldValue: { type: String, default: 'value' },
     value: { type: [ String, Array ] }

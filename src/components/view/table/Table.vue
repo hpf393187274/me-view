@@ -27,7 +27,7 @@
           :data="item"
           :highlight="highlight"
           :index="index"
-          :key="data[primaryField] || index"
+          :key="getPrimaryValue(data) || index"
           :multiple="multiple"
           :primary-field = "primaryField"
           v-for="(item,index) in data"
@@ -60,7 +60,6 @@ export default {
     columns: { type: Array, default: () => [] },
     checked: { type: Boolean, default: false },
     primaryField: { type: String, default: 'id' },
-    primaryKey: String,
     center: Boolean,
     checkbox: Boolean,
     height: [ Number, String ],
@@ -110,11 +109,23 @@ export default {
   created () {
     this.id__ = `me-table_${idSeed++}`
     this.initAllRows()
+
+    this.listener('me-table-sort', ({ field, order }) => {
+      this.sort(field, order)
+    })
   },
   async mounted () {
+    await this.$nextTick()
     this.handlerSlots()
   },
   methods: {
+    sort (field, order) {
+      this.data.sort((a, b) => {
+        const valueA = Reflect.get(a, field)
+        const valueB = Reflect.get(b, field)
+        return order === 'ASC' ? valueA - valueB : valueB - valueA
+      })
+    },
     initAllRows () {
       this.allRows.clear()
       this.listener('table-row-all-append', ({ key, value }) => this.allRows.set(key, value))
@@ -138,43 +149,33 @@ export default {
       this.checkedNumber = this.checkedRows.size
     },
     clear () { this.checkedRows.clear() },
-
     removeRows (data = []) {
       this.$tools.forEach(data, item => {
-        const primaryValue = this.$type.isObject(item) ? Reflect.get(item, this.primaryField) : item
-        const row = this.checkedRows.get(primaryValue)
-        if (row) {
-          row.handlerCheckedChange(false)
-        }
+        this.$tools.arrayRemove(this.data, target => this.getPrimaryValue(target) === this.getPrimaryValue(item))
       })
       this.refresh()
     },
-    getSelectedData () {
+    getPrimaryValue (target) {
+      return Reflect.get(target, this.primaryField)
+    },
+    getCheckedRows () {
       const result = []
       this.checkedRows.forEach(value => result.push(value.data))
       return result
     },
-    batchRemoveData (data = []) {
-      this.$tools.forEach(data, item1 => {
-        this.$tools.arrayRemove(this.data, item2 => {
-          return Reflect.get(item1, this.primaryField) === Reflect.get(item2, this.primaryField)
-        })
-      })
-      this.cancelSelected()
-    },
-    cancelSelected () {
+    cancelChecked () {
       this.checkedRows.forEach(row => row.handlerCheckedChange(false))
       this.refresh()
     },
     /**
      * 设置选中的数据
      * @param {Array} data 数据
-     * @param {Boolean} clear 是否清楚原有数据，默认清除
+     * @param {Boolean} clear 是否清楚原有选择数据，默认不清楚
      */
-    setSelected (data = [], clear = true) {
-      clear && this.cancelSelected()
+    setCheckedRows (data = [], clear) {
+      clear && this.cancelChecked()
       this.$tools.forEach(data, item => {
-        const primaryValue = this.$type.isObject(item) ? Reflect.get(item, this.primaryField) : item
+        const primaryValue = this.$type.isObject(item) ? this.getPrimaryValue(item) : item
         const row = this.allRows.get(primaryValue)
         if (row) {
           row.handlerCheckedChange(true)
@@ -186,9 +187,10 @@ export default {
      * 点击 Header row checkbox
      */
     handlerCheckboxHeader (status) {
+      console.debug(`table.header.checked = ${status}`)
       this.checkedHeaderHalf = false
       this.clear()
-      this.allRows.forEach(value => value.handlerCheckedChange(status))
+      this.allRows.forEach(value => { value.handlerCheckedChange(status) })
       this.refresh()
     },
     handlerScrollBody (scrollLeft) {
@@ -201,7 +203,7 @@ export default {
       if (this.$type.isArray(slotKeys) && slotKeys.length > 0) {
         const newSlotKeys = slotKeys.filter(item => !(item.includes('$') || excludeSlots.includes(item)))
         if (this.$type.isArray(newSlotKeys) && newSlotKeys.length > 0) {
-          console.debug('newSlotKeys = ', newSlotKeys)
+          console.debug('table.handlerSlots --> newSlotKeys = ', newSlotKeys)
           for (const column of this.columns__) {
             if (newSlotKeys.includes(column.field)) {
               const extended = Reflect.get(this.$scopedSlots, column.field)

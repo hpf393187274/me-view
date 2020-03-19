@@ -81,7 +81,7 @@ Dialog.newInstance = (options = {}) => {
           h('me-button', {
             props: { width: '80px' },
             on: { click: this.handlerCancel }
-          }, this.cancelText)
+          }, [ this.cancelText ])
         )
       }
 
@@ -89,7 +89,7 @@ Dialog.newInstance = (options = {}) => {
         h('me-button', {
           props: { type: 'primary', width: '80px' },
           on: { click: this.handlerOk }
-        }, this.okText)
+        }, [ this.okText ])
       )
 
       const { title, closable, width, height } = this.$data

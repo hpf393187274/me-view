@@ -6,15 +6,7 @@
       </slot>
     </div>
   </div>
-  <div
-    :class="classContainer"
-    :style="styles"
-    @mousedown="onMouseDown"
-    class="me-column modal-container"
-    ref="target"
-    v-else
-    v-show="value__"
-  >
+  <div :class="classContainer" :style="styles" @mousedown="onMouseDown" class="me-column modal-container" ref="target" v-else v-show="value__" >
     <slot>
       <me-button @click="handlerCancel">关闭</me-button>
     </slot>
@@ -31,8 +23,9 @@ export default {
   components: { MeButton },
   props: {
     height: String,
-    zIndex: { type: Number, default: 1000 },
-    width: String
+    width: String,
+    background: { type: String, default: '#ffffff' },
+    zIndex: { type: Number, default: 1000 }
   },
   data () {
     return {
@@ -109,6 +102,7 @@ export default {
       const styleBasal = {
         width: this.width,
         height: this.height,
+        background: this.background,
         left: `${this.position.x}px`,
         top: `${this.position.y}px`
       }
@@ -136,6 +130,7 @@ export default {
   z-index: 9999;
   cursor: pointer;
   position: absolute;
-  background: #ffffff;
+  max-width: 80%;
+  max-height: 80%;
 }
 </style>

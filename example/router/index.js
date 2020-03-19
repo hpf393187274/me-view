@@ -17,7 +17,6 @@ const children = routeList.flatMap(item => {
 
 export default new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',

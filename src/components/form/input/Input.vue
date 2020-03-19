@@ -1,12 +1,12 @@
 <template>
-  <div :class="classes">
+  <div :class="classes" :style="styles">
     <input
       :disabled="disabled"
       :max="max"
       :min="min"
       :placeholder="placeholder"
       :readonly="readonly"
-      :style="styles"
+      :style="styleInput"
       :type="type"
       @blur="handleBlur"
       @click.stop="handleClick"
@@ -51,6 +51,7 @@ export default {
     iconSuffix: String,
     placeholder: String,
     pattern: String,
+    flex: Boolean,
     readonly: Boolean
   },
   data () {
@@ -85,19 +86,23 @@ export default {
     },
     classes () {
       return [
-        'me-row me-flex me-input',
+        'me-row me-input',
         {
+          'me-flex': this.flex,
           'me-readonly': this.readonly,
           'me-disabled': this.disabled,
           'me-input-error': this.validateStatus === 'error'
         }
       ]
     },
-    styles () {
+    styleInput () {
       return {
         'padding-left': `${this.left}px`,
         'padding-right': `${this.right}px`
       }
+    },
+    styles () {
+      return this.flex ? { width: 'auto' } : {}
     },
     paddingLeft () {
       return this.clearable ? 20 : 10

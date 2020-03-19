@@ -4,7 +4,7 @@
       <span style="color:red;" v-if="required__">*</span>
       {{label}}：
     </label>
-    <div class="label-content me-flex">
+    <div class="label-content me-column me-flex">
       <slot>
         <div class="me-row me-cross-center label-content-slot">请在插巢填充元素</div>
       </slot>

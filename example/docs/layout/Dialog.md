@@ -6,8 +6,8 @@
 ::: demo `data` 数据 `border` 边框
 ```html
 <template>
-  <div>
-    <me-dialog width="800px" height="500px" title="dialog" v-model="status" @confirm="handlerConfirm">
+  <div class="me-row">
+    <me-dialog title="dialog" v-model="statusTable" @confirm="handlerConfirm">
       <me-table ref="tableList" checkbox multiple :data="data" :columns="columns" highlight>
         <template #action="{data}">
           <me-input v-model="data.label" />
@@ -17,23 +17,46 @@
         </template>
       </me-table>
     </me-dialog>
-    <me-button @click="status=!status">Dialog</me-button>
+    <me-dialog title="dialog" v-model="statusForm" @confirm="handlerConfirm">
+      <me-form class="me-grid-column-3" ref="form">
+        <me-label label="主机" prop="domain">
+          <me-input clearable v-model="form.domain"></me-input>
+        </me-label>
+        <me-label label="端口" prop="port">
+          <me-input clearable v-model="form.port"></me-input>
+        </me-label>
+        <me-label label="数据库" prop="databaseName">
+          <me-input clearable v-model="form.databaseName"></me-input>
+        </me-label>
+        <me-label label="用户名" prop="userName">
+          <me-input clearable v-model="form.userName"></me-input>
+        </me-label>
+        <me-label flex label="密码" prop="password">
+          <me-input clearable v-model="form.password"></me-input>
+        </me-label>
+        <me-label class="me-grid-self-center">
+          <me-button @click="handlerDataSource" plain type="primary">变更数据源</me-button>
+        </me-label>
+      </me-form>
+    </me-dialog>
+    <me-button @click="statusTable=!statusTable">Dialog - Table</me-button>
+    <me-button @click="statusForm=!statusForm">Dialog - Form</me-button>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      status: false,
+      statusTable: false,
+      statusForm: false,
       checkedRows:[],
+      form: {},
       columns: [
         { label:'编号', field: 'id'},
         { label:'测试', field: 'test' },
         { label:'操作', field: 'action' }
       ],
-      selectData: [
-
-      ],
+      selectData: [ ],
       data: [
         { id: '1', label: '陕西省sssss'},
         { id: '2', label: '四川省'},
@@ -51,7 +74,7 @@ export default {
   },
   methods: {
     handlerConfirm () {
-      const selectedData = this.$refs.tableList.getSelectedData()
+      const selectedData = this.$refs.tableList.getCheckedRows()
       if(!selectedData || selectedData.length < 1) {
         this.$dialog.alert({
           content: '我们都是好孩子',

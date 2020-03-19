@@ -9,42 +9,41 @@
   <pre>{{form}}</pre>
     <div class="me-row">
       <me-label flex required label="姓名" prop="name">
-        <me-input clearable placeholder="请输入姓名" v-model="form.name"></me-input>
+        <me-input flex clearable placeholder="请输入姓名" v-model="form.name"></me-input>
       </me-label>
       <me-label flex label="年龄" prop="age">
-        <me-input clearable placeholder="请输入年龄" v-model="form.age"></me-input>
+        <me-input flex clearable placeholder="请输入年龄" v-model="form.age"></me-input>
       </me-label>
     </div>
     <div class="me-row">
       <me-label flex label="性别" prop="sex">
-        <me-combo-select readonly :data="sexList" v-model="form.sex" clearable placeholder="请选择性别">
+        <me-combo-select flex readonly :data="sexList" v-model="form.sex" clearable placeholder="请选择性别">
         </me-combo-select>
       </me-label>
       <me-label flex label="省份">
-        <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
+        <me-combo-table flex readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
         </me-combo-table>
       </me-label>
     </div>
     <div class="me-row">
       <me-label flex label="省份">
-        <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
+        <me-combo-table flex readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
       
         </me-combo-table>
       </me-label>
       <me-label flex label="省份">
-        <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
-
+        <me-combo-table flex readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
         </me-combo-table>
       </me-label>
     </div>
     <div class="me-row">
       <me-label flex label="行政区域1">
-        <me-combo-tree readonly  :data="regionList" :expanded-level="1" field-value="id">
+        <me-combo-tree flex readonly  :data="regionList" :expanded-level="1" field-value="id">
           <template #node-label="{data}">{{data.title}}</template>
         </me-combo-tree>
       </me-label>
       <me-label flex label="行政区域">
-        <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id"></me-combo-tree>
+        <me-combo-tree flex readonly :data="regionList" :expanded-level="1" field-value="id"></me-combo-tree>
       </me-label>
     </div>
     <div class="me-row me-center">

@@ -52,9 +52,7 @@ export default {
   },
   methods: {
     renderRoot (h, children) {
-      return h('td', {
-        style: this.styles
-      }, children)
+      return h('td', { style: this.styles }, children)
     }
   }
 }

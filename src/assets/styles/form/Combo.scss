@@ -1,12 +1,7 @@
-@combo-border: #ebeef5;
-@combo-color: #FFFFFF;
-@combo-row-odd:#FFFFFF;
-@combo-row-even:#F8F8F9;
-@combo-hover: #ebf7ff;
-@combo-active: #ebf7ff;
-.@{PREFIX}-combo {
+
+.#{$prefix}-combo {
   position: relative;
-  .@{PREFIX}-input {
+  .#{$prefix}-input {
     margin: 0px;
   }
   .combo-options {
@@ -15,28 +10,28 @@
     height: 200px;
     font-size: 14px;
     font-weight: normal;
-    background: @combo-color;
+    background: $combo-color;
     overflow: auto;
     .combo-option {
       padding: 0px 8px;
       min-height: 32px;
       align-items: center;
       &:nth-child(odd){
-				background: @combo-row-odd;
+				background: $combo-row-odd;
 			}
 			&:nth-child(even){
-				background: @combo-row-even;
+				background: $combo-row-even;
 			}
 			&:hover{
 				cursor: pointer;
-				background-color: @combo-hover;
+				background-color: $combo-hover;
       }
       .combo-item-inner {
         flex: 1;
       }
     }
     .is-selected {
-      background-color: @combo-active !important;
+      background-color: $combo-active !important;
     }
   }
 } 

@@ -1,0 +1,7 @@
+.#{$prefix}-link {
+	margin: 0px 2px;
+	display: block;
+	&:link {color: $link-link-color}     /* 未访问的链接 */
+	&:visited {color: $link-visited-color}  /* 已访问的链接 */
+	&:hover { color: $link-hover-color; }    /* 当有鼠标悬停在链接上 */
+}

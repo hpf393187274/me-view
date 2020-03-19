@@ -127,7 +127,8 @@ export default class Database {
   async remove (tableName, value) {
     console.debug(`database.remove --> tableName = ${tableName}, value = `, value)
     const store = await this.__store(tableName, 'readwrite')
-    await this.handlerResponse(store.delete(value))
+    const keyValue = type.isObject(value) ? Reflect.get(value, store.keyPath) : value
+    await this.handlerResponse(store.delete(keyValue))
     console.debug('数据删除成功')
   }
 

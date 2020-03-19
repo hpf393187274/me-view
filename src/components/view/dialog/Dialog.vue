@@ -44,8 +44,8 @@ export default {
   mixins: [ Modal ],
   props: {
     title: { type: String, default: '' },
-    height: { type: String, default: '300px' },
-    width: { type: String, default: '300px' },
+    height: String,
+    width: String,
     draggable: { type: Boolean, default: true },
     closable: { type: Boolean, default: true }
   },

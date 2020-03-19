@@ -5,14 +5,7 @@
 
 ```html
 <template>
-  <me-table :height="height + 'px'" checkbox multiple has-index :data="data" :columns="columns">
-    <template #header>
-      <me-button plain type="primary"  @click="height = height + 50"> + 50 </me-button>
-      <me-button plain type="primary"  @click="height = height - 50"> - 50 </me-button>
-      <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
-      <me-button plain type="primary" @click="handlerData">变更数据</me-button>
-      <me-button plain type="primary" icon="icon-minus-square">批量删除</me-button>
-    </template>
+  <me-table checkbox multiple has-index :data="data" :columns="columns">
     <template #action="{data}">
       <me-input v-model="data.label" />
     </template>
@@ -25,9 +18,8 @@
   export default {
     data() {
       return {
-        height: 400,
         columns: [
-          { label:'编号', field: 'id'},
+          { label:'编号', field: 'id', sortable: true},
           { label:'测试', field: 'test' },
           { label:'操作', field: 'action' }
         ],
@@ -42,11 +34,6 @@
           { id: '8', label: '河南省'}
         ]
       }
-    },
-    methods: {
-      handlerData () {
-        this.data.push(...this.data1)
-      }
     }
   }
 </script>
@@ -58,11 +45,13 @@
 
 ```html
 <template>
-  <me-table ref="tableList" checkbox multiple :data="data" :columns="columns" highlight>
+  <me-table :height="height + 'px'" ref="tableList" primary-field ="id" checkbox multiple :data="data" :columns="columns" highlight>
     <template #header>
+      <me-button plain type="primary"  @click="height = height + 50"> + 50 </me-button>
+      <me-button plain type="primary"  @click="height = height - 50"> - 50 </me-button>
       <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
-      <me-button plain type="primary" @click="getSelectedData">获取选中的数据</me-button>
-      <me-button plain type="primary" @click="setSelected">设置选中</me-button>
+      <me-button plain type="primary" @click="getCheckedRows">获取选中的数据</me-button>
+      <me-button plain type="primary" @click="setCheckedRows">设置选中</me-button>
       <me-button plain type="primary" @click="handlerData">变更数据</me-button>
       <me-button plain type="primary" @click="removeSelectData">批量删除</me-button>
     </template>
@@ -78,8 +67,9 @@
   export default {
     data() {
       return {
+        height: 400,
         columns: [
-          { label:'编号', field: 'id'},
+          { label:'编号', field: 'id', sortable: true},
           { label:'测试', field: 'test' },
           { label:'操作', field: 'action' }
         ],
@@ -89,46 +79,39 @@
           { id: '4', label: '河南省'}
         ],
         data: [
-          { id: '1', label: '陕西省sssss'},
-          { id: '2', label: '四川省'},
-          { id: '3', label: '江苏省'},
-          { id: '4', label: '河南省'},
-          { id: '5', label: '陕西省'},
-          { id: '6', label: '四川省'},
-          { id: '7', label: '江苏省'},
-          { id: '8', label: '河南省'}
+          { id: '1', label: '陕西省1'},
+          { id: '2', label: '四川省2'},
+          { id: '3', label: '江苏省3'},
+          { id: '4', label: '河南省4'},
+          { id: '5', label: '陕西省5'},
+          { id: '6', label: '四川省6'},
+          { id: '7', label: '江苏省7'},
+          { id: '8', label: '河南省8'}
         ]
       }
     },
     methods: {
       handlerData () {
-        this.data.push(...this.data1)
+        this.data.push(...this.selectedData)
       },
-      setSelected () {
-        this.$refs.tableList.setSelected(this.selectedData)
+      setCheckedRows () {
+        this.$refs.tableList.setCheckedRows(this.selectedData)
       },
-      getSelectedData(){
-        if(this.$refs.tableList){
-          const result = this.$refs.tableList.getSelectedData()
-          console.debug('handlerTableSelectedData=========》', result)
-        }
+      getCheckedRows(){
+        const result = this.$refs.tableList.getCheckedRows()
+        console.debug('table.getCheckedRows -->', result)
       },
-      removeRow (data) {
-        const tableList = this.$refs.tableList
-        this.$dialog.confirm({
-          content: '确定要删除当前行？',
-          ok() {
-            tableList.batchRemoveData([data])
-          }
-        })
+      async removeRow (data) {
+        await this.$dialog.confirm('确定要删除当前行？')
+        this.$refs.tableList.removeRows([ data ])
       },
       removeSelectData(){
-         const result = this.$refs.tableList.getSelectedData()
+         const result = this.$refs.tableList.getCheckedRows()
          if(this.$type.notArray(result) || result.length < 1 ) {
            this.$message.info('请选择要删除的数据！')
            return
          }
-         this.$refs.tableList.batchRemoveData(result)
+         this.$refs.tableList.removeRows(result)
       }
     }
   }

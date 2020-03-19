@@ -5,10 +5,7 @@
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
-  <me-tree :data="data" />
-</template>
-<template>
-  <me-tree :data="data" header></me-tree>
+  <me-tree :data="data" header />
 </template>
 
 
@@ -45,7 +42,7 @@ export default {
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
-  <me-tree :data="data" checkbox header/>
+  <me-tree :data="data" checkbox header />
 </template>
 <script>
 export default {
