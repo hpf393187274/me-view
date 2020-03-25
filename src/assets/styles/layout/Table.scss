@@ -1,15 +1,7 @@
-@table-border: rgba(218, 214, 214, 0.514);
-@table-color: rgba(211, 207, 207, 0.863);
-@table-header:rgba(226, 224, 224, 0.397);
-@table-body: #FFFFFF;
-@table-body-row-odd:#FFFFFF;
-@table-body-row-even:#F8F8F9;
-@table-body-hover: #ebf7ff;
-@table-tr-active: #4aacee;
 td,th {
-	border: 1px solid @table-border !important;
+	border: 1px solid $table-border !important;
 }
-.@{PREFIX}-table-container {
+.#{$prefix}-table-container {
 	table{ width: 100%; }
 	table,table td, .table th {
 		border: none;
@@ -43,21 +35,21 @@ td,th {
 		.table-body { 
 			overflow: auto;
 			tr {
-				&:nth-child(odd){ background-color: @table-body-row-odd !important; }
-				&:nth-child(even){ 	background-color: @table-body-row-even !important; }
+				&:nth-child(odd){ background-color: $table-body-row-odd !important; }
+				&:nth-child(even){ 	background-color: $table-body-row-even !important; }
 				&:hover {
-					background-color: @table-body-hover !important;
+					background-color: $table-body-hover !important;
 				}
 				&.is-selected {
-					background-color: @table-tr-active !important;
+					background-color: $table-tr-active !important;
 				}
 			}
 		}
 	
 		.table-header {
-			background-color: @table-header;
+			background-color: $table-header;
 			tr {
-				background-color: @table-header;
+				background-color: $table-header;
 			}
 		}
 	}

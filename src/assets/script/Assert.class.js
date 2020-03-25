@@ -43,4 +43,10 @@ export default class Assert {
       throw new CustomError(message, target)
     }
   }
+
+  static isString (target, message) {
+    if (type.notString(target)) {
+      throw new CustomError(message, target)
+    }
+  }
 }

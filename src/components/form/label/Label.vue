@@ -13,14 +13,15 @@
   </div>
 </template>
 <script>
-import { type, tools } from '@assets/script/common'
+import { type, tools, Assert } from '@assets/script/common'
 import Validator from 'async-validator'
 export default {
   name: 'MeLabel',
   props: {
     rules: {
-      type: [ Array, Object ],
-      validator: value => type.isObjectOrArray(value)
+      type: Array,
+      default: () => {},
+      validator: value => type.isArray(value)
     },
     prop: String,
     required: Boolean,
@@ -35,7 +36,6 @@ export default {
       validateMessage: '',
       validateStatus: '',
       FormInstance: null,
-      rulesForm: {},
       rules__: [],
       valueCurrent: '',
       valueDefault: null
@@ -87,20 +87,17 @@ export default {
     },
     setRules (value) {
       if (tools.isEmpty(value)) { return }
-      if (type.isArray(value) && value.length > 0) {
-        this.rules__ = [ ...value ]
-      }
-      if (type.isObject(value)) {
-        this.rules__ = [ value ]
-      }
+      Assert.isArray(value, 'MeLabel rules 必须为数组')
+      this.rules__ = [ value ]
     },
     bindFormRules () {
       if (this.prop && this.FormInstance) {
-        this.rulesForm = this.FormInstance.rules
-        const ruleProp = Reflect.get(this.rulesForm, this.prop)
-        if (this.$type.notArray(ruleProp)) {
+        const formRules = this.FormInstance.rules
+        if (type.notObject(formRules)) {
+          console.debug('MeForm.rules is not Object --> rules：', formRules)
           return
         }
+        const ruleProp = tools.findPath(formRules, this.prop)
         this.setRules(ruleProp)
       }
     },
@@ -113,6 +110,9 @@ export default {
      * 校验表单元素
      */
     validate () {
+      if (type.notArray(this.rules__)) {
+        return Promise.resolve()
+      }
       const validator = new Validator({ [this.prop]: this.rules__ })
       const _this = this
       return new Promise((resolve, reject) => {

@@ -67,6 +67,23 @@ class Tools {
     return target
   }
 
+  findPath (target, path) {
+    Assert.isObject(target, 'target is not Object')
+    Assert.isString(path, 'path is not String')
+    if (path.includes('.') === false) {
+      return Reflect.get(target, path)
+    }
+    const props = path.split('.')
+    let tempObject = { ...target }
+    for (const prop of props) {
+      if (this.isEmpty(prop) || type.notObject(tempObject) || Reflect.has(tempObject, prop) === false) {
+        return undefined
+      }
+      tempObject = Reflect.get(tempObject, prop)
+    }
+    return tempObject
+  }
+
   /**
    * 序列号：Json to form
    * @param {Object} target 目标对象
@@ -210,14 +227,18 @@ class Tools {
    * 克隆对象
    * @param {Object} target
    * @param {Boolean} param.deep 是否深度克隆, 默认：false
-   * @param {Array} param.exclude 是否深度克隆, 默认：false
+   * @param {Array} param.exclude 属性排除, deep = true 无效
    */
   clone (target, { deep = false, exclude = [] } = {}) {
     if (type.notObject(target)) {
       return target
     }
     if (deep === true) {
-      return JSON.parse(JSON.stringify(target))
+      try {
+        return JSON.parse(JSON.stringify(target))
+      } catch (error) {
+        console.error('tools.clone --> deep = true，target = ', target)
+      }
     }
     const newTarget = { ...target }
     // 排除掉不用的属性
@@ -240,10 +261,11 @@ class Tools {
   /**
   * 获取 Url 参数
   * @param {String} key 参数名
+  * @param {String} search 参数集
   */
-  urlParam (key, target = location.search) {
-    if (this.isEmpty(target)) { return '' }
-    let result = target.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
+  urlParam (key, search = location.search) {
+    if (this.isEmpty(search)) { return '' }
+    let result = search.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
     try {
       result = result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '"$1":"$2"')
       const params = JSON.parse(`{${result}}`)

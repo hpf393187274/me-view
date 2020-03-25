@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-.tabs-container {
+.#{$prefix}-tabs {
   display: grid;
   border: 1px solid rgb(245, 243, 243);
   grid-template-columns: 1fr;
@@ -14,7 +14,7 @@
 }
 </style>
 <template>
-  <div class="tabs-container">
+  <div class="me-tabs">
     <div class="tabs-title-wrap" :class="[`tabs-title-${mode}`]">
       <me-tab-title :closable="analyzeClosable(item)" v-for="item in paneList" :key="item.name" :name="item.name">{{item.title}}</me-tab-title>
     </div>

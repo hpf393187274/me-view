@@ -23,13 +23,27 @@ export default {
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
-  <me-paging :total="total" border />
+  <div>
+    <div class="me-row me-center">
+      pageNum = {{info.pageNum}}, pageSize = {{info.pageSize}}
+    </div>
+    <me-paging :total="total" border @change-page="handlerPaging"/>
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      total: 1000
+      total: 1000,
+      info: {
+        pageNum: 1,
+        pageSize: 10
+      }
+    }
+  },
+  methods: {
+    handlerPaging (info) {
+      Object.assign(this.info, info)
     }
   }
 }

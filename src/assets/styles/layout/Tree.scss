@@ -1,8 +1,7 @@
-@tree-header: #F8F8F9;
-.@{PREFIX}-tree {
+.#{$prefix}-tree {
 	.tree-node-header{ 
 		font-weight: bold;
-		background: @tree-header;
+		background: $tree-header;
 		font-size: 16px;
 	}
 	.tree-node-label {
@@ -19,7 +18,7 @@
 	.tree-node-body {
 		.tree-node-item:hover {
 			cursor: pointer;
-			background: @color-hover;
+			background: $color-hover;
 		}
 	}
 	

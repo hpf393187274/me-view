@@ -153,3 +153,32 @@ $slidebar-active                      : #747474;
 $scrollbar-base                       : rgb(243, 240, 240);
 $scrollbar                            : rgb(194, 191, 191);
 $scrollbar-hover                      : rgb(209, 209, 209);
+
+// view -- dialog
+$dialog-border                        : #4aacee;
+$dialog-shadow                        : #a5b0b8;
+$dialog-header                        : #4aacee;
+
+// view -- message
+$message-border                       : #4aacee;
+$message-shadow                       : #a5b0b8;
+$message-header                       : #4aacee;
+
+// view -- table
+$table-border                         : rgba(218, 214, 214, 0.514);
+$table-color                          : rgba(211, 207, 207, 0.863);
+$table-header                         : rgba(226, 224, 224, 0.397);
+$table-body                           : #FFFFFF;
+$table-body-row-odd                   : #FFFFFF;
+$table-body-row-even                  : #F8F8F9;
+$table-body-hover                     : #ebf7ff;
+$table-tr-active                      : #4aacee;
+
+// view -- tree
+$tree-header                          : #F8F8F9;
+
+// view -- paging
+
+$paging-color-hover                   : $color-hover;
+$paging-color-font-hover              : #FFFFFF;
+

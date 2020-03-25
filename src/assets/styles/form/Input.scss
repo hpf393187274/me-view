@@ -15,6 +15,7 @@ textarea {
 	min-height: 40px;
 	width: 150px;
 	position: relative;
+	min-width: 35px;
 	.input-required {
 		color: red;
 	}
@@ -24,7 +25,7 @@ textarea {
 	}
 	.input-inner {
 		width: 1px;
-		min-width: 50px;
+		min-width: 20px;
 		outline: none;
 		border: 1px solid $color-border;
 		color: $color-font;

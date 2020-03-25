@@ -7,7 +7,7 @@
 export default {
   name: 'MeForm',
   props: {
-    rules: Object
+    rules: { type: Object, default: () => {} }
   },
   data () {
     return {

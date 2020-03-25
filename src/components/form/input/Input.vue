@@ -7,7 +7,8 @@
       :placeholder="placeholder"
       :readonly="readonly"
       :style="styleInput"
-      :type="type"
+      :type="type__"
+      @change="handlerChange"
       @blur="handleBlur"
       @click.stop="handleClick"
       @focus="handleFocus"
@@ -32,6 +33,11 @@
 
 <script>
 const types = [ 'text', 'number', 'email', 'password' ]
+const patterns = {
+  number: /[0-0]+/,
+  email: /^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$/
+}
+
 export default {
   name: 'MeInput',
   model: {
@@ -41,6 +47,7 @@ export default {
     required: Boolean,
     disabled: Boolean,
     clearable: Boolean,
+    width: String,
     type: { type: String, default: 'text', validator: value => types.includes(value) },
     value: { type: [ Number, String, Array ], default: '' },
     min: Number,
@@ -58,7 +65,8 @@ export default {
     return {
       left: 8,
       right: 8,
-      value__: null,
+      type__: this.type === 'number' ? 'text' : this.type,
+      value__: undefined,
       valueReset: '',
       validateStatus: '',
       active: false
@@ -102,7 +110,13 @@ export default {
       }
     },
     styles () {
-      return this.flex ? { width: 'auto' } : {}
+      if (this.width) {
+        return { width: this.width }
+      }
+      if (this.flex) {
+        return { width: 'auto' }
+      }
+      return { }
     },
     paddingLeft () {
       return this.clearable ? 20 : 10
@@ -111,33 +125,40 @@ export default {
       return this.clearable ? 10 : 0
     },
     pattern__ () {
-      let value = this.pattern
-      this.type === 'number' && (value = '[0-0]+')
-      this.type === 'email' && (value = '^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$')
-      return value
+      const value = Reflect.get(patterns, this.type)
+      if (value) {
+        return value
+      }
+      return this.pattern
     }
   },
   watch: {
     value (newValue) {
       this.value__ = newValue
-    },
-    value__ (newValue, oldValue) {
-      if (this.$refs.target.checkValidity() === false) {
-        this.value__ = oldValue
-        return
-      }
-      this.updateValue(newValue)
-      this.handlerLableEvent(() => {
-        this.dispatchUpward('MeLabel', 'on-label-change', this.value__)
-      })
-    },
-    change (value) {
-      this.updateValue(value)
     }
   },
   methods: {
-    updateValue (value) {
-      this.$emit('change', this.type === 'number' ? Number(value) : value)
+    convertType (value) {
+      if (this.type === 'number' && isNaN(value) === false) {
+        // 转换为数字类型
+        return Number(value)
+      }
+      return value
+    },
+    handlerChange ({ target }) {
+      const value = this.convertType(target.value)
+      const oldValue = this.value
+      if (this.type === 'number') {
+        if (isNaN(value) || value < this.min || value > this.max) {
+          this.value__ = oldValue
+          return
+        }
+      }
+
+      this.$emit('change', this.convertType(this.value__))
+      this.handlerLableEvent(() => {
+        this.dispatchUpward('MeLabel', 'on-label-change', this.value__)
+      })
     },
     /**
      * MeInput

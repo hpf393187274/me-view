@@ -7,14 +7,9 @@
 @import "./animation/index.scss";
 @import "./layout/index.scss";
 
-html {
+html, body {
 	height: 100%;
-	padding: 5px;
-}
-
-body {
-	height: 100%;
-	margin: 0px;
+	margin: auto;
 }
 
 .#{$prefix}-cursor-move{
@@ -49,4 +44,10 @@ body {
 
 .#{$prefix}-readonly {
 	* { cursor: pointer; }
+}
+
+.#{$prefix}-cursor-pointer {
+	&:hover { 
+		cursor: pointer; 
+	} 
 }

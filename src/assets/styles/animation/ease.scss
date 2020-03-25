@@ -1,17 +1,17 @@
-.ease-motion(@className, @keyframeName) {
-    .make-motion(@className, @keyframeName);
-    .@{className}-enter-active, .@{className}-appear {
+@mixin ease-motion($className, $keyframeName) {
+    @include make-motion($className, $keyframeName);
+    .#{$className}-enter-active, .#{$className}-appear {
         opacity: 0;
         animation-timing-function: linear;
-        animation-duration: @transition-time;
+        animation-duration: $transition-time;
     }
-    .@{className}-leave-active {
+    .#{$className}-leave-active {
         animation-timing-function: linear;
-        animation-duration: @transition-time;
+        animation-duration: $transition-time;
     }
 }
 
-.ease-motion(ease, meEase);
+@include ease-motion(ease, meEase);
 
 @keyframes meEaseIn {
     0% {

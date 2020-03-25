@@ -19,7 +19,8 @@
 export default {
   data() {
     return { 
-      list: ['#FF0000 ','#FF7F00','#FFFF00','#00FF00','#00FFFF','#0000FF','#8B00FF']
+      list: ['#FF0000 ','#FF7F00','#FFFF00','#00FF00','#00FFFF','#0000FF','#8B00FF'],
+      data : { user: { name: '张三', sex: { value: '女' } }, orgCode: '2222'}
     }
   },
   methods: {

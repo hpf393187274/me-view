@@ -12,6 +12,9 @@
     <template #test>
       <me-button>test</me-button>
     </template>
+    <template #footer>
+      <me-paging :total="50" class="me-flex"/>
+    </template>
   </me-table>
 </template>
 <script>

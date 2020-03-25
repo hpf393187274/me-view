@@ -1,18 +1,18 @@
-.move-motion(@className, @keyframeName) {
-    .make-motion(@className, @keyframeName);
-    .@{className}-enter-active, .@{className}-appear {
+@mixin move-motion($className, $keyframeName) {
+    @include make-motion($className, $keyframeName);
+    .#{$className}-enter-active, .#{$className}-appear {
         opacity: 0;
-        animation-timing-function: @ease-in-out;
+        animation-timing-function: $ease-in-out;
     }
-    .@{className}-leave-active {
-        animation-timing-function: @ease-in-out;
+    .#{$className}-leave-active {
+        animation-timing-function: $ease-in-out;
     }
 }
 
-.move-motion(move-up, meMoveUp);
-.move-motion(move-down, meMoveDown);
-.move-motion(move-left, meMoveLeft);
-.move-motion(move-right, meMoveRight);
+@include move-motion(move-up, meMoveUp);
+@include move-motion(move-down, meMoveDown);
+@include move-motion(move-left, meMoveLeft);
+@include move-motion(move-right, meMoveRight);
 
 @keyframes meMoveDownIn {
     0% {
@@ -120,7 +120,7 @@
 
 // specific transition for Notice
 
-.move-motion(move-notice, meMoveNotice);
+@include move-motion(move-notice, meMoveNotice);
 
 
 @keyframes meMoveNoticeIn {
@@ -146,8 +146,8 @@
         transform-origin: 0 0;
         transform: translateX(100%);
         height: auto;
-        padding: @notice-padding;
-        margin-bottom: @notice-margin-bottom;
+        padding: $notice-padding;
+        margin-bottom: $notice-margin-bottom;
         opacity: 0;
     }
     100% {
