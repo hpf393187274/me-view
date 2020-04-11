@@ -1,26 +1,23 @@
-import '@assets/styles/index.scss'
-import '@assets/styles/icon.css'
-
-import { components, mixins, config } from '@components/index'
-import watermark from '@assets/script/watermark'
-
-import Dialog from '@components/view/dialog/index'
-import Message from '@components/view/message/index'
+import './assets/styles/index.scss'
+import './assets/styles/icon.css'
 
 import Clipboard from 'clipboard'
-import { local, session, type, tools, http } from '@assets/script/common'
-
-export * from '@assets/script/common'
+import { local, session, type, tools, http, watermark } from './assets/script/common'
+import mixins from './components/mixins'
+import config from './components/config/index'
+import * as components from './components'
+export * from './assets/script/common'
+export * from './components'
 
 export default {
   install (Vue) {
-    for (const item of components) {
+    for (const key in components) {
+      const item = Reflect.get(components, key)
       Vue.component(item.name, item)
     }
     Vue.mixin(mixins)
-    Vue.prototype.$config = config
-    Vue.prototype.$dialog = Dialog
-    Vue.prototype.$message = Message
+    Vue.prototype.$dialog = components.Dialog
+    Vue.prototype.$message = components.Message
 
     Vue.prototype.$watermark = watermark
     Vue.prototype.$copy = function (classes) {
@@ -35,6 +32,7 @@ export default {
         clipboard.destroy()
       })
     }
+    Vue.prototype.$config = config
     Vue.prototype.$type = type
     Vue.prototype.$tools = tools
     Vue.prototype.$local = local

@@ -4,7 +4,6 @@
 ## 基础用法
 ::: demo `clearable` 可清除的
 ```html
-结果：{{form}}
 <me-column>
   <me-input clearable placeholder="请输入姓名" v-model="userName"></me-input>
 </me-column>

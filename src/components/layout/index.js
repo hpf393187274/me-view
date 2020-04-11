@@ -1,4 +1,5 @@
-import DemoBlock from './DemoBlock'
-export default [
-  DemoBlock
-]
+
+import Layout from './Layout'
+
+Layout.install = Vue => Vue.component(Layout.name, Layout)
+export default Layout

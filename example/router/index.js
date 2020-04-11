@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { local } from '@/index'
+import { local } from '../../src/index'
 Vue.use(Router)
 // 动态获取路由： 根据目录结构
 const routeList = require.context('../../example/docs/', true, /.md$/).keys()

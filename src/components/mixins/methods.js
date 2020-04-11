@@ -1,4 +1,4 @@
-import { tools, type } from '@assets/script/common'
+import { tools, type } from '../../assets/script/common'
 
 function findChildren (componentName, callback = () => { }) {
   const children = this.$children

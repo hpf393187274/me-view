@@ -1,9 +1,4 @@
-import Input from './input/index'
-import Checkbox from './checkbox/index'
-import Button from './button/index'
-import { ComboSelect, ComboTable, ComboTree } from './combo/index'
-import Label from './label/index'
-import Form from './form/index'
-export default [
-  Input, Checkbox, Button, Label, ComboSelect, ComboTree, ComboTable, Form
-]
+import Form from './Form.vue'
+
+Form.install = Vue => Vue.component(Form.name, Form)
+export default Form

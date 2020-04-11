@@ -6,7 +6,6 @@
 ```html
 <template>
   <me-form ref="form" :rules="rules">
-  <pre>{{form}}</pre>
     <div class="me-row">
       <me-label flex required label="姓名" prop="name">
         <me-input flex clearable placeholder="请输入姓名" v-model="form.name"></me-input>
@@ -134,8 +133,6 @@ export default {
 </script>
 ```
 :::
-
-
 
 ### Form Attributes
 | 名称 | 描述 | 类型  | 默认值 | 可选值 |

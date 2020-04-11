@@ -35,7 +35,7 @@
           <me-input clearable v-model="form.password"></me-input>
         </me-label>
         <me-label class="me-grid-self-center">
-          <me-button @click="handlerDataSource" plain type="primary">变更数据源</me-button>
+          <me-button plain type="primary">变更数据源</me-button>
         </me-label>
       </me-form>
     </me-dialog>

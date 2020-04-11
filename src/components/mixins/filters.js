@@ -1,4 +1,4 @@
-import { tools, type } from '@assets/script/common'
+import { tools, type } from '../../assets/script/common'
 export default {
   isEmpty (value, defaultValue) {
     return tools.isEmpty(value) ? defaultValue : value
