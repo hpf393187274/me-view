@@ -4,9 +4,15 @@ import type from './Type.class'
 import tools from './Tools.class'
 
 export default class Database {
+  // 数据库实例
+  #database
+  // 数据库状态
+  #status
+  #dbName
+  #version
   constructor (name = 'me-view-database-default', version = 4) {
-    this.dbName = name
-    this.version = version
+    this.#dbName = name
+    this.#version = version
   }
 
   handlerResponse (response) {
@@ -21,7 +27,7 @@ export default class Database {
    * 打开链接
    */
   async open () {
-    if (this.db) {
+    if (this.#database) {
       return '数据库已存在'
     }
     if (Reflect.has(window, 'indexedDB') === false) {
@@ -31,10 +37,10 @@ export default class Database {
     const request = window.indexedDB.open(this.dbName, this.version)
     const { upgrade, event } = await this.handlerResponse(request).catch((event) => {
       console.debug('数据库打开报错', event)
-      this.status = false
+      this.#status = false
     })
-    this.status = true
-    this.db = upgrade === true ? event.target.result : request.result
+    this.#status = true
+    this.#database = upgrade === true ? event.target.result : request.result
   }
 
   /**
@@ -43,10 +49,10 @@ export default class Database {
    * @param {String} mode 模式 readonly="只读" readwrite="读写"
    */
   async __store (tableName, mode = 'readonly') {
-    if (!this.db) {
+    if (!this.#database) {
       await this.open()
     }
-    return this.db.transaction([ tableName ], mode).objectStore(tableName)
+    return this.#database.transaction([ tableName ], mode).objectStore(tableName)
   }
 
   /**
@@ -54,16 +60,16 @@ export default class Database {
    * @param {Object} params { tableName="String-表名", keyPath="String-主键", index="Array-索引" }
    */
   async createStore ({ tableName, keyPath, index }) {
-    if (!this.db) {
+    if (!this.#database) {
       await this.open()
     }
-    if (this.db.objectStoreNames.contains(tableName) === false) {
+    if (this.#database.objectStoreNames.contains(tableName) === false) {
       const options = { autoIncrement: true }
       if (keyPath) {
         Reflect.set(options, 'keyPath', keyPath)
         Reflect.deleteProperty(options, 'autoIncrement')
       }
-      const store = this.db.createObjectStore(tableName, options)
+      const store = this.#database.createObjectStore(tableName, options)
       if (index && type.isArray(index)) {
         for (const item of index) {
           store.createIndex(item.key, item.key, { unique: false })

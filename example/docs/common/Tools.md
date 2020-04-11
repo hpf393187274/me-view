@@ -6,7 +6,7 @@ import { local, session } from 'me-view'
 ``` js
 local.set('userList', [])
 local.get('userList')
-local.remove('uesrName')
+local.remove('userName')
 ```
 
 ### Tools

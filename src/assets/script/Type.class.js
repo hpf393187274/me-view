@@ -1,15 +1,14 @@
-// const TYPE_NULL = '[object Null]'
-// const TYPE_UNDEFINED = '[object Undefined]'
-const TYPE_NUMBER = '[object Number]'
-const TYPE_BOOLEAN = '[object Boolean]'
-const TYPE_OBJECT = '[object Object]'
-const TYPE_ARRAY = '[object Array]'
-const TYPE_FUNCTION = '[object Function]'
-const TYPE_STRING = '[object String]'
-const TYPE_REGEXP = '[object RegExp]'
-const TYPE_BLOB = '[object Blob]'
 
 class Type {
+  static TYPE_NUMBER = '[object Number]'
+  static TYPE_BOOLEAN = '[object Boolean]'
+  static TYPE_OBJECT = '[object Object]'
+  static TYPE_ARRAY = '[object Array]'
+  static TYPE_FUNCTION = '[object Function]'
+  static TYPE_STRING = '[object String]'
+  static TYPE_REGEXP = '[object RegExp]'
+  static TYPE_BLOB = '[object Blob]'
+
   /**
    * 获取类型
    * @param target 目标值
@@ -21,7 +20,7 @@ class Type {
 
   isBlog (target) {
     const type = this.getType(target)
-    return type === TYPE_BLOB
+    return type === Type.TYPE_BLOB
   }
 
   /**
@@ -31,7 +30,7 @@ class Type {
    */
   isBoolean (target) {
     const type = this.getType(target)
-    return type === TYPE_BOOLEAN
+    return type === Type.TYPE_BOOLEAN
   }
 
   /**
@@ -50,7 +49,7 @@ class Type {
    */
   isNumber (target) {
     var type = this.getType(target)
-    return type === TYPE_NUMBER
+    return type === Type.TYPE_NUMBER
   }
 
   /**
@@ -69,7 +68,7 @@ class Type {
    */
   isString (target) {
     var type = this.getType(target)
-    return type === TYPE_STRING
+    return type === Type.TYPE_STRING
   }
 
   /**
@@ -88,7 +87,7 @@ class Type {
    */
   isObjectOrArray (target) {
     var type = this.getType(target)
-    return type === TYPE_OBJECT || type === TYPE_ARRAY
+    return type === Type.TYPE_OBJECT || type === Type.TYPE_ARRAY
   }
 
   /**
@@ -106,7 +105,7 @@ class Type {
    * @returns {Boolean}
    */
   isObject (target) {
-    return this.getType(target) === TYPE_OBJECT
+    return this.getType(target) === Type.TYPE_OBJECT
   }
 
   /**
@@ -124,7 +123,7 @@ class Type {
    * @returns {Boolean}
    */
   isArray (target) {
-    return this.getType(target) === TYPE_ARRAY
+    return this.getType(target) === Type.TYPE_ARRAY
   }
 
   /**
@@ -137,7 +136,7 @@ class Type {
   }
 
   isRegExp (target) {
-    return this.getType(target) === TYPE_REGEXP
+    return this.getType(target) === Type.TYPE_REGEXP
   }
 
   /**
@@ -146,7 +145,7 @@ class Type {
    * @returns {Boolean}
    */
   isFunction (target) {
-    return this.getType(target) === TYPE_FUNCTION
+    return this.getType(target) === Type.TYPE_FUNCTION
   }
 
   /**

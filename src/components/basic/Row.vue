@@ -24,8 +24,27 @@
 //   pageNum: 1,
 //   pageSize: 10
 // })
-
+// import { Socket } from '@assets/script/common'
+// const socket = new Socket('localhost', 8088)
 export default {
-  name: 'MeRow'
+  name: 'MeRow',
+  created () {
+    // this.$type.isString('22222222222222')
+    // socket.registerEvent('message', data => {
+    //   console.log('event -> message', data)
+    // })
+    // socket.registerEvent('message-1', data => {
+    //   console.log('event -> message-1-1', data)
+    // })
+    // socket.registerEvent('message-1', data => {
+    //   console.log('event -> message-1-2', data)
+    // })
+    // socket.registerEvent('message-2', data => {
+    //   console.log('event -> message-2', data)
+    // })
+    // socket.registerEvent('message-3', data => {
+    //   console.log('event -> message-3', data)
+    // })
+  }
 }
 </script>

@@ -1,17 +1,5 @@
 import '@assets/styles/index.scss'
 import '@assets/styles/icon.css'
-import {
-  type,
-  tools,
-  local,
-  session,
-  http,
-  Http,
-  Assert,
-  Database,
-  database,
-  CustomError
-} from '@assets/script/common'
 
 import { components, mixins, config } from '@components/index'
 import watermark from '@assets/script/watermark'
@@ -20,26 +8,9 @@ import Dialog from '@components/view/dialog/index'
 import Message from '@components/view/message/index'
 
 import Clipboard from 'clipboard'
+import { local, session, type, tools, http } from '@assets/script/common'
 
-export {
-  type,
-  tools,
-  local,
-  session,
-  http,
-  Http,
-  Assert,
-  watermark,
-  Dialog,
-  Message,
-  Database,
-  database,
-  CustomError
-}
-
-const componentsList = require.context('./components/', true, /index.js$/).keys()
-
-local.set('componentsList', componentsList)
+export * from '@assets/script/common'
 
 export default {
   install (Vue) {
