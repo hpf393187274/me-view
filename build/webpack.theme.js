@@ -1,15 +1,40 @@
 const path = require('path')
-// const fs = require('fs')
+const fs = require('fs')
 const md = require('markdown-it')() // 引入markdown-it
 const mdContainer = require('markdown-it-container')
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
+function formatFileName (target) {
+  const connector = '-'
+  target = target.replace(/([A-Z])/g, $1 => connector + $1.toLowerCase())
+  if (target.startsWith(connector)) {
+    target = target.substr(1)
+  }
+  return target
+}
+function findFiles (dir) {
+  const result = {}
+  const files = fs.readdirSync(dir)
+  for (const file of files) {
+    const [ fileName ] = file.split('.')
+    const targetFileName = formatFileName(fileName)
+    Reflect.set(result, targetFileName, {
+      entry: path.join(dir, file),
+      filename: targetFileName,
+      chunks: [ 'chunk-vendors', 'chunk-common', 'index' ],
+      template: 'public/index.html'
+    })
+  }
+  return result
+}
+findFiles(resolve('src/script'))
 module.exports = {
   lintOnSave: undefined,
   runtimeCompiler: true,
   filenameHashing: false,
+  // pages: findFiles(resolve('src/script')),
   devServer: {
     port: 8000,
     disableHostCheck: true,
@@ -33,12 +58,28 @@ module.exports = {
       }
     }
   },
+  configureWebpack: {
+    entry: {
+      type: './src/script/Type.class.js'
+    }
+    // u
+  },
   chainWebpack: config => {
+    if (process.env.NODE_ENV === 'production') {
+      // 为生产环境修改配置...
+      config.output.filename('[name].js')
+      config.entry('type').clear().add('./src/script/Type.class.js')
+    } else {
+      // 为开发环境修改配置...
+      // config.entry('app').clear().add('./example/main.js')
+    }
     config.entry('app').clear().add('./example/main.js')
+    // config.entry('type').clear().add('./src/script/Type.class.js')
     config.resolve.alias
+      .set('@assets', resolve('src/assets'))
+      .set('@components', resolve('src/components'))
       .set('@example', resolve('example'))
       .set('@router', resolve('example/router'))
-      .set('me-view', resolve('./'))
       .set('@docs', resolve('example/docs'))
 
     config.module.rule('md')
