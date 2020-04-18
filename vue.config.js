@@ -2,8 +2,10 @@ const path = require('path')
 // const fs = require('fs')
 const md = require('markdown-it')() // 引入markdown-it
 const mdContainer = require('markdown-it-container')
+
+const processPath = process.cwd()
 function resolve (dir) {
-  return path.join(__dirname, dir)
+  return path.join(processPath, dir)
 }
 
 module.exports = {

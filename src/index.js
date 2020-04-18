@@ -1,16 +1,15 @@
 
 import './theme/index.scss'
 import Clipboard from 'clipboard'
-import config from './components/config/index'
-import * as components from './components/index'
+import config from './config/index'
+import * as components from './index-component'
 import { local, session, type, tools, http, Watermark } from './index-script'
 // import './test'
 
 export * from './index-script'
-export * from './components/index'
+export * from './index-component'
 
 export default {
-  ...components,
   install (Vue) {
     for (const key in components) {
       const item = Reflect.get(components, key)
