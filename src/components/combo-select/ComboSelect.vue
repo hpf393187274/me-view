@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import ComboMixin from '../Combo/combo.mixin'
-import ComboBaseMixin from '../Combo/comboBase.mixin'
+import ComboMixin from '../combo/combo.mixin'
+import ComboBaseMixin from '../combo/comboBase.mixin'
 import Option from './Option'
-import Combo from '../Combo/index'
+import Combo from '../combo/index'
 export default {
   components: { [Combo.name]: Combo, [Option.name]: Option },
   mixins: [ ComboMixin, ComboBaseMixin ],

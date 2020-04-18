@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import Modal from '../Modal/modal.mixin'
+import Modal from '../modal/modal.mixin'
 import MeMessageItem from './MessageItem'
-import { tools } from '../../assets/script/common'
-import MeModal from '../Modal/index'
+import tools from '../../script/Tools.class'
+import MeModal from '../modal/index'
 export default {
   name: 'MeMessage',
   mixins: [ Modal ],

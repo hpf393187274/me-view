@@ -1,6 +1,6 @@
 <template>
   <div :class="classes">
-    <label :style="labelStyle" class="label-label" v-if="boolean(label)">
+    <label :style="labelStyle" class="label-label" v-if="isBoolean(label)">
       <span style="color:red;" v-if="required__">*</span>
       {{label}}：
     </label>
@@ -13,10 +13,15 @@
   </div>
 </template>
 <script>
-import { type, tools, Assert } from '@assets/script/common'
+import type from '../../script/Type.class'
+import tools from '../../script/Tools.class'
+import Assert from '../../script/Assert.class'
+import common from '../mixins/common'
+import emitter from '../mixins/emitter'
 import Validator from 'async-validator'
 export default {
   name: 'MeLabel',
+  mixins: [ common, emitter ],
   props: {
     rules: {
       type: Array,

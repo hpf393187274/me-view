@@ -5,16 +5,10 @@
     <me-icon class="me-grid-center" v-if="closable === true" @click="handlerClose">icon-cross</me-icon>
   </div>
 </template>
-<style lang="scss" scoped>
-.tab-title-item {
-  display: grid;
-  grid-template-columns: 1fr 25px;
-  grid-template-rows: 1fr;
-  cursor: pointer;
-}
-</style>
 <script>
+import emitter from '../mixins/emitter'
 export default {
+  mixins: [ emitter ],
   name: 'MeTabTitle',
   props: {
     title: String,

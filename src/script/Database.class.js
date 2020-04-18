@@ -3,7 +3,7 @@ import Assert from './Assert.class'
 import type from './Type.class'
 import tools from './Tools.class'
 
-export default class Database {
+class Database {
   // 数据库实例
   #database
   // 数据库状态
@@ -232,3 +232,7 @@ export default class Database {
     return request.result
   }
 }
+
+const database = new Database('me-view-database-default')
+export { database }
+export default Database

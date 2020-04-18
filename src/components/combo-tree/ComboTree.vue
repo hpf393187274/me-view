@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import ComboMixin from '../Combo/combo.mixin'
-import Combo from '../Combo'
+import ComboMixin from '../combo/combo.mixin'
+import Combo from '../combo'
 export default {
   components: { [Combo.name]: Combo },
   mixins: [ ComboMixin ],

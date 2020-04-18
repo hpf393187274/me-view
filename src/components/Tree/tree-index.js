@@ -1,4 +1,6 @@
 
+import type from '../../script/Type.class'
+import tools from '../../script/Tools.class'
 export default {
   props: {
     /**
@@ -50,7 +52,7 @@ export default {
      */
     nodeNumber () {
       /* 获取当前节点的子节点数 */
-      return this.$type.isArray(this.children) ? this.children.length : 0
+      return type.isArray(this.children) ? this.children.length : 0
     }
   },
   methods: {
@@ -81,7 +83,7 @@ export default {
      */
     getChildrenNodeList () {
       const treeNode = this.$refs.treeNode
-      if (this.$tools.isEmpty(treeNode)) { return [] }
+      if (tools.isEmpty(treeNode)) { return [] }
       return [ ...treeNode ]
     },
     /**
@@ -89,7 +91,7 @@ export default {
      * @param {Function} filter 过滤函数
      */
     findNode (filter) {
-      if (this.$type.notFunction(filter)) { return }
+      if (type.notFunction(filter)) { return }
       return this.getChildrenNodeList().find(node => filter(node.getData()))
     },
     /**
@@ -105,7 +107,7 @@ export default {
      * @param {*} value 比对值
      */
     defaultFilter (value) {
-      if (this.$type.isObjectOrArray(value)) {
+      if (type.isObjectOrArray(value)) {
         return item => item[this.nodeKey] === value[this.nodeKey]
       }
       return item => item[this.nodeKey] === value
@@ -115,7 +117,7 @@ export default {
      *  @param {Object} data 要移除的节点
      */
     removeChildrenNode (node) {
-      this.$tools.arrayRemove(this.children, this.defaultFilter(node.getData()))
+      tools.arrayRemove(this.children, this.defaultFilter(node.getData()))
     }
   }
 }

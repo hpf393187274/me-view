@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Draggable from '@components/mixins/draggable'
+import Draggable from '../mixins/draggable'
 export default {
   name: 'MeSlidebar',
   mixins: [ Draggable ],

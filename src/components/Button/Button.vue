@@ -1,6 +1,6 @@
 <template>
-  <button :class="classes" :disabled="disabled" :margin="margin" :style="{ width}" @click.stop="click" type="button">
-    <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
+  <button :class="classes" :disabled="disabled" :margin="margin" :style="{ width }" @click.stop="click" type="button">
+    <me-icon v-if="isBoolean(icon)">{{icon}}</me-icon>
     <span class="button-inner">
       <slot />
     </span>
@@ -8,9 +8,11 @@
 </template>
 
 <script>
-import MeIcon from '../Icon'
+import MeIcon from '../icon/index'
+import Common from '../mixins/common'
 export default {
   name: 'MeButton',
+  mixins: [ Common ],
   components: { MeIcon },
   props: {
     type: { type: String, default: 'default' },

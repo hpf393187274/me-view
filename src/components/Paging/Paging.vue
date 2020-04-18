@@ -1,7 +1,7 @@
 <template>
   <div class="me-row me-center me-paging me-border">
     <span class="me-cursor-pointer" :class="itemClass()" @click="setCurrentPage(--currentPage)" title="上一页">
-      <template v-if="boolean(prevText)">{{prevText}}</template>
+      <template v-if="isBoolean(prevText)">{{prevText}}</template>
       <me-icon v-else>icon-angle_left</me-icon>
     </span>
     <div class="me-row me-center me-flex">
@@ -18,7 +18,7 @@
       </template>
     </div>
     <span :class="itemClass()" @click="setCurrentPage(++currentPage)" title="下一页">
-      <template v-if="boolean(nextText)">{{nextText}}</template>
+      <template v-if="isBoolean(nextText)">{{nextText}}</template>
       <me-icon v-else>icon-angle_right</me-icon>
     </span>
     <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{`${currentPage} / ${pageNumber}`}}</span>
@@ -28,9 +28,11 @@
 </template>
 
 <script>
-import { type } from '@assets/script/common'
+import type from '../../script/Type.class'
+import common from '../mixins/common'
 export default {
   name: 'MePaging',
+  mixins: [ common ],
   props: {
     value: { type: Number, default: 1 },
     border: Boolean,

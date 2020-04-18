@@ -8,6 +8,9 @@ class Type {
   static TYPE_STRING = '[object String]'
   static TYPE_REGEXP = '[object RegExp]'
   static TYPE_BLOB = '[object Blob]'
+  static TYPE_FILE = '[object File]'
+
+  static TYPE_DATE = '[object Date]'
 
   /**
    * 获取类型
@@ -18,9 +21,16 @@ class Type {
     return toString.call(target)
   }
 
+  isDate (target) {
+    return this.getType(target) === Type.TYPE_DATE
+  }
+
+  isFile (target) {
+    return this.getType(target) === Type.TYPE_FILE
+  }
+
   isBlog (target) {
-    const type = this.getType(target)
-    return type === Type.TYPE_BLOB
+    return this.getType(target) === Type.TYPE_BLOB
   }
 
   /**

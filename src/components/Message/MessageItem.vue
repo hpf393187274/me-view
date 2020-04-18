@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import MeIcon from '../Icon'
+import MeIcon from '../icon/index'
 export default {
   name: 'MeMessageItem',
   components: {

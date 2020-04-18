@@ -15,9 +15,11 @@
 }
 </style>
 <script>
-import { tools } from '@assets/script/common'
+import tools from '../../script/Tools.class'
+import emitter from '../mixins/emitter'
 export default {
   name: 'MeTabPane',
+  mixins: [ emitter ],
   props: {
     title: String,
     src: String,

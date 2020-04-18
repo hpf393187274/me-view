@@ -17,10 +17,13 @@
   </tr>
 </template>
 <script>
+import tools from '../../script/Tools.class'
 import TableCellD from './TableCellD'
 import TableCellHeader from './TableCellHeader'
+import emitter from '../mixins/emitter'
 export default {
   name: 'MeTableRow',
+  mixins: [ emitter ],
   components: {
     [TableCellD.name]: TableCellD,
     [TableCellHeader.name]: TableCellHeader
@@ -64,7 +67,7 @@ export default {
       return [
         'me-row table-column',
         {
-          'me-flex': this.columns.findIndex(item => this.$tools.notEmpty(item.width)) === -1,
+          'me-flex': this.columns.findIndex(item => tools.notEmpty(item.width)) === -1,
           'me-center': this.center
         }
       ]

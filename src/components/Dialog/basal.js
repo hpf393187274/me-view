@@ -1,18 +1,15 @@
 import Vue from 'vue'
-import Icon from '../Icon'
+import Icon from '../icon/index'
 
-import Button from '../Button'
-import Label from '../Label'
-import Input from '../Input'
+import Button from '../button/index'
+import Label from '../label/index'
+import Input from '../input/index'
 
-import Modal from '../Modal'
+import Modal from '../modal/index'
 import Dialog from './Dialog'
-
-import methods from '../mixins/methods'
 
 Dialog.newInstance = (options = {}) => {
   const instance = new Vue({
-    mixins: [ { methods } ],
     components: {
       [Modal.name]: Modal,
       [Button.name]: Button,

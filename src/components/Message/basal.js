@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Message from './Message'
-import { tools } from '../../assets/script/common'
+import tools from '../../script/Tools.class'
 Message.newInstance = (options = {}) => {
   const instance = new Vue({
     data () {

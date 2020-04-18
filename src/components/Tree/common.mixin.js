@@ -1,4 +1,6 @@
 
+import type from '../../script/Type.class'
+import tools from '../../script/Tools.class'
 export default {
   methods: {
     /**
@@ -96,23 +98,23 @@ export default {
       this.setAllChecked(false)
     },
     pushData (data) {
-      if (this.$tools.isEmpty(data)) { return }
+      if (tools.isEmpty(data)) { return }
       for (const item of [ data ].flat()) {
         const node = this.findNode(this.defaultFilter(item))
-        if (this.$tools.isEmpty(node)) {
-          if (this.$tools.isEmpty(this.level)) {
+        if (tools.isEmpty(node)) {
+          if (tools.isEmpty(this.level)) {
             // TreeRoot
             this.data.push(item)
             continue
           }
           // TreeNode
-          if (this.$tools.isEmpty(this.data.children)) {
+          if (tools.isEmpty(this.data.children)) {
             this.data.children = []
           }
           this.data.children.push(item)
           continue
         }
-        if (this.$type.isArray(item.children) && item.children.length !== 0) {
+        if (type.isArray(item.children) && item.children.length !== 0) {
           // 存在子节点
           node.pushData(item.children)
         }

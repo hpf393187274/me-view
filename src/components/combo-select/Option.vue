@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" @click.self="onHandleClick">
+  <div :class="classes" @click.self="handleClick">
     <me-checkbox v-if="checkbox" v-model="checked__" />
     <span class="combo-option-inner">
       <slot>{{data[fieldLabel]}}</slot>
@@ -41,7 +41,7 @@ export default {
     }
   },
   methods: {
-    onHandleClick () {
+    handleClick () {
       if (this.disabled === true) { return }
       this.checked__ = this.checked__ !== true
       this.$emit('click-option', this.data, this.index)

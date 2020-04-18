@@ -1,25 +1,22 @@
-import './assets/styles/index.scss'
-import './assets/styles/icon.css'
 
+import './theme/index.scss'
 import Clipboard from 'clipboard'
-import { local, session, type, tools, http, watermark } from './assets/script/common'
-import mixins from './components/mixins'
 import config from './components/config/index'
-import * as components from './components'
-export * from './assets/script/common'
-export * from './components'
+import * as components from './components/index'
+import { local, session, type, tools, http, Watermark } from './index-script'
+// import './test'
+
+export * from './index-script'
+export * from './components/index'
 
 export default {
+  ...components,
   install (Vue) {
     for (const key in components) {
       const item = Reflect.get(components, key)
       Vue.component(item.name, item)
     }
-    Vue.mixin(mixins)
-    Vue.prototype.$dialog = components.Dialog
-    Vue.prototype.$message = components.Message
 
-    Vue.prototype.$watermark = watermark
     Vue.prototype.$copy = function (classes) {
       const _this = this
       const clipboard = new Clipboard(classes)
@@ -32,6 +29,9 @@ export default {
         clipboard.destroy()
       })
     }
+    Vue.prototype.$dialog = components.Dialog
+    Vue.prototype.$message = components.Message
+    Vue.prototype.$watermark = Watermark
     Vue.prototype.$config = config
     Vue.prototype.$type = type
     Vue.prototype.$tools = tools

@@ -32,11 +32,11 @@
 
 <script>
 
-import Modal from '../Modal/modal.mixin'
-import MeModal from '../Modal'
-import MeButton from '../Button'
-import MeIcon from '../Icon'
-import MeLineH from '../LineH'
+import Modal from '../modal/modal.mixin'
+import MeModal from '../modal/index'
+import MeButton from '../button/index'
+import MeIcon from '../icon/index'
+import MeLineH from '../line-h/index'
 let zIndex = 1000
 export default {
   name: 'MeDialog',
@@ -74,20 +74,3 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
-.me-dialog {
-  .dialog-header {
-    align-items: center;
-    padding: 15px 10px;
-  }
-  .dialog-body {
-    padding: 5px;
-    overflow: auto;
-  }
-  .dialog-footer {
-    align-items: center;
-    padding: 5px;
-    justify-content: flex-end;
-  }
-}
-</style>

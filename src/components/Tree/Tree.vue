@@ -48,15 +48,16 @@
 </template>
 
 <script>
-import treeIndex from '@components/mixins/tree'
-import treeCommon from '@components/mixins/tree/common'
+import type from '../../script/Type.class'
+import TreeIndex from './tree-index'
+import TreeCommon from './tree-common'
 import treeInner from './common.mixin'
 import TreeHeader from './TreeHeader'
 import TreeNode from './TreeNode'
 import Vue from 'vue'
 export default {
   name: 'MeTree',
-  mixins: [ treeCommon, treeIndex, treeInner ],
+  mixins: [ TreeCommon, TreeIndex, treeInner ],
   components: {
     [TreeHeader.name]: TreeHeader,
     [TreeNode.name]: TreeNode
@@ -72,11 +73,10 @@ export default {
   },
   computed: {
     length () {
-      return this.$type.isArray(this.data) ? this.data.length : 0
+      return type.isArray(this.data) ? this.data.length : 0
     }
   },
   created () {
-    this.initPrimaryKey(this.data)
     this.$nextTick(() => {
       // 点击节点
       this.handlerOn('click-node')

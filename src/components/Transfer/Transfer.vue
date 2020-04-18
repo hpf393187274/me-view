@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import treeCommon from '@components/mixins/tree/common'
-import treeIndex from '@components/mixins/tree'
+import TreeCommon from '../tree/tree-common'
+import TreeIndex from '../tree/tree-index'
 export default {
   name: 'MeTransfer',
-  mixins: [ treeCommon, treeIndex ],
+  mixins: [ TreeCommon, TreeIndex ],
   props: {
     value: { type: Array, default () { return [] } },
     data: { type: Array, default () { return [] } },

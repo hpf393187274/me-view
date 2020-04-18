@@ -20,10 +20,11 @@
 </template>
 
 <script>
-import treeCommon from '@components/mixins/tree/common'
+import type from '../../script/Type.class'
+import TreeCommon from './tree-common'
 export default {
   name: 'MeTreeHeader',
-  mixins: [ treeCommon ],
+  mixins: [ TreeCommon ],
   props: {
     checkedHalf: Boolean,
     nodeNumber: { type: Number, default: 0 },
@@ -32,7 +33,7 @@ export default {
   computed: {
     indent__ () {
       let value = 0
-      if (this.$parent.data.every(item => this.$type.isArray(item.children) === false)) {
+      if (this.$parent.data.every(item => type.isArray(item.children) === false)) {
         return value
       }
       return ++value

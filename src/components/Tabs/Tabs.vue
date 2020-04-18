@@ -1,18 +1,4 @@
-<style lang="scss" scoped>
-.#{$prefix}-tabs {
-  display: grid;
-  border: 1px solid rgb(245, 243, 243);
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
-  min-height: 200px;
-  .tabs-title-wrap {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px,200px));
-    min-height: 35px;
-    margin-bottom: 2px;
-  }
-}
-</style>
+
 <template>
   <div class="me-tabs">
     <div class="tabs-title-wrap" :class="[`tabs-title-${mode}`]">
@@ -23,9 +9,12 @@
   </div>
 </template>
 <script>
+import tools from '../../script/Tools.class'
 import TabTitle from './TabTitle'
+import emitter from '../mixins/emitter'
 export default {
   name: 'MeTabs',
+  mixins: [ emitter ],
   components: { [TabTitle.name]: TabTitle },
   props: {
     active: String,
@@ -114,7 +103,7 @@ export default {
         this.nodeActive = this.paneList.find(this.handlerCompare(item))
       })
       this.listener('tab-close', item => {
-        let indexActive = this.$tools.arrayRemove(this.paneList, this.handlerCompare(item))
+        let indexActive = tools.arrayRemove(this.paneList, this.handlerCompare(item))
         if (indexActive > -1) {
           if (this.size === indexActive) {
             indexActive = this.size - 1

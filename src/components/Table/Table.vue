@@ -42,13 +42,16 @@
   </div>
 </template>
 <script>
+import tools from '../../script/Tools.class'
+import type from '../../script/Type.class'
 import TableRow from './TableRow.vue'
 import TableHeader from './TableHeader.vue'
 import TableBody from './TableBody.vue'
-
+import emitter from '../mixins/emitter'
 let idSeed = 1
 export default {
   name: 'MeTable',
+  mixins: [ emitter ],
   components: {
     [TableRow.name]: TableRow,
     [TableHeader.name]: TableHeader,
@@ -70,15 +73,15 @@ export default {
   computed: {
     styleContainer () {
       return {
-        width: this.$type.isNumber(this.width) ? `${this.width}px` : this.width,
-        height: this.$type.isNumber(this.height) ? `${this.height}px` : this.height
+        width: type.isNumber(this.width) ? `${this.width}px` : this.width,
+        height: type.isNumber(this.height) ? `${this.height}px` : this.height
       }
     },
     styleTHead () {
       return { 'padding-right': `${this.difference}px` }
     },
     length () {
-      return this.$type.isArray(this.data) ? this.data.length : 0
+      return type.isArray(this.data) ? this.data.length : 0
     }
   },
   watch: {
@@ -150,8 +153,8 @@ export default {
     },
     clear () { this.checkedRows.clear() },
     removeRows (data = []) {
-      this.$tools.forEach(data, item => {
-        this.$tools.arrayRemove(this.data, target => this.getPrimaryValue(target) === this.getPrimaryValue(item))
+      tools.forEach(data, item => {
+        tools.arrayRemove(this.data, target => this.getPrimaryValue(target) === this.getPrimaryValue(item))
       })
       this.refresh()
     },
@@ -174,8 +177,8 @@ export default {
      */
     setCheckedRows (data = [], clear) {
       clear && this.cancelChecked()
-      this.$tools.forEach(data, item => {
-        const primaryValue = this.$type.isObject(item) ? this.getPrimaryValue(item) : item
+      tools.forEach(data, item => {
+        const primaryValue = type.isObject(item) ? this.getPrimaryValue(item) : item
         const row = this.allRows.get(primaryValue)
         if (row) {
           row.handlerCheckedChange(true)
@@ -200,9 +203,9 @@ export default {
       const excludeSlots = [ 'header', 'footer', 'default' ]
       const slotKeys = Reflect.ownKeys(this.$scopedSlots)
       this.columns__ = [ ...this.columns ]
-      if (this.$type.isArray(slotKeys) && slotKeys.length > 0) {
+      if (type.isArray(slotKeys) && slotKeys.length > 0) {
         const newSlotKeys = slotKeys.filter(item => !(item.includes('$') || excludeSlots.includes(item)))
-        if (this.$type.isArray(newSlotKeys) && newSlotKeys.length > 0) {
+        if (type.isArray(newSlotKeys) && newSlotKeys.length > 0) {
           console.debug('table.handlerSlots --> newSlotKeys = ', newSlotKeys)
           for (const column of this.columns__) {
             if (newSlotKeys.includes(column.field)) {

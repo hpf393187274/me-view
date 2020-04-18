@@ -16,9 +16,10 @@
 <script>
 
 import TableCell from './TableCell.mixin'
+import emitter from '../mixins/emitter'
 export default {
   name: 'MeTableCellHeader',
-  mixins: [ TableCell ],
+  mixins: [ emitter, TableCell ],
   props: {
     sortable: Boolean
   },

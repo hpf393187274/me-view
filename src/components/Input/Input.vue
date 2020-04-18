@@ -16,22 +16,26 @@
       ref="target"
       v-model.trim.lazy="value__"
     />
-    <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="boolean(iconPrefix) || $slots.prefix">
+    <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="isBoolean(iconPrefix) || $slots.prefix">
       <slot name="prefix">
-        <me-icon :disabled="disabled" @click="onClickPrefix" v-if="boolean(iconPrefix)">{{iconPrefix}}</me-icon>
+        <me-icon :disabled="disabled" @click="onClickPrefix" v-if="isBoolean(iconPrefix)">{{iconPrefix}}</me-icon>
       </slot>
     </div>
 
-    <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="showClear || boolean(iconSuffix) || $slots.suffix">
+    <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="showClear || isBoolean(iconSuffix) || $slots.suffix">
       <me-icon :disabled="disabled" @click="onReset" v-if="showClear">{{$config.icon.clear}}</me-icon>
       <slot name="suffix">
-        <me-icon :disabled="disabled" @click="onClickSuffix" v-if="boolean(iconSuffix)">{{iconSuffix}}</me-icon>
+        <me-icon :disabled="disabled" @click="onClickSuffix" v-if="isBoolean(iconSuffix)">{{iconSuffix}}</me-icon>
       </slot>
     </div>
   </div>
 </template>
 
 <script>
+import common from '../mixins/common'
+import emitter from '../mixins/emitter'
+import type from '../../script/Type.class'
+import tools from '../../script/Tools.class'
 const types = [ 'text', 'number', 'email', 'password' ]
 const patterns = {
   number: /[0-0]+/,
@@ -40,6 +44,7 @@ const patterns = {
 
 export default {
   name: 'MeInput',
+  mixins: [ common, emitter ],
   model: {
     props: 'value', event: 'change'
   },
@@ -168,10 +173,10 @@ export default {
       callback && callback.call(this)
     },
     initValue (value) {
-      if (this.$type.isObject(value)) {
+      if (type.isObject(value)) {
         this.value__ = { ...value }
         this.valueReset = { ...value }
-      } else if (this.$type.isArray(value)) {
+      } else if (type.isArray(value)) {
         this.value__ = [ ...value ]
         this.valueReset = [ ...value ]
       } else {
@@ -183,7 +188,7 @@ export default {
      * 重置
      */
     onReset () {
-      this.value__ = this.$tools.clone(this.valueReset, true)
+      this.value__ = tools.clone(this.valueReset, true)
     },
     handleFocus () {
       this.$emit('on-blur', this.value__)

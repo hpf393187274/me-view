@@ -49,19 +49,20 @@
 </template>
 
 <script>
-import treeIndex from '@components/mixins/tree'
-import treeCommon from '@components/mixins/tree/common'
-import treeInner from './common.mixin'
+import type from '../../script/Type.class'
+import tools from '../../script/Tools.class'
+import TreeIndex from './tree-index'
+import TreeCommon from './tree-common'
+import TreeInner from './common.mixin'
 export default {
   name: 'MeTreeNode',
-  mixins: [ treeCommon, treeIndex, treeInner ],
+  mixins: [ TreeCommon, TreeIndex, TreeInner ],
   props: {
     data: { type: Object, default () { return {} } },
     eventTree: Object,
     level: { type: Number, default: 1 }
   },
   created () {
-    this.data && this.initPrimaryKey(this.data.children)
     this.renderFirst = this.nodeBranch && (this.expandable === false || this.expandedAll || this.expandedLevel >= this.level)
   },
   watch: {
@@ -115,7 +116,7 @@ export default {
     * 获取节点数据
     */
     getData ({ deep = false, exclude = [ 'children' ] } = {}) {
-      return this.$tools.clone(this.data, { deep, exclude })
+      return tools.clone(this.data, { deep, exclude })
     },
     /**
      * 移除当前节点
@@ -149,7 +150,7 @@ export default {
       const list = []
       if (this.nodeLeaf) {
         const resource = this.getData()
-        list.push(this.$type.isFunction(filter) ? filter(resource) : resource)
+        list.push(type.isFunction(filter) ? filter(resource) : resource)
       }
       list.push(...this.getCheckedChildren({ filter, ...param }))
       return list

@@ -15,8 +15,8 @@
 <script>
 import Modal from './modal.mixin'
 import Draggable from '../mixins/draggable'
-import MeButton from '../Button'
-import { tools } from '../../assets/script/common'
+import MeButton from '../button/index'
+import tools from '../../script/Tools.class'
 
 export default {
   name: 'MeModal',
@@ -117,21 +117,3 @@ export default {
   }
 }
 </script>
-
-<style lang="less" scoped>
-.me-modal {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0px;
-  top: 0px;
-  background: rgba(216, 216, 216, 0.4);
-}
-.modal-container {
-  z-index: 9999;
-  cursor: pointer;
-  position: absolute;
-  max-width: 80%;
-  max-height: 80%;
-}
-</style>

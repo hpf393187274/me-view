@@ -11,9 +11,9 @@ module.exports = {
     port: 8000,
     disableHostCheck: true,
     proxy: {
-      '/portal/': {
+      '/api': {
         // target: 'http://10.130.36.240:7091',
-        target: 'http://127.0.0.1:8081',
+        target: 'http://localhost:8081',
         ws: false,
         // 将主机标头的原点更改为目标URL~
         changeOrigin: false
@@ -24,9 +24,9 @@ module.exports = {
     loaderOptions: {
       // 给 sass-loader 传递选项
       sass: {
-        // @assets/ 是 src/assets 的别名
-        // 所以这里假设你有 `@assets/styles/variable` 这个文件
-        prependData: '@import "@assets/styles/variable.scss";'
+        // @ 是 src/assets 的别名
+        // 所以这里假设你有 `@styles/variable` 这个文件
+        prependData: '@import "src/theme/variable.scss";'
       }
     }
   },

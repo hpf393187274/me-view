@@ -1,4 +1,5 @@
 
+import type from '../../script/Type.class'
 export default {
   props: {
     editable: Boolean,
@@ -32,7 +33,7 @@ export default {
   computed: {
     styles () {
       return {
-        width: this.$type.isNumber(this.width) ? `${this.width}px` : this.width
+        width: type.isNumber(this.width) ? `${this.width}px` : this.width
       }
     }
   }

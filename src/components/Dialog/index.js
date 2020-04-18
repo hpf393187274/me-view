@@ -1,5 +1,5 @@
 import Dialog from './basal'
-import { type } from '../../assets/script/common'
+import type from '../../script/Type.class'
 let instance
 
 const basal = (options = {}) => {

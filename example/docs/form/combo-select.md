@@ -10,6 +10,7 @@
   <me-combo-select :data="data" v-model="modelA"> </me-combo-select>
 </div>
 <script>
+
 export default {
   data() {
     return {

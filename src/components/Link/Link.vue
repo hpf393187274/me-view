@@ -1,13 +1,16 @@
 <template>
   <a :class="class__" @click="handlerClick" href="javascript:void(0)">
-    <me-icon v-if="boolean(icon)">{{icon}}</me-icon>
+    <me-icon v-if="isBoolean(icon)">{{icon}}</me-icon>
     <slot />
   </a>
 </template>
 
 <script>
+import common from '../mixins/common'
+import tools from '../../script/Tools.class'
 export default {
   name: 'MeLink',
+  mixins: [ common ],
   props: {
     icon: String,
     target: { type: String, default: '_blank', validator: value => [ '_blank', '_parent', '_self', '_top' ].includes(value) },
@@ -22,7 +25,7 @@ export default {
     handlerClick () {
       if (this.disabled) { return }
       this.$emit('click')
-      if (this.$tools.notEmpty(this.url)) {
+      if (tools.notEmpty(this.url)) {
         window.open(this.url, this.target)
       }
     }
