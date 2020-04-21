@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    [
+      "import", 
+      {
+        "libraryName": "me-view",
+        "libraryDirectory": "lib",
+        "styleLibraryDirectory": "lib/theme"
+      }
+    ]
+  ]
+}

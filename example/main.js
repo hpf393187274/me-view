@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './src/App'
 import router from './router'
 import 'highlight.js/styles/color-brewer.css'
-import './style/markdown.scss'
-import MeView from '@src/index'
 
-import MeDemo from './components/index'
+import MeView from '../src/index.js'
+import MeDemo from './src/components/index'
+import './src/style/markdown.css'
 Vue.use(MeView)
 Vue.use(MeDemo)
 Vue.config.productionTip = false
