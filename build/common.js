@@ -20,13 +20,11 @@ function readdirSync (dir, callback) {
  * @param {String} target 名称
  */
 function formatFileName (target) {
-  // console.log('---------------------formatFileName begin---------------', target)
   const connector = '-'
   target = target.replace(/([A-Z])/g, $1 => connector + $1.toLowerCase())
   if (target.startsWith(connector)) {
     target = target.substr(1)
   }
-  // console.log('---------------------formatFileName end---------------', target)
   return target
 }
 
@@ -39,7 +37,6 @@ function entry (dir, callback = file => file) {
     const suffix = file.includes('.') ? '' : '/index.js'
     Reflect.set(entry, key, `./${dir}/${file}${suffix}`)
   }
-  console.log(`-----------${dir}--------------`, entry)
   return entry
 }
 

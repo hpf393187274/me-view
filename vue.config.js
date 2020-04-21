@@ -25,24 +25,22 @@ module.exports = {
       }
     }
   },
-  css: {
-    loaderOptions: {
-      // 给 sass-loader 传递选项
-      sass: {
-        // @ 是 src/assets 的别名
-        // 所以这里假设你有 `@styles/variable` 这个文件
-        prependData: '@import "src/theme/src/common/var.scss";'
-      }
-    }
-  },
+  // css: {
+  //   loaderOptions: {
+  //     // 给 sass-loader 传递选项
+  //     sass: {
+  //       // @ 是 src/assets 的别名
+  //       // 所以这里假设你有 `@styles/variable` 这个文件
+  //       prependData: '@import "src/theme/src/common/var.scss";'
+  //     }
+  //   }
+  // },
   chainWebpack: config => {
     config.entry('app').clear().add('./example/main.js')
     config.resolve.alias
-      .set('@example', resolve('example'))
-      .set('@router', resolve('example/router'))
+      .set('@example', resolve('./src/example'))
       .set('@src', resolve('./src/'))
       .set('me-view', resolve('./'))
-      .set('@docs', resolve('example/docs'))
 
     config.module.rule('md')
       .test(/\.md/)

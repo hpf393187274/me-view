@@ -1,6 +1,6 @@
 {
   "name": "me-view",
-  "version": "1.1.41",
+  "version": "1.1.43",
   "private": false,
   "main": "lib/index.common.js",
   "files": [
@@ -12,7 +12,7 @@
     "serve": "vue-cli-service serve --fix",
     "build": "vue-cli-service build --dest dist/lib",
     "build:test": "vue-cli-service build",
-    "build:tools": "webpack --config build/webpack.tools.js",
+    "build:tools": "webpack --config build/webpack.Tools.js",
     "build:common": "webpack --config build/webpack.common.js",
     "build:theme": "gulp build --gulpfile src/theme/gulpfile.js && cp-cli src/theme/lib lib/theme",
     "build:component": "webpack --config build/webpack.component.js",
@@ -42,7 +42,6 @@
     "@vue/eslint-config-standard": "^5.1.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.26.0",
     "cp-cli": "^2.0.0",
     "cross-env": "^7.0.2",
