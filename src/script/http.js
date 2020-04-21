@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Qs from 'qs'
-import tools from './tools'
-import type from './type'
+import Tools from './tools'
+import Type from './type'
 
 const defaultAction = {
   request: {
@@ -28,9 +28,9 @@ const defaultConfig = {
     (data, headers) => {
       console.debug('http.transformRequest ----------------------------------- ')
 
-      if (tools.isEmpty(data)) { return data }
-      if (type.isArray(data)) { return data }
-      if (type.notObject(data)) { return data }
+      if (Tools.isEmpty(data)) { return data }
+      if (Type.isArray(data)) { return data }
+      if (Type.notObject(data)) { return data }
       if (Reflect.has(headers, 'Content-Type') === false) { return data }
 
       const contentType = Reflect.get(headers, 'Content-Type')
@@ -49,7 +49,7 @@ const defaultConfig = {
   ]
 }
 
-class Http {
+export default class Http {
   static APP_FROM = APP_FROM
   static APP_JSON = APP_JSON
 
@@ -65,7 +65,7 @@ class Http {
 
     console.debug('Http.constructor --> defaults', defaults)
     this.#instance = axios.create({ ...defaults })
-    this.#name = tools.UUId()
+    this.#name = Tools.UUId()
     console.debug('Http.constructor --> name：', this.#name)
   }
 
@@ -78,7 +78,7 @@ class Http {
   }
 
   initHttp ({ baseURL, timeout = 2000, headers = {} } = { }) {
-    if (type.notObject(this.defaults.headers)) {
+    if (Type.notObject(this.defaults.headers)) {
       this.defaults.headers = {}
     }
 
@@ -184,7 +184,3 @@ class Http {
     return this.#instance({ url, method, params, data, ...config })
   }
 }
-
-const http = new Http({ baseURL: '/api' })
-export { http }
-export default Http

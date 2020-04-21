@@ -1,51 +1,51 @@
 import CustomError from './custom-error'
-import type from './type'
-import tools from './tools'
+import Type from './type'
+import Tools from './tools'
 export default class Assert {
   static notEmpty (target, message) {
-    if (tools.isEmpty(target)) {
+    if (Tools.isEmpty(target)) {
       throw new CustomError(message, target)
     }
   }
 
   static isArray (target, message) {
-    if (type.notArray(target)) {
+    if (Type.notArray(target)) {
       throw new CustomError(message, target)
     }
   }
 
   static notArray (target, message) {
-    if (type.isArray(target)) {
+    if (Type.isArray(target)) {
       throw new CustomError(message, target)
     }
   }
 
   static emptyArray (target, message) {
-    if (type.notArray(target) || target.length === 0) {
+    if (Type.notArray(target) || target.length === 0) {
       throw new CustomError(message, target)
     }
   }
 
   static isObject (target, message) {
-    if (type.notObject(target)) {
+    if (Type.notObject(target)) {
       throw new CustomError(message, target)
     }
   }
 
   static notObject (target, message) {
-    if (type.isObject(target)) {
+    if (Type.isObject(target)) {
       throw new CustomError(message, target)
     }
   }
 
   static isFunction (target, message) {
-    if (type.notFunction(target)) {
+    if (Type.notFunction(target)) {
       throw new CustomError(message, target)
     }
   }
 
   static isString (target, message) {
-    if (type.notString(target)) {
+    if (Type.notString(target)) {
       throw new CustomError(message, target)
     }
   }

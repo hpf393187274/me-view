@@ -1,5 +1,5 @@
 
-class Type {
+export default class Type {
   static TYPE_NUMBER = '[object Number]'
   static TYPE_BOOLEAN = '[object Boolean]'
   static TYPE_OBJECT = '[object Object]'
@@ -16,20 +16,20 @@ class Type {
    * @param target 目标值
    * @returns {string}
    */
-  getType (target) {
+  static getType (target) {
     return toString.call(target)
   }
 
-  isDate (target) {
-    return this.getType(target) === Type.TYPE_DATE
+  static isDate (target) {
+    return Type.getType(target) === Type.TYPE_DATE
   }
 
-  isFile (target) {
-    return this.getType(target) === Type.TYPE_FILE
+  static isFile (target) {
+    return Type.getType(target) === Type.TYPE_FILE
   }
 
-  isBlog (target) {
-    return this.getType(target) === Type.TYPE_BLOB
+  static isBlog (target) {
+    return Type.getType(target) === Type.TYPE_BLOB
   }
 
   /**
@@ -37,8 +37,8 @@ class Type {
    * @param target
    * @returns {Boolean}
    */
-  isBoolean (target) {
-    const type = this.getType(target)
+  static isBoolean (target) {
+    const type = Type.getType(target)
     return type === Type.TYPE_BOOLEAN
   }
 
@@ -47,8 +47,8 @@ class Type {
    * @param target
    * @returns {Boolean}
    */
-  notBoolean (target) {
-    return this.isBoolean(target)
+  static notBoolean (target) {
+    return Type.isBoolean(target)
   }
 
   /**
@@ -56,8 +56,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isNumber (target) {
-    var type = this.getType(target)
+  static isNumber (target) {
+    var type = Type.getType(target)
     return type === Type.TYPE_NUMBER
   }
 
@@ -66,8 +66,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  notNumber (target) {
-    return !this.isNumber(target)
+  static notNumber (target) {
+    return !Type.isNumber(target)
   }
 
   /**
@@ -75,8 +75,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isString (target) {
-    var type = this.getType(target)
+  static isString (target) {
+    var type = Type.getType(target)
     return type === Type.TYPE_STRING
   }
 
@@ -85,8 +85,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  notString (target) {
-    return !this.isString(target)
+  static notString (target) {
+    return !Type.isString(target)
   }
 
   /**
@@ -94,8 +94,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isObjectOrArray (target) {
-    var type = this.getType(target)
+  static isObjectOrArray (target) {
+    var type = Type.getType(target)
     return type === Type.TYPE_OBJECT || type === Type.TYPE_ARRAY
   }
 
@@ -104,8 +104,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  notObjectOrArray (target) {
-    return !this.isObjectOrArray(target)
+  static notObjectOrArray (target) {
+    return !Type.isObjectOrArray(target)
   }
 
   /**
@@ -113,8 +113,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isObject (target) {
-    return this.getType(target) === Type.TYPE_OBJECT
+  static isObject (target) {
+    return Type.getType(target) === Type.TYPE_OBJECT
   }
 
   /**
@@ -122,8 +122,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  notObject (target) {
-    return !this.isObject(target)
+  static notObject (target) {
+    return !Type.isObject(target)
   }
 
   /**
@@ -131,8 +131,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isArray (target) {
-    return this.getType(target) === Type.TYPE_ARRAY
+  static isArray (target) {
+    return Type.getType(target) === Type.TYPE_ARRAY
   }
 
   /**
@@ -140,12 +140,12 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  notArray (target) {
-    return !this.isArray(target)
+  static notArray (target) {
+    return !Type.isArray(target)
   }
 
-  isRegExp (target) {
-    return this.getType(target) === Type.TYPE_REGEXP
+  static isRegExp (target) {
+    return Type.getType(target) === Type.TYPE_REGEXP
   }
 
   /**
@@ -153,8 +153,8 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  isFunction (target) {
-    return this.getType(target) === Type.TYPE_FUNCTION
+  static isFunction (target) {
+    return Type.getType(target) === Type.TYPE_FUNCTION
   }
 
   /**
@@ -162,9 +162,7 @@ class Type {
    * @param target 目标值
    * @returns {Boolean}
    */
-  notFunction (target) {
-    return !this.isFunction(target)
+  static notFunction (target) {
+    return !Type.isFunction(target)
   }
 }
-
-export default new Type()

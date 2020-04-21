@@ -1,16 +1,16 @@
 
-import tools from './tools'
+import Tools from './tools'
 import Assert from './assert'
-class Storage {
+export default class Storage {
   constructor (storage) {
-    this.storage = tools.isEmpty(storage) ? window.localStorage : storage
+    this.storage = Tools.isEmpty(storage) ? window.localStorage : storage
   }
 
   get (key, { defaultValue = undefined } = { }) {
     console.debug(`storage.arrayAppend：key = ${key}`)
     Assert.notEmpty(key, 'storage.get：key is empty')
     const value = this.storage.getItem(key)
-    if (tools.isEmpty(value)) {
+    if (Tools.isEmpty(value)) {
       return defaultValue
     }
     return JSON.parse(value)
@@ -34,9 +34,9 @@ class Storage {
     console.debug(`storage.arrayAppend：key = ${key}，value = `, value)
     Assert.notEmpty(key, 'storage.arrayAppend：key is empty')
     Assert.isFunction(callback, `storage.arrayAppend: key = ${key} callback is not function`)
-    if (tools.isEmpty(value)) { return }
+    if (Tools.isEmpty(value)) { return }
     const list = this.get(key)
-    if (tools.isEmpty(list)) {
+    if (Tools.isEmpty(list)) {
       return this.set(key, [ value ])
     }
 
@@ -50,7 +50,7 @@ class Storage {
     Assert.notEmpty(key, 'storage.arrayRemove：key is empty')
     Assert.isFunction(callback, `storage.arrayRemove: key = ${key} callback is not function`)
     const list = this.get(key)
-    if (tools.isEmpty(list)) { return }
+    if (Tools.isEmpty(list)) { return }
     const index = list.findIndex(callback)
     if (index > -1) {
       list.splice(index, 1)

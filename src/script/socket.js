@@ -1,6 +1,6 @@
 
 import Assert from './assert'
-import type from './type'
+import Type from './type'
 import EventMonitor from './event-monitor'
 export default class Socket extends EventMonitor {
   #socket
@@ -17,7 +17,7 @@ export default class Socket extends EventMonitor {
   }
 
   #message = data => {
-    if (type.isString(data)) {
+    if (Type.isString(data)) {
       try {
         data = JSON.parse(data)
       } catch (error) {
@@ -27,7 +27,7 @@ export default class Socket extends EventMonitor {
 
     this.dispatchEvent('message', data)
 
-    if (type.isObject(data)) {
+    if (Type.isObject(data)) {
       const { topic } = data || {}
       if (topic) {
         this.dispatchEvent(`message-${topic}`, data)

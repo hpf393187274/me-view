@@ -1,9 +1,9 @@
 
 import Assert from './assert'
-import type from './type'
-import tools from './tools'
+import Type from './type'
+import Tools from './tools'
 
-class Database {
+export default class Database {
   // 数据库实例
   #database
   // 数据库状态
@@ -70,7 +70,7 @@ class Database {
         Reflect.deleteProperty(options, 'autoIncrement')
       }
       const store = this.#database.createObjectStore(tableName, options)
-      if (index && type.isArray(index)) {
+      if (index && Type.isArray(index)) {
         for (const item of index) {
           store.createIndex(item.key, item.key, { unique: false })
         }
@@ -133,7 +133,7 @@ class Database {
   async remove (tableName, value) {
     console.debug(`database.remove --> tableName = ${tableName}, value = `, value)
     const store = await this.__store(tableName, 'readwrite')
-    const keyValue = type.isObject(value) ? Reflect.get(value, store.keyPath) : value
+    const keyValue = Type.isObject(value) ? Reflect.get(value, store.keyPath) : value
     await this.handlerResponse(store.delete(keyValue))
     console.debug('数据删除成功')
   }
@@ -186,7 +186,7 @@ class Database {
     Assert.notEmpty(value, '主键值不存在')
 
     const store = await this.__store(tableName)
-    const keyValue = type.isObject(value) ? Reflect.get(value, store.keyPath) : value
+    const keyValue = Type.isObject(value) ? Reflect.get(value, store.keyPath) : value
     const request = store.get(keyValue)
     await this.handlerResponse(request)
     return request.result
@@ -202,7 +202,7 @@ class Database {
     Assert.notEmpty(value, '参数不能为空')
 
     const store = await this.__store(tableName)
-    const keyValue = type.isObject(value) ? Reflect.get(value, store.keyPath) : value
+    const keyValue = Type.isObject(value) ? Reflect.get(value, store.keyPath) : value
     console.debug(`${tableName} 执行 exist -> keyPath = ${store.keyPath}，keyValue = ${keyValue}`)
     const request = store.get(keyValue)
     await this.handlerResponse(request)
@@ -219,7 +219,7 @@ class Database {
     console.debug(`database.findList --> tableName = ${tableName}, key = ${key}, value = `, value)
 
     const store = await this.__store(tableName)
-    if (tools.isEmpty(key)) {
+    if (Tools.isEmpty(key)) {
       const request = store.getAll()
       await this.handlerResponse(request)
       return request.result
@@ -232,7 +232,3 @@ class Database {
     return request.result
   }
 }
-
-const database = new Database('me-view-database-default')
-export { database }
-export default Database

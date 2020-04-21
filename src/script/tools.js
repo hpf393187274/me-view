@@ -1,20 +1,20 @@
-import type from './type'
+import Type from './type'
 import Assert from './assert'
 
-class Tools {
+export default class Tools {
   /**
    * 校验：对象是否为空
    * @param {Object} target 目标
    */
-  isEmpty (target) {
+  static isEmpty (target) {
     if (target === null || target === undefined) { return true }
-    if (type.isString(target)) {
-      const value = this.trim(target)
+    if (Type.isString(target)) {
+      const value = Tools.trim(target)
       return value === '' || value === 'null' || value === 'undefined'
     }
 
-    if (type.isArray(target) && target.length === 0) { return true }
-    if (type.isObject(target) && Object.keys(target).length === 0) { return true }
+    if (Type.isArray(target) && target.length === 0) { return true }
+    if (Type.isObject(target) && Object.keys(target).length === 0) { return true }
 
     return false
   }
@@ -23,8 +23,8 @@ class Tools {
    * 是空数组
    * @param {Array} target
    */
-  isEmptyArray (target) {
-    if (type.isArray(target)) {
+  static isEmptyArray (target) {
+    if (Type.isArray(target)) {
       return target.length === 0
     }
     throw new CustomEvent('target is not array.')
@@ -34,20 +34,20 @@ class Tools {
    * 校验：对象是否为空
    * @param {Object} target 目标
    */
-  notEmpty (target) {
-    return !this.isEmpty(target)
+  static notEmpty (target) {
+    return !Tools.isEmpty(target)
   }
 
   /**
    * 转换为 Number
    * @param {*} target
    */
-  convertToNumber (target) {
+  static convertToNumber (target) {
     if (target) {
-      if (type.isNumber(target)) { return target }
-      if (type.isString(target)) {
+      if (Type.isNumber(target)) { return target }
+      if (Type.isString(target)) {
         const result = target.replace(/[^\d]+/, '')
-        if (this.notEmpty(result)) {
+        if (Tools.notEmpty(result)) {
           return Number(result)
         }
       }
@@ -60,14 +60,14 @@ class Tools {
    * 去除字符串两边的空格
    * @param {String} target 目标字符串
    */
-  trim (target) {
-    if (type.isString(target)) {
+  static trim (target) {
+    if (Type.isString(target)) {
       return target.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
     }
     return target
   }
 
-  findPath (target, path) {
+  static findPath (target, path) {
     Assert.isObject(target, 'target is not Object')
     Assert.isString(path, 'path is not String')
     if (path.includes('.') === false) {
@@ -76,7 +76,7 @@ class Tools {
     const props = path.split('.')
     let tempObject = { ...target }
     for (const prop of props) {
-      if (this.isEmpty(prop) || type.notObject(tempObject) || Reflect.has(tempObject, prop) === false) {
+      if (Tools.isEmpty(prop) || Type.notObject(tempObject) || Reflect.has(tempObject, prop) === false) {
         return undefined
       }
       tempObject = Reflect.get(tempObject, prop)
@@ -89,18 +89,18 @@ class Tools {
    * @param {Object} target 目标对象
    * @param {String} key 不需要传递
    */
-  jsonToForm (target, key) {
-    if (type.notObjectOrArray(target)) { return {} }
+  static jsonToForm (target, key) {
+    if (Type.notObjectOrArray(target)) { return {} }
     const getKey = (_key) => {
-      return this.isEmpty(key) ? _key : `${key}[${_key}]`
+      return Tools.isEmpty(key) ? _key : `${key}[${_key}]`
     }
     let result = {}
     for (const _key in target) {
       const value = target[_key]
-      if (this.isEmpty(value)) { continue }
-      if (type.isFunction(value)) { continue }
-      if (type.isObjectOrArray(value)) {
-        result = Object.assign(result, this.jsonToForm(value, getKey(_key)))
+      if (Tools.isEmpty(value)) { continue }
+      if (Type.isFunction(value)) { continue }
+      if (Type.isObjectOrArray(value)) {
+        result = Object.assign(result, Tools.jsonToForm(value, getKey(_key)))
         continue
       }
       // value 非 Object or Array
@@ -112,7 +112,7 @@ class Tools {
   /**
    * 生成 UUID
    */
-  UUId () {
+  static UUId () {
     var s = []
     var hexDigits = '0123456789abcdef'
     for (var i = 0; i < 36; i++) {
@@ -129,13 +129,13 @@ class Tools {
    * @param {Array} target
    * @param {Function or Number} condition
    */
-  arrayRemove (target, condition) {
-    if (type.isArray(target)) {
-      if (type.isNumber(condition)) {
+  static arrayRemove (target, condition) {
+    if (Type.isArray(target)) {
+      if (Type.isNumber(condition)) {
         target.splice(condition, 1)
         return condition
       }
-      if (type.isFunction(condition)) {
+      if (Type.isFunction(condition)) {
         const index = target.findIndex(condition)
         target.splice(index, 1)
         return index
@@ -147,12 +147,12 @@ class Tools {
    *
    * @param {Array | Object} target 清空目标内容
    */
-  clearEmpty (target) {
-    if (type.isArray(target)) {
+  static clearEmpty (target) {
+    if (Type.isArray(target)) {
       target.splice(0, target.length)
     }
 
-    if (type.isObject(target)) {
+    if (Type.isObject(target)) {
       for (const key of Object.keys(target)) {
         Reflect.deleteProperty(target, key)
       }
@@ -164,12 +164,12 @@ class Tools {
    * @param {Array|Object} target 目标
    * @param {Function} callback 回调函数
    */
-  forEach (target, callback) {
-    if (type.isArray(target) && target.length > 0 && type.isFunction(callback)) {
+  static forEach (target, callback) {
+    if (Type.isArray(target) && target.length > 0 && Type.isFunction(callback)) {
       for (const item of target) { callback(item) }
     }
 
-    if (type.isObject(target) && type.isFunction(callback)) {
+    if (Type.isObject(target) && Type.isFunction(callback)) {
       for (const key in target) { callback(key, target[key]) }
     }
   }
@@ -183,8 +183,8 @@ class Tools {
    * @param {Object} target
    * @param {Function} callback
    */
-  includes (target, callback) {
-    if (type.isArray(target) && type.isFunction(callback)) {
+  static includes (target, callback) {
+    if (Type.isArray(target) && Type.isFunction(callback)) {
       return target.findIndex(callback) >= 0
     }
     return false
@@ -195,15 +195,15 @@ class Tools {
    * @param {Function} callback 执行的回调函数
    * @param {String} classify 获取类别 默认秒 = second, 'hour', 'minute', 'second'
    */
-  expendTime (callback, classify = 'second') {
+  static expendTime (callback, classify = 'second') {
     const classifyList = [ 'hour', 'minute', 'second' ]
     if (classifyList.includes(classify) === false) {
       classify = 'second'
     }
-    if (type.notFunction(callback)) { return 0 }
+    if (Type.notFunction(callback)) { return 0 }
     const begin = new Date().getTime()
     try {
-      callback.call(this)
+      callback.call(Tools)
     } catch (error) {
       console.error(error)
     }
@@ -229,15 +229,15 @@ class Tools {
    * @param {Boolean} param.deep 是否深度克隆, 默认：false
    * @param {Array} param.exclude 属性排除, deep = true 无效
    */
-  clone (target, { deep = false, exclude = [] } = {}) {
-    if (type.notObject(target)) {
+  static clone (target, { deep = false, exclude = [] } = {}) {
+    if (Type.notObject(target)) {
       return target
     }
     if (deep === true) {
       try {
         return JSON.parse(JSON.stringify(target))
       } catch (error) {
-        console.error('tools.clone --> deep = true，target = ', target)
+        console.error('Tools.clone --> deep = true，target = ', target)
       }
     }
     const newTarget = { ...target }
@@ -247,14 +247,14 @@ class Tools {
     return newTarget
   }
 
-  sendRedirect (url) {
+  static sendRedirect (url) {
     window.location.href = url
   }
 
   /**
    * 如果存在 iframe
    */
-  isSameHost () {
+  static isSameHost () {
     return top.location.host === window.location.host
   }
 
@@ -263,15 +263,15 @@ class Tools {
   * @param {String} key 参数名
   * @param {String} search 参数集
   */
-  urlParam (key, search = location.search) {
-    if (this.isEmpty(search)) { return '' }
+  static urlParam (key, search = location.search) {
+    if (Tools.isEmpty(search)) { return '' }
     let result = search.replace(/^([^s]*)[?]/g, '').replace(/&/g, ',')
     try {
       result = result.replace(/([\w.\d\\-]+)=?([\w.\d\\-]+|)/ig, '"$1":"$2"')
       const params = JSON.parse(`{${result}}`)
-      return this.isEmpty(key) ? params : Reflect.get(params, key)
+      return Tools.isEmpty(key) ? params : Reflect.get(params, key)
     } catch (error) {
-      console.debug('tools.urlParam error：', error)
+      console.debug('Tools.urlParam error：', error)
       return ''
     }
   }
@@ -280,7 +280,7 @@ class Tools {
    * URl 格式化
    * @param {String} url 地址
    */
-  urlFormat (url) {
+  static urlFormat (url) {
     Assert.notEmpty(url, '参数 url 不能为空')
     return url.replace(/:\/+/g, '**').replace(/\\+/g, '/').replace(/\/+|\\+/g, '/').replace('**', '://')
   }
@@ -290,20 +290,20 @@ class Tools {
    * @param {String} url 目标url
    * @param {String} origin 默认当前环境
    */
-  urlAbsolutize (url, origin = location.origin) {
+  static urlAbsolutize (url, origin = location.origin) {
     Assert.notEmpty(url, '参数 url 不能为空')
     if (url.startsWith('http://') === false && url.startsWith('https://') === false) {
-      return this.urlFormat(`${origin}/${url}`)
+      return Tools.urlFormat(`${origin}/${url}`)
     }
-    return this.urlFormat(url)
+    return Tools.urlFormat(url)
   }
 
   /**
    * 首字母变大写
    * @param {String} target
    */
-  firstCharUpperCase (target) {
-    if (this.isEmpty(target)) { return '' }
+  static firstCharUpperCase (target) {
+    if (Tools.isEmpty(target)) { return '' }
     return target.slice(0, 1).toUpperCase() + target.slice(1)
   }
 
@@ -311,10 +311,8 @@ class Tools {
    * 首字母变小写
    * @param {String} target
    */
-  firstCharLowerCase (target) {
-    if (this.isEmpty(target)) { return '' }
+  static firstCharLowerCase (target) {
+    if (Tools.isEmpty(target)) { return '' }
     return target.slice(0, 1).toLowerCase() + target.slice(1)
   }
 }
-
-export default new Tools()
