@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import type from 'me-view/src/script/type'
+import Type from 'me-view/src/script/type'
 import common from 'me-view/src/mixins/common'
 export default {
   name: 'MePaging',
@@ -36,8 +36,8 @@ export default {
   props: {
     value: { type: Number, default: 1 },
     border: Boolean,
-    total: { type: Number, default: 0, validator: value => type.isNumber(value) },
-    pageSize: { type: Number, default: 10, validator: value => type.isNumber(value) && value !== 0 },
+    total: { type: Number, default: 0, validator: value => Type.isNumber(value) },
+    pageSize: { type: Number, default: 10, validator: value => Type.isNumber(value) && value !== 0 },
     pageSizes: { type: Number, default: 10 },
     prevText: { type: String, default: '' },
     nextText: { type: String, default: '' },

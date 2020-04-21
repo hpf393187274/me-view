@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import tools from 'me-view/src/script/tools'
+import Tools from 'me-view/src/script/tools'
 import TabTitle from './TabTitle'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
@@ -103,7 +103,7 @@ export default {
         this.nodeActive = this.paneList.find(this.handlerCompare(item))
       })
       this.listener('tab-close', item => {
-        let indexActive = tools.arrayRemove(this.paneList, this.handlerCompare(item))
+        let indexActive = Tools.arrayRemove(this.paneList, this.handlerCompare(item))
         if (indexActive > -1) {
           if (this.size === indexActive) {
             indexActive = this.size - 1

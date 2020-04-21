@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import type from 'me-view/src/script/type'
+import Type from 'me-view/src/script/type'
 import TreeCommon from './tree-common'
 export default {
   name: 'MeTreeHeader',
@@ -33,7 +33,7 @@ export default {
   computed: {
     indent__ () {
       let value = 0
-      if (this.$parent.data.every(item => type.isArray(item.children) === false)) {
+      if (this.$parent.data.every(item => Type.isArray(item.children) === false)) {
         return value
       }
       return ++value

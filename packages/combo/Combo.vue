@@ -32,8 +32,8 @@
 <script>
 import ComboMixin from './combo.mixin'
 import emitter from 'me-view/src/mixins/emitter'
-import type from 'me-view/src/script/type'
-import tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
+import Tools from 'me-view/src/script/tools'
 export default {
   mixins: [ emitter, ComboMixin ],
   name: 'MeCombo',
@@ -87,7 +87,7 @@ export default {
     },
     initValueSingle (value) {
       const data = this.findItem(value)
-      if (tools.isEmpty(data)) { return }
+      if (Tools.isEmpty(data)) { return }
       Object.assign(this.valueSingle, data)
       this.label__ = Reflect.get(data, this.fieldLabel) || ''
       this.value__ = Reflect.get(data, this.fieldValue) || ''
@@ -95,8 +95,8 @@ export default {
     initValueMultiple (value) {
       this.label__ = []
       this.value__ = []
-      if (tools.isEmpty(value)) { return }
-      const list = type.isArray(value) ? [ ...value ] : [ value ]
+      if (Tools.isEmpty(value)) { return }
+      const list = Type.isArray(value) ? [ ...value ] : [ value ]
       this.valueMultiple = this.data.filter(item => list.includes(Reflect.get(item, this.fieldValue)))
 
       for (const item of this.valueMultiple) {
@@ -125,9 +125,9 @@ export default {
       this.$emit('change', this.value__)
     },
     handleMultipleRemove (index) {
-      tools.arrayRemove(this.label__, index).catch(error => { console.debug(error) })
-      tools.arrayRemove(this.value__, index).catch(error => { console.debug(error) })
-      tools.arrayRemove(this.valueMultiple, index).catch(error => { console.debug(error) })
+      Tools.arrayRemove(this.label__, index).catch(error => { console.debug(error) })
+      Tools.arrayRemove(this.value__, index).catch(error => { console.debug(error) })
+      Tools.arrayRemove(this.valueMultiple, index).catch(error => { console.debug(error) })
     },
     handleMultiplPush (data) {
       this.label__.push(Reflect.get(data, this.fieldLabel))

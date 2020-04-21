@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Message from './Message'
-import tools from 'me-view/src/script/tools'
+import Tools from 'me-view/src/script/tools'
 Message.newInstance = (options = {}) => {
   const instance = new Vue({
     data () {
@@ -19,9 +19,9 @@ Message.newInstance = (options = {}) => {
         const message = this.$refs.message
         if (message) {
           if (message.container.length >= this.capacity) {
-            tools.arrayRemove(message.container, 0)
+            Tools.arrayRemove(message.container, 0)
           }
-          message.container.push({ ...options, primaryKey: tools.UUId() })
+          message.container.push({ ...options, primaryKey: Tools.UUId() })
         }
 
         modal.$parent.onRemove = onRemove

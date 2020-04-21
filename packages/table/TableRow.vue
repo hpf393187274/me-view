@@ -17,7 +17,7 @@
   </tr>
 </template>
 <script>
-import tools from 'me-view/src/script/tools'
+import Tools from 'me-view/src/script/tools'
 import TableCellD from './TableCellD'
 import TableCellHeader from './TableCellHeader'
 import emitter from 'me-view/src/mixins/emitter'
@@ -67,7 +67,7 @@ export default {
       return [
         'me-row table-column',
         {
-          'me-flex': this.columns.findIndex(item => tools.notEmpty(item.width)) === -1,
+          'me-flex': this.columns.findIndex(item => Tools.notEmpty(item.width)) === -1,
           'me-center': this.center
         }
       ]

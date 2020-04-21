@@ -1,5 +1,5 @@
 import Message from './basal'
-import type from 'me-view/src/script/type'
+import Type from 'me-view/src/script/type'
 
 let instance
 const basal = (options = {}) => {
@@ -13,7 +13,7 @@ const basal = (options = {}) => {
 }
 
 Message.info = (options = {}) => {
-  if (type.isString(options)) {
+  if (Type.isString(options)) {
     options = { content: options }
   }
   return basal(Object.assign({}, options, {
@@ -22,7 +22,7 @@ Message.info = (options = {}) => {
 }
 
 Message.success = (options = {}) => {
-  if (type.isString(options)) {
+  if (Type.isString(options)) {
     options = { content: options }
   }
   return basal(Object.assign({}, options, {
@@ -30,7 +30,7 @@ Message.success = (options = {}) => {
   }))
 }
 Message.warning = (options = {}) => {
-  if (type.isString(options)) {
+  if (Type.isString(options)) {
     options = { content: options }
   }
   return basal(Object.assign({}, options, {
@@ -38,7 +38,7 @@ Message.warning = (options = {}) => {
   }))
 }
 Message.error = (options = {}) => {
-  if (type.isString(options)) {
+  if (Type.isString(options)) {
     options = { content: options }
   }
   return basal(Object.assign({}, options, {
@@ -46,7 +46,7 @@ Message.error = (options = {}) => {
   }))
 }
 Message.loading = (options = {}) => {
-  if (type.isString(options)) {
+  if (Type.isString(options)) {
     options = { content: options }
   }
   return basal(Object.assign({}, options, {

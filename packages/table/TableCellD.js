@@ -1,6 +1,6 @@
 
 import TableCell from './TableCell.mixin'
-import type from 'me-view/src/script/type'
+import Type from 'me-view/src/script/type'
 let idSeed = 1
 export default {
   name: 'MeTableCellD',
@@ -25,13 +25,13 @@ export default {
       indexCell: this.indexCell
     }
     // 渲染 extended
-    if (type.isFunction(this.extended)) {
+    if (Type.isFunction(this.extended)) {
       return this.renderRoot(h, [
         this.extended(params)
       ])
     }
 
-    if (type.isFunction(this.render)) {
+    if (Type.isFunction(this.render)) {
       return this.renderRoot(h, [
         this.render(h, params)
       ])

@@ -8,7 +8,7 @@
 <script>
 import Modal from '../modal/modal.mixin'
 import MeMessageItem from './MessageItem'
-import tools from 'me-view/src/script/tools'
+import Tools from 'me-view/src/script/tools'
 import MeModal from '../modal/index'
 export default {
   name: 'MeMessage',
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     handlerRemove (key) {
-      tools.arrayRemove(this.container, item => item.primaryKey === key)
+      Tools.arrayRemove(this.container, item => item.primaryKey === key)
       if (this.container.length === 0) {
         this.value__ = false
         this.$emit('destroy')

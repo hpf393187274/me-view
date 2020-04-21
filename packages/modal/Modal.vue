@@ -16,7 +16,7 @@
 import Modal from './modal.mixin'
 import Draggable from 'me-view/src/mixins/draggable'
 import MeButton from '../button/index'
-import tools from 'me-view/src/script/tools'
+import Tools from 'me-view/src/script/tools'
 
 export default {
   name: 'MeModal',
@@ -30,16 +30,16 @@ export default {
   },
   data () {
     return {
-      width__: tools.convertToNumber(this.width),
-      height__: tools.convertToNumber(this.height)
+      width__: Tools.convertToNumber(this.width),
+      height__: Tools.convertToNumber(this.height)
     }
   },
   watch: {
     width (newValue) {
-      this.width__ = tools.convertToNumber(newValue)
+      this.width__ = Tools.convertToNumber(newValue)
     },
     height (newValue) {
-      this.height__ = tools.convertToNumber(newValue)
+      this.height__ = Tools.convertToNumber(newValue)
     },
     value__ (newValue) {
       if (newValue) {
@@ -64,10 +64,10 @@ export default {
         y: (this.containerMax.y - this.height__) / 2
       })
       if (this.left) {
-        Reflect.set(this.position, 'x', tools.convertToNumber(this.left))
+        Reflect.set(this.position, 'x', Tools.convertToNumber(this.left))
       }
       if (this.top) {
-        Reflect.set(this.position, 'y', tools.convertToNumber(this.top))
+        Reflect.set(this.position, 'y', Tools.convertToNumber(this.top))
       }
       Object.assign(this.pointStart, this.position)
     },

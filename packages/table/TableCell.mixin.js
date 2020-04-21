@@ -1,5 +1,5 @@
 
-import type from 'me-view/src/script/type'
+import Type from 'me-view/src/script/type'
 export default {
   props: {
     editable: Boolean,
@@ -33,7 +33,7 @@ export default {
   computed: {
     styles () {
       return {
-        width: type.isNumber(this.width) ? `${this.width}px` : this.width
+        width: Type.isNumber(this.width) ? `${this.width}px` : this.width
       }
     }
   }

@@ -7,7 +7,7 @@
 
 <script>
 import common from 'me-view/src/mixins/common'
-import tools from 'me-view/src/script/tools'
+import Tools from 'me-view/src/script/tools'
 export default {
   name: 'MeLink',
   mixins: [ common ],
@@ -25,7 +25,7 @@ export default {
     handlerClick () {
       if (this.disabled) { return }
       this.$emit('click')
-      if (tools.notEmpty(this.url)) {
+      if (Tools.notEmpty(this.url)) {
         window.open(this.url, this.target)
       }
     }

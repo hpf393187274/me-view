@@ -13,8 +13,8 @@
   </div>
 </template>
 <script>
-import type from 'me-view/src/script/type'
-import tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
+import Tools from 'me-view/src/script/tools'
 import Assert from 'me-view/src/script/assert'
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
@@ -26,7 +26,7 @@ export default {
     rules: {
       type: Array,
       default: () => {},
-      validator: value => type.isArray(value)
+      validator: value => Type.isArray(value)
     },
     prop: String,
     required: Boolean,
@@ -83,7 +83,7 @@ export default {
       this.validate().catch(() => {})
     },
     bindFormElement () {
-      if (tools.isEmptyArray(this.$children)) { return }
+      if (Tools.isEmptyArray(this.$children)) { return }
       this.bindEventToFormElement()
     },
     bindFormInstance () {
@@ -91,18 +91,18 @@ export default {
       this.bindFormRules(/* 解析表达元素 prop */)
     },
     setRules (value) {
-      if (tools.isEmpty(value)) { return }
+      if (Tools.isEmpty(value)) { return }
       Assert.isArray(value, 'MeLabel rules 必须为数组')
       this.rules__ = [ value ]
     },
     bindFormRules () {
       if (this.prop && this.FormInstance) {
         const formRules = this.FormInstance.rules
-        if (type.notObject(formRules)) {
+        if (Type.notObject(formRules)) {
           console.debug('MeForm.rules is not Object --> rules：', formRules)
           return
         }
-        const ruleProp = tools.findPath(formRules, this.prop)
+        const ruleProp = Tools.findPath(formRules, this.prop)
         this.setRules(ruleProp)
       }
     },
@@ -115,7 +115,7 @@ export default {
      * 校验表单元素
      */
     validate () {
-      if (type.notArray(this.rules__)) {
+      if (Type.notArray(this.rules__)) {
         return Promise.resolve()
       }
       const validator = new Validator({ [this.prop]: this.rules__ })

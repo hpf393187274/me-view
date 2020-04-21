@@ -42,8 +42,8 @@
   </div>
 </template>
 <script>
-import tools from 'me-view/src/script/tools'
-import type from 'me-view/src/script/type'
+import Tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
 import TableRow from './TableRow.vue'
 import TableHeader from './TableHeader.vue'
 import TableBody from './TableBody.vue'
@@ -73,15 +73,15 @@ export default {
   computed: {
     styleContainer () {
       return {
-        width: type.isNumber(this.width) ? `${this.width}px` : this.width,
-        height: type.isNumber(this.height) ? `${this.height}px` : this.height
+        width: Type.isNumber(this.width) ? `${this.width}px` : this.width,
+        height: Type.isNumber(this.height) ? `${this.height}px` : this.height
       }
     },
     styleTHead () {
       return { 'padding-right': `${this.difference}px` }
     },
     length () {
-      return type.isArray(this.data) ? this.data.length : 0
+      return Type.isArray(this.data) ? this.data.length : 0
     }
   },
   watch: {
@@ -153,8 +153,8 @@ export default {
     },
     clear () { this.checkedRows.clear() },
     removeRows (data = []) {
-      tools.forEach(data, item => {
-        tools.arrayRemove(this.data, target => this.getPrimaryValue(target) === this.getPrimaryValue(item))
+      Tools.forEach(data, item => {
+        Tools.arrayRemove(this.data, target => this.getPrimaryValue(target) === this.getPrimaryValue(item))
       })
       this.refresh()
     },
@@ -177,8 +177,8 @@ export default {
      */
     setCheckedRows (data = [], clear) {
       clear && this.cancelChecked()
-      tools.forEach(data, item => {
-        const primaryValue = type.isObject(item) ? this.getPrimaryValue(item) : item
+      Tools.forEach(data, item => {
+        const primaryValue = Type.isObject(item) ? this.getPrimaryValue(item) : item
         const row = this.allRows.get(primaryValue)
         if (row) {
           row.handlerCheckedChange(true)
@@ -203,9 +203,9 @@ export default {
       const excludeSlots = [ 'header', 'footer', 'default' ]
       const slotKeys = Reflect.ownKeys(this.$scopedSlots)
       this.columns__ = [ ...this.columns ]
-      if (type.isArray(slotKeys) && slotKeys.length > 0) {
+      if (Type.isArray(slotKeys) && slotKeys.length > 0) {
         const newSlotKeys = slotKeys.filter(item => !(item.includes('$') || excludeSlots.includes(item)))
-        if (type.isArray(newSlotKeys) && newSlotKeys.length > 0) {
+        if (Type.isArray(newSlotKeys) && newSlotKeys.length > 0) {
           console.debug('table.handlerSlots --> newSlotKeys = ', newSlotKeys)
           for (const column of this.columns__) {
             if (newSlotKeys.includes(column.field)) {

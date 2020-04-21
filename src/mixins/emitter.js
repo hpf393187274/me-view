@@ -1,4 +1,4 @@
-import tools from 'me-view/src/script/tools'
+import Tools from 'me-view/src/script/tools'
 function findChildren (componentName, callback = () => { }) {
   const children = this.$children
   if (!children || children.length === 0) { return }
@@ -20,13 +20,13 @@ export default {
   methods: {
     existParentComponent (componentNames) {
       const parent = this.findParentComponent(componentNames)
-      return tools.notEmpty(parent)
+      return Tools.notEmpty(parent)
     },
     findChildrenComponent (componentName, callback = () => { }) {
       findChildren.call(this, componentName, callback)
     },
     findParentComponent (componentNames) {
-      if (tools.isEmptyArray(componentNames)) {
+      if (Tools.isEmptyArray(componentNames)) {
         throw new CustomEvent(`组件(${this.$options.name}) 调用方法 findParentComponent 入参  is no array or empty array`)
       }
       let parent = this.$parent || this.$root

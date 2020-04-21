@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import type from 'me-view/src/script/type'
+import Type from 'me-view/src/script/type'
 import TreeIndex from './tree-index'
 import TreeCommon from './tree-common'
 import treeInner from './common.mixin'
@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     length () {
-      return type.isArray(this.data) ? this.data.length : 0
+      return Type.isArray(this.data) ? this.data.length : 0
     }
   },
   created () {

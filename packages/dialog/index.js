@@ -1,5 +1,5 @@
 import Dialog from './basal'
-import type from 'me-view/src/script/type'
+import Type from 'me-view/src/script/type'
 let instance
 
 const basal = (options = {}) => {
@@ -15,7 +15,7 @@ const basal = (options = {}) => {
 }
 
 Dialog.alert = (options = {}) => {
-  if (type.isString(options)) {
+  if (Type.isString(options)) {
     options = { content: options }
   }
   return basal(Object.assign({ title: '提示' }, options, {
@@ -24,7 +24,7 @@ Dialog.alert = (options = {}) => {
 }
 
 Dialog.confirm = (options = {}) => {
-  if (type.isString(options)) {
+  if (Type.isString(options)) {
     options = { content: options }
   }
   return basal(Object.assign({ title: '确认' }, options, {
@@ -33,7 +33,7 @@ Dialog.confirm = (options = {}) => {
 }
 
 Dialog.prompt = (options = {}) => {
-  if (type.isString(options)) {
+  if (Type.isString(options)) {
     options = { content: options }
   }
 

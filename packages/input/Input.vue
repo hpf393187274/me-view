@@ -34,8 +34,8 @@
 <script>
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
-import type from 'me-view/src/script/type'
-import tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
+import Tools from 'me-view/src/script/tools'
 
 const types = [ 'text', 'number', 'email', 'password' ]
 const patterns = {
@@ -174,10 +174,10 @@ export default {
       callback && callback.call(this)
     },
     initValue (value) {
-      if (type.isObject(value)) {
+      if (Type.isObject(value)) {
         this.value__ = { ...value }
         this.valueReset = { ...value }
-      } else if (type.isArray(value)) {
+      } else if (Type.isArray(value)) {
         this.value__ = [ ...value ]
         this.valueReset = [ ...value ]
       } else {
@@ -189,7 +189,7 @@ export default {
      * 重置
      */
     onReset () {
-      this.value__ = tools.clone(this.valueReset, true)
+      this.value__ = Tools.clone(this.valueReset, true)
     },
     handleFocus () {
       this.$emit('on-blur', this.value__)

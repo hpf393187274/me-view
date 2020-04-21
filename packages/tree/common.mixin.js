@@ -1,6 +1,6 @@
 
-import type from 'me-view/src/script/type'
-import tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
+import Tools from 'me-view/src/script/tools'
 export default {
   methods: {
     /**
@@ -98,23 +98,23 @@ export default {
       this.setAllChecked(false)
     },
     pushData (data) {
-      if (tools.isEmpty(data)) { return }
+      if (Tools.isEmpty(data)) { return }
       for (const item of [ data ].flat()) {
         const node = this.findNode(this.defaultFilter(item))
-        if (tools.isEmpty(node)) {
-          if (tools.isEmpty(this.level)) {
+        if (Tools.isEmpty(node)) {
+          if (Tools.isEmpty(this.level)) {
             // TreeRoot
             this.data.push(item)
             continue
           }
           // TreeNode
-          if (tools.isEmpty(this.data.children)) {
+          if (Tools.isEmpty(this.data.children)) {
             this.data.children = []
           }
           this.data.children.push(item)
           continue
         }
-        if (type.isArray(item.children) && item.children.length !== 0) {
+        if (Type.isArray(item.children) && item.children.length !== 0) {
           // 存在子节点
           node.pushData(item.children)
         }

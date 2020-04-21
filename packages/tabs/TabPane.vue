@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import tools from 'me-view/src/script/tools'
+import Tools from 'me-view/src/script/tools'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
   name: 'MeTabPane',
@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       rendered: false,
-      name__: this.name || tools.UUId(),
+      name__: this.name || Tools.UUId(),
       activated: false
     }
   },

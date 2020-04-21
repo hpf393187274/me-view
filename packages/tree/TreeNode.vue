@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import type from 'me-view/src/script/type'
-import tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
+import Tools from 'me-view/src/script/tools'
 import TreeIndex from './tree-index'
 import TreeCommon from './tree-common'
 import TreeInner from './common.mixin'
@@ -116,7 +116,7 @@ export default {
     * 获取节点数据
     */
     getData ({ deep = false, exclude = [ 'children' ] } = {}) {
-      return tools.clone(this.data, { deep, exclude })
+      return Tools.clone(this.data, { deep, exclude })
     },
     /**
      * 移除当前节点
@@ -150,7 +150,7 @@ export default {
       const list = []
       if (this.nodeLeaf) {
         const resource = this.getData()
-        list.push(type.isFunction(filter) ? filter(resource) : resource)
+        list.push(Type.isFunction(filter) ? filter(resource) : resource)
       }
       list.push(...this.getCheckedChildren({ filter, ...param }))
       return list
