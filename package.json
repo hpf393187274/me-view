@@ -1,6 +1,6 @@
 {
   "name": "me-view",
-  "version": "1.1.37",
+  "version": "1.1.41",
   "private": false,
   "main": "lib/index.common.js",
   "files": [
@@ -56,13 +56,11 @@
     "gulp-autoprefixer": "^7.0.1",
     "gulp-cssmin": "^0.2.0",
     "gulp-sass": "^4.0.2",
-    "less": "^3.11.1",
-    "less-loader": "^4.1.0",
     "lint-staged": "^9.5.0",
     "markdown-it": "^8.4.2",
     "markdown-it-anchor": "^5.2.7",
     "markdown-it-container": "^2.0.0",
-    "np@babel/core": "^7.9.0",
+    "@babel/core": "^7.9.0",
     "progress-bar-webpack-plugin": "^2.1.0",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",

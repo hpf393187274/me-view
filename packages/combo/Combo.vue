@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     iconSuffix () {
-      return this.status ? this.$config.icon.angle_down_fill : this.$config.icon.angle_up_fill
+      return this.status ? 'icon-triangle_fill_down' : 'icon-triangle_fill_up'
     }
   },
   watch: {

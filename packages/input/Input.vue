@@ -23,7 +23,7 @@
     </div>
 
     <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="showClear || isBoolean(iconSuffix) || $slots.suffix">
-      <me-icon :disabled="disabled" @click="onReset" v-if="showClear">{{$config.icon.clear}}</me-icon>
+      <me-icon :disabled="disabled" @click="onReset" v-if="showClear">icon-cross</me-icon>
       <slot name="suffix">
         <me-icon :disabled="disabled" @click="onClickSuffix" v-if="isBoolean(iconSuffix)">{{iconSuffix}}</me-icon>
       </slot>

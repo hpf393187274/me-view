@@ -1,7 +1,6 @@
 
 import './theme/index.scss'
 import Clipboard from 'clipboard'
-import config from './config/index'
 import * as components from './index-component'
 import { local, session, type, tools, http, Watermark } from './index-script'
 // import './test'
@@ -32,7 +31,6 @@ export default {
     Vue.prototype.$dialog = components.Dialog
     Vue.prototype.$message = components.Message
     Vue.prototype.$watermark = Watermark
-    Vue.prototype.$config = config
     Vue.prototype.$type = type
     Vue.prototype.$tools = tools
     Vue.prototype.$local = local

@@ -1,7 +1,7 @@
 
 # Button 按钮
 
-<style lang="less">
+<style>
 .me-btn {
   margin: 5px;
 }

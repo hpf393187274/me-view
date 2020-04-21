@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import 'highlight.js/styles/color-brewer.css'
-import './style/markdown.less'
+import './style/markdown.scss'
 import MeView from '@src/index'
 
 import MeDemo from './components/index'

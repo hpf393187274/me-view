@@ -1,5 +1,6 @@
 import tools from 'me-view/src/script/tools'
 import type from 'me-view/src/script/type'
+import Config from 'me-view/src/config/index'
 export default {
   filters: {
     isEmpty (value, defaultValue) {
@@ -12,6 +13,11 @@ export default {
       return false
     },
     boolean (value) { return tools.notEmpty(value) }
+  },
+  computed: {
+    $config () {
+      return Config
+    }
   },
   methods: {
     /**

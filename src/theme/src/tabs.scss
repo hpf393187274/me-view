@@ -14,6 +14,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px,200px));
   }
+  .tab-title-item {
+    display: grid;
+    grid-template-columns: 1fr 25px;
+    grid-template-rows: 1fr;
+    cursor: pointer;
+  }
 
   .tabs-title-line {
     background: #FFF;
@@ -34,11 +40,7 @@
   .tabs-title-card {
     background: rgb(245, 243, 243);
     .tab-title-item {
-      display: grid;
       border-right: 1px solid rgb(199, 193, 193);
-      grid-template-columns: 1fr 25px;
-      grid-template-rows: 1fr;
-      cursor: pointer;
     }
     .activated {
       background: #FFF;
