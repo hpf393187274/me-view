@@ -27,7 +27,7 @@ import Icon from 'me-view/packages/icon/index'
 import Link from 'me-view/packages/link/index'
 import Scrollbar from 'me-view/packages/scrollbar/index'
 import Slidebar from 'me-view/packages/slidebar/index'
-import DemoBlock from './components/demo-block/index'
+import DemoBlock from 'me-view/packages/demo-block/index'
 
 const TabPane = Tabs.TabPane
 export {
