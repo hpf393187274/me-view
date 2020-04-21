@@ -1,4 +1,4 @@
-import http from '@script/Http.class'
+import http from './script/http.class'
 
 http.initHttp({
   baseURL: '/api',

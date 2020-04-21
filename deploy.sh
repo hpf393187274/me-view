@@ -4,7 +4,7 @@
 set -e
 
 # 构建
-npm run package
+npm run build:all
 
 
 

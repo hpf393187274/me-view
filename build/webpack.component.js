@@ -2,7 +2,7 @@ const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const common = require('./common')
-
+console.log('----------------------------common.entryComponent-----------', common.entryComponent)
 const webpackConfig = {
   mode: 'production',
   entry: common.entryComponent,
@@ -14,7 +14,7 @@ const webpackConfig = {
     modules: [ 'node_modules' ]
   },
   output: {
-    path: path.resolve(process.cwd(), './dist/lib'),
+    path: path.resolve(process.cwd(), './lib'),
     publicPath: '/dist/',
     filename: '[name].js',
     chunkFilename: '[id].js',

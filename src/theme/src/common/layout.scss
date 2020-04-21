@@ -1,0 +1,150 @@
+@import "./var.scss";
+@import "./icon.scss";
+@mixin flex($type){
+	-webkit-display:flex;
+	display: flex;
+	flex-direction: $type;
+}
+
+@mixin grid-column($columns) {
+	display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  grid-auto-rows: auto;
+}
+
+@for $i from 2 through 12 {
+.#{$prefix}-grid-column-#{$i} {
+	@include grid-column($i)
+}
+}
+
+.#{$prefix}-border-red {
+	border: 1px solid red;
+}
+
+.#{$prefix}-grid-self-center {
+	place-self: center center;
+}
+
+@mixin border($color: $color-border) {
+	border: 1px solid $color;
+}
+
+.#{$prefix}-empty {
+	@include flex(row);
+	flex: 1;
+	justify-content:center;
+	align-items:center;
+	color: darkgray;
+}
+
+.#{$prefix}-row { 
+	@include flex(row);
+}
+.#{$prefix}-column {
+	@include flex(column);
+}
+
+.#{$prefix}-center {
+	justify-content: center !important;
+	align-items: center !important;
+}
+
+.#{$prefix}-flex {
+	flex: 1 1 0%;
+}
+.#{$prefix}-border {
+	@include border();
+}
+
+.#{$prefix}-main-center{
+	justify-content: center !important;
+}
+.#{$prefix}-main-start{
+	justify-content: flex-start !important;
+}
+.#{$prefix}-main-end{
+	justify-content: flex-end !important;
+}
+.#{$prefix}-cross-center{
+	align-items: center !important;
+}
+.#{$prefix}-cross-start{
+	align-items: flex-start !important;
+}
+.#{$prefix}-cross-end{
+	align-items: flex-end !important;
+}
+
+/* 空间不足，可换行 */
+.#{$prefix}-wrap {
+	flex-wrap: wrap !important;
+}
+
+
+.#{$prefix}-border-red {
+	border: 1px solid red;
+}
+
+.#{$prefix}-margin-child-5 {
+	> * { margin: 5px; }
+}
+.#{$prefix}-margin-child-10 {
+	> * { margin: 10px; }
+	> * { margin: 10px; }
+}
+
+.#{$prefix}-padding-child {
+	> * {
+		padding: 10px;
+	}
+}
+
+.#{$prefix}-border-green {
+	border: 1px solid green;
+}
+
+html, body {
+	height: 100%;
+	margin: auto;
+}
+
+.#{$prefix}-cursor-move{
+	cursor: move;
+}
+.#{$prefix}-cursor-pointer{
+	cursor: pointer;
+}
+#app {
+	height: 100%;
+  @include flex(row);
+}
+
+.#{$prefix}-icon {
+	cursor: pointer;
+	align-self: center;
+	font-size: 16px;
+	margin: 0px;
+}
+
+.#{$prefix}-grid-center {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+.#{$prefix}-disabled {
+	* {
+		cursor: not-allowed;
+	}
+}
+
+.#{$prefix}-readonly {
+	* { cursor: pointer; }
+}
+
+.#{$prefix}-cursor-pointer {
+	&:hover { 
+		cursor: pointer; 
+	} 
+}

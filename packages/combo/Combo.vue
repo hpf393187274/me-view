@@ -32,8 +32,8 @@
 <script>
 import ComboMixin from './combo.mixin'
 import emitter from 'me-view/src/mixins/emitter'
-import type from 'me-view/src/script/Type.class'
-import tools from 'me-view/src/script/Tools.class'
+import type from 'me-view/src/script/type'
+import tools from 'me-view/src/script/tools'
 export default {
   mixins: [ emitter, ComboMixin ],
   name: 'MeCombo',

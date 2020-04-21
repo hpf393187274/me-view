@@ -7,7 +7,7 @@
 
 <script>
 import common from 'me-view/src/mixins/common'
-import tools from 'me-view/src/script/Tools.class'
+import tools from 'me-view/src/script/tools'
 export default {
   name: 'MeLink',
   mixins: [ common ],

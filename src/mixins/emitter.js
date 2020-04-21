@@ -1,4 +1,4 @@
-import tools from 'me-view/src/script/Tools.class'
+import tools from 'me-view/src/script/tools'
 function findChildren (componentName, callback = () => { }) {
   const children = this.$children
   if (!children || children.length === 0) { return }

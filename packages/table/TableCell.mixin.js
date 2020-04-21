@@ -1,5 +1,5 @@
 
-import type from 'me-view/src/script/Type.class'
+import type from 'me-view/src/script/type'
 export default {
   props: {
     editable: Boolean,

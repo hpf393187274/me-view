@@ -1,5 +1,5 @@
 import Message from './basal'
-import type from 'me-view/src/script/Type.class'
+import type from 'me-view/src/script/type'
 
 let instance
 const basal = (options = {}) => {

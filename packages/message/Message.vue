@@ -8,7 +8,7 @@
 <script>
 import Modal from '../modal/modal.mixin'
 import MeMessageItem from './MessageItem'
-import tools from 'me-view/src/script/Tools.class'
+import tools from 'me-view/src/script/tools'
 import MeModal from '../modal/index'
 export default {
   name: 'MeMessage',

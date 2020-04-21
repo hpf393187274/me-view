@@ -1,0 +1,47 @@
+@import "./common/layout";
+.#{$prefix}-tabs {
+  border: 1px solid rgb(199, 193, 193);
+  min-height: 400px !important;
+  box-shadow: 0px 0px 5px 0px rgb(199, 193, 193);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  .tabs-title-wrap {
+    border-bottom: 1px solid rgb(199, 193, 193);
+    min-height: 35px;
+    margin-bottom: 2px;
+    background: rgb(245, 243, 243);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px,200px));
+  }
+
+  .tabs-title-line {
+    background: #FFF;
+    .tab-title-item {
+      border: none !important;
+    }
+    .activated {
+      border-bottom: 1px solid #4aacee !important;
+    }
+  }
+
+  .tabs-pane {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .tabs-title-card {
+    background: rgb(245, 243, 243);
+    .tab-title-item {
+      display: grid;
+      border-right: 1px solid rgb(199, 193, 193);
+      grid-template-columns: 1fr 25px;
+      grid-template-rows: 1fr;
+      cursor: pointer;
+    }
+    .activated {
+      background: #FFF;
+    }
+  }
+}

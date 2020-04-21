@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import type from 'me-view/src/script/Type.class'
+import type from 'me-view/src/script/type'
 import common from 'me-view/src/mixins/common'
 export default {
   name: 'MePaging',

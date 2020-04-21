@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import tools from 'me-view/src/script/Tools.class'
+import tools from 'me-view/src/script/tools'
 import TabTitle from './TabTitle'
 import emitter from 'me-view/src/mixins/emitter'
 export default {

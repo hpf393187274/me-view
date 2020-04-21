@@ -1,54 +1,21 @@
 
-@import "./icon.scss";
-@import "./flex.scss";
-@import "./grid.scss";
-@import "./form/index.scss";
-@import "./basic/index.scss";
-@import "./animation/index.scss";
-@import "./layout/index.scss";
 
+@import "./src/common/layout.scss";
+@import "./src/button.scss";
+@import "./src/form.scss";
+@import "./src/input.scss";
+@import "./src/link.scss";
+@import "./src/combo.scss";
+@import "./src/scrollbar.scss";
+@import "./src/slidebar.scss";
+@import "./src/tabs.scss";
 
-html, body {
-	height: 100%;
-	margin: auto;
-}
-
-.#{$prefix}-cursor-move{
-	cursor: move;
-}
-.#{$prefix}-cursor-pointer{
-	cursor: pointer;
-}
-#app {
-	height: 100%;
-  @include flex(row);
-}
-
-.#{$prefix}-icon {
-	cursor: pointer;
-	align-self: center;
-	font-size: 16px;
-	margin: 0px;
-}
-
-.#{$prefix}-grid-center {
-  display: grid;
-  justify-items: center;
-  align-items: center;
-}
-
-.#{$prefix}-disabled {
-	* {
-		cursor: not-allowed;
-	}
-}
-
-.#{$prefix}-readonly {
-	* { cursor: pointer; }
-}
-
-.#{$prefix}-cursor-pointer {
-	&:hover { 
-		cursor: pointer; 
-	} 
-}
+@import "./src/tabs.scss";
+@import "./src/tree.scss";
+@import "./src/transfer.scss";
+@import "./src/dialog.scss";
+@import "./src/line-v.scss";
+@import "./src/line-h.scss";
+@import "./src/table.scss";
+@import "./src/paging.scss";
+@import "./src/message.scss";

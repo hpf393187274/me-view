@@ -7,15 +7,8 @@
     <template v-else><slot/></template>
   </div>
 </template>
-<style lang="scss" scoped>
-.tabs-pane {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-}
-</style>
 <script>
-import tools from 'me-view/src/script/Tools.class'
+import tools from 'me-view/src/script/tools'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
   name: 'MeTabPane',

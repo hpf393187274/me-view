@@ -1,0 +1,11 @@
+@import "./common/layout";
+.#{$prefix}-line-v {
+	justify-content: center;
+	align-items: center;
+	width: 10px;
+	> div {
+		background-color: $color-fill;
+		height: 100%;
+		width: 1px;
+	}
+}

@@ -1,0 +1,9 @@
+@import "./common/layout";
+.#{$prefix}-checkbox {
+	margin: 3px $prefix;
+	.checkbox-inner {
+		margin: 0px !important;
+		width: 14px;
+		height: 15px;
+	}
+}

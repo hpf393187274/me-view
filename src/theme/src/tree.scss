@@ -1,0 +1,35 @@
+@import "./common/layout";
+.#{$prefix}-tree {
+	.tree-node-header{ 
+		font-weight: bold;
+		background: $tree-header;
+		font-size: 16px;
+	}
+	.tree-node-label {
+		text-align: center;
+		min-width: 40px;
+		.tree-node-inner {
+			overflow: hidden; /*自动隐藏文字*/
+			text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+			white-space: nowrap;/*强制不换行*/
+			padding: 12px 0px ;
+		}
+	}
+	
+	.tree-node-body {
+		.tree-node-item:hover {
+			cursor: pointer;
+			background: $color-hover;
+		}
+	}
+	
+	.tree-node-item {
+		font-size: 13px;
+		align-items: center;
+		.tree-node-statistics {
+			color: rgba(170, 170, 170, 0.548);
+			margin: 0px 3px;
+			> span { margin: 0px 1px; }
+		}
+	}
+}

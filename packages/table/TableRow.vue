@@ -17,7 +17,7 @@
   </tr>
 </template>
 <script>
-import tools from 'me-view/src/script/Tools.class'
+import tools from 'me-view/src/script/tools'
 import TableCellD from './TableCellD'
 import TableCellHeader from './TableCellHeader'
 import emitter from 'me-view/src/mixins/emitter'

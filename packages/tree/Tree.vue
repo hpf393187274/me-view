@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import type from 'me-view/src/script/Type.class'
+import type from 'me-view/src/script/type'
 import TreeIndex from './tree-index'
 import TreeCommon from './tree-common'
 import treeInner from './common.mixin'

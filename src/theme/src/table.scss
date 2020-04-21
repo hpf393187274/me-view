@@ -1,0 +1,58 @@
+@import "./common/layout";
+
+.#{$prefix}-table-container {
+	table{ width: 100%; }
+	td,th {
+		border: 1px solid $table-border !important;
+	}
+	table,table td, .table th {
+		border: none;
+	}
+	table, thead, tbody , th, td {
+		table-layout: fixed !important;
+	}
+	th, td {
+		vertical-align: middle;
+		background: initial;
+	}
+	.table-toolbar {
+		padding: 5px 0px;
+		> * { margin-right: 10px; }
+	}
+
+	.table-wrapper {
+		display: grid;
+		grid-template-rows: 45px auto;
+		overflow: auto;
+		.content-center {
+			text-align: center;
+			width: 50px;
+		}
+		.cell-inner {
+			margin: 5px;
+			overflow: hidden; /*自动隐藏文字*/
+			text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+			white-space: nowrap;/*强制不换行*/
+		}
+		.table-body { 
+			overflow: auto;
+			tr {
+				&:nth-child(odd){ background-color: $table-body-row-odd !important; }
+				&:nth-child(even){ 	background-color: $table-body-row-even !important; }
+				&:hover {
+					background-color: $table-body-hover !important;
+				}
+				&.is-selected {
+					background-color: $table-tr-active !important;
+				}
+			}
+		}
+	
+		.table-header {
+			background-color: $table-header;
+			tr {
+				background-color: $table-header;
+			}
+		}
+	}
+}

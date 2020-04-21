@@ -1,6 +1,6 @@
 
-import type from 'me-view/src/script/Type.class'
-import tools from 'me-view/src/script/Tools.class'
+import type from 'me-view/src/script/type'
+import tools from 'me-view/src/script/tools'
 export default {
   methods: {
     /**

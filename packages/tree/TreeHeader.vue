@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import type from 'me-view/src/script/Type.class'
+import type from 'me-view/src/script/type'
 import TreeCommon from './tree-common'
 export default {
   name: 'MeTreeHeader',

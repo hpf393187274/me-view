@@ -16,7 +16,7 @@
 import Modal from './modal.mixin'
 import Draggable from 'me-view/src/mixins/draggable'
 import MeButton from '../button/index'
-import tools from 'me-view/src/script/Tools.class'
+import tools from 'me-view/src/script/tools'
 
 export default {
   name: 'MeModal',

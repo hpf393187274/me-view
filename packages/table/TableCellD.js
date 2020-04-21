@@ -1,6 +1,6 @@
 
 import TableCell from './TableCell.mixin'
-import type from 'me-view/src/script/Type.class'
+import type from 'me-view/src/script/type'
 let idSeed = 1
 export default {
   name: 'MeTableCellD',

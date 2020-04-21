@@ -1,0 +1,10 @@
+@import "./common/layout";
+.#{$prefix}-line-h {
+	align-items: center;
+	padding: 3px;
+	> div {
+		background-color: $color-fill;
+		width: 100%;
+		height: 1px;
+	}
+}

@@ -42,8 +42,8 @@
   </div>
 </template>
 <script>
-import tools from 'me-view/src/script/Tools.class'
-import type from 'me-view/src/script/Type.class'
+import tools from 'me-view/src/script/tools'
+import type from 'me-view/src/script/type'
 import TableRow from './TableRow.vue'
 import TableHeader from './TableHeader.vue'
 import TableBody from './TableBody.vue'

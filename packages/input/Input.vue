@@ -34,8 +34,8 @@
 <script>
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
-import type from 'me-view/src/script/Type.class'
-import tools from 'me-view/src/script/Tools.class'
+import type from 'me-view/src/script/type'
+import tools from 'me-view/src/script/tools'
 
 const types = [ 'text', 'number', 'email', 'password' ]
 const patterns = {

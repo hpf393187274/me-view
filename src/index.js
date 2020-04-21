@@ -10,6 +10,7 @@ export * from './index-script'
 export * from './index-component'
 
 export default {
+  ...components,
   install (Vue) {
     for (const key in components) {
       const item = Reflect.get(components, key)

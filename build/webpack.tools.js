@@ -13,7 +13,7 @@ const webpackConfig = {
     modules: [ 'node_modules' ]
   },
   output: {
-    path: path.resolve(process.cwd(), './dist/lib/script'),
+    path: path.resolve(process.cwd(), './lib'),
     publicPath: '/dist/',
     filename: '[name].js',
     chunkFilename: '[id].js',

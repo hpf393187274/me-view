@@ -13,9 +13,9 @@
   </div>
 </template>
 <script>
-import type from 'me-view/src/script/Type.class'
-import tools from 'me-view/src/script/Tools.class'
-import Assert from 'me-view/src/script/Assert.class'
+import type from 'me-view/src/script/type'
+import tools from 'me-view/src/script/tools'
+import Assert from 'me-view/src/script/assert'
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
 import Validator from 'async-validator'
