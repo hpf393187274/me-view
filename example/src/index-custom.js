@@ -33,7 +33,7 @@ import {
 import { local, session } from 'me-view/lib/script/storage'
 import Type from 'me-view/lib/script/type'
 import Tools from 'me-view/lib/script/tools'
-import Watermark from 'me-view/lib/script/watermark'
+import watermark from 'me-view/lib/script/watermark'
 
 // Vue.component(Panel.name, Panel)
 // Vue.component(Dialog.name, Dialog)
@@ -66,7 +66,7 @@ import Watermark from 'me-view/lib/script/watermark'
 
 Vue.prototype.$dialog = Dialog
 Vue.prototype.$message = Message
-Vue.prototype.$watermark = Watermark
+Vue.prototype.$watermark = watermark
 Vue.prototype.$type = Type
 Vue.prototype.$tools = Tools
 Vue.prototype.$local = local
