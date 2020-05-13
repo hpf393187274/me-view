@@ -21,3 +21,4 @@ yarn-error.log*
 *.sw?
 lib/
 example/node_modules_hpf/
+theme/

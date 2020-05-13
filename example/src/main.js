@@ -4,6 +4,7 @@ import router from './router'
 import 'highlight.js/styles/color-brewer.css'
 import './style/markdown.css'
 import './index-custom'
+// import './index-default'
 import MeDemo from './components/index'
 
 Vue.use(MeDemo)

@@ -23,7 +23,7 @@
     </div>
 
     <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="showClear || isBoolean(iconSuffix) || $slots.suffix">
-      <me-icon :disabled="disabled" @click="onReset" v-if="showClear">icon-cross</me-icon>
+      <me-icon :disabled="disabled" @click="handlerReset" v-if="showClear">icon-cross</me-icon>
       <slot name="suffix">
         <me-icon :disabled="disabled" @click="onClickSuffix" v-if="isBoolean(iconSuffix)">{{iconSuffix}}</me-icon>
       </slot>
@@ -73,25 +73,28 @@ export default {
       right: 8,
       type__: this.type === 'number' ? 'text' : this.type,
       value__: undefined,
-      valueReset: '',
+      valueReset: undefined,
       validateStatus: '',
       active: false
     }
   },
   created () {
-    this.initValue(this.value)
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
-      this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
-      this.$on('focus-input', this.onFocusInput)
-
-      this.listenerUpward('MeLabel', 'on-label-status', status => { this.validateStatus = status })
-
+    this.valueInit(this.value)
+    if (Tools.notEmpty(this.valueReset)) {
       this.handlerLableEvent(() => {
-        this.listenerUpward('MeLabel', 'on-label-reset', value => { this.value__ = value })
+        this.dispatchUpward('MeLabel', 'on-label-init', this.valueReset)
       })
+    }
+  },
+  async mounted () {
+    await this.$nextTick()
+    this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
+    this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
+    this.$on('focus-input', this.onFocusInput)
+    this.listenerUpward('MeLabel', 'on-label-status', status => { this.validateStatus = status })
+
+    this.handlerLableEvent(() => {
+      this.listenerUpward('MeLabel', 'on-label-reset', this.valueUpdate)
     })
   },
   computed: {
@@ -151,20 +154,23 @@ export default {
       }
       return value
     },
-    handlerChange ({ target }) {
-      const value = this.convertType(target.value)
+    valueUpdate (value) {
+      const newValue = this.convertType(value)
       const oldValue = this.value
       if (this.type === 'number') {
-        if (isNaN(value) || value < this.min || value > this.max) {
+        if (isNaN(newValue) || newValue < this.min || newValue > this.max) {
           this.value__ = oldValue
           return
         }
       }
-
-      this.$emit('change', this.convertType(this.value__))
+      this.value__ = newValue
+      this.$emit('change', newValue)
       this.handlerLableEvent(() => {
-        this.dispatchUpward('MeLabel', 'on-label-change', this.value__)
+        this.dispatchUpward('MeLabel', 'on-label-change', newValue)
       })
+    },
+    handlerChange ({ target }) {
+      this.valueUpdate(target.value)
     },
     /**
      * MeInput
@@ -173,32 +179,26 @@ export default {
       if (this.existParentComponent([ 'MeCombo' ])) { return }
       callback && callback.call(this)
     },
-    initValue (value) {
-      if (Type.isObject(value)) {
-        this.value__ = { ...value }
-        this.valueReset = { ...value }
-      } else if (Type.isArray(value)) {
+    valueInit (value) {
+      if (Type.isArray(value)) {
         this.value__ = [ ...value ]
         this.valueReset = [ ...value ]
-      } else {
-        this.value__ = value
-        this.valueReset = value
+        return
       }
+      this.value__ = value
+      this.valueReset = value
     },
     /**
      * 重置
      */
-    onReset () {
-      this.value__ = Tools.clone(this.valueReset, true)
+    handlerReset () {
+      this.valueUpdate(Tools.clone(this.valueReset, true))
     },
     handleFocus () {
-      this.$emit('on-blur', this.value__)
+      this.$emit('on-focus', this.value__)
     },
     handleBlur () {
       this.$emit('on-blur', this.value__)
-      this.handlerLableEvent(() => {
-        this.dispatchUpward('MeLabel', 'on-label-blur', this.value__)
-      })
     },
     setValue (value) {
       this.value__ = value

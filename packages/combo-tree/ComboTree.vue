@@ -7,7 +7,7 @@
       :expanded-node-click="false"
       :highlight="highlight"
       :node-key="fieldValue"
-      @click-node="onClickNode"
+      @click-node="handlerClick"
       ref="tree"
     >
       <template #node-label="{data}">
@@ -35,7 +35,7 @@ export default {
     this.value__ = this.value
   },
   methods: {
-    onClickNode (row, index) {
+    handlerClick (row, index) {
       this.$emit('on-select', row, index)
       this.$emit('change', this.multiple ? [ ...this.value__ ] : this.value__)
     }

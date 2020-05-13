@@ -1,5 +1,5 @@
-import http from './script/http.class'
-
+import Http from '../script/http'
+const http = new Http({})
 http.initHttp({
   baseURL: '/api',
   headers: {

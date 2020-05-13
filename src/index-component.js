@@ -4,6 +4,7 @@ import Menu from 'me-view/packages/menu/index'
 import Tree from 'me-view/packages/tree/index'
 import Table from 'me-view/packages/table/index'
 import Tabs from 'me-view/packages/tabs/index'
+import TabPane from 'me-view/packages/tab-pane/index'
 import Transfer from 'me-view/packages/transfer/index'
 import Paging from 'me-view/packages/paging/index'
 import Modal from 'me-view/packages/modal/index'
@@ -29,7 +30,6 @@ import Scrollbar from 'me-view/packages/scrollbar/index'
 import Slidebar from 'me-view/packages/slidebar/index'
 import DemoBlock from 'me-view/packages/demo-block/index'
 
-const TabPane = Tabs.TabPane
 export {
   Panel,
   Dialog,

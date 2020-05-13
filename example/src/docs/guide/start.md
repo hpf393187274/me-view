@@ -1,8 +1,5 @@
 # 快速上手
 
-## 使用之前
-> 待完善中...
-
 ## 使用 Vue CLI 3 
 
 ``` warning
@@ -24,8 +21,7 @@ yarn global add @vue/cli
 ```
 vue --version
 ```
-## 使用推荐工程
-> 待完善中...
+
 ## 全量MeView
 一般在 webpack 入口页面 `main.js` 中如下配置：
 ``` js
@@ -44,8 +40,164 @@ vue --version
 ```
 ## 按需引用MeView
 
-> 待完善中...
+借助插件 `babel-plugin-component` or `babel-plugin-import`，我们可以只引入需要的组件，以达到减小项目体积的目的。
 
+vue-cli3 一下版本 安装 babel-plugin-component：
+```
+npm install babel-plugin-component -D
+```
+
+vue-cli3 及以上版本 安装 babel-plugin-import
+```
+npm install babel-plugin-component -D
+```
+
+然后，在 `.babelrc` or `babel.config.js` 文件内增加一下类容：
+
+``` json
+{
+  "plugins": [
+    [
+      "import", 
+      {
+        "libraryName": "me-view",
+        "styleLibraryDirectory": "theme"
+      }
+    ]
+  ]
+}
+```
+最后 在 文件 `vue.config.js` 进行如下配置
+
+``` js
+module.exports = {
+  chainWebpack: config => {
+    config.resolve.extensions.add('.js').add('.vue').add('.css')
+  }
+}
+
+```
+接下来，如果你只希望引入部分组件，比如 Button 和 Input，那么需要在 main.js 中写入以下内容：
+
+``` js
+import Vue from 'vue';
+import { Button, Input } from 'me-view';
+import App from './App.vue';
+
+Vue.component(Button.name, Button);
+Vue.component(Input.name, Input);
+
+/* 或写为
+ * Vue.use(Button)
+ * Vue.use(Input)
+ */
+
+new Vue({
+  el: '#app',
+  render: h => h(App)
+});
+```
+
+完整组件列表和引入方式以下面内容为准
+
+``` json
+import Vue from 'vue'
+import Clipboard from 'clipboard'
+import {
+  Panel,
+  Dialog,
+  Menu,
+  Tree,
+  Table,
+  Tabs,
+  TabPane,
+  Transfer,
+  Paging,
+  Modal,
+  Message,
+  Input,
+  Checkbox,
+  Button,
+  ComboSelect,
+  ComboTable,
+  ComboTree,
+  Label,
+  Form,
+  Icon,
+  LineH,
+  LineV,
+  Row,
+  Column,
+  Link,
+  Scrollbar,
+  Slidebar,
+  DemoBlock
+} from 'me-view'
+
+// ---------------- 工具类 begin ---------------- 
+// 浏览器 Storage 存储组件
+import { local, session } from 'me-view/lib/script/storage'
+// 数据类型判断组件
+import Type from 'me-view/lib/script/type'
+// 常用工具类组件
+import Tools from 'me-view/lib/script/tools'
+// 水印组件
+import watermark from 'me-view/lib/script/watermark'
+
+// 内容复制组件
+Vue.prototype.$copy = function (classes) {
+  const _this = this
+  const clipboard = new Clipboard(classes)
+  clipboard.on('success', () => {
+    _this.$message.info('复制成功')
+    clipboard.destroy()
+  })
+  clipboard.on('error', () => {
+    _this.$message.error('该浏览器不支持自动复制')
+    clipboard.destroy()
+  })
+}
+
+Vue.prototype.$dialog = Dialog
+Vue.prototype.$message = Message
+Vue.prototype.$watermark = watermark
+Vue.prototype.$type = Type
+Vue.prototype.$tools = Tools
+Vue.prototype.$local = local
+Vue.prototype.$session = session
+// ---------------- 工具类 end ---------------- 
+
+Vue.use(Panel)
+Vue.use(Dialog)
+Vue.use(Menu)
+Vue.use(Tree)
+Vue.use(Table)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Transfer)
+Vue.use(Paging)
+Vue.use(Modal)
+Vue.use(Message)
+Vue.use(Input)
+Vue.use(Checkbox)
+Vue.use(Button)
+Vue.use(ComboSelect)
+Vue.use(ComboTable)
+Vue.use(ComboTree)
+Vue.use(Label)
+Vue.use(Form)
+Vue.use(Icon)
+Vue.use(LineH)
+Vue.use(LineV)
+Vue.use(Row)
+Vue.use(Column)
+Vue.use(Link)
+Vue.use(Scrollbar)
+Vue.use(Slidebar)
+Vue.use(DemoBlock)
+
+
+```
 ## 开始使用
 
 ### 运行

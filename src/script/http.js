@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Qs from 'qs'
 import Tools from './tools'
 import Type from './type'
 
@@ -22,27 +21,24 @@ const defaultConfig = {
     'X-Requested-With': 'XMLHttpRequest'
   },
   paramsSerializer (params) {
-    return Qs.stringify(params, { arrayFormat: 'repeat' })
+    return Tools.stringify(params, { arrayFormat: 'repeat' })
   },
   transformRequest: [
     (data, headers) => {
       console.debug('http.transformRequest ----------------------------------- ')
+      if (Tools.isEmpty(data) || Reflect.has(headers || {}, 'Content-Type') === false) { return data }
 
-      if (Tools.isEmpty(data)) { return data }
-      if (Type.isArray(data)) { return data }
-      if (Type.notObject(data)) { return data }
-      if (Reflect.has(headers, 'Content-Type') === false) { return data }
-
-      const contentType = Reflect.get(headers, 'Content-Type')
+      const contentType = Reflect.get(headers || {}, 'Content-Type')
       console.debug(`axios.transformRequest -> headers['Content-Type'] = ${contentType}`)
-      if (contentType.includes(APP_JSON)) {
-        console.debug(`${APP_JSON} --------`, JSON.stringify(data))
-        return JSON.stringify(data)
+
+      if (Type.isObject(data) && contentType.includes(APP_FROM)) {
+        console.debug(`${APP_FROM} -----------`, Tools.stringify(data, { arrayFormat: 'repeat' }))
+        return Tools.stringify(data, { arrayFormat: 'repeat' })
       }
 
-      if (contentType.includes(APP_FROM)) {
-        console.debug(`${APP_FROM} -----------`, Qs.stringify(data, { arrayFormat: 'repeat' }))
-        return Qs.stringify(data, { arrayFormat: 'repeat' })
+      if (Type.isObjectOrArray(data) && contentType.includes(APP_JSON)) {
+        console.debug(`${APP_JSON} --------`, JSON.stringify(data))
+        return JSON.stringify(data)
       }
       return data
     }

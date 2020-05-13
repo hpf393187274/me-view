@@ -1,7 +1,6 @@
 const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const common = require('./common')
-console.log('-------------common.externals------------------', common.externals)
 const webpackConfig = {
   mode: 'production',
   entry: { ...common.entryMixin, ...common.entryConfig },

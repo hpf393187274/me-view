@@ -1,6 +1,6 @@
 
 <template>
-  <div class="tabs-pane" v-if="rendered" v-show="activated">
+  <div class="me-tab-pane" v-if="rendered" v-show="activated">
     <template v-if="type === 'frame'">
       <iframe :id="name" :name="name" :title="title" :src="src" frameborder="0" width="100%" height="100%"></iframe>
     </template>

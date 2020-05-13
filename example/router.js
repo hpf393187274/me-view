@@ -24,6 +24,18 @@ export default new Router({
       redirect: '/guide/install',
       component: () => import('./src/layout/index.vue'),
       children: [...children]
+    },
+    {
+      path: '/page',
+      component: () => import('./src/views/page.vue')
+    },
+    {
+      path: '/page-a',
+      component: () => import('./src/views/pageA.vue')
+    },
+    {
+      path: '/page-b',
+      component: () => import('./src/views/pageB.vue')
     }
   ]
 })

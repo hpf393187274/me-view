@@ -1,24 +1,22 @@
 {
   "name": "me-view",
-  "version": "1.1.43",
+  "version": "1.1.52",
   "private": false,
-  "main": "lib/index.common.js",
+  "main": "lib/me-view.common.js",
   "files": [
     "lib",
     "src",
+    "theme",
     "packages"
   ],
   "scripts": {
     "serve": "vue-cli-service serve --fix",
-    "build": "vue-cli-service build --dest dist/lib",
-    "build:test": "vue-cli-service build",
     "build:tools": "webpack --config build/webpack.Tools.js",
     "build:common": "webpack --config build/webpack.common.js",
-    "build:theme": "gulp build --gulpfile src/theme/gulpfile.js && cp-cli src/theme/lib lib/theme",
+    "build:theme": "gulp build --gulpfile src/theme/gulpfile.js && cp-cli src/theme/lib theme",
     "build:component": "webpack --config build/webpack.component.js",
-    "package": "vue-cli-service build --dest lib --target lib --name index ./src/index.js",
+    "package": "vue-cli-service build --dest lib --target lib ./src/index.js",
     "build:all": "npm run package && npm run build:component && npm run build:tools && npm run build:theme && npm run build:common",
-    "package:script": "vue-cli-service build --dest dist/lib --target lib ./src/components/index.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -33,7 +31,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/plugin-transform-classes": "^7.9.5",
+    "@babel/core": "^7.9.0",
     "@babel/runtime": "^7.9.2",
     "@vue/cli-plugin-babel": "^4.3.1",
     "@vue/cli-plugin-eslint": "^4.3.1",
@@ -59,7 +57,6 @@
     "markdown-it": "^8.4.2",
     "markdown-it-anchor": "^5.2.7",
     "markdown-it-container": "^2.0.0",
-    "@babel/core": "^7.9.0",
     "progress-bar-webpack-plugin": "^2.1.0",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",

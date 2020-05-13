@@ -1,11 +1,22 @@
 {
   "name": "me-view",
-  "version": "1.1.8",
+  "version": "1.2.6",
   "private": false,
-  "main": "dist/lib/index.common.js",
+  "main": "lib/me-view.common.js",
+  "files": [
+    "lib",
+    "src",
+    "theme",
+    "packages"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve --fix",
-    "package": "vue-cli-service build --dest dist/lib --target lib --name index ./src/index.js",
+    "build:tools": "webpack --config build/webpack.Tools.js",
+    "build:common": "webpack --config build/webpack.common.js",
+    "build:theme": "gulp build --gulpfile src/theme/gulpfile.js && cp-cli src/theme/lib theme",
+    "build:component": "webpack --config build/webpack.component.js",
+    "package": "vue-cli-service build --dest lib --target lib ./src/index.js",
+    "build:all": "npm run package && npm run build:component && npm run build:tools && npm run build:theme && npm run build:common",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -19,7 +30,6 @@
     "vue-router": "^3.1.6"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-methods": "^7.8.3",
     "@vue/cli-plugin-babel": "^4.3.1",
     "@vue/cli-plugin-eslint": "^4.3.1",
     "@vue/cli-plugin-router": "^4.3.1",
@@ -40,7 +50,9 @@
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
     "vue-markdown-loader": "^2.4.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

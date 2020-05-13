@@ -15,7 +15,6 @@ local.remove('userName')
 | ------------- | -------------------------- | ----------------------------------------------------------------------- | ------------- |
 | isEmpty       | 是否为空                   | target                                                                  | true, false   |
 | notEmpty      | 是否非空                   | target                                                                  | true, false   |
-| isEmptyArray  | 是否空数组，非数组抛出异常 | target                                                                  | true, false   |
 | trim          | 去除字符串前后空格         | target                                                                  | 结果          |
 | UUId          | 获取唯一UUID               | -                                                                       | 唯一值        |
 | clone         | 克隆                       | target, {deep: false /* 是否深度拷贝 */, exclude:[/* 排除拷贝的key */]} | true, false   |

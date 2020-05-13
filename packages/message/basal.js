@@ -52,5 +52,4 @@ Message.newInstance = (options = {}) => {
   return instance
 }
 
-Message.install = Vue => Vue.component(Message.name, Message)
 export default Message

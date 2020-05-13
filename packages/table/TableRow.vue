@@ -1,5 +1,5 @@
 <template>
-  <tr :class="clesses" @click.stop="handlerRow(!checked__)">
+  <tr :class="classes" @click.stop="handlerRow(!checked__)">
     <template v-if="header">
       <me-table-cell-header class="content-center" v-if="checkbox">
         <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerCheckedChange(!checked__)" v-model="checked__" />
@@ -17,7 +17,6 @@
   </tr>
 </template>
 <script>
-import Tools from 'me-view/src/script/tools'
 import TableCellD from './TableCellD'
 import TableCellHeader from './TableCellHeader'
 import emitter from 'me-view/src/mixins/emitter'
@@ -58,18 +57,9 @@ export default {
     checked (value) { this.checked__ = value }
   },
   computed: {
-    clesses () {
+    classes () {
       return [
         { 'is-selected': this.highlight && this.checked__ }
-      ]
-    },
-    classColumn () {
-      return [
-        'me-row table-column',
-        {
-          'me-flex': this.columns.findIndex(item => Tools.notEmpty(item.width)) === -1,
-          'me-center': this.center
-        }
       ]
     }
   },
@@ -85,7 +75,7 @@ export default {
     handlerRow (checked) {
       if (this.header === false) {
         this.handlerCheckedChange(checked)
-        this.$emit('click-row', this.data, this.index, this)
+        this.dispatchUpward('MeTable', 'click-row', { data: this.data, index: this.index, row: this })
       }
     },
     handlerCheckedChange (checked) {

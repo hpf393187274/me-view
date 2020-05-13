@@ -1,4 +1,5 @@
 import Tools from 'me-view/src/script/tools'
+import Assert from 'me-view/src/script/assert'
 function findChildren (componentName, callback = () => { }) {
   const children = this.$children
   if (!children || children.length === 0) { return }
@@ -26,9 +27,7 @@ export default {
       findChildren.call(this, componentName, callback)
     },
     findParentComponent (componentNames) {
-      if (Tools.isEmptyArray(componentNames)) {
-        throw new CustomEvent(`组件(${this.$options.name}) 调用方法 findParentComponent 入参  is no array or empty array`)
-      }
+      Assert.isArray(componentNames, '必须是一个数组')
       let parent = this.$parent || this.$root
       let name = parent.$options.name
 

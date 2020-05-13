@@ -1,7 +1,7 @@
 
 <template>
   <div class="tab-title-item" :class="{ 'activated': activated }">
-    <div class="me-grid-center" @click="handlerTitle">{{name}} - <slot/></div>
+    <div class="me-grid-center" @click="handlerTitle"><slot/></div>
     <me-icon class="me-grid-center" v-if="closable === true" @click="handlerClose">icon-cross</me-icon>
   </div>
 </template>

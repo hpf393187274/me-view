@@ -15,9 +15,12 @@
         <template #test>
           <me-button>test</me-button>
         </template>
+        <template #footer>
+          <me-paging :total="50" class="me-flex"/>
+        </template>
       </me-table>
     </me-dialog>
-    <me-dialog title="dialog" v-model="statusForm" @confirm="handlerConfirm">
+    <me-dialog title="dialog"  v-model="statusForm" @confirm="handlerConfirm">
       <me-form class="me-grid-column-3" ref="form">
         <me-label label="主机" prop="domain">
           <me-input clearable v-model="form.domain"></me-input>

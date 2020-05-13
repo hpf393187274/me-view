@@ -1,4 +1,4 @@
-@import "./common/layout";
+@import "./layout";
 
 .#{$prefix}-table-container {
 	table{ width: 100%; }
@@ -22,7 +22,7 @@
 
 	.table-wrapper {
 		display: grid;
-		grid-template-rows: 45px auto;
+		grid-template-rows: auto 1fr;
 		overflow: auto;
 		.content-center {
 			text-align: center;

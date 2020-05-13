@@ -14,8 +14,7 @@ module.exports = {
     disableHostCheck: true
   },
   chainWebpack: config => {
-    config.resolve.extensions
-      .add('.js').add('.vue').add('.json').add('.css')
+    config.resolve.extensions.add('.js').add('.vue').add('.css')
     config.resolve.alias
       .set('@assets', resolve('src/assets'))
       .set('@components', resolve('src/components'))

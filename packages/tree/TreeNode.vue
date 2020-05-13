@@ -3,9 +3,9 @@
     <div :style="styleIndent" :title="data.label" class="me-row tree-node-item">
       <me-icon @click="doExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
       <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox" v-if="checkbox" />
-      <div @click="onClickLabel" class="me-row me-flex tree-node-label">
+      <div @click="onClickLabel" class="me-row me-flex me-cross-center tree-node-label">
         <slot :data="data" name="node-label">
-          <span class="tree-node-inner">{{data.label}}</span>
+          <span class="tree-label-inner">{{data.label}}</span>
         </slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">

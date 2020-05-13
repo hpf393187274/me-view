@@ -1,9 +1,11 @@
 import './theme/index.scss'
 import Clipboard from 'clipboard'
 import * as components from './index-component'
-import { local, session, Type, Tools, Watermark } from './index-script'
+import { local, session, Type, Tools, Watermark } from './script/index'
 
-export * from './index-script'
+// import './test/index'
+
+export * from './script/index'
 export * from './index-component'
 
 export default {
@@ -25,9 +27,11 @@ export default {
         clipboard.destroy()
       })
     }
-    Vue.prototype.$dialog = components.Dialog
-    Vue.prototype.$message = components.Message
-    Vue.prototype.$watermark = Watermark
+
+    const { Dialog, Message } = components
+    Vue.prototype.$dialog = Dialog
+    Vue.prototype.$message = Message
+    Vue.prototype.$watermark = new Watermark()
     Vue.prototype.$type = Type
     Vue.prototype.$tools = Tools
     Vue.prototype.$local = local

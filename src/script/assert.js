@@ -14,6 +14,19 @@ export default class Assert {
     }
   }
 
+  /**
+   * 有效的数组
+   * @param {Array} target 目标
+   * @param {String} message 消息
+   */
+  static validArray (target, message) {
+    Assert.isArray(target, message)
+
+    if (target.length === 0) {
+      throw new CustomError(message, target)
+    }
+  }
+
   static notArray (target, message) {
     if (Type.isArray(target)) {
       throw new CustomError(message, target)
@@ -21,7 +34,8 @@ export default class Assert {
   }
 
   static emptyArray (target, message) {
-    if (Type.notArray(target) || target.length === 0) {
+    Assert.isArray(target, message)
+    if (target.length !== 0) {
       throw new CustomError(message, target)
     }
   }

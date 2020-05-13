@@ -1,5 +1,5 @@
 
-class Watermark {
+export default class Watermark {
   #id = '1.23452384164.123412416'
   #canvas
   createCanvas (value) {
@@ -44,5 +44,3 @@ class Watermark {
     this.createDiv()
   }
 }
-
-export default new Watermark()

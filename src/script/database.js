@@ -34,7 +34,7 @@ export default class Database {
       console.debug('不支持indexedDB...')
       window.indexedDB = window.mozIndexedDB || window.webkitIndexedDB
     }
-    const request = window.indexedDB.open(this.dbName, this.version)
+    const request = window.indexedDB.open(this.#dbName, this.#version)
     const { upgrade, event } = await this.handlerResponse(request).catch((event) => {
       console.debug('数据库打开报错', event)
       this.#status = false

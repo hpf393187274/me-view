@@ -11,7 +11,7 @@
         <me-input flex clearable placeholder="请输入姓名" v-model="form.name"></me-input>
       </me-label>
       <me-label flex label="年龄" prop="age">
-        <me-input flex clearable placeholder="请输入年龄" v-model="form.age"></me-input>
+        <me-input flex type="number" clearable placeholder="请输入年龄" v-model="form.age"></me-input>
       </me-label>
     </div>
     <div class="me-row">
@@ -27,7 +27,6 @@
     <div class="me-row">
       <me-label flex label="省份">
         <me-combo-table flex readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
-      
         </me-combo-table>
       </me-label>
       <me-label flex label="省份">
@@ -70,7 +69,7 @@ export default {
     return {
       form: {
         name: '张',
-        sex: '-1',
+        sex: '1',
         age: 12
       },
       rules: {

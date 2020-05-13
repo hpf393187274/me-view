@@ -1,0 +1,6 @@
+@import "./layout";
+.#{$prefix}-tab-pane {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}

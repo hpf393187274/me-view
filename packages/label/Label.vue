@@ -48,6 +48,7 @@ export default {
   },
   created () {
     this.setRules(this.rules)
+    this.listenerEvents()
   },
   computed: {
     classes () {
@@ -62,29 +63,20 @@ export default {
       this.dispatchUpward('MeForm', 'on-label-add', this)
       this.bindFormInstance()
     }
-    this.bindFormElement()
   },
   beforeDestroy () {
     this.dispatchUpward('MeForm', 'on-label-remove', this)
   },
   methods: {
-    bindEventToFormElement () {
-      this.listener('on-label-blur', this.handlerElementBlur)
+    listenerEvents () {
       this.listener('on-label-change', this.handlerElementChange)
-    },
-    handlerElementBlur () {
-      this.validate().catch(() => {})
+      this.listener('on-label-init', value => {
+        !this.valueDefault && (this.valueDefault = value)
+      })
     },
     handlerElementChange (value) {
-      if (!this.valueDefault) {
-        Reflect.set(this, 'valueDefault', value)
-      }
       this.valueCurrent = value
       this.validate().catch(() => {})
-    },
-    bindFormElement () {
-      if (Tools.isEmptyArray(this.$children)) { return }
-      this.bindEventToFormElement()
     },
     bindFormInstance () {
       this.FormInstance = this.findParentComponent([ 'MeForm' ])
@@ -93,7 +85,7 @@ export default {
     setRules (value) {
       if (Tools.isEmpty(value)) { return }
       Assert.isArray(value, 'MeLabel rules 必须为数组')
-      this.rules__ = [ value ]
+      this.rules__ = [ ...value ]
     },
     bindFormRules () {
       if (this.prop && this.FormInstance) {

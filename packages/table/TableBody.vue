@@ -1,11 +1,11 @@
 <template>
-  <me-scrollbar @scroll-render-v="handlerDifference" @scroll="onScroll" class="table-body">
+  <div class="table-body">
     <table border="0" cellpadding="0" cellspacing="0" ref="table">
       <tbody>
         <slot />
       </tbody>
     </table>
-  </me-scrollbar>
+  </div>
 </template>
 
 <script>

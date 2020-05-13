@@ -1,33 +1,34 @@
 import Type from './type'
 import Assert from './assert'
-
+import Qs from 'qs'
 export default class Tools {
   /**
    * 校验：对象是否为空
    * @param {Object} target 目标
    */
   static isEmpty (target) {
-    if (target === null || target === undefined) { return true }
+    return target === null || target === undefined
+  }
+
+  /**
+   * 校验：是否为空值
+   * @param {Object} target 目标
+   */
+  static isBlank (target) {
+    if (Tools.isEmpty(target)) { return true }
     if (Type.isString(target)) {
       const value = Tools.trim(target)
       return value === '' || value === 'null' || value === 'undefined'
     }
-
-    if (Type.isArray(target) && target.length === 0) { return true }
-    if (Type.isObject(target) && Object.keys(target).length === 0) { return true }
-
     return false
   }
 
   /**
-   * 是空数组
-   * @param {Array} target
+   * 校验：不是空值
+   * @param {Object} target 目标
    */
-  static isEmptyArray (target) {
-    if (Type.isArray(target)) {
-      return target.length === 0
-    }
-    throw new CustomEvent('target is not array.')
+  static notBlank (target) {
+    return !Tools.notBlank(target)
   }
 
   /**
@@ -85,31 +86,6 @@ export default class Tools {
   }
 
   /**
-   * 序列号：Json to form
-   * @param {Object} target 目标对象
-   * @param {String} key 不需要传递
-   */
-  static jsonToForm (target, key) {
-    if (Type.notObjectOrArray(target)) { return {} }
-    const getKey = (_key) => {
-      return Tools.isEmpty(key) ? _key : `${key}[${_key}]`
-    }
-    let result = {}
-    for (const _key in target) {
-      const value = target[_key]
-      if (Tools.isEmpty(value)) { continue }
-      if (Type.isFunction(value)) { continue }
-      if (Type.isObjectOrArray(value)) {
-        result = Object.assign(result, Tools.jsonToForm(value, getKey(_key)))
-        continue
-      }
-      // value 非 Object or Array
-      result[getKey(_key)] = value
-    }
-    return result
-  }
-
-  /**
    * 生成 UUID
    */
   static UUId () {
@@ -137,7 +113,7 @@ export default class Tools {
       }
       if (Type.isFunction(condition)) {
         const index = target.findIndex(condition)
-        target.splice(index, 1)
+        index !== -1 && target.splice(index, 1)
         return index
       }
     }
@@ -165,11 +141,12 @@ export default class Tools {
    * @param {Function} callback 回调函数
    */
   static forEach (target, callback) {
-    if (Type.isArray(target) && target.length > 0 && Type.isFunction(callback)) {
+    if (Type.notFunction(callback)) { return }
+    if (Type.isArray(target)) {
       for (const item of target) { callback(item) }
     }
 
-    if (Type.isObject(target) && Type.isFunction(callback)) {
+    if (Type.isObject(target)) {
       for (const key in target) { callback(key, target[key]) }
     }
   }
@@ -314,5 +291,31 @@ export default class Tools {
   static firstCharLowerCase (target) {
     if (Tools.isEmpty(target)) { return '' }
     return target.slice(0, 1).toLowerCase() + target.slice(1)
+  }
+
+  /**
+   * 字符串化
+   * 参考：Qs.stringify
+   * @param {String} target 目标
+   * @param {Object} options 配置
+   */
+  static stringify (target = '', options = {}) {
+    const newOptions = Object.assign({
+      encodeValuesOnly: true, arrayFormat: 'repeat', allowDots: true
+    }, options || {})
+    return Qs.stringify(target, newOptions)
+  }
+
+  /**
+   * 字符串解析成对象
+   * 参考：Qs.parse
+   * @param {String} target 目标
+   * @param {Object} options 配置
+   */
+  static parse (target = {}, options = {}) {
+    const newOptions = Object.assign({
+      charset: 'utf-8'
+    }, options || {})
+    return Qs.parse(target, newOptions)
   }
 }

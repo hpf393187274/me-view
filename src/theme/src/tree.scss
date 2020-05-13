@@ -1,4 +1,4 @@
-@import "./common/layout";
+@import "./layout";
 .#{$prefix}-tree {
 	.tree-node-header{ 
 		font-weight: bold;
@@ -6,13 +6,12 @@
 		font-size: 16px;
 	}
 	.tree-node-label {
-		text-align: center;
 		min-width: 40px;
-		.tree-node-inner {
+		min-height: 35px;
+		.tree-label-inner {
 			overflow: hidden; /*自动隐藏文字*/
 			text-overflow: ellipsis;/*文字隐藏后添加省略号*/
 			white-space: nowrap;/*强制不换行*/
-			padding: 12px 0px ;
 		}
 	}
 	

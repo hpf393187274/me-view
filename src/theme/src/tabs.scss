@@ -1,4 +1,4 @@
-@import "./common/layout";
+@import "./layout";
 .#{$prefix}-tabs {
   border: 1px solid rgb(199, 193, 193);
   min-height: 400px !important;
@@ -29,12 +29,6 @@
     .activated {
       border-bottom: 1px solid #4aacee !important;
     }
-  }
-
-  .tabs-pane {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
   }
 
   .tabs-title-card {

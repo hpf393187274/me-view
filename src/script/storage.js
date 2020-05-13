@@ -10,7 +10,7 @@ export default class Storage {
     console.debug(`storage.arrayAppend：key = ${key}`)
     Assert.notEmpty(key, 'storage.get：key is empty')
     const value = this.storage.getItem(key)
-    if (Tools.isEmpty(value)) {
+    if (Tools.isBlank(value)) {
       return defaultValue
     }
     return JSON.parse(value)
@@ -19,6 +19,7 @@ export default class Storage {
   set (key, value) {
     console.debug(`storage.set：key = ${key}`)
     Assert.notEmpty(key, 'storage.set：key is empty')
+    if (Tools.isBlank(value)) { value = '' }
     this.storage.setItem(key, JSON.stringify(value))
   }
 

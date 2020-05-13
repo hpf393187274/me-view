@@ -44,8 +44,14 @@ Dialog.prompt = (options = {}) => {
       const self = this
       return h('div', { class: 'me-flex' }, [
         h('div', { style: { 'margin-bottom': '10px' } }, [ options.content ]),
-        h('me-label', { ref: 'label', class: 'me-row me-flex', props: { rules: self.rules } }, [
+        h('me-label', {
+          ref: 'label',
+          style: { 'margin-right': '20px' },
+          class: 'me-row me-flex',
+          props: { rules: self.rules }
+        }, [
           h('me-input', {
+            props: { flex: true },
             domProps: { value: self.value },
             on: {
               change (value) { self.value = value }
@@ -57,5 +63,5 @@ Dialog.prompt = (options = {}) => {
   }))
 }
 
-Dialog.install = Vue => Vue.component(Dialog.name, Dialog)
+Dialog.install = Vue => { Vue.component(Dialog.name, Dialog) }
 export default Dialog
