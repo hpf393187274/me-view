@@ -6,7 +6,7 @@
       </slot>
     </div>
   </div>
-  <div :class="classContainer" :style="styles" @mousedown="onMouseDown" class="me-column modal-container" ref="target" v-else v-show="value__" >
+  <div :class="classContainer" :style="{...styles, 'z-index': zIndex}" @mousedown="onMouseDown" class="me-column modal-container" ref="target" v-else v-show="value__" >
     <slot>
       <me-button @click="handlerCancel">关闭</me-button>
     </slot>

@@ -8,6 +8,12 @@ export default class Assert {
     }
   }
 
+  static notBlank (target, message) {
+    if (Tools.isBlank(target)) {
+      throw new CustomError(message, target)
+    }
+  }
+
   static isArray (target, message) {
     if (Type.notArray(target)) {
       throw new CustomError(message, target)

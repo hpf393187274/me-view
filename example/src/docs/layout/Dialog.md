@@ -22,19 +22,19 @@
     </me-dialog>
     <me-dialog title="dialog"  v-model="statusForm" @confirm="handlerConfirm">
       <me-form class="me-grid-column-3" ref="form">
-        <me-label label="主机" prop="domain">
+        <me-label title="主机" prop="domain">
           <me-input clearable v-model="form.domain"></me-input>
         </me-label>
-        <me-label label="端口" prop="port">
+        <me-label title="端口" prop="port">
           <me-input clearable v-model="form.port"></me-input>
         </me-label>
-        <me-label label="数据库" prop="databaseName">
+        <me-label title="数据库" prop="databaseName">
           <me-input clearable v-model="form.databaseName"></me-input>
         </me-label>
-        <me-label label="用户名" prop="userName">
+        <me-label title="用户名" prop="userName">
           <me-input clearable v-model="form.userName"></me-input>
         </me-label>
-        <me-label flex label="密码" prop="password">
+        <me-label title="密码" prop="password">
           <me-input clearable v-model="form.password"></me-input>
         </me-label>
         <me-label class="me-grid-self-center">
@@ -79,12 +79,14 @@ export default {
     handlerConfirm () {
       const selectedData = this.$refs.tableList.getCheckedRows()
       if(!selectedData || selectedData.length < 1) {
-        this.$dialog.alert({
-          content: '我们都是好孩子',
-          render(h) {
-            return h('div', "请选择数据")
-          }
-        })
+        // this.$dialog.alert({
+        //   content: '我们都是好孩子',
+        //   render(h) {
+        //     return h('div', "请选择数据")
+        //   }
+        // })
+
+        this.$message.info('请选择数据')
         return 
       }
 

@@ -15,7 +15,7 @@ export default class Database {
     this.#version = version
   }
 
-  handlerResponse (response) {
+  #handlerResponse = function (response) {
     return new Promise((resolve, reject) => {
       response.onsuccess = resolve
       response.onerror = reject
@@ -26,7 +26,7 @@ export default class Database {
   /**
    * 打开链接
    */
-  async open () {
+  #open = async function () {
     if (this.#database) {
       return '数据库已存在'
     }
@@ -35,7 +35,7 @@ export default class Database {
       window.indexedDB = window.mozIndexedDB || window.webkitIndexedDB
     }
     const request = window.indexedDB.open(this.#dbName, this.#version)
-    const { upgrade, event } = await this.handlerResponse(request).catch((event) => {
+    const { upgrade, event } = await this.#handlerResponse(request).catch((event) => {
       console.debug('数据库打开报错', event)
       this.#status = false
     })
@@ -48,9 +48,9 @@ export default class Database {
    * @param {String} tableName 表名
    * @param {String} mode 模式 readonly="只读" readwrite="读写"
    */
-  async __store (tableName, mode = 'readonly') {
+  #store = async function (tableName, mode = 'readonly') {
     if (!this.#database) {
-      await this.open()
+      await this.#open()
     }
     return this.#database.transaction([ tableName ], mode).objectStore(tableName)
   }
@@ -61,7 +61,7 @@ export default class Database {
    */
   async createStore ({ tableName, keyPath, index }) {
     if (!this.#database) {
-      await this.open()
+      await this.#open()
     }
     if (this.#database.objectStoreNames.contains(tableName) === false) {
       const options = { autoIncrement: true }
@@ -72,7 +72,7 @@ export default class Database {
       const store = this.#database.createObjectStore(tableName, options)
       if (index && Type.isArray(index)) {
         for (const item of index) {
-          store.createIndex(item.key, item.key, { unique: false })
+          store.createIndex(`index-${item.key}`, item.key, { unique: false })
         }
       }
     }
@@ -87,9 +87,9 @@ export default class Database {
     console.debug(`database.add --> tableName = ${tableName}, data = `, data)
     Assert.isObject(data, '添加的数据不是一个对象，data：' + JSON.stringify(data))
 
-    const store = await this.__store(tableName, 'readwrite')
+    const store = await this.#store(tableName, 'readwrite')
     const request = store.add({ ...data })
-    await this.handlerResponse(request)
+    await this.#handlerResponse(request)
     console.debug('数据添加成功')
   }
 
@@ -132,10 +132,18 @@ export default class Database {
    */
   async remove (tableName, value) {
     console.debug(`database.remove --> tableName = ${tableName}, value = `, value)
-    const store = await this.__store(tableName, 'readwrite')
+    const store = await this.#store(tableName, 'readwrite')
     const keyValue = Type.isObject(value) ? Reflect.get(value, store.keyPath) : value
-    await this.handlerResponse(store.delete(keyValue))
+    await this.#handlerResponse(store.delete(keyValue))
     console.debug('数据删除成功')
+  }
+
+  async removeIndex (tableName, key, value) {
+    console.debug(`database.clear --> tableName = ${tableName}`)
+    Assert.notBlank(tableName, 'tableName 不能为空')
+    Assert.notBlank(key, 'key 不能为空')
+    const store = await this.#store(tableName, 'readwrite')
+    store.index(key)
   }
 
   async batchRemove (tableName, values) {
@@ -158,7 +166,7 @@ export default class Database {
     console.debug(`database.update --> tableName = ${tableName}, data = `, data)
     Assert.isObject(data, '添加的数据不是一个对象，data：' + JSON.stringify(data))
 
-    const store = await this.__store(tableName, 'readwrite')
+    const store = await this.#store(tableName, 'readwrite')
 
     const keyValue = Reflect.get(data, store.keyPath)
 
@@ -166,13 +174,13 @@ export default class Database {
 
     const findRequest = store.get(keyValue)
 
-    await this.handlerResponse(findRequest)
+    await this.#handlerResponse(findRequest)
 
     Assert.notEmpty(findRequest.result, '数据不存在，请检查数据，data：' + JSON.stringify(data))
 
     const newData = Object.assign({}, findRequest.result, data)
     const request = store.put(newData)
-    await this.handlerResponse(request)
+    await this.#handlerResponse(request)
     console.debug('数据更新成功')
   }
 
@@ -185,10 +193,10 @@ export default class Database {
     console.debug(`database.findOne --> tableName = ${tableName}, value = `, value)
     Assert.notEmpty(value, '主键值不存在')
 
-    const store = await this.__store(tableName)
+    const store = await this.#store(tableName)
     const keyValue = Type.isObject(value) ? Reflect.get(value, store.keyPath) : value
     const request = store.get(keyValue)
-    await this.handlerResponse(request)
+    await this.#handlerResponse(request)
     return request.result
   }
 
@@ -201,11 +209,11 @@ export default class Database {
     console.debug(`database.exist --> tableName = ${tableName}, value = `, value)
     Assert.notEmpty(value, '参数不能为空')
 
-    const store = await this.__store(tableName)
+    const store = await this.#store(tableName)
     const keyValue = Type.isObject(value) ? Reflect.get(value, store.keyPath) : value
     console.debug(`${tableName} 执行 exist -> keyPath = ${store.keyPath}，keyValue = ${keyValue}`)
     const request = store.get(keyValue)
-    await this.handlerResponse(request)
+    await this.#handlerResponse(request)
     return !!request.result
   }
 
@@ -218,17 +226,17 @@ export default class Database {
   async findList (tableName, key, value) {
     console.debug(`database.findList --> tableName = ${tableName}, key = ${key}, value = `, value)
 
-    const store = await this.__store(tableName)
+    const store = await this.#store(tableName)
     if (Tools.isEmpty(key)) {
       const request = store.getAll()
-      await this.handlerResponse(request)
+      await this.#handlerResponse(request)
       return request.result
     }
     Assert.notEmpty(value, '查询条件不能为空')
     const index = store.index(key)
     Assert.notEmpty(index, '索引不存在')
     const request = index.getAll(value)
-    await this.handlerResponse(request)
+    await this.#handlerResponse(request)
     return request.result
   }
 }

@@ -10,7 +10,7 @@ const children = routeList.flatMap(item => {
   const path = item.replace('./', '/').replace('.md', '')
   const filePath = item.replace('./', '')
   return {
-    path,
+    path: `/doc/${path}`,
     component: () => import('@docs/' + filePath)
   }
 })
@@ -20,7 +20,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/guide/install',
+      redirect: '/doc/guide/install',
       component: () => import('../layout/index.vue'),
       children: [...children]
     }

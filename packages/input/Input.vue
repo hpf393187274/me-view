@@ -64,7 +64,6 @@ export default {
     iconSuffix: String,
     placeholder: String,
     pattern: String,
-    flex: Boolean,
     readonly: Boolean
   },
   data () {
@@ -103,9 +102,10 @@ export default {
     },
     classes () {
       return [
-        'me-row me-input',
+        'me-row',
+        'me-input',
+        'me-flex',
         {
-          'me-flex': this.flex,
           'me-readonly': this.readonly,
           'me-disabled': this.disabled,
           'me-input-error': this.validateStatus === 'error'
@@ -120,10 +120,7 @@ export default {
     },
     styles () {
       if (this.width) {
-        return { width: this.width }
-      }
-      if (this.flex) {
-        return { width: 'auto' }
+        return { width: this.width, flex: '0 1 auto' }
       }
       return { }
     },

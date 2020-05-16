@@ -8,12 +8,14 @@ import Database from './database'
 import CustomError from './custom-error'
 import Socket from './socket'
 import Watermark from './watermark'
+import Node from './node'
 const type = Type
 const tools = Tools
 export {
   Type,
   type,
   Tools,
+  Node,
   tools,
   Http,
   local,

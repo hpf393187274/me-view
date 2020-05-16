@@ -1,14 +1,14 @@
 <template>
-  <div :class="classes">
-    <label :style="labelStyle" class="label-label" v-if="isBoolean(label)">
+  <div :class="classes" :style="styles">
+    <label :style="labelStyle" class="label-title" v-if="isBoolean(title)">
       <span style="color:red;" v-if="required__">*</span>
-      {{label}}：
+      {{title}}：
     </label>
-    <div class="label-content me-column me-flex">
+    <div class="label-content me-flex" :title="validateStatus==='error' ? validateMessage :''">
       <slot>
         <div class="me-row me-cross-center label-content-slot">请在插巢填充元素</div>
       </slot>
-      <div class="label-content-error" v-show="validateStatus==='error'">{{validateMessage}}</div>
+      <div class="label-content-error" v-if="errorStatus" v-show="validateStatus==='error'">{{validateMessage}}</div>
     </div>
   </div>
 </template>
@@ -28,10 +28,16 @@ export default {
       default: () => {},
       validator: value => Type.isArray(value)
     },
+    errorStatus: { type: Boolean, default: true },
+    errorWay: {
+      type: String,
+      default: 'down',
+      validator: value => [ 'down', 'right' ].includes(value)
+    },
+    width: String,
     prop: String,
     required: Boolean,
-    label: String,
-    flex: Boolean,
+    title: String,
     labelStyle: { type: Object, default () { return {} } },
     readonly: Boolean
   },
@@ -53,9 +59,14 @@ export default {
   computed: {
     classes () {
       return [
-        'me-row me-label me-cross-start',
-        { 'me-flex': this.flex }
+        'me-row me-label me-cross-start me-flex'
       ]
+    },
+    styles () {
+      if (this.width) {
+        return { width: this.width, flex: '0 1 auto' }
+      }
+      return { }
     }
   },
   mounted () {

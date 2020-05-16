@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     handlerSort (order) {
-      this.dispatchUpward('MeTable', 'me-table-sort', { field: this.field, order })
+      this.dispatchUpward('MeTable', 'MeTable-row-sort', { field: this.field, order })
     }
   }
 }

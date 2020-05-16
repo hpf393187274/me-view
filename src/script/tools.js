@@ -2,6 +2,8 @@ import Type from './type'
 import Assert from './assert'
 import Qs from 'qs'
 export default class Tools {
+  static ASC = 'ASC'
+  static DESC = 'DESC'
   /**
    * 校验：对象是否为空
    * @param {Object} target 目标
@@ -55,6 +57,21 @@ export default class Tools {
       throw new Error('convert to number error, target；' + target)
     }
     return target
+  }
+
+  /**
+   * 排序集合
+   * @param {Array} target集合
+   * @param {Function} callback 排序回调
+   * @param {String} order 排序方式：ASC 升序，DESC 降序
+   */
+  static sort (target, callback = item => item, order = Tools.ASC) {
+    if (Type.notArray(target) || target.length === 0) { return }
+    target.sort((a, b) => {
+      const valueA = callback && callback(a)
+      const valueB = callback && callback(b)
+      return order === Tools.ASC ? valueA - valueB : valueB - valueA
+    })
   }
 
   /**

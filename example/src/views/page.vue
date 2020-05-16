@@ -1,7 +1,7 @@
 <template>
   <div class="me-flex">
     <div class="me-row">
-      <me-label label="消息">
+      <me-label title="消息">
         <me-input v-model="message" />
       </me-label>
       <me-label>

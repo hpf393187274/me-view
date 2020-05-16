@@ -47,11 +47,9 @@ Dialog.prompt = (options = {}) => {
         h('me-label', {
           ref: 'label',
           style: { 'margin-right': '20px' },
-          class: 'me-row me-flex',
           props: { rules: self.rules }
         }, [
           h('me-input', {
-            props: { flex: true },
             domProps: { value: self.value },
             on: {
               change (value) { self.value = value }

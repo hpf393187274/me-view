@@ -5,14 +5,11 @@
     </div>
     <me-row class="me-center right">
       <me-input icon-prefix="icon-sousuo" style="width: 300px" />
+      <me-link target="_self" url="/doc/guide/install">API</me-link>
+      <me-link target="_self" url="/demo/database">示例代码</me-link>
       <me-link>语言选择</me-link>
       <me-link url="https://github.com/hpf393187274/me-view">源码查看</me-link>
     </me-row>
-    <!-- <div class="me-row me-center right">
-      <me-input icon-prefix="icon-sousuo" style="width: 300px" />
-      <me-link>语言选择</me-link>
-      <me-link url="https://github.com/hpf393187274/me-view">源码查看</me-link>
-    </div> -->
   </div>
 </template>
 <style lang="scss" scoped>

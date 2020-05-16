@@ -4,15 +4,27 @@ import { local } from 'me-view/src/index'
 Vue.use(Router)
 console.log('---------------e-------')
 // 动态获取路由： 根据目录结构
-const routeList = require.context('./src/docs/', true, /.md$/).keys()
-local.set('routeList', routeList)
-console.log('---------------routeList-------', routeList)
-const children = routeList.flatMap(item => {
+const routeDoc = require.context('./src/docs/', true, /.md$/).keys()
+local.set('routeDoc', routeDoc)
+console.log('---------------route-doc-------', routeDoc)
+const childrenDoc = routeDoc.flatMap(item => {
   const path = item.replace('./', '/').replace('.md', '')
   const filePath = item.replace('./', '')
   return {
-    path,
+    path: `/doc${path}`,
     component: () => import('me-view/example/src/docs/' + filePath)
+  }
+})
+
+const routeDemo = require.context('./src/demo/', true, /.vue$/).keys()
+local.set('routeDemo', routeDemo)
+console.log('---------------route-demo-------', routeDemo)
+const childrenDemo = routeDemo.flatMap(item => {
+  const path = item.replace('./', '/').replace('.vue', '')
+  const filePath = item.replace('./', '')
+  return {
+    path: `/demo${path}`,
+    component: () => import('me-view/example/src/demo/' + filePath)
   }
 })
 
@@ -21,21 +33,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/guide/install',
+      redirect: '/doc/guide/install',
       component: () => import('./src/layout/index.vue'),
-      children: [...children]
-    },
-    {
-      path: '/page',
-      component: () => import('./src/views/page.vue')
-    },
-    {
-      path: '/page-a',
-      component: () => import('./src/views/pageA.vue')
-    },
-    {
-      path: '/page-b',
-      component: () => import('./src/views/pageB.vue')
+      children: [...childrenDoc, ...childrenDemo]
     }
   ]
 })

@@ -24,13 +24,13 @@
           :center="center"
           :checkbox="checkbox"
           :columns="columns__"
-          :data="item"
+          :node="item"
           :highlight="highlight"
           :index="index"
-          :key="getPrimaryValue(data) || index"
+          :key="getPrimaryValue(item.data) || index"
           :multiple="multiple"
           :primary-field = "primaryField"
-          v-for="(item,index) in data"
+          v-for="(item,index) in nodeList"
         />
       </me-table-body>
     </div>
@@ -48,6 +48,7 @@ import TableRow from './TableRow.vue'
 import TableHeader from './TableHeader.vue'
 import TableBody from './TableBody.vue'
 import emitter from 'me-view/src/mixins/emitter'
+// import Node from './Node'
 let idSeed = 1
 export default {
   name: 'MeTable',
@@ -81,10 +82,15 @@ export default {
       return { 'padding-right': `${this.difference}px` }
     },
     length () {
-      return Type.isArray(this.data) ? this.data.length : 0
-    }
+      return Type.isArray(this.nodeList) ? this.nodeList.length : 0
+    },
+    checkedNumber () { return Object.keys(this.checkedData).length }
   },
   watch: {
+    data (newValue, oldValue) {
+      console.debug('Table.watch -> data is change begin ......')
+      this.initData(newValue)
+    },
     checkedNumber (value) {
       if (this.length === 0 || value === 0) {
         this.checkedHeader = this.checkedHeaderHalf = false
@@ -100,9 +106,8 @@ export default {
       columns__: [],
       checkedHeader: this.checked,
       checkedHeaderHalf: false,
-      checkedRows: new Map(),
-      allRows: new Map(),
-      checkedNumber: 0,
+      checkedData: {},
+      nodeList: [],
       difference: 0,
       selectedNodeOld: null,
       scrollLeft: 0,
@@ -111,64 +116,51 @@ export default {
   },
   created () {
     this.id__ = `me-table_${idSeed++}`
-    this.initAllRows()
-
-    this.listener('me-table-sort', ({ field, order }) => {
-      this.sort(field, order)
-    })
+    this.initData(this.data)
+    this.listener('MeTable-row-checked-true', ({ key, value }) => this.$set(this.checkedData, key, value))
+    this.listener('MeTable-row-checked-false', ({ key }) => this.$delete(this.checkedData, key))
+    this.listener('MeTable-row-sort', ({ field, order }) => this.sort(field, order))
   },
   async mounted () {
     await this.$nextTick()
     this.handlerSlots()
   },
   methods: {
-    sort (field, order) {
-      this.data.sort((a, b) => {
-        const valueA = Reflect.get(a, field)
-        const valueB = Reflect.get(b, field)
-        return order === 'ASC' ? valueA - valueB : valueB - valueA
-      })
+    append (...list) {
+      if (Type.isArray(list)) {
+        for (const item of list) {
+          this.nodeList.push({ data: item, checked: false, component: null })
+        }
+      }
     },
-    initAllRows () {
-      this.allRows.clear()
-      this.listener('table-row-all-append', ({ key, value }) => this.allRows.set(key, value))
-      this.listener('table-row-all-remove', ({ key }) => this.allRows.delete(key))
-
-      this.listener('table-row-checked-true', ({ key, value }) => this.append(key, value))
-      this.listener('table-row-checked-false', ({ key }) => this.remove(key))
+    initData (data = []) {
+      this.nodeList = []
+      this.handlerCheckboxHeader(false)
+      this.append(...data)
+    },
+    sort (field, order = Tools.ASC) {
+      Tools.sort(this.nodeList, item => Reflect.get(item.data, field), order)
     },
     handlerDifference ({ status, size }) {
       this.difference = status ? size : 0
     },
-    append (key, value, refresh = true) {
-      this.checkedRows.set(key, value)
-      refresh && this.refresh()
-    },
-    remove (key, refresh = true) {
-      this.checkedRows.delete(key)
-      refresh && this.refresh()
-    },
-    refresh () {
-      this.checkedNumber = this.checkedRows.size
-    },
-    clear () { this.checkedRows.clear() },
+    clear () { this.checkedData = {} },
     removeRows (data = []) {
       Tools.forEach(data, item => {
-        Tools.arrayRemove(this.data, target => this.getPrimaryValue(target) === this.getPrimaryValue(item))
+        const primaryValue = this.getPrimaryValue(data)
+        Reflect.deleteProperty(this.checkedData, primaryValue)
+        Tools.arrayRemove(this.nodeList, target => this.getPrimaryValue(target.data) === primaryValue)
       })
-      this.refresh()
     },
     getPrimaryValue (target) {
       return Reflect.get(target, this.primaryField)
     },
     getCheckedRows () {
-      const result = []
-      this.checkedRows.forEach(value => result.push(value.data))
-      return result
+      const values = Object.values(this.checkedData)
+      return values && values.map(item => item.data)
     },
     cancelChecked () {
-      this.checkedRows.forEach(row => row.handlerCheckedChange(false))
-      this.refresh()
+      this.checkedData.forEach(row => row.handlerCheckedChange(false))
     },
     /**
      * 设置选中的数据
@@ -176,15 +168,15 @@ export default {
      * @param {Boolean} clear 是否清楚原有选择数据，默认不清楚
      */
     setCheckedRows (data = [], clear) {
+      console.debug('Table.setCheckedRows -> begin......')
       clear && this.cancelChecked()
       Tools.forEach(data, item => {
-        const primaryValue = Type.isObject(item) ? this.getPrimaryValue(item) : item
-        const row = this.allRows.get(primaryValue)
-        if (row) {
-          row.handlerCheckedChange(true)
+        const uniqueValue = this.getPrimaryValue(item)
+        const node = this.nodeList.find(item => uniqueValue === item.uniqueValue)
+        if (node && node.component) {
+          node.component.handlerCheckedChange(true)
         }
       })
-      this.refresh()
     },
     /**
      * 点击 Header row checkbox
@@ -193,8 +185,7 @@ export default {
       console.debug(`table.header.checked = ${status}`)
       this.checkedHeaderHalf = false
       this.clear()
-      this.allRows.forEach(value => { value.handlerCheckedChange(status) })
-      this.refresh()
+      this.nodeList.forEach(({ component }) => { component.handlerCheckedChange(status) })
     },
     handlerScrollBody (scrollLeft) {
       this.scrollLeft = scrollLeft

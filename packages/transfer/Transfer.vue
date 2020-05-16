@@ -16,10 +16,10 @@
     </me-tree>
     <div class="me-column me-center transfer-center">
       <slot name="center">
-        <me-button :disabled="disabledRight" @click="moveToRightAll" icon="icon-angles_strong_right" label="全部向右" />
-        <me-button :disabled="disabledRight" @click="moveToRight" icon="icon-angle_strong_right" label="向右" />
-        <me-button :disabled="disabledLeft" @click="moveToLeft" icon="icon-angle_strong_left" label="向左" />
-        <me-button :disabled="disabledLeft" @click="moveToLeftAll" icon="icon-angles_strong_left" label="全部向左" />
+        <me-button :disabled="disabledRight" @click="moveToRightAll" icon="icon-angles_strong_right" title="全部向右" />
+        <me-button :disabled="disabledRight" @click="moveToRight" icon="icon-angle_strong_right" title="向右" />
+        <me-button :disabled="disabledLeft" @click="moveToLeft" icon="icon-angle_strong_left" title="向左" />
+        <me-button :disabled="disabledLeft" @click="moveToLeftAll" icon="icon-angles_strong_left" title="全部向左" />
       </slot>
     </div>
     <me-tree
