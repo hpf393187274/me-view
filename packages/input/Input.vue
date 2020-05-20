@@ -55,7 +55,7 @@ export default {
     clearable: Boolean,
     width: String,
     type: { type: String, default: 'text', validator: value => types.includes(value) },
-    value: { type: [ Number, String, Array ], default: '' },
+    value: [ Number, String, Array ],
     min: Number,
     max: { type: Number, default: 1000000 },
     minLength: Number,
@@ -78,7 +78,7 @@ export default {
     }
   },
   created () {
-    this.valueInit(this.value)
+    this.valueUpdate(this.value)
     if (Tools.notEmpty(this.valueReset)) {
       this.handlerLableEvent(() => {
         this.dispatchUpward('MeLabel', 'on-label-init', this.valueReset)
@@ -91,7 +91,6 @@ export default {
     this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
     this.$on('focus-input', this.onFocusInput)
     this.listenerUpward('MeLabel', 'on-label-status', status => { this.validateStatus = status })
-
     this.handlerLableEvent(() => {
       this.listenerUpward('MeLabel', 'on-label-reset', this.valueUpdate)
     })
@@ -140,7 +139,7 @@ export default {
   },
   watch: {
     value (newValue) {
-      this.value__ = newValue
+      this.valueUpdate(newValue)
     }
   },
   methods: {
@@ -152,7 +151,11 @@ export default {
       return value
     },
     valueUpdate (value) {
+      if (Tools.isEmpty(this.valueReset) && Tools.isBlank(value)) { return }
       const newValue = this.convertType(value)
+      if (Tools.isEmpty(this.valueReset)) {
+        this.valueReset = Type.isArray(newValue) ? [ ...newValue ] : newValue
+      }
       const oldValue = this.value
       if (this.type === 'number') {
         if (isNaN(newValue) || newValue < this.min || newValue > this.max) {
@@ -175,15 +178,6 @@ export default {
     handlerLableEvent (callback = () => { }) {
       if (this.existParentComponent([ 'MeCombo' ])) { return }
       callback && callback.call(this)
-    },
-    valueInit (value) {
-      if (Type.isArray(value)) {
-        this.value__ = [ ...value ]
-        this.valueReset = [ ...value ]
-        return
-      }
-      this.value__ = value
-      this.valueReset = value
     },
     /**
      * 重置

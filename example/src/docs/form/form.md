@@ -19,17 +19,17 @@
         <me-combo-select readonly :data="sexList" v-model="form.sex" clearable placeholder="请选择性别">
         </me-combo-select>
       </me-label>
-      <me-label title="省份">
+      <me-label title="省份1">
         <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
         </me-combo-table>
       </me-label>
     </div>
     <div class="me-row">
-      <me-label title="省份">
+      <me-label title="省份2">
         <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
         </me-combo-table>
       </me-label>
-      <me-label title="省份">
+      <me-label title="省份3">
         <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
         </me-combo-table>
       </me-label>

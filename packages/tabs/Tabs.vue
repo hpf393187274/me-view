@@ -1,4 +1,3 @@
-
 <template>
   <div class="me-tabs">
     <div class="tabs-title-wrap" :class="[`tabs-title-${mode}`]">
@@ -19,7 +18,7 @@ export default {
   props: {
     active: String,
     addable: Boolean,
-    closable: { type: Boolean, default: null },
+    closable: { type: Boolean, default: true },
     mode: { type: String, default: 'line', validator: value => [ 'line', 'card' ].includes(value) },
     data: { type: Array, default () { return [] } }
   },
@@ -57,11 +56,20 @@ export default {
     size () { return this.paneList.length }
   },
   methods: {
-    analyzeClosable ({ closable }) {
-      if (closable === null || closable === undefined) {
-        return this.closable
+    openTabPane ({ name, title, src } = {}, { active = true, refresh = true } = {}) {
+      const target = this.paneList.find(this.handlerCompare({ name, title }))
+      if (Tools.isEmpty(target)) {
+        this.paneList.push({ name, title, src })
       }
-      return closable
+    },
+    removeTabPane () {
+    },
+    activeTabPane () {
+    },
+    refreshTabPane () {
+    },
+    analyzeClosable ({ closable }) {
+      return Tools.isEmpty(closable) ? this.closable : closable
     },
     /**
      * 处理自定义激活
@@ -74,7 +82,7 @@ export default {
       }
     },
     handlerCompare (item) {
-      return ({ name }) => name === item.name
+      return ({ name, title }) => name === item.name || title === item.title
     },
     handlerEvents () {
       this.listener('tab-pane-add', item => {

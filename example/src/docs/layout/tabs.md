@@ -5,16 +5,59 @@
 ::: demo `title` 标题
 ```html
 <template>
-  <me-tabs closable active="163">
-    <me-tab-pane name="baidu" type="frame" src="https://www.baidu.com" title="百度" />
-    <me-tab-pane name="163" type="frame" src="https://www.163.com" title="163" />
-  </me-tabs>
+  <div class="me-column">
+    <me-form ref="from_line" :rules="rules" class="me-row">
+      <me-label title="名称" prop="name">
+        <me-input v-model="from.name" />
+      </me-label>
+      <me-label title="标题" prop="title">
+        <me-input v-model="from.title" />
+      </me-label>
+      <me-label title="网址" prop="src">
+        <me-input v-model="from.src" />
+      </me-label>
+      <me-label>
+        <div class="me-row">
+          <me-button @click="handlerOpenTabPane">打开 OR 激活</me-button>
+          <me-button @click="handlerRemoveTabPane">移 出</me-button>
+        </div>
+      </me-label>
+    </me-form>
+    <me-tabs ref="tab_line" closable active="163">
+      <me-tab-pane name="baidu" type="frame" src="https://www.baidu.com" title="百度" />
+      <me-tab-pane name="163" type="frame" src="https://www.163.com" title="163" />
+    </me-tabs>
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      from: {
+        name: 'baidu',
+        title: '百度',
+        src: 'https://www.baidu.com'
+      },
+      rules: {
+        name: [ { required: true, message: '名称不能为空' } ],
+        title: [ { required: true, message: '标题不能为空' } ],
+        src: [ { required: true, message: '网址不能为空' } ]
+      }
     }
+  },
+  methods: {
+    async handlerOpenTabPane () {
+      try {
+        await this.$refs.from_line.validate()
+        this.$refs.tab_line.openTabPane({...this.form})
+      } catch (error) {
+        console.log(error)
+        this.$message.error('表单校验失败!')
+      }
+    },
+    handlerRemoveTabPane () {
+      this.$refs.tab_line.removeTabPane({...this.form})
+    },
   }
 }
 </script>
@@ -34,6 +77,7 @@ export default {
 export default {
   data() {
     return {
+      
     }
   }
 }
