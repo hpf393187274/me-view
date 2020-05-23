@@ -3,11 +3,11 @@
     <me-input
       :clearable="clearable"
       :disabled="disabled"
+      :width="width"
       :placeholder="placeholder"
       :readonly="readonly__"
       @on-blur="handlerBlurInput"
       @on-click="handlerClickInput"
-      :flex= flex
       ref="input"
       v-model="label__"
     >
@@ -17,7 +17,7 @@
     </me-input>
     <transition appear name="transition-drop">
       <div
-        :style="{'z-index': status? 10000 : 0,'height': height}"
+        :style="{'z-index': status? 1000000 : 0, width: width__ + 'px'}"
         @mouseout="closable=true"
         @mouseover="onMouseoverOther"
         class="me-column me-border combo-options"
@@ -43,6 +43,7 @@ export default {
       rendered: false,
       valueSingle: {},
       valueMultiple: [],
+      width__: undefined,
       readonly__: this.readonly || this.multiple,
       /** input 失焦 移入 body 区域 */
       closable: true
@@ -70,6 +71,7 @@ export default {
     status (newValue) {
       if (newValue) {
         this.rendered = true
+        this.width__ = this.$refs.input.$el.scrollWidth
         this.onFocusInput()
       }
       this.$emit(newValue === true ? 'combo-content-show' : 'combo-content-hide', newValue)
@@ -79,6 +81,9 @@ export default {
     },
     value__ (newValue) {
       this.dispatchUpward('MeLabel', 'on-label-change', newValue)
+    },
+    data () {
+      this.initValue(this.value)
     }
   },
   methods: {

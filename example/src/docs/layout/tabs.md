@@ -19,13 +19,13 @@
       <me-label>
         <div class="me-row">
           <me-button @click="handlerOpenTabPane">打开 OR 激活</me-button>
-          <me-button @click="handlerRemoveTabPane">移 出</me-button>
+          <me-button @click="handlerTabRemove(from)">移 出</me-button>
         </div>
       </me-label>
     </me-form>
-    <me-tabs ref="tab_line" closable active="163">
-      <me-tab-pane name="baidu" type="frame" src="https://www.baidu.com" title="百度" />
-      <me-tab-pane name="163" type="frame" src="https://www.163.com" title="163" />
+    <me-tabs :active="active" @tab-remove="handlerTabRemove">
+      <me-tab-pane :closable="false" name="163" type="frame" src="https://www.163.com" title="163" />
+      <me-tab-pane v-for="item in paneList" v-bind="item" type="frame" :key="item.name" />
     </me-tabs>
   </div>
 </template>
@@ -38,6 +38,8 @@ export default {
         title: '百度',
         src: 'https://www.baidu.com'
       },
+      active: '163',
+      paneList: [],
       rules: {
         name: [ { required: true, message: '名称不能为空' } ],
         title: [ { required: true, message: '标题不能为空' } ],
@@ -46,18 +48,26 @@ export default {
     }
   },
   methods: {
+    handlerCompare (item) {
+      return ({ title, name }) => item.name === name || item.title === title
+    },
+    handlerTabRemove (item) {
+      this.$tools.arrayRemove(this.paneList, this.handlerCompare(item))
+    },
     async handlerOpenTabPane () {
       try {
         await this.$refs.from_line.validate()
-        this.$refs.tab_line.openTabPane({...this.form})
+        const target = this.paneList.find(this.handlerCompare(this.from))
+        if (this.$tools.isEmpty(target)) {
+          this.paneList.push({...this.from})
+        }
+        const newTarget = Object.assign({}, target || {}, this.from)
+        this.active = newTarget.name || newTarget.title
       } catch (error) {
         console.log(error)
         this.$message.error('表单校验失败!')
       }
-    },
-    handlerRemoveTabPane () {
-      this.$refs.tab_line.removeTabPane({...this.form})
-    },
+    }
   }
 }
 </script>

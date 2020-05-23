@@ -53,18 +53,19 @@ export default {
         oldValue.nodePane.setActivated(false)
       }
     },
+    active (value) {
+      this.activeTabPane({ name: value, title: value })
+    },
     size () { return this.paneList.length }
   },
   methods: {
     openTabPane ({ name, title, src } = {}, { active = true, refresh = true } = {}) {
-      const target = this.paneList.find(this.handlerCompare({ name, title }))
-      if (Tools.isEmpty(target)) {
-        this.paneList.push({ name, title, src })
-      }
+
     },
     removeTabPane () {
     },
-    activeTabPane () {
+    activeTabPane (item) {
+      this.nodeActive = this.paneList.find(this.handlerCompare(item))
     },
     refreshTabPane () {
     },
@@ -75,9 +76,14 @@ export default {
      * 处理自定义激活
      */
     handlerActiveCustom (target) {
-      const { nodePane, nodeTitle, name } = target
-      if (this.active && nodePane && nodeTitle && this.active === name) {
-        // 设置自定义激活
+      const { name, title, activated } = target
+      if (Tools.notBlank(this.active) && Tools.notEmpty(this.nodeActive)) {
+        if (this.active === name || this.active === title) {
+          this.nodeActive = target
+        }
+        return
+      }
+      if (activated === true) {
         this.nodeActive = target
       }
     },
@@ -97,22 +103,26 @@ export default {
         }
       })
       this.listener('tab-title-add', item => {
+        console.log('--------------------------------')
         const target = this.paneList.find(this.handlerCompare(item))
-        if (target) {
-          if (!target.nodeTitle) {
-            Reflect.set(target, 'nodeTitle', item.nodeTitle)
-          }
-          this.handlerActiveCustom(target)
+        if (target && !target.nodeTitle) {
+          Reflect.set(target, 'nodeTitle', item.nodeTitle)
         } else {
           this.paneList.push(item)
         }
+        this.handlerActiveCustom(target || item)
+      })
+      this.listener('tab-pane-remove', item => {
+        this.$emit('tab-close', item)
       })
       this.listener('tab-click', item => {
-        this.nodeActive = this.paneList.find(this.handlerCompare(item))
+        this.activeTabPane(item)
       })
       this.listener('tab-close', item => {
         let indexActive = Tools.arrayRemove(this.paneList, this.handlerCompare(item))
         if (indexActive > -1) {
+          const { name, title } = item
+          this.$emit('tab-remove', { name, title })
           if (this.size === indexActive) {
             indexActive = this.size - 1
           }

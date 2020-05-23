@@ -25,6 +25,8 @@ export default {
   props: {
     height: String,
     width: String,
+    minHeight: String,
+    minWidth: String,
     background: { type: String, default: '#ffffff' },
     zIndex: { type: Number, default: 1000 }
   },
@@ -103,6 +105,8 @@ export default {
       const styleBasal = {
         width: this.width,
         height: this.height,
+        'min-height': this.minHeight,
+        'min-width': this.minWidth,
         background: this.background,
         left: `${this.position.x}px`,
         top: `${this.position.y}px`

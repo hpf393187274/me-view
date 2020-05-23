@@ -9,6 +9,7 @@ export default {
     disabled: Boolean,
     clearable: Boolean,
     checkbox: Boolean,
+    width: String,
     height: [ String, Number ],
     index: Number,
     border: Boolean,

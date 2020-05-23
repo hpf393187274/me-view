@@ -47,6 +47,7 @@
     <div class="me-row me-center">
       <me-button type="primary" @click="confirm">确 定</me-button>
       <me-button @click="reset">重 置</me-button>
+      <me-button @click="loadData">加载数据</me-button>
     </div>
   </me-form>
 </template>
@@ -63,6 +64,9 @@ export default {
     },
     reset(){
       this.$refs.form.reset()
+    },
+    loadData () {
+      this.sexList = [ ...this.sexListSource ]
     }
   },
   data() {
@@ -93,6 +97,11 @@ export default {
         ]
       },
       sexList:[ 
+        // { label: '男', value: '1' },
+        // { label: '女', value: '0' },
+        // { label: '未知', value: '-1' }
+      ],
+      sexListSource:[ 
         { label: '男', value: '1' },
         { label: '女', value: '0' },
         { label: '未知', value: '-1' }

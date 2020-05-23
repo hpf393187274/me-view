@@ -3,6 +3,8 @@
   <me-modal
     :closable-modal="closableModal"
     :draggable="draggable"
+    :min-height="minHeight"
+    :min-width="minWidth"
     :height="height"
     :width="width"
     :z-index="zIndex"
@@ -44,6 +46,8 @@ export default {
   mixins: [ Modal ],
   props: {
     title: { type: String, default: '' },
+    minHeight: String,
+    minWidth: String,
     height: String,
     width: String,
     draggable: { type: Boolean, default: true },

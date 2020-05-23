@@ -10,6 +10,7 @@
         <me-table-row
           :center="center"
           :checkbox="checkbox"
+          :has-index="hasIndex"
           :checked="checkedHeader"
           :checked-half="checkedHeaderHalf"
           :columns="columns__"
@@ -25,6 +26,7 @@
           :checkbox="checkbox"
           :columns="columns__"
           :node="item"
+          :has-index="hasIndex"
           :highlight="highlight"
           :index="index"
           :key="getPrimaryValue(item.data) || index"
@@ -64,6 +66,7 @@ export default {
     columns: { type: Array, default: () => [] },
     checked: { type: Boolean, default: false },
     primaryField: { type: String, default: 'id' },
+    hasIndex: Boolean,
     center: Boolean,
     checkbox: Boolean,
     height: [ Number, String ],

@@ -22,8 +22,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-auto-rows: 100px;
-  grid-row-gap: 10px;
-  grid-column-gap: 10px;
+  grid-gap: 10px;
   .item {
     display: grid;
     justify-items: center;

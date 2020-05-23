@@ -1,14 +1,13 @@
 @import "./layout";
 @import "./animation/index";
 .#{$prefix}-combo {
-  position: relative;
   .#{$prefix}-input {
     margin: 0px;
   }
   .combo-options {
     position: absolute;
-    width: 100%;
-    height: 200px;
+    min-height: 100px;
+    max-height: 500px;
     font-size: 14px;
     font-weight: normal;
     background: $combo-color;

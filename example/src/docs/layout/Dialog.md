@@ -20,9 +20,12 @@
         </template>
       </me-table>
     </me-dialog>
-    <me-dialog title="dialog"  v-model="statusForm" @confirm="handlerConfirm">
-      <me-form class="me-grid-column-3" ref="form">
-        <me-label title="主机" prop="domain">
+    <me-dialog title="dialog" min-height="100px" min-width="600px" v-model="statusForm" @confirm="handlerConfirm">
+      <me-form class="me-flex me-grid-column-2" ref="form">
+        <me-label title="省份">
+          <me-combo-select clearable :data="provinceList" v-model="form.province"></me-combo-select>
+        </me-label>
+        <!-- <me-label title="主机" prop="domain">
           <me-input clearable v-model="form.domain"></me-input>
         </me-label>
         <me-label title="端口" prop="port">
@@ -39,7 +42,7 @@
         </me-label>
         <me-label class="me-grid-self-center">
           <me-button plain type="primary">变更数据源</me-button>
-        </me-label>
+        </me-label> -->
       </me-form>
     </me-dialog>
     <me-button @click="statusTable=!statusTable">Dialog - Table</me-button>
@@ -53,7 +56,16 @@ export default {
       statusTable: false,
       statusForm: false,
       checkedRows:[],
-      form: {},
+      form: {
+        province: '陕西省'
+      },
+      provinceList:[
+        { label: '山西省', value: '1' },
+        { label: '陕西省', value: '2' },
+        { label: '四川省', value: '3' },
+        { label: '河南省', value: '4' },
+        { label: '江苏省', value: '5' }
+      ],
       columns: [
         { label:'编号', field: 'id'},
         { label:'测试', field: 'test' },

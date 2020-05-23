@@ -30,7 +30,7 @@ export default class Tools {
    * @param {Object} target 目标
    */
   static notBlank (target) {
-    return !Tools.notBlank(target)
+    return Tools.isBlank(target) === false
   }
 
   /**
@@ -38,7 +38,7 @@ export default class Tools {
    * @param {Object} target 目标
    */
   static notEmpty (target) {
-    return !Tools.isEmpty(target)
+    return Tools.isEmpty(target) === false
   }
 
   /**

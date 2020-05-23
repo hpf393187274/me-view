@@ -34,14 +34,11 @@ export default {
     node: {
       type: Object, default () { return { data: null, checked: false } }
     },
-    renderMethod: Function,
     highlight: Boolean,
     checkedHalf: Boolean,
     primaryField: String,
-    primaryKey: String,
     checked: { type: Boolean, default: false },
     checkbox: Boolean,
-    dataLength: Number,
     multiple: Boolean,
     columns: { type: Array, default: () => [] }
   },
