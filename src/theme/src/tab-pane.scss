@@ -1,4 +1,4 @@
-@import "./layout";
+@import './var';
 .#{$prefix}-tab-pane {
   display: grid;
   grid-template-columns: 1fr;

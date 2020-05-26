@@ -1,5 +1,4 @@
-@import "./layout";
-
+@import './var';
 .#{$prefix}-table-container {
 	table{ width: 100%; }
 	td,th {

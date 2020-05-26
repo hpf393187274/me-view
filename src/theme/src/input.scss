@@ -1,19 +1,19 @@
-input[type=checkbox] {
-	vertical-align:middle;
-	cursor: pointer;
-}
-input::placeholder {
-	color: $color-placeholder;
-}
-
-textarea {
-	resize: none;
-}
-
+@import './var';
 .#{$prefix}-input {
 	min-height: 40px;
 	position: relative;
 	min-width: 35px;
+	input[type=checkbox] {
+		vertical-align:middle;
+		cursor: pointer;
+	}
+	input::placeholder {
+		color: $color-placeholder;
+	}
+	
+	textarea {
+		resize: none;
+	}
 	.input-required {
 		color: red;
 	}
