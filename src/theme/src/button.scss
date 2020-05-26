@@ -1,5 +1,3 @@
-@import "./layout";
-
 @mixin btn-model($background: none, $color: none, $border: none){
 	color: $color;
 	background-color: $background;
