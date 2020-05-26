@@ -1,8 +1,8 @@
 export default {
   props: {
     /**
-   * 是否显示统计
-   */
+     * 是否显示统计
+     */
     statistics: Boolean,
     label: String,
     disabled: Boolean,
@@ -11,8 +11,8 @@ export default {
     /* 是否默认选中 */
     checked: { type: Boolean, default: false },
     /**
-    * 懒加载模式
-    */
+     * 懒加载模式
+     */
     lazy: Boolean,
     /**
      * 操作功能

@@ -20,21 +20,24 @@
           header
         />
       </me-table-header>
-      <me-table-body @scroll-render-v="handlerDifference" @scroll-body="handlerScrollBody" class="me-flex" ref="tableBody">
-        <me-table-row
-          :center="center"
-          :checkbox="checkbox"
-          :columns="columns__"
-          :node="item"
-          :has-index="hasIndex"
-          :highlight="highlight"
-          :index="index"
-          :key="getPrimaryValue(item.data) || index"
-          :multiple="multiple"
-          :primary-field = "primaryField"
-          v-for="(item,index) in nodeList"
-        />
-      </me-table-body>
+      <template v-if="data && data.length > 0">
+        <me-table-body @scroll-render-v="handlerDifference" @scroll-body="handlerScrollBody" class="me-flex" ref="tableBody">
+          <me-table-row
+            :center="center"
+            :checkbox="checkbox"
+            :columns="columns__"
+            :node="item"
+            :has-index="hasIndex"
+            :highlight="highlight"
+            :index="index"
+            :key="getPrimaryValue(item.data) || index"
+            :multiple="multiple"
+            :primary-field = "primaryField"
+            v-for="(item,index) in nodeList"
+          />
+        </me-table-body>
+      </template>
+      <div class="me-empty me-border" v-else>暂无数据</div>
     </div>
     <template v-if="$slots.footer">
       <div class="me-row table-toolbar" v-if="$slots.footer">

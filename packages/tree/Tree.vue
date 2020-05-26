@@ -19,29 +19,31 @@
       </template>
     </me-tree-header>
     <template v-if="data && data.length > 0">
-      <me-tree-node
-        :action="action"
-        :checkbox="checkbox"
-        :checked="checkedChildren"
-        :checked-strictly="checkedStrictly"
-        :data="node"
-        :event-tree="eventTree"
-        :expandable="expandable"
-        :expanded-all="expandedAll"
-        :expanded-level="expandedLevel"
-        :expanded-node-click="expandedNodeClick"
-        :key="node.primaryKey"
-        :lazy="lazy"
-        :primary-key="node.primaryKey"
-        :statistics="statistics"
-        @alter-parent="alterParent"
-        ref="treeNode"
-        v-for="node in data"
-      >
-        <template #node-label="{data}">
-          <slot :data="data" name="node-label" />
-        </template>
-      </me-tree-node>
+      <div style="overflow: auto;">
+        <me-tree-node
+          :action="action"
+          :checkbox="checkbox"
+          :checked="checkedChildren"
+          :checked-strictly="checkedStrictly"
+          :data="node"
+          :event-tree="eventTree"
+          :expandable="expandable"
+          :expanded-all="expandedAll"
+          :expanded-level="expandedLevel"
+          :expanded-node-click="expandedNodeClick"
+          :key="node.primaryKey"
+          :lazy="lazy"
+          :primary-key="node.primaryKey"
+          :statistics="statistics"
+          @alter-parent="alterParent"
+          ref="treeNode"
+          v-for="node in data"
+        >
+          <template #node-label="{data}">
+            <slot :data="data" name="node-label" />
+          </template>
+        </me-tree-node>
+      </div>
     </template>
     <div class="me-empty" v-else>暂无数据</div>
   </div>

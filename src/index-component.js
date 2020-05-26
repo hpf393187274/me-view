@@ -3,6 +3,7 @@ import Dialog from 'me-view/packages/dialog/index'
 import Menu from 'me-view/packages/menu/index'
 import Tree from 'me-view/packages/tree/index'
 import Table from 'me-view/packages/table/index'
+import List from 'me-view/packages/list/index'
 import Tabs from 'me-view/packages/tabs/index'
 import TabPane from 'me-view/packages/tab-pane/index'
 import Transfer from 'me-view/packages/transfer/index'
@@ -40,6 +41,7 @@ export {
   TabPane,
   Transfer,
   Paging,
+  List,
   Modal,
   Message,
   Input,

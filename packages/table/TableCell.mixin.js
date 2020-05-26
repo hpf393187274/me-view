@@ -6,6 +6,7 @@ export default {
     sortable: Boolean,
     resizable: Boolean, /** 可调整的 */
     width: [ Number, String ],
+    layout: { type: String, default: 'left' },
     label: String,
     index: Number,
     field: String,

@@ -93,11 +93,11 @@ export default {
     },
     styleIndent () {
       return {
-        'padding-left': `${this.indent__}rem`
+        'padding-left': `${this.indent__ * 16}px`
       }
     },
     indent__ () {
-      if (this.expandable && this.nodeLeaf) { return this.indent + 1 }
+      if (this.level > 1 && this.expandable && this.nodeLeaf) { return this.indent + 1 }
       return this.indent
     }
   },

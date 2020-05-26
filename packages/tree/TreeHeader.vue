@@ -1,8 +1,8 @@
 <template>
   <div class="me-column tree-node-header">
-    <div :style="{'padding-left': `${indent__}em`}" class="me-row tree-node-item">
+    <div :style="{'padding-left': `${indent__ * 16}px`}" class="me-row tree-node-item">
       <me-checkbox :checkedHalf="checkedHalf" :disabled="disabled" :value="allChecked" @click="clickCheckbox" v-if="checkbox" />
-      <div class="me-row me-flex tree-node-label">
+      <div class="me-row me-flex me-cross-center tree-node-label">
         <slot name="node-label">{{label}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">

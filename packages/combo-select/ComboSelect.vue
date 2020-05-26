@@ -1,19 +1,24 @@
 <template>
   <me-combo ref="combo" v-bind="$props" v-model="value__">
-    <div class="me-column">
-      <me-combo-option :data="item" :index="index" :key="item[fieldValue]" @click-option="handlerClick" v-for="(item,index) in data" />
-    </div>
+    <me-list
+      :data="data"
+      :highlight="highlight"
+      :multiple="multiple"
+      :checkbox="checkbox"
+      :field-value="fieldValue"
+      :field-label="fieldLabel"
+      v-model="value__"
+      @click="handlerClick">
+    </me-list>
   </me-combo>
 </template>
 
 <script>
 import ComboMixin from '../combo/combo.mixin'
-import ComboBaseMixin from '../combo/comboBase.mixin'
-import Option from './Option'
 import Combo from '../combo/index'
 export default {
-  components: { [Combo.name]: Combo, [Option.name]: Option },
-  mixins: [ ComboMixin, ComboBaseMixin ],
+  components: { [Combo.name]: Combo },
+  mixins: [ ComboMixin ],
   name: 'MeComboSelect',
   props: {
     columns: { type: Array, default: () => [] }
