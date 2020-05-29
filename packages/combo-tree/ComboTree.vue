@@ -7,6 +7,8 @@
       :expanded-node-click="false"
       :highlight="highlight"
       :node-key="fieldValue"
+      :field-value="fieldValue"
+      :field-label="fieldLabel"
       @click-node="handlerClick"
       ref="tree"
     >

@@ -36,7 +36,7 @@
     </div>
     <div class="me-row">
       <me-label title="行政区域1">
-        <me-combo-tree readonly  :data="regionList" :expanded-level="1" field-value="id">
+        <me-combo-tree readonly  :data="regionList" :expanded-level="1" field-value="id" field-label="title">
           <template #node-label="{data}">{{data.title}}</template>
         </me-combo-tree>
       </me-label>
@@ -119,7 +119,7 @@ export default {
       ],
       regionList:[
         {
-          id: '1', label: '陕西省', title:'陕西', children: [
+          id: '1', title:'陕西', children: [
             {
               id: '1-1', label: '西安市', title: '西安', children: [
                 { id: '1-1-1', label: '雁塔区', title: '雁塔' },
@@ -129,7 +129,7 @@ export default {
           ]
         },
         {
-          id: '2', label: '四川省',title:'四川', children: [
+          id: '2', title:'四川', children: [
             { id: '2-1', label: '成都市', title: '成都' },
             { id: '2-2', label: '汶川市', title: '汶川' }
           ]

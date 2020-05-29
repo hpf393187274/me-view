@@ -31,6 +31,10 @@ export default class Storage {
     this.storage.removeItem(key)
   }
 
+  deepGetMap (key, property, defaultValue) {
+    return Reflect.get(this.get(key, { defaultValue: {} }), property) || defaultValue
+  }
+
   arrayAppend (key, value, callback) {
     console.debug(`storage.arrayAppend：key = ${key}，value = `, value)
     Assert.notEmpty(key, 'storage.arrayAppend：key is empty')

@@ -22,6 +22,12 @@ export default class Tools {
       const value = Tools.trim(target)
       return value === '' || value === 'null' || value === 'undefined'
     }
+    if (Type.isArray(target)) {
+      return target.length === 0
+    }
+    if (Type.isObject(target)) {
+      return Object.keys(target).length === 0
+    }
     return false
   }
 

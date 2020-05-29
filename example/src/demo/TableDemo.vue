@@ -8,7 +8,6 @@
       <me-button plain type="primary" @click="setCheckedRows">设置选中</me-button>
       <me-button plain type="primary" @click="handlerData">变更数据</me-button>
       <me-button plain type="primary" @click="removeSelectData">批量删除</me-button>
-      {{checkedRows}}
     </template>
     <template #action="{data}">
       <me-button @click="removeRow(data)">删除</me-button>
