@@ -183,7 +183,7 @@ export default {
      * 重置
      */
     handlerReset () {
-      this.valueUpdate(Tools.clone(this.valueReset, true))
+      this.valueUpdate(this.valueReset)
     },
     handleFocus () {
       this.$emit('on-focus', this.value__)

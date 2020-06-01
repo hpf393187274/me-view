@@ -3,14 +3,17 @@
     <me-tree-header
       :action="action"
       :checkbox="checkbox"
-      :checked="allChecked"
+      :checked="checkedAll"
       :checked-number="checkedNumber"
       :checkedHalf="checkedHalf"
-      :disabled="length === 0"
-      :label="label"
+      :disabled="nodeNumber === 0"
+      :header-label="headerLabel"
       :lazy="lazy"
+      :expandable="expandable"
       :nodeNumber="nodeNumber"
       :statistics="statistics"
+      :parent-grandson="parentGrandson__"
+      @click="handlerNodeCheck"
       class="node-header"
       v-if="header"
     >
@@ -18,7 +21,7 @@
         <slot name="node-header" />
       </template>
     </me-tree-header>
-    <template v-if="data && data.length > 0">
+    <template v-if="nodeNumber > 0">
       <div style="overflow: auto;">
         <me-tree-node
           :action="action"
@@ -31,12 +34,12 @@
           :expanded-all="expandedAll"
           :expanded-level="expandedLevel"
           :expanded-node-click="expandedNodeClick"
-          :key="node.primaryKey"
+          :key="uniqueValue(node)"
           :lazy="lazy"
-          :primary-key="node.primaryKey"
+          :parent-grandson="parentGrandson__"
           :statistics="statistics"
-          @alter-parent="alterParent"
-          ref="treeNode"
+          :field-value="fieldValue"
+          :field-label="fieldLabel"
           v-for="node in data"
         >
           <template #node-label="{data}">
@@ -51,30 +54,38 @@
 
 <script>
 import Type from 'me-view/src/script/type'
-import TreeIndex from './tree-index'
+import Tools from 'me-view/src/script/tools'
 import TreeCommon from './tree-common'
-import treeInner from './common.mixin'
+import TreeProp from './tree-prop'
+import emitter from 'me-view/src/mixins/emitter'
 import TreeHeader from './TreeHeader'
 import TreeNode from './TreeNode'
 import Vue from 'vue'
 export default {
   name: 'MeTree',
-  mixins: [ TreeCommon, TreeIndex, treeInner ],
+  mixins: [ TreeCommon, TreeProp, emitter ],
   components: {
     [TreeHeader.name]: TreeHeader,
     [TreeNode.name]: TreeNode
   },
   props: {
     data: { type: Array, default () { return [] } },
+    headerLabel: String,
     header: Boolean
   },
   data () {
     return {
-      eventTree: new Vue()
+      eventTree: new Vue(),
+      nodesMap: new Map(),
+      checkedChildren: false
     }
   },
   computed: {
-    length () {
+    /**
+     * 获取当前节点的子节点个数
+     */
+    nodeNumber () {
+      /* 获取当前节点的子节点数 */
       return Type.isArray(this.data) ? this.data.length : 0
     }
   },
@@ -91,6 +102,13 @@ export default {
       // 刷新节点
       this.handlerOn('refresh-node')
     })
+    this.listener('notification-parent', this.handlerChildrenNotification)
+    this.listener('MeTree-node-append', ({ key, value }) => {
+      this.nodesMap.set(key, value)
+    })
+    this.listener('MeTree-node-remove', key => {
+      this.nodesMap.delete(key)
+    })
   },
   methods: {
     handlerOn (eventName) {
@@ -98,8 +116,34 @@ export default {
         this.$emit(eventName, ...option)
       })
     },
-    getCheckedData ({ leaf = true, ...param } = {}) {
-      return this.getCheckedChildren({ leaf, ...param })
+    clearChecked () {
+      this.setChecked(null, false, true)
+    },
+    setChecked (target, checked = false, deep = false) {
+      if (Tools.isBlank(target)) {
+        return this.handlerNodeCheck(checked)
+      }
+      const uniqueValue = Type.isObject(target) ? this.uniqueValue(target) : target
+      const targetNode = this.nodesMap.get(uniqueValue)
+      if (targetNode && targetNode.component) {
+        targetNode.component.handlerNodeCheck(checked)
+      }
+    },
+    getCheckedData ({ leaf = false, callback } = {}) {
+      const result = []
+      this.nodesMap.forEach(value => {
+        const { data, component } = value
+        if (component.isCheckedAll()) {
+          if (callback) {
+            if (callback(data) === true) {
+              result.push(data)
+            }
+          } else {
+            result.push(data)
+          }
+        }
+      })
+      return result
     },
     getCheckedTreeData ({ leaf = true } = {}) {
       return this.getCheckedChildren({ leaf, tree: true })

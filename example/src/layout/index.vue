@@ -1,7 +1,7 @@
 <template>
   <div class="me-flex container">
     <layout-header style="grid-area: header;" />
-    <layout-left style="grid-area: left;" />
+    <layout-left style="grid-area: left;padding-left:10px" />
     <router-view class="container-main"/>
   </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
   <div class="me-column tree-node-header">
     <div :style="{'padding-left': `${indent__ * 16}px`}" class="me-row tree-node-item">
-      <me-checkbox :checkedHalf="checkedHalf" :disabled="disabled" :value="allChecked" @click="clickCheckbox" v-if="checkbox" />
+      <me-checkbox :checkedHalf="checkedHalf" :disabled="disabled" :value="checkedAll" @click="clickCheckbox" v-if="checkbox" />
       <div class="me-row me-flex me-cross-center tree-node-label">
-        <slot name="node-label">{{label}}</slot>
+        <slot name="node-label">{{headerLabel}}</slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
         <span>{{checkedNumber}}</span>
@@ -20,34 +20,40 @@
 </template>
 
 <script>
-import Type from 'me-view/src/script/type'
-import TreeCommon from './tree-common'
+import TreeProp from './tree-prop'
 export default {
   name: 'MeTreeHeader',
-  mixins: [ TreeCommon ],
+  mixins: [ TreeProp ],
   props: {
+    nodeNumber: Number,
+    checkedNumber: Number,
     checkedHalf: Boolean,
-    nodeNumber: { type: Number, default: 0 },
-    checkedNumber: { type: Number, default: 0 }
+    parentGrandson: Boolean,
+    checked: Boolean,
+    headerLabel: String,
+    data: { type: Array, default () { return [] } }
+  },
+  data () {
+    return {
+      checkedAll: this.checked
+    }
   },
   computed: {
     indent__ () {
-      let value = 0
-      if (this.$parent.data.every(item => Type.isArray(item.children) === false)) {
-        return value
-      }
-      return ++value
+      if (this.expandable === false) { return 0 }
+      if (this.parentGrandson) { return 1 }
+      return 0
     }
   },
   watch: {
     checked (newValue) {
-      this.allChecked = newValue
+      this.checkedAll = newValue
     }
   },
   methods: {
     clickCheckbox (value) {
-      this.allChecked = value
-      this.$parent.setAllChecked(value, true)
+      this.checkedAll = value
+      this.$emit('click', value)
     }
   }
 }

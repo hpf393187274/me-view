@@ -40,6 +40,9 @@ export default {
       }
       return parent
     },
+    dispatch (eventName, params) {
+      this.$emit(eventName, params)
+    },
     dispatchParent (eventName, params) {
       const parent = this.$parent || this.$root
       if (parent) {

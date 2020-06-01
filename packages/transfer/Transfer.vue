@@ -5,7 +5,7 @@
       <me-tree
         :data="data"
         :expanded="expanded"
-        :label="labelLeft"
+        :header-label="labelLeft"
         :statistics="statistics"
         checkbox
         class="me-flex me-border"
@@ -30,7 +30,7 @@
       <me-tree
         :data="value"
         :expanded="expanded"
-        :label="labelRight"
+        :header-label="labelRight"
         :statistics="statistics"
         checkbox
         class="me-flex me-border"
@@ -47,11 +47,10 @@
 
 <script>
 import Tools from 'me-view/src/script/tools'
-import TreeCommon from '../tree/tree-common'
-import TreeIndex from '../tree/tree-index'
+import TreeProp from '../tree/tree-prop'
 export default {
   name: 'MeTransfer',
-  mixins: [ TreeCommon, TreeIndex ],
+  mixins: [ TreeProp ],
   props: {
     value: { type: Array, default () { return [] } },
     data: { type: Array, default () { return [] } },

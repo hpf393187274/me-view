@@ -1,11 +1,11 @@
 <template>
   <div class="tree-node-body">
-    <div :style="styleIndent" :title="data.label" class="me-row tree-node-item">
+    <div :style="styleIndent" :title="nodeLabel" class="me-row tree-node-item">
       <me-icon @click="doExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
-      <me-checkbox :checkedHalf="checkedHalf" :value="allChecked" @click="clickCheckbox" v-if="checkbox" />
-      <div @click="onClickLabel" class="me-row me-flex me-cross-center tree-node-label">
+      <me-checkbox :checkedHalf="checkedHalf" :value="checkedAll" @click="handlerNodeCheck" v-if="checkbox" />
+      <div @click="handlerClickLabel" class="me-row me-flex me-cross-center tree-node-label">
         <slot :data="data" name="node-label">
-          <span class="tree-label-inner">{{data.label}}</span>
+          <span class="tree-label-inner">{{nodeLabel}}</span>
         </slot>
       </div>
       <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
@@ -22,7 +22,6 @@
       <me-tree-node
         :action="action"
         :checkbox="checkbox"
-        :checked="checkedChildren || data.checked === true"
         :checked-strictly="checkedStrictly"
         :data="node"
         :event-tree="eventTree"
@@ -30,14 +29,14 @@
         :expanded-all="expandedAll"
         :expanded-level="expandedLevel"
         :expanded-node-click="expandedNodeClick"
-        :indent="indent__ + 1"
-        :key="node.primaryKey"
+        :indent="indent__"
+        :key="uniqueValue(node)"
         :lazy="lazy"
-        :level=" level + 1 "
-        :primary-key="node.primaryKey"
+        :level="level + 1"
+        :field-value="fieldValue"
+        :field-label="fieldLabel"
         :statistics="statistics"
-        @alter-parent="alterParent"
-        ref="treeNode"
+        :parent-grandson="parentGrandson__"
         v-for="node in data.children"
       >
         <template #node-label="{data}">
@@ -51,25 +50,38 @@
 <script>
 import Type from 'me-view/src/script/type'
 import Tools from 'me-view/src/script/tools'
-import TreeIndex from './tree-index'
 import TreeCommon from './tree-common'
-import TreeInner from './common.mixin'
+import TreeProp from './tree-prop'
+import emitter from 'me-view/src/mixins/emitter'
 export default {
   name: 'MeTreeNode',
-  mixins: [ TreeCommon, TreeIndex, TreeInner ],
+  mixins: [ TreeCommon, TreeProp, emitter ],
   props: {
     data: { type: Object, default () { return {} } },
+    parentGrandson: Boolean,
+    indent: { type: Number, default: 0 },
     eventTree: Object,
     level: { type: Number, default: 1 }
   },
   created () {
     this.renderFirst = this.nodeBranch && (this.expandable === false || this.expandedAll || this.expandedLevel >= this.level)
+
+    this.listenerParent('broadcast-children', value => {
+      this.setCheckedAll(value)
+      this.dispatch('broadcast-children', value)
+    })
+
+    this.listener('notification-parent', this.handlerChildrenNotification)
   },
-  watch: {
-    checked (newValue) {
-      this.checkedChildren = newValue
-      this.setAllChecked(newValue)
-    }
+  async mounted () {
+    await this.$nextTick()
+    this.dispatchUpward('MeTree', 'MeTree-node-append', {
+      key: this.uniqueValue(),
+      value: { data: this.data, component: this }
+    })
+  },
+  beforeDestroy () {
+    this.dispatchUpward('MeTree', 'MeTree-node-remove', this.uniqueValue())
   },
   data () {
     return {
@@ -81,6 +93,9 @@ export default {
     }
   },
   computed: {
+    nodeLabel () {
+      return Reflect.get(this.data, this.fieldLabel)
+    },
     iconExpanded () {
       return this.expanded__ ? 'icon-triangle_fill_down' : 'icon-triangle_fill_right'
     },
@@ -97,21 +112,24 @@ export default {
       }
     },
     indent__ () {
-      if (this.level > 1 && this.expandable && this.nodeLeaf) { return this.indent + 1 }
-      return this.indent
+      if (this.expandable === false) {
+        return this.level === 1 ? this.indent : this.indent + 1
+      }
+      const indent = this.level === 1 ? this.indent : this.indent + 1
+      if (this.parentGrandson) {
+        return this.nodeNumber === 0 ? indent + 1 : indent
+      }
+      return this.nodeNumber === 0 ? indent + 1 : indent
+    },
+    /**
+     * 获取当前节点的子节点个数
+     */
+    nodeNumber () {
+      /* 获取当前节点的子节点数 */
+      return Type.isArray(this.children) ? this.children.length : 0
     }
   },
   methods: {
-    /**
-    * 点击 Checkbox
-    * @param {Booelan} value 变更后的Checkbox 状态
-    */
-    clickCheckbox (value) {
-      this.setAllChecked(value)
-      this.$emit('alter-parent')
-      this.alterChildrenNodeChecked(value)
-    },
-
     /**
     * 获取节点数据
     */
@@ -134,10 +152,8 @@ export default {
       this.expanded__ = !this.expanded__
       if (this.renderFirst === false) {
         this.renderFirst = true
-        this.alterChildrenNodeChecked(this.allChecked)
       }
     },
-
     /**
      * 获取子节点个数
      */
@@ -160,7 +176,7 @@ export default {
      * @param {Boolean} param.leaf 是否包含叶子节点：默认：true
      */
     getCheckedTreeData ({ ...param } = {}) {
-      if (this.allChecked) {
+      if (this.checkedAll) {
         return this.getData({ deep: true })
       }
       const resource = this.getData()
@@ -170,7 +186,7 @@ export default {
       }
       return resource
     },
-    onClickLabel () {
+    handlerClickLabel () {
       if (this.nodeBranch && this.expandedNodeClick) {
         this.doExpanded()
       }
@@ -183,7 +199,7 @@ export default {
       }
     },
     handlerEvent (eventName) {
-      this.eventTree.$emit(eventName, this.getData(), this.primaryKey, this)
+      this.eventTree.$emit(eventName, this.getData(), this)
     }
   }
 }
