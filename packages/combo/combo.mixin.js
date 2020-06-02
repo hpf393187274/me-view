@@ -1,7 +1,7 @@
 export default {
-  model: {
-    props: 'value', event: 'change'
-  },
+  // model: {
+  //   props: 'value', event: 'change'
+  // },
   props: {
     data: { type: Array, default () { return [] } },
     highlight: Boolean,

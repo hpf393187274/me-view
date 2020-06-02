@@ -6,7 +6,7 @@
 ```html
 <template>
   <me-form ref="form" :rules="rules">
-    <div class="me-row">
+    <!-- <div class="me-row">
       <me-label required title="姓名" prop="name">
         <me-input clearable placeholder="请输入姓名" v-model="form.name"></me-input>
       </me-label>
@@ -23,18 +23,19 @@
         <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
         </me-combo-table>
       </me-label>
-    </div>
+    </div> -->
     <div class="me-row">
-      <me-label title="省份2">
-        <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
+    {{form.province}}
+      <me-label title="省份2" prop="province">
+        <me-combo-table v-model="form.province" readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title" @change="handlerChangeProvince">
         </me-combo-table>
       </me-label>
-      <me-label title="省份3">
+      <!-- <me-label title="省份3">
         <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
         </me-combo-table>
-      </me-label>
+      </me-label> -->
     </div>
-    <div class="me-row">
+    <!-- <div class="me-row">
       <me-label title="行政区域1">
         <me-combo-tree readonly  :data="regionList" :expanded-level="1" field-value="id" field-label="title">
           <template #node-label="{data}">{{data.title}}</template>
@@ -43,11 +44,11 @@
       <me-label title="行政区域">
         <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id"></me-combo-tree>
       </me-label>
-    </div>
+    </div> -->
     <div class="me-row me-center">
       <me-button type="primary" @click="confirm">确 定</me-button>
       <me-button @click="reset">重 置</me-button>
-      <me-button @click="loadData">加载数据</me-button>
+      <me-button @click="initData">初始化数据</me-button>
     </div>
   </me-form>
 </template>
@@ -65,16 +66,23 @@ export default {
     reset(){
       this.$refs.form.reset()
     },
-    loadData () {
-      this.sexList = [ ...this.sexListSource ]
+    initData () {
+      this.form.sex = '0'
+      this.$refs.form.initialize(this.form)
+    },
+    handlerChangeProvince ( { value, data, index } = { }) {
+      console.log('value = ', value)
+      console.log('index = ', index)
+      console.log('data = ', data)
     }
   },
   data() {
     return {
       form: {
-        name: '张',
+        name: '男',
         sex: '1',
-        age: 12
+        age: 12,
+        province: ''
       },
       rules: {
         name: [

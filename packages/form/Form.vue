@@ -15,11 +15,11 @@ export default {
     }
   },
   created () {
-    this.$on('on-label-add', (field) => {
+    this.$on('me-form--add', (field) => {
       field && this.fields.push(field)
       return false
     })
-    this.$on('on-label-remove', (field) => {
+    this.$on('me-form--remove', (field) => {
       if (field.prop) this.fields.splice(this.fields.indexOf(field), 1)
       return false
     })
@@ -28,6 +28,13 @@ export default {
     reset () {
       for (const field of this.fields) {
         field.reset()
+      }
+    },
+    initialize (data) {
+      for (const field of this.fields) {
+        if (field.prop) {
+          field.initialize(Reflect.get(data, field.prop))
+        }
       }
     },
     async validate () {

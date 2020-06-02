@@ -2,6 +2,7 @@
   <div :class="classes" :style="styles">
     <label :style="labelStyle" class="label-title" v-if="isBoolean(title)">
       <span style="color:red;" v-if="required__">*</span>
+      {{valueDefault}}
       {{title}}：
     </label>
     <div class="label-content me-flex" :title="validateStatus==='error' ? validateMessage :''">
@@ -48,13 +49,26 @@ export default {
       validateStatus: '',
       FormInstance: null,
       rules__: [],
-      valueCurrent: '',
+      valueCurrent: null,
       valueDefault: null
     }
   },
   created () {
+    if (this.required === true) {
+      this.rules__.push({ required: true, message: `${this.title}不能为空` })
+    }
     this.setRules(this.rules)
     this.listenerEvents()
+  },
+  watch: {
+    required (value) {
+      const rule = this.rules__.find(({ required }) => required === true)
+      if (rule) {
+        Reflect.set(rule, 'required', value)
+      } else {
+        this.rules__.push({ required: value, message: `${this.title}不能为空` })
+      }
+    }
   },
   computed: {
     classes () {
@@ -71,19 +85,24 @@ export default {
   },
   mounted () {
     if (this.prop) {
-      this.dispatchUpward('MeForm', 'on-label-add', this)
+      this.dispatchUpward('MeForm', 'me-form--add', this)
+      this.initialize(this.valueCurrent)
       this.bindFormInstance()
     }
   },
   beforeDestroy () {
-    this.dispatchUpward('MeForm', 'on-label-remove', this)
+    this.dispatchUpward('MeForm', 'me-form--remove', this)
   },
   methods: {
+    initialize (value) {
+      let initialValue = value
+      if (Array.isArray(initialValue)) {
+        initialValue = [].concat(initialValue)
+      }
+      this.valueDefault = initialValue
+    },
     listenerEvents () {
-      this.listener('on-label-change', this.handlerElementChange)
-      this.listener('on-label-init', value => {
-        !this.valueDefault && (this.valueDefault = value)
-      })
+      this.listener('me-label--change', this.handlerElementChange)
     },
     handlerElementChange (value) {
       this.valueCurrent = value
@@ -94,9 +113,9 @@ export default {
       this.bindFormRules(/* 解析表达元素 prop */)
     },
     setRules (value) {
-      if (Tools.isEmpty(value)) { return }
+      if (Tools.isBlank(value)) { return }
       Assert.isArray(value, 'MeLabel rules 必须为数组')
-      this.rules__ = [ ...value ]
+      this.rules__.push(...value)
     },
     bindFormRules () {
       if (this.prop && this.FormInstance) {
@@ -106,13 +125,19 @@ export default {
           return
         }
         const ruleProp = Tools.findPath(formRules, this.prop)
+        if (Type.isArray(ruleProp)) {
+          const index = ruleProp.findIndex(({ required }) => required === true)
+          if (index !== -1) {
+            this.required__ = true
+          }
+        }
         this.setRules(ruleProp)
       }
     },
     setValidateInfo (status, message) {
       this.validateStatus = status
       this.validateMessage = message
-      this.$emit('on-label-status', status)
+      this.$emit('me-label--status', status)
     },
     /**
      * 校验表单元素
@@ -137,8 +162,7 @@ export default {
       })
     },
     reset () {
-      console.debug(`reset -> 当前值：${this.valueCurrent}, 默认值：${this.valueDefault}`)
-      this.$emit('on-label-reset', this.valueDefault)
+      this.$emit('me-label--reset', this.valueDefault)
     }
   }
 }

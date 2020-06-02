@@ -14,7 +14,7 @@
       @focus="handleFocus"
       class="me-flex input-inner"
       ref="target"
-      v-model.trim.lazy="value__"
+      :value="value__"
     />
     <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="isBoolean(iconPrefix) || $slots.prefix">
       <slot name="prefix">
@@ -23,7 +23,7 @@
     </div>
 
     <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="showClear || isBoolean(iconSuffix) || $slots.suffix">
-      <me-icon :disabled="disabled" @click="handlerReset" v-if="showClear">icon-cross</me-icon>
+      <me-icon :disabled="disabled" @click="handlerClear" v-if="showClear">icon-cross</me-icon>
       <slot name="suffix">
         <me-icon :disabled="disabled" @click="onClickSuffix" v-if="isBoolean(iconSuffix)">{{iconSuffix}}</me-icon>
       </slot>
@@ -34,8 +34,6 @@
 <script>
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
-import Type from 'me-view/src/script/type'
-import Tools from 'me-view/src/script/tools'
 
 const types = [ 'text', 'number', 'email', 'password' ]
 const patterns = {
@@ -72,27 +70,21 @@ export default {
       right: 8,
       type__: this.type === 'number' ? 'text' : this.type,
       value__: undefined,
-      valueReset: undefined,
       validateStatus: '',
       active: false
     }
   },
   created () {
     this.valueUpdate(this.value)
-    if (Tools.notEmpty(this.valueReset)) {
-      this.handlerLableEvent(() => {
-        this.dispatchUpward('MeLabel', 'on-label-init', this.valueReset)
-      })
-    }
   },
   async mounted () {
     await this.$nextTick()
     this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
     this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
     this.$on('focus-input', this.onFocusInput)
-    this.listenerUpward('MeLabel', 'on-label-status', status => { this.validateStatus = status })
+    this.listenerUpward('MeLabel', 'me-label--status', status => { this.validateStatus = status })
     this.handlerLableEvent(() => {
-      this.listenerUpward('MeLabel', 'on-label-reset', this.valueUpdate)
+      this.listenerUpward('MeLabel', 'me-label--reset', this.valueUpdate)
     })
   },
   computed: {
@@ -151,11 +143,7 @@ export default {
       return value
     },
     valueUpdate (value) {
-      if (Tools.isEmpty(this.valueReset) && Tools.isBlank(value)) { return }
       const newValue = this.convertType(value)
-      if (Tools.isEmpty(this.valueReset)) {
-        this.valueReset = Type.isArray(newValue) ? [ ...newValue ] : newValue
-      }
       const oldValue = this.value
       if (this.type === 'number') {
         if (isNaN(newValue) || newValue < this.min || newValue > this.max) {
@@ -164,13 +152,15 @@ export default {
         }
       }
       this.value__ = newValue
-      this.$emit('change', newValue)
+
       this.handlerLableEvent(() => {
-        this.dispatchUpward('MeLabel', 'on-label-change', newValue)
+        this.dispatchUpward('MeLabel', 'me-label--change', newValue)
       })
     },
     handlerChange ({ target }) {
-      this.valueUpdate(target.value)
+      console.log('handlerChange ---------> value')
+      this.valueUpdate(target.value, false)
+      this.$emit('change', this.value__)
     },
     /**
      * MeInput
@@ -182,8 +172,8 @@ export default {
     /**
      * 重置
      */
-    handlerReset () {
-      this.valueUpdate(this.valueReset)
+    handlerClear () {
+      this.valueUpdate('')
     },
     handleFocus () {
       this.$emit('on-focus', this.value__)

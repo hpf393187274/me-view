@@ -4,7 +4,7 @@
       <img height="40" src="/logo.png" /> Me-View
     </div>
     <me-row class="me-center right">
-      <me-input icon-prefix="icon-sousuo" style="width: 300px" />
+      <!-- <me-input icon-prefix="icon-sousuo" style="width: 300px" /> -->
       <me-link target="_self" url="/doc/guide/install">API</me-link>
       <me-link target="_self" url="/demo/database">示例代码</me-link>
       <me-link>语言选择</me-link>

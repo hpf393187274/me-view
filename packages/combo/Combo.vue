@@ -56,11 +56,11 @@ export default {
         this.rendered = true
       })
     }
-    this.listenerUpward('MeLabel', 'on-label-reset', value => this.initValue(value))
   },
   created () {
     this.initValue(this.value)
-    this.listenerParent('on-select', this.handlerClickOption)
+    this.listenerUpward('MeLabel', 'me-label--reset', this.initValue)
+    this.listenerParent('me-combo--select', this.handlerClickOption)
   },
   computed: {
     iconSuffix () {
@@ -79,9 +79,6 @@ export default {
     value (newValue) {
       this.initValue(newValue)
     },
-    value__ (newValue) {
-      this.dispatchUpward('MeLabel', 'on-label-change', newValue)
-    },
     data () {
       this.initValue(this.value)
     }
@@ -91,8 +88,8 @@ export default {
       return this.data.find(item => Reflect.get(item, this.fieldValue) === value)
     },
     initValueSingle (value) {
-      const data = this.findItem(value)
-      if (Tools.isEmpty(data)) { return }
+      let data = this.findItem(value)
+      if (Type.notObject(data)) { data = {} }
       Object.assign(this.valueSingle, data)
       this.label__ = Reflect.get(data, this.fieldLabel) || ''
       this.value__ = Reflect.get(data, this.fieldValue) || ''
@@ -100,8 +97,7 @@ export default {
     initValueMultiple (value) {
       this.label__ = []
       this.value__ = []
-      if (Tools.isEmpty(value)) { return }
-      const list = Type.isArray(value) ? [ ...value ] : [ value ]
+      const list = Type.isArray(value) ? [ ...value ] : [ value || '' ]
       this.valueMultiple = this.data.filter(item => list.includes(Reflect.get(item, this.fieldValue)))
 
       for (const item of this.valueMultiple) {
@@ -111,6 +107,7 @@ export default {
     },
     initValue (value) {
       this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
+      this.dispatchUpward('MeLabel', 'me-label--change', this.value__)
     },
     isSelected (value) {
       const list = this.multiple ? this.valueMultiple : [ this.valueSingle ]
@@ -127,7 +124,12 @@ export default {
       this.label__ = Reflect.get(data, this.fieldLabel)
       this.value__ = Reflect.get(data, this.fieldValue)
       this.valueSingle = { ...data }
-      this.$emit('change', this.value__)
+    },
+    changeValue (data, index) {
+      this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
+      this.dispatchUpward('MeLabel', 'me-label--change', this.value__)
+      this.dispatchParent('input', this.value__)
+      this.dispatchParent('change', { value: this.value__, data, index })
     },
     handleMultipleRemove (index) {
       Tools.arrayRemove(this.label__, index).catch(error => { console.debug(error) })
@@ -142,14 +144,9 @@ export default {
     selectMultiple (data) {
       const index = this.valueMultiple.findIndex(item => item[this.fieldValue] === data[this.fieldValue])
       index >= 0 ? this.handleMultipleRemove(index) : this.handleMultiplPush(data)
-      this.$emit('change', [ ...this.value__ ])
     },
     handlerClickOption (item, index) {
-      const data = { ...item, index }
-      this.$emit('click-option-before', item, index)
-      this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
-      this.$emit('click-option', item, index)
-      this.$emit('click-option-after', item, index)
+      this.changeValue(item, index)
     },
     handlerBlurInput () {
       this.closable && (this.status = false)

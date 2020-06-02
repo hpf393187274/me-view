@@ -38,8 +38,7 @@ export default {
   },
   methods: {
     handlerClick (row, index) {
-      this.$emit('on-select', row, index)
-      this.$emit('change', this.multiple ? [ ...this.value__ ] : this.value__)
+      this.$emit('me-combo--select', row, index)
     }
   }
 }
