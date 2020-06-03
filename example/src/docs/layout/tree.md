@@ -11,8 +11,9 @@
       <me-input v-model="key" />
       <me-button @click="handlerChecked">选中/取消</me-button>
       <me-button @click="handlerCheckedData">选中数据</me-button>
+      <me-button @click="handlerCheckedRemove">移出选中的数据</me-button>
     </div>
-    <me-tree ref="tree" :data="data" :expandable="false" checkbox statistics header header-label="全选">
+    <me-tree ref="tree" action :data="data" :expandable="false" checkbox statistics header header-label="全选">
     </me-tree>
   </div>
 </template>
@@ -55,6 +56,9 @@ export default {
     handlerCheckedData () {
       const data = this.$refs.tree.getCheckedData()
       console.log('handlerCheckedData -> ', data)
+    },
+    handlerCheckedRemove () {
+      this.$refs.tree.removeCheckedNode()
     }
   }
 }

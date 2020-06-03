@@ -52,8 +52,11 @@ export default {
     findItem (value) {
       return this.data.find(item => this.uniqueValue(item) === value)
     },
-    uniqueValue (item) {
-      return Reflect.get(item || this.data, this.fieldValue)
+    uniqueValue (data = {}) {
+      if (Reflect.has(data, this.fieldValue) === false) {
+        Reflect.set(data, this.fieldValue, Tools.UUId())
+      }
+      return Reflect.get(data, this.fieldValue)
     },
     /**
      * 获取默认过滤器
@@ -132,8 +135,8 @@ export default {
       return childrenList
     },
     pushData (data) {
-      if (Tools.isEmpty(data)) { return }
-      for (const item of [ data ].flat()) {
+      if (Type.notArray(data) || Tools.isBlank(data)) { return }
+      for (const item of [ ...data ]) {
         const node = this.findNode(this.defaultFilter(item))
         if (Tools.isEmpty(node)) {
           if (Tools.isEmpty(this.level)) {

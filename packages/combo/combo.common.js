@@ -1,7 +1,4 @@
 export default {
-  // model: {
-  //   props: 'value', event: 'change'
-  // },
   props: {
     data: { type: Array, default () { return [] } },
     highlight: Boolean,
@@ -22,8 +19,8 @@ export default {
   },
   data () {
     return {
-      value__: this.multiple ? [] : '',
-      label__: this.multiple ? [] : ''
+      value__: undefined,
+      label__: undefined
     }
   }
 }

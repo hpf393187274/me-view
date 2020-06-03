@@ -29,7 +29,6 @@
           :checked="checkedChildren"
           :checked-strictly="checkedStrictly"
           :data="node"
-          :event-tree="eventTree"
           :expandable="expandable"
           :expanded-all="expandedAll"
           :expanded-level="expandedLevel"
@@ -60,7 +59,6 @@ import TreeProp from './tree-prop'
 import emitter from 'me-view/src/mixins/emitter'
 import TreeHeader from './TreeHeader'
 import TreeNode from './TreeNode'
-import Vue from 'vue'
 export default {
   name: 'MeTree',
   mixins: [ TreeCommon, TreeProp, emitter ],
@@ -75,8 +73,8 @@ export default {
   },
   data () {
     return {
-      eventTree: new Vue(),
       nodesMap: new Map(),
+      nodesSize: 0,
       checkedChildren: false
     }
   },
@@ -90,31 +88,48 @@ export default {
     }
   },
   created () {
-    this.$nextTick(() => {
-      // 点击节点
-      this.handlerOn('click-node')
-      this.handlerOn('click-node-branch')
-      this.handlerOn('click-node-leaf')
-
-      // 移出节点
-      this.handlerOn('remove-node')
-
-      // 刷新节点
-      this.handlerOn('refresh-node')
-    })
+    this.nodesMap.clear()
     this.listener('notification-parent', this.handlerChildrenNotification)
-    this.listener('MeTree-node-append', ({ key, value }) => {
-      this.nodesMap.set(key, value)
+    this.listener('me-tree--clear', () => {
+      const newData = [ ...this.data ]
+      for (const item of newData) {
+        this.removeNode(this.uniqueValue(item))
+      }
     })
-    this.listener('MeTree-node-remove', key => {
+
+    this.listener('me-tree-node--remove', key => {
+      if (Tools.isBlank(key)) { return }
+      const target = this.nodesMap.get(key)
+      const { component } = target || {}
+      if (Tools.isEmpty(component)) { return }
+      const name = component?.$options?.name
+      const parent = component.$parent
+      if (Tools.isEmpty(parent)) { return }
+      const parentName = parent?.$options?.name
+      if ([ 'MeTree', 'MeTreeNode' ].includes(parentName) === false) { return }
+      const data = parent?.data // 组件当前数据
+      const children = (parentName === 'MeTree' ? data : data?.children) || []
+      if (name === 'MeTreeNode') {
+        component.handlerNodeCheck(false)
+      }
+      const index = Tools.arrayRemove(children, item => this.uniqueValue(item) === key)
+      if (index !== -1) {
+        this.dispatch('me-tree-map--remove', key)
+      }
+    })
+
+    this.listener('me-tree-map--append', ({ key, value }) => {
+      this.nodesMap.set(key, value)
+      this.refreshSize()
+    })
+    this.listener('me-tree-map--remove', key => {
       this.nodesMap.delete(key)
+      this.refreshSize()
     })
   },
   methods: {
-    handlerOn (eventName) {
-      this.eventTree.$on(eventName, (...option) => {
-        this.$emit(eventName, ...option)
-      })
+    refreshSize () {
+      this.nodesSize = this.nodesMap.size
     },
     clearChecked () {
       this.setChecked(null, false, true)
@@ -127,6 +142,17 @@ export default {
       const targetNode = this.nodesMap.get(uniqueValue)
       if (targetNode && targetNode.component) {
         targetNode.component.handlerNodeCheck(checked)
+      }
+    },
+    removeNode (value) {
+      this.dispatch('me-tree-node--remove', value)
+    },
+    removeCheckedNode () {
+      const checkedData = this.getCheckedData()
+      if (Type.isArray(checkedData)) {
+        for (const item of checkedData) {
+          this.removeNode(this.uniqueValue(item))
+        }
       }
     },
     getCheckedData ({ leaf = false, callback } = {}) {

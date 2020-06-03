@@ -11,7 +11,7 @@
         <span>{{nodeNumber}}</span>
       </div>
       <div class="em-center tree-node-action" v-if="action">
-        <me-link @click="removeCurrentNode">移除</me-link>
+        <me-link @click="removeNodeAll">移除</me-link>
         <me-link @click="refreshChildrenNode" v-if="lazy">刷新</me-link>
       </div>
     </div>
@@ -21,9 +21,10 @@
 
 <script>
 import TreeProp from './tree-prop'
+import emitter from 'me-view/src/mixins/emitter'
 export default {
   name: 'MeTreeHeader',
-  mixins: [ TreeProp ],
+  mixins: [ emitter, TreeProp ],
   props: {
     nodeNumber: Number,
     checkedNumber: Number,
@@ -54,6 +55,10 @@ export default {
     clickCheckbox (value) {
       this.checkedAll = value
       this.$emit('click', value)
+    },
+    removeNodeAll () {
+      this.clickCheckbox(false)
+      this.dispatchUpward('MeTree', 'me-tree--clear')
     }
   }
 }

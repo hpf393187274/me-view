@@ -9,8 +9,7 @@
         :highlight="highlight"
         :field-value="fieldValue"
         :field-label="fieldLabel"
-        v-model="value"
-        @click-item="handlerClick">
+        v-model="value">
       </me-list-item>
     </template>
   </div>
@@ -28,11 +27,6 @@ export default {
     multiple: Boolean,
     fieldValue: { type: String, default: 'value' },
     fieldLabel: { type: String, default: 'label' }
-  },
-  methods: {
-    handlerClick (data, index) {
-      this.$emit('click', data, index)
-    }
   }
 }
 </script>

@@ -7,8 +7,10 @@
   </div>
 </template>
 <script>
+import emitter from 'me-view/src/mixins/emitter'
 export default {
   name: 'MeListItem',
+  mixins: [ emitter ],
   props: {
     checked: Boolean,
     index: Number,
@@ -46,7 +48,7 @@ export default {
     handleClick () {
       if (this.disabled === true) { return }
       this.checked__ = this.checked__ !== true
-      this.$emit('click-item', this.data, this.index)
+      this.dispatchParent('click', { data: this.data, index: this.index })
     }
   }
 }

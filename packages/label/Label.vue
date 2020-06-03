@@ -2,7 +2,6 @@
   <div :class="classes" :style="styles">
     <label :style="labelStyle" class="label-title" v-if="isBoolean(title)">
       <span style="color:red;" v-if="required__">*</span>
-      {{valueDefault}}
       {{title}}：
     </label>
     <div class="label-content me-flex" :title="validateStatus==='error' ? validateMessage :''">

@@ -28,12 +28,13 @@ export default {
     },
     findParentComponent (componentNames) {
       Assert.isArray(componentNames, '必须是一个数组')
+      let name = this.$options.name
+      if (componentNames.includes(name)) { return this }
       let parent = this.$parent || this.$root
-      let name = parent.$options.name
+      name = parent.$options.name
 
       while (parent && (!name || componentNames.includes(name) === false)) {
         parent = parent.$parent
-
         if (parent) {
           name = parent.$options.name
         }

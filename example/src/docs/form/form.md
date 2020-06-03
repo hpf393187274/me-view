@@ -6,7 +6,7 @@
 ```html
 <template>
   <me-form ref="form" :rules="rules">
-    <!-- <div class="me-row">
+    <div class="me-row">
       <me-label required title="姓名" prop="name">
         <me-input clearable placeholder="请输入姓名" v-model="form.name"></me-input>
       </me-label>
@@ -19,32 +19,24 @@
         <me-combo-select readonly :data="sexList" v-model="form.sex" clearable placeholder="请选择性别">
         </me-combo-select>
       </me-label>
-      <me-label title="省份1">
-        <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
-        </me-combo-table>
-      </me-label>
-    </div> -->
+    </div>
     <div class="me-row">
-    {{form.province}}
-      <me-label title="省份2" prop="province">
+      <me-label title="省份" prop="province">
         <me-combo-table v-model="form.province" readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title" @change="handlerChangeProvince">
         </me-combo-table>
       </me-label>
-      <!-- <me-label title="省份3">
-        <me-combo-table readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
-        </me-combo-table>
-      </me-label> -->
-    </div>
-    <!-- <div class="me-row">
-      <me-label title="行政区域1">
-        <me-combo-tree readonly  :data="regionList" :expanded-level="1" field-value="id" field-label="title">
+      <me-label title="行政区域" prop="region">
+        <me-combo-tree 
+          readonly 
+          v-model="form.region"
+          :data="regionList"
+          :expanded-level="2"
+          field-value="id"
+          field-label="title">
           <template #node-label="{data}">{{data.title}}</template>
         </me-combo-tree>
       </me-label>
-      <me-label title="行政区域">
-        <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id"></me-combo-tree>
-      </me-label>
-    </div> -->
+    </div>
     <div class="me-row me-center">
       <me-button type="primary" @click="confirm">确 定</me-button>
       <me-button @click="reset">重 置</me-button>
@@ -67,7 +59,7 @@ export default {
       this.$refs.form.reset()
     },
     initData () {
-      this.form.sex = '0'
+      this.form.region = '1-1-1'
       this.$refs.form.initialize(this.form)
     },
     handlerChangeProvince ( { value, data, index } = { }) {
@@ -82,7 +74,8 @@ export default {
         name: '男',
         sex: '1',
         age: 12,
-        province: ''
+        province: '2',
+        region: '2'
       },
       rules: {
         name: [
@@ -129,17 +122,17 @@ export default {
         {
           id: '1', title:'陕西', children: [
             {
-              id: '1-1', label: '西安市', title: '西安', children: [
-                { id: '1-1-1', label: '雁塔区', title: '雁塔' },
-                { id: '1-1-2', label: '长安区', title: '长安' }
+              id: '1-1', title: '西安', children: [
+                { id: '1-1-1', title: '雁塔' },
+                { id: '1-1-2', title: '长安' }
               ]
             }
           ]
         },
         {
           id: '2', title:'四川', children: [
-            { id: '2-1', label: '成都市', title: '成都' },
-            { id: '2-2', label: '汶川市', title: '汶川' }
+            { id: '2-1', title: '成都' },
+            { id: '2-2', title: '汶川' }
           ]
         }
       ]

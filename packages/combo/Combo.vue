@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import ComboMixin from './combo.mixin'
+import ComboCommon from './combo.common'
 import emitter from 'me-view/src/mixins/emitter'
 import Type from 'me-view/src/script/type'
 import Tools from 'me-view/src/script/tools'
 export default {
-  mixins: [ emitter, ComboMixin ],
+  mixins: [ emitter, ComboCommon ],
   name: 'MeCombo',
   data () {
     return {
@@ -44,6 +44,7 @@ export default {
       valueSingle: {},
       valueMultiple: [],
       width__: undefined,
+      dataFlat: [],
       readonly__: this.readonly || this.multiple,
       /** input 失焦 移入 body 区域 */
       closable: true
@@ -58,9 +59,10 @@ export default {
     }
   },
   created () {
+    this.deepFlatData(this.data, true)
     this.initValue(this.value)
     this.listenerUpward('MeLabel', 'me-label--reset', this.initValue)
-    this.listenerParent('me-combo--select', this.handlerClickOption)
+    this.listener('me-combo--select', this.handlerChange)
   },
   computed: {
     iconSuffix () {
@@ -74,25 +76,40 @@ export default {
         this.width__ = this.$refs.input.$el.scrollWidth
         this.onFocusInput()
       }
-      this.$emit(newValue === true ? 'combo-content-show' : 'combo-content-hide', newValue)
     },
-    value (newValue) {
-      this.initValue(newValue)
+    value () {
+      const newValue = Type.isArray(this.value) ? this.value.toString() : this.value
+      const oldValue = Type.isArray(this.value__) ? this.value__.toString() : this.value__
+      if (newValue !== oldValue) {
+        this.initValue(newValue)
+      }
     },
-    data () {
+    data (value) {
+      this.deepFlatData(value, true)
       this.initValue(this.value)
     }
   },
   methods: {
+    deepFlatData (data, clear = false) {
+      if (Type.isArray(data)) {
+        if (clear === true) { this.dataFlat = [] }
+        for (const item of data) {
+          if (Tools.notBlank(item.children)) {
+            this.deepFlatData(item.children)
+          }
+          this.dataFlat.push({ ...item, children: undefined })
+        }
+      }
+    },
     findItem (value) {
-      return this.data.find(item => Reflect.get(item, this.fieldValue) === value)
+      return this.dataFlat.find(item => Reflect.get(item, this.fieldValue) === value)
     },
     initValueSingle (value) {
       let data = this.findItem(value)
       if (Type.notObject(data)) { data = {} }
       Object.assign(this.valueSingle, data)
-      this.label__ = Reflect.get(data, this.fieldLabel) || ''
-      this.value__ = Reflect.get(data, this.fieldValue) || ''
+      this.label__ = Reflect.get(data, this.fieldLabel)
+      this.value__ = Reflect.get(data, this.fieldValue)
     },
     initValueMultiple (value) {
       this.label__ = []
@@ -119,15 +136,16 @@ export default {
     handlerClickInput () {
       this.readonly__ && this.onClickSuffix()
     },
-    selectSingle (data) {
+    selectSingle (data = {}) {
       this.status = false
       this.label__ = Reflect.get(data, this.fieldLabel)
       this.value__ = Reflect.get(data, this.fieldValue)
       this.valueSingle = { ...data }
     },
-    changeValue (data, index) {
+    handlerChange (data, index) {
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
       this.dispatchUpward('MeLabel', 'me-label--change', this.value__)
+      this.$emit('input', this.value__)
       this.dispatchParent('input', this.value__)
       this.dispatchParent('change', { value: this.value__, data, index })
     },
@@ -144,9 +162,6 @@ export default {
     selectMultiple (data) {
       const index = this.valueMultiple.findIndex(item => item[this.fieldValue] === data[this.fieldValue])
       index >= 0 ? this.handleMultipleRemove(index) : this.handleMultiplPush(data)
-    },
-    handlerClickOption (item, index) {
-      this.changeValue(item, index)
     },
     handlerBlurInput () {
       this.closable && (this.status = false)

@@ -24,7 +24,6 @@
         :checkbox="checkbox"
         :checked-strictly="checkedStrictly"
         :data="node"
-        :event-tree="eventTree"
         :expandable="expandable"
         :expanded-all="expandedAll"
         :expanded-level="expandedLevel"
@@ -60,7 +59,6 @@ export default {
     data: { type: Object, default () { return {} } },
     parentGrandson: Boolean,
     indent: { type: Number, default: 0 },
-    eventTree: Object,
     level: { type: Number, default: 1 }
   },
   created () {
@@ -75,13 +73,13 @@ export default {
   },
   async mounted () {
     await this.$nextTick()
-    this.dispatchUpward('MeTree', 'MeTree-node-append', {
-      key: this.uniqueValue(),
+    this.dispatchUpward('MeTree', 'me-tree-map--append', {
+      key: this.uniqueValue(this.data),
       value: { data: this.data, component: this }
     })
   },
   beforeDestroy () {
-    this.dispatchUpward('MeTree', 'MeTree-node-remove', this.uniqueValue())
+    this.dispatchUpward('MeTree', 'me-tree-map--remove', this.uniqueValue(this.data))
   },
   data () {
     return {
@@ -119,6 +117,9 @@ export default {
       if (this.parentGrandson) {
         return this.nodeNumber === 0 ? indent + 1 : indent
       }
+      if (this.level === 1) {
+        return indent
+      }
       return this.nodeNumber === 0 ? indent + 1 : indent
     },
     /**
@@ -140,10 +141,10 @@ export default {
      * 移除当前节点
      */
     removeCurrentNode () {
-      this.$parent.removeChildrenNode(this)
-      this.handlerEvent('remove-node')
+      const uniqueValue = this.uniqueValue(this.data)
+      this.dispatchUpward('MeTree', 'me-tree-node--remove', uniqueValue)
+      this.handlerEvent('node-remove')
     },
-
     /**
      * 展开子节点
      */
@@ -199,7 +200,7 @@ export default {
       }
     },
     handlerEvent (eventName) {
-      this.eventTree.$emit(eventName, this.getData(), this)
+      this.dispatchUpward('MeTree', eventName, { data: this.getData(), node: this })
     }
   }
 }

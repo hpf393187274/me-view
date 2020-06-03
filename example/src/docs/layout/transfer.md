@@ -5,14 +5,17 @@
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
-  <me-transfer style="height:200px" :data="data" v-model="value">
-    <template #header-left>
-      我们都是好孩子
-    </template>
-    <template #header-right>
-      我们都是好孩子11
-    </template>
-  </me-transfer>
+  <div>
+    <div>{{value}}</div>
+    <me-transfer style="height:200px" :data="data" v-model="value">
+      <template #header-left>
+        我们都是好孩子
+      </template>
+      <template #header-right>
+        我们都是好孩子11
+      </template>
+    </me-transfer>
+  </div>
 </template>
 <script>
 export default {
@@ -38,16 +41,26 @@ export default {
 ::: demo `v-model` 绑定之值 `label` 设置标签 `placeholder` 提示语句
 ```html
 <template>
-  <me-transfer :data="data" expanded statistics />
+  <div>
+    <div>{{value}}</div>
+  <me-transfer :data="data" expanded statistics v-model="value"/>
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      value: [],
       data: [
         {
           id: '1', label: '陕西省', children: [
-            { id: '1-1', label: '西安市' }
+            { 
+              id: '1-1', label: '西安市', children : [
+                 { id: '1-1-1', label: '雁塔区' },
+                 { id: '1-1-2', label: '长安区' }
+              ]
+            },
+            { id: '1-2', label: '咸阳市' }
           ]
         },
         {

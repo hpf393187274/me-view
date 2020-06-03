@@ -61,12 +61,9 @@ export default {
       ]
     }
   },
-  created () {
-    this.$local.get('routeList')
-  },
   methods: {
-    handleClick ({ path }) {
-      this.$router.push(path).catch(error => { console.debug(error) })
+    handleClick ({ data }) {
+      this.$router.push(data.path).catch(error => { console.debug(error) })
     }
   }
 }

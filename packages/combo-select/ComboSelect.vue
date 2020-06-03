@@ -5,25 +5,15 @@
 </template>
 
 <script>
-import ComboMixin from '../combo/combo.mixin'
+import ComboCommon from '../combo/combo.common'
+import ComboExtend from '../combo/combo.extend'
 import Combo from '../combo/index'
 export default {
   components: { [Combo.name]: Combo },
-  mixins: [ ComboMixin ],
+  mixins: [ ComboCommon, ComboExtend ],
   name: 'MeComboSelect',
   props: {
     columns: { type: Array, default: () => [] }
-  },
-  watch: {
-    value (value) { this.value__ = value }
-  },
-  created () {
-    this.value__ = this.value
-  },
-  methods: {
-    handlerClick (row, index) {
-      this.$emit('me-combo--select', row, index)
-    }
   }
 }
 </script>
