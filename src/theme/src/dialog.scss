@@ -13,9 +13,13 @@
 		.confirm{ color: rgb(76, 201, 76); }
 	}
   .dialog-header {
-		background-color: $dialog-header;
+		background-color: $dialog-header-background;
 		align-items: center;
-    padding: 15px 10px;
+		color: $dialog-header-color;
+		padding: 15px 10px;
+		.#{$prefix}-icon {
+			color: $dialog-header-color;
+		}
 	}
 	.dialog-footer {
     align-items: center;

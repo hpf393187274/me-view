@@ -1,7 +1,17 @@
 
 @import './var';
 .#{$prefix}-transfer {
+	min-height: 300px;
 	.transfer-center {
-		padding: 20px;
+		padding-top: 60px;
+		margin: 0px 20px;
+		display: grid;
+		grid-template-columns: 70px;
+		grid-template-rows: repeat(4, auto);
+		justify-content: center;
+		align-content: center;
+		> * {
+			margin: 10px 0px;
+		}
 	}
 }

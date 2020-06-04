@@ -1,6 +1,5 @@
-@import './var';
 .#{$prefix}-input {
-	min-height: 40px;
+	min-height: $form-element--height-min;
 	position: relative;
 	min-width: 35px;
 	input[type=checkbox] {

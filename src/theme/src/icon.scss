@@ -1,9 +1,8 @@
 
-@import './var';
 .#{$prefix}-icon {
 	cursor: pointer;
 	align-self: center;
-	font-size: 16px;
-	color: inherit;
+	font-size: $icon-size;
+	color: $icon-color;
 	margin: 0px;
 }
