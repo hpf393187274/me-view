@@ -143,7 +143,7 @@ export default {
     removeCurrentNode () {
       const uniqueValue = this.uniqueValue(this.data)
       this.dispatchUpward('MeTree', 'me-tree-node--remove', uniqueValue)
-      this.handlerEvent('node-remove')
+      this.handlerEvent('remove')
     },
     /**
      * 展开子节点
@@ -191,12 +191,12 @@ export default {
       if (this.nodeBranch && this.expandedNodeClick) {
         this.doExpanded()
       }
-      this.handlerEvent('click-node')
+      this.handlerEvent('click')
       if (this.nodeLeaf) {
-        this.handlerEvent('click-node-leaf')
+        this.handlerEvent('click-leaf')
       }
       if (this.nodeBranch) {
-        this.handlerEvent('click-node-branch')
+        this.handlerEvent('click-branch')
       }
     },
     handlerEvent (eventName) {

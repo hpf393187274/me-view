@@ -30,7 +30,7 @@ module.exports = {
       sass: {
         // @ 是 src/assets 的别名
         // 所以这里假设你有 `@styles/variable` 这个文件
-        prependData: '@import "src/theme/src/var.scss";'
+        prependData: '@import "src/theme/var.scss";'
       }
     }
   },

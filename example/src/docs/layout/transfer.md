@@ -7,7 +7,7 @@
 <template>
   <div>
     <div>{{value}}</div>
-    <me-transfer style="height:200px" :data="data" v-model="value">
+    <me-transfer style="height:200px" field-value="id" field-label="label" :data="data" v-model="value">
       <template #header-left>
         我们都是好孩子
       </template>
@@ -43,7 +43,7 @@ export default {
 <template>
   <div>
     <div>{{value}}</div>
-  <me-transfer :data="data" expanded statistics v-model="value"/>
+  <me-transfer :data="data" field-value="id" field-label="label" expanded statistics v-model="value"/>
   </div>
 </template>
 <script>

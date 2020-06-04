@@ -81,7 +81,8 @@ export default {
       list: [
         'icon-user','icon-shezhi','icon-outdent', 'icon-indent',
         'icon-list','icon-icon_phone','icon-horn', 'icon-file',
-        'icon-addperson'
+        'icon-addperson', 'icon-zhongduan', 'icon-APPduanwebfuwuqi',
+        'icon-tuoputu_fanghuoqiang', 'icon-zhongduan1'
       ]
     }
   }

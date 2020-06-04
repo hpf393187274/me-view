@@ -1,5 +1,5 @@
 <template>
-  <me-tree :data="data" :expandable="false" @click-node-leaf="handleClick" />
+  <me-tree :data="data" :expandable="false" @click-leaf="handleClick" />
 </template>
 <script>
 export default {

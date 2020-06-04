@@ -7,6 +7,8 @@
         :expanded="expanded"
         :header-label="labelLeft"
         :statistics="statistics"
+        :field-value="fieldValue"
+        :field-label="fieldLabel"
         checkbox
         class="me-flex me-border"
         header
@@ -17,7 +19,7 @@
         </template>
       </me-tree>
     </div>
-    <div class="me-column me-center transfer-center">
+    <div class="transfer-center">
       <slot name="center">
         <me-button :disabled="disabledRight" @click="moveToRightAll" icon="icon-angles_strong_right" title="全部向右" />
         <me-button :disabled="disabledRight" @click="moveToRight" icon="icon-angle_strong_right" title="向右" />
@@ -32,6 +34,8 @@
         :expanded="expanded"
         :header-label="labelRight"
         :statistics="statistics"
+        :field-value="fieldValue"
+        :field-label="fieldLabel"
         checkbox
         class="me-flex me-border"
         header

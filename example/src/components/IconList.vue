@@ -31,6 +31,7 @@ export default {
     border: 1px solid #0099ff;
     .me-icon {
       font-size: 40px !important;
+      // color: red;
     }
     // .title {
     //   /* width: 80%; */

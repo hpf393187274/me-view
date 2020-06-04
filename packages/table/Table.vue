@@ -168,6 +168,9 @@ export default {
     cancelChecked () {
       this.checkedData.forEach(row => row.handlerCheckedChange(false))
     },
+    layout () {
+
+    },
     /**
      * 设置选中的数据
      * @param {Array} data 数据
