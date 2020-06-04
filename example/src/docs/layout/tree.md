@@ -13,7 +13,7 @@
       <me-button @click="handlerCheckedData">选中数据</me-button>
       <me-button @click="handlerCheckedRemove">移出选中的数据</me-button>
     </div>
-    <me-tree ref="tree" action :data="data" :expandable="false" checkbox statistics header header-label="全选">
+    <me-tree ref="tree" highlight action :data="data" :expandable="false" checkbox statistics header header-label="全选">
     </me-tree>
   </div>
 </template>
@@ -147,7 +147,7 @@ export default {
 | lazy                | 是否懒加载                              | Boolean | false  | true, false  |
 | expandable          | 可展开，false 展开全部节点              | Boolean |  true  | true, false  |
 | expanded-all        | 展开所有                                | Boolean | false  | true, false  |
-| expanded-node-click | 点击节点是否展开                        | Boolean |  true  | true, false  |
+| click-expanded | 点击节点是否展开                        | Boolean |  true  | true, false  |
 | expanded-level      | 展开级别：expanded-all = true, 级别失效 | Number  |   0    | 1, 2, 3, ... |
 | accordion           | 待实现 - 是否手风琴模式                 | Boolean | false  | true, false  |
 | node-key            | 唯一标识的属性                          | String  |   id   | id           |

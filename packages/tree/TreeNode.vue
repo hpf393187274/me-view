@@ -1,6 +1,6 @@
 <template>
-  <div class="tree-node-body">
-    <div :style="styleIndent" :title="nodeLabel" class="me-row tree-node-item">
+  <div class="tree-node-body" >
+    <div :style="styleIndent" :title="nodeLabel" :class="classes">
       <me-icon @click="doExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
       <me-checkbox :checkedHalf="checkedHalf" :value="checkedAll" @click="handlerNodeCheck" v-if="checkbox" />
       <div @click="handlerClickLabel" class="me-row me-flex me-cross-center tree-node-label">
@@ -27,11 +27,13 @@
         :expandable="expandable"
         :expanded-all="expandedAll"
         :expanded-level="expandedLevel"
-        :expanded-node-click="expandedNodeClick"
+        :click-expanded="clickExpanded"
+        :click-checked="clickChecked"
         :indent="indent__"
         :key="uniqueValue(node)"
         :lazy="lazy"
         :level="level + 1"
+        :highlight="highlight"
         :field-value="fieldValue"
         :field-label="fieldLabel"
         :statistics="statistics"
@@ -84,6 +86,7 @@ export default {
   data () {
     return {
       expanded__: this.expandable === false || this.expandedAll || this.expandedLevel >= this.level,
+      statusHighlight: false,
       /**
        * 第一次渲染
        */
@@ -128,6 +131,12 @@ export default {
     nodeNumber () {
       /* 获取当前节点的子节点数 */
       return Type.isArray(this.children) ? this.children.length : 0
+    },
+    classes () {
+      return [
+        'me-row tree-node-item',
+        { 'is-selected': this.highlight && (this.checkedAll || this.statusHighlight) }
+      ]
     }
   },
   methods: {
@@ -188,9 +197,11 @@ export default {
       return resource
     },
     handlerClickLabel () {
-      if (this.nodeBranch && this.expandedNodeClick) {
+      if (this.nodeBranch && this.clickExpanded) {
         this.doExpanded()
       }
+      this.statusHighlight = !this.statusHighlight
+      this.dispatchUpward('MeTree', 'me-tree-node--click', this)
       this.handlerEvent('click')
       if (this.nodeLeaf) {
         this.handlerEvent('click-leaf')

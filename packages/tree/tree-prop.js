@@ -21,12 +21,14 @@ export default {
     /**
      * 点击节点是否展开
      */
-    expandedNodeClick: { type: Boolean, default: true },
+    clickExpanded: { type: Boolean, default: true },
+    clickChecked: { type: Boolean, default: true },
     /**
      * 是否每次只打开一个同级树节点展开
      * 手风琴模式
      */
     accordion: Boolean,
+    highlight: Boolean,
     /**
      * 每个树节点用来作为唯一标识的属性，整棵树应该是唯一的
      */

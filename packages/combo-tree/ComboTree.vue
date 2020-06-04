@@ -4,11 +4,11 @@
       :border="border"
       :data="data"
       :expanded-level="expandedLevel"
-      :expanded-node-click="false"
+      :click-expanded="false"
       :highlight="highlight"
       :field-value="fieldValue"
       :field-label="fieldLabel"
-      @click-node="handlerClick">
+      @click="handlerClick">
       <template #node-label="{data}">
         <slot :data="data" name="node-label" />
       </template>

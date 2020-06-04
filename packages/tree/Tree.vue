@@ -32,11 +32,13 @@
           :expandable="expandable"
           :expanded-all="expandedAll"
           :expanded-level="expandedLevel"
-          :expanded-node-click="expandedNodeClick"
+          :click-expanded="clickExpanded"
+          :click-checked="clickChecked"
           :key="uniqueValue(node)"
           :lazy="lazy"
           :parent-grandson="parentGrandson__"
           :statistics="statistics"
+          :highlight="highlight"
           :field-value="fieldValue"
           :field-label="fieldLabel"
           v-for="node in data"
@@ -74,6 +76,7 @@ export default {
   data () {
     return {
       nodesMap: new Map(),
+      clickNode: undefined,
       nodesSize: 0,
       checkedChildren: false
     }
@@ -95,6 +98,15 @@ export default {
       for (const item of newData) {
         this.removeNode(this.uniqueValue(item))
       }
+    })
+
+    this.listener('me-tree-node--click', node => {
+      console.log('me-tree-node--click ---> node, ', node.data)
+      if (Tools.notEmpty(this.clickNode)) {
+        console.log('me-tree-node--click ---> clickNode =', this.clickNode.data)
+        this.clickNode.statusHighlight = false
+      }
+      this.clickNode = node
     })
 
     this.listener('me-tree-node--remove', key => {

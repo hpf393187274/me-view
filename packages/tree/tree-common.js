@@ -24,6 +24,7 @@ export default {
       this.checkedAll = value
       this.checkedChildren = value
       this.checkedHalf = false
+      this.statusHighlight = value
       this.checkedNumber = value ? this.nodeNumber : 0
       this.checkedHalfNumber = 0
     },
@@ -117,8 +118,10 @@ export default {
     },
     handlerNodeCheck (value) {
       this.setCheckedAll(value)
-      this.dispatch('broadcast-children', value)
-      this.dispatchParent('notification-parent')
+      if (this.checkbox === true && this.checkedStrictly === true) {
+        this.dispatch('broadcast-children', value)
+        this.dispatchParent('notification-parent')
+      }
     },
     getCheckedChildren ({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []
