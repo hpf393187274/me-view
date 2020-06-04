@@ -1,4 +1,3 @@
-@import './var';
 .#{$prefix}-tree {
 	.tree-node-header{ 
 		font-weight: bold;
@@ -18,7 +17,7 @@
 	.tree-node-body {
 		.tree-node-item:hover {
 			cursor: pointer;
-			background: $color-hover;
+			background: $tree-node--hover;
 		}
 	}
 	
@@ -29,6 +28,9 @@
 			color: rgba(170, 170, 170, 0.548);
 			margin: 0px 3px;
 			> span { margin: 0px 1px; }
+		}
+		&.is-selected {
+			background-color: $tree-node--active;
 		}
 	}
 }
