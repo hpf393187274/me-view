@@ -152,7 +152,6 @@ export default {
         }
       }
       this.value__ = newValue
-
       this.handlerLableEvent(() => {
         this.dispatchUpward('MeLabel', 'me-label--change', newValue)
       })
@@ -173,7 +172,8 @@ export default {
      * 重置
      */
     handlerClear () {
-      this.valueUpdate('')
+      this.valueUpdate(null)
+      this.$emit('change', null)
     },
     handleFocus () {
       this.$emit('on-focus', this.value__)

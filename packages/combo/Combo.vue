@@ -84,6 +84,12 @@ export default {
         this.initValue(newValue)
       }
     },
+    label__ (value) {
+      if (Tools.isEmpty(value)) {
+        /** 处理清空无法选择问题 */
+        this.handlerChangeValue(null)
+      }
+    },
     data (value) {
       this.deepFlatData(value, true)
       this.initValue(this.value)
@@ -124,7 +130,7 @@ export default {
     },
     initValue (value) {
       this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
-      this.dispatchUpward('MeLabel', 'me-label--change', this.value__)
+      this.handlerChangeValue(this.value__)
     },
     isSelected (value) {
       const list = this.multiple ? this.valueMultiple : [ this.valueSingle ]
@@ -144,10 +150,15 @@ export default {
     },
     handlerChange (data, index) {
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
-      this.dispatchUpward('MeLabel', 'me-label--change', this.value__)
-      this.$emit('input', this.value__)
-      this.dispatchParent('input', this.value__)
-      this.dispatchParent('change', { value: this.value__, data, index })
+      this.handlerChangeValue(this.value__, data, index)
+    },
+    handlerChangeValue (value = null, data = null, index = -1) {
+      this.dispatchUpward('MeLabel', 'me-label--change', value)
+      this.$emit('input', value)
+      this.dispatchParent('input', value)
+      if (Tools.notBlank(data) && index !== -1) {
+        this.dispatchParent('change', { value, data, index })
+      }
     },
     handleMultipleRemove (index) {
       Tools.arrayRemove(this.label__, index).catch(error => { console.debug(error) })
