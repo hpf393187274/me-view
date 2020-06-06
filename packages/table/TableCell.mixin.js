@@ -1,12 +1,13 @@
 
 import Type from 'me-view/src/script/type'
+const layouts = [ 'center', 'start', 'end' ]
 export default {
   props: {
     editable: Boolean,
     sortable: Boolean,
     resizable: Boolean, /** 可调整的 */
     width: [ Number, String ],
-    layout: { type: String, default: 'left' },
+    layout: { type: String, default: 'start', validator: value => layouts.includes(value) },
     label: String,
     index: Number,
     field: String,

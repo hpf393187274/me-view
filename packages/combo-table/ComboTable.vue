@@ -1,13 +1,13 @@
 <template>
   <me-combo ref="combo" v-bind="$props" v-model="value__">
     <me-table
-      :border="border"
-      :columns="columns"
-      :data="data"
-      :highlight="highlight"
-      :multiple="multiple"
-      @click-row="handlerClick">
-      <slot />
+        :border="border"
+        :columns="columns"
+        :data="data"
+        :highlight="highlight"
+        :multiple="multiple"
+        @click-row="handlerClick">
+        <slot />
     </me-table>
   </me-combo>
 </template>

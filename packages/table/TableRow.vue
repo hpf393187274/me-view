@@ -1,17 +1,17 @@
 <template>
   <tr :class="classes" @click.stop="handlerRow(!checked__)">
     <template v-if="header">
-      <me-table-cell-header class="content-center" v-if="checkbox">
+      <me-table-cell-header width="50px" layout="center" v-if="checkbox">
         <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerCheckedChange(!checked__)" v-model="checked__" />
       </me-table-cell-header>
-      <me-table-cell-header class="content-center" v-if="hasIndex">序号</me-table-cell-header>
+      <me-table-cell-header width="50px" layout="center" v-if="hasIndex">序号</me-table-cell-header>
       <me-table-cell-header :key="column.label" v-bind="column" v-for="column in columns" />
     </template>
     <template v-else>
-      <me-table-cell-d class="content-center" v-if="checkbox">
+      <me-table-cell-d width="50px" layout="center" v-if="checkbox">
         <me-checkbox :disabled="multiple === false" @click="handlerCheckedChange(!checked__)" v-model="node.checked" />
       </me-table-cell-d>
-      <me-table-cell-d class="content-center" v-if="hasIndex">{{index + 1}}</me-table-cell-d>
+      <me-table-cell-d width="50px" layout="center" v-if="hasIndex">{{index + 1}}</me-table-cell-d>
       <me-table-cell-d :data="data" :key="column.field" v-bind="column" v-for="column in columns" />
     </template>
   </tr>

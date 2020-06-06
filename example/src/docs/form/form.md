@@ -22,7 +22,7 @@
     </div>
     <div class="me-row">
       <me-label title="省份" prop="province">
-        <me-combo-table v-model="form.province" readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title" @change="handlerChangeProvince">
+        <me-combo-table clearable v-model="form.province" readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title" @change="handlerChangeProvince">
         </me-combo-table>
       </me-label>
       <me-label title="行政区域" prop="region">
@@ -49,10 +49,10 @@ export default {
   methods:{
     async confirm () {
       try {
-        await this.$refs.form.validate()
+        const message = await this.$refs.form.validate()
         this.$message.success('表单校验成功')
-      } catch {
-        this.$message.error('表单校验失败!')
+      } catch (message) {
+        this.$message.error(message)
       }
     },
     reset(){

@@ -11,20 +11,20 @@ export default {
   },
   data () {
     return {
-      value__: this.value
+      visibility: this.value
     }
   },
   watch: {
     value (newValue) {
-      this.value__ = newValue
+      this.visibility = newValue
     },
-    value__ (newValue) {
+    visibility (newValue) {
       this.$emit('input', newValue)
     }
   },
   methods: {
     handlerCancel () {
-      this.value__ = false
+      this.visibility = false
       this.$emit('cancel')
     }
   }

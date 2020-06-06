@@ -9,17 +9,6 @@
 </template>
 <script>
 export default {
-  name: 'MeTableHeader',
-  props: { scrollLeft: Number },
-  watch: {
-    scrollLeft (newValue) {
-      this.$el.scrollLeft = newValue
-    }
-  },
-  data () {
-    return {
-      hasScrollbar: false
-    }
-  }
+  name: 'MeTableHeader'
 }
 </script>

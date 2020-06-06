@@ -7,7 +7,7 @@
 ```html
 <template>
   <div class="me-row">
-    <me-dialog title="dialog" v-model="statusTable" @confirm="handlerConfirm">
+    <me-dialog title="dialog" height="500px" v-model="statusTable" @confirm="handlerConfirm">
       <me-table ref="tableList" checkbox multiple :data="data" :columns="columns" highlight>
         <template #action="{data}">
           <me-input v-model="data.label" />

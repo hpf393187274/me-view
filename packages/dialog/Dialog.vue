@@ -10,7 +10,7 @@
     :z-index="zIndex"
     @cancel="$emit('cancel')"
     class-container="me-dialog"
-    v-model="value__"
+    v-model="visibility"
   >
     <div class="me-row dialog-header">
       <slot name="header">
@@ -69,6 +69,7 @@ export default {
      */
     value (newValue) {
       this.$emit('status-change', newValue)
+      this.$emit('me-attribute--visibility-change', newValue)
       this.$emit(newValue === true ? 'status-show' : 'status-hide', newValue)
     }
   },

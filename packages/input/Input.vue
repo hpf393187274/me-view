@@ -2,8 +2,6 @@
   <div :class="classes" :style="styles">
     <input
       :disabled="disabled"
-      :max="max"
-      :min="min"
       :placeholder="placeholder"
       :readonly="readonly"
       :style="styleInput"
@@ -32,14 +30,11 @@
 </template>
 
 <script>
+import Tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
-
 const types = [ 'text', 'number', 'email', 'password' ]
-const patterns = {
-  number: /[0-0]+/,
-  email: /^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$/
-}
 
 export default {
   name: 'MeInput',
@@ -54,8 +49,9 @@ export default {
     width: String,
     type: { type: String, default: 'text', validator: value => types.includes(value) },
     value: [ Number, String, Array ],
+    rules: Array,
     min: Number,
-    max: { type: Number, default: 1000000 },
+    max: Number,
     minLength: Number,
     maxLength: Number,
     iconPrefix: String,
@@ -70,7 +66,9 @@ export default {
       right: 8,
       type__: this.type === 'number' ? 'text' : this.type,
       value__: undefined,
+      valueValid: undefined,
       validateStatus: '',
+      rules__: [ ...this.rules || [] ],
       active: false
     }
   },
@@ -82,9 +80,9 @@ export default {
     this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
     this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
     this.$on('focus-input', this.onFocusInput)
-    this.listenerUpward('MeLabel', 'me-label--status', status => { this.validateStatus = status })
+    this.listenerUpward([ 'MeLabel' ], 'me-label--status', status => { this.validateStatus = status })
     this.handlerLableEvent(() => {
-      this.listenerUpward('MeLabel', 'me-label--reset', this.valueUpdate)
+      this.listenerUpward([ 'MeLabel' ], 'me-label--reset', this.valueUpdate)
     })
   },
   computed: {
@@ -110,8 +108,9 @@ export default {
       }
     },
     styles () {
-      if (this.width) {
-        return { width: this.width, flex: '0 1 auto' }
+      const width = this.width
+      if (width) {
+        return { width, flex: '0 1 auto' }
       }
       return { }
     },
@@ -120,38 +119,43 @@ export default {
     },
     paddingRight () {
       return this.clearable ? 10 : 0
-    },
-    pattern__ () {
-      const value = Reflect.get(patterns, this.type)
-      if (value) {
-        return value
-      }
-      return this.pattern
     }
   },
   watch: {
     value (newValue) {
       this.valueUpdate(newValue)
+    },
+    rules: {
+      deep: true,
+      handler (value) {
+        this.rules__ = [ ...value || [] ]
+      }
     }
   },
   methods: {
     convertType (value) {
-      if (this.type === 'number' && isNaN(value) === false) {
+      if (Tools.isBlank(value)) { return value }
+      if (this.type === 'number' && /^(-?\d+)(\.\d+)?$/.test(value)) {
         // 转换为数字类型
         return Number(value)
       }
       return value
     },
-    valueUpdate (value) {
+    async valueUpdate (value) {
       const newValue = this.convertType(value)
-      const oldValue = this.value
-      if (this.type === 'number') {
-        if (isNaN(newValue) || newValue < this.min || newValue > this.max) {
-          this.value__ = oldValue
+      this.value__ = newValue
+      if (Type.isArray(this.rules__) && Tools.notBlank(this.rules__)) {
+        try {
+          await Tools.validate(this.value__, this.rules__)
+          console.debug(`me-input valueUpdate -> type=${this.type}, then`)
+        } catch (message) {
+          console.debug(`me-input valueUpdate -> type=${this.type}, catch message=${message}`)
+          this.value__ = this.valueValid
+          this.$emit('change', this.value__)
           return
         }
       }
-      this.value__ = newValue
+      this.valueValid = newValue
       this.handlerLableEvent(() => {
         this.dispatchUpward('MeLabel', 'me-label--change', newValue)
       })
@@ -176,19 +180,13 @@ export default {
       this.$emit('change', null)
     },
     handleFocus () {
-      this.$emit('on-focus', this.value__)
+      this.$emit('focus', this.value__)
     },
     handleBlur () {
-      this.$emit('on-blur', this.value__)
-    },
-    setValue (value) {
-      this.value__ = value
-    },
-    getValue () {
-      return this.value__
+      this.$emit('blur', this.value__)
     },
     handleClick () {
-      this.$emit('on-click', this.value__)
+      this.$emit('click', this.value__)
     },
     onFocusInput () {
       this.$refs.target.focus()

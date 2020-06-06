@@ -5,7 +5,7 @@
 ::: demo `clearable` 可清除的
 ```html
 <me-column>
-  <me-input clearable placeholder="请输入姓名" v-model="userName"></me-input>
+  <me-input type="number" clearable placeholder="请输入姓名" v-model="userName" :rules="rules"></me-input>
 </me-column>
 <script>
 export default {
@@ -14,7 +14,12 @@ export default {
       userName:'',
       form : {
         userName:''
-      }
+      },
+      rules: [
+        { required: true, message: '年龄不能为空' },
+        { type:'number', min:10, max:100, message: '年龄不能小于10岁，不能大于100岁' }
+      ]
+
     }
   }
 }

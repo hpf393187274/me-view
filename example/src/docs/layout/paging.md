@@ -26,6 +26,7 @@ export default {
   <div>
     <div class="me-row me-center">
       pageNum = {{info.pageNum}}, pageSize = {{info.pageSize}}
+      <me-button @click="total = 10000">变更</me-button>
     </div>
     <me-paging :total="total" border @change-page="handlerPaging"/>
   </div>
@@ -34,7 +35,7 @@ export default {
 export default {
   data() {
     return {
-      total: 1000,
+      total: undefined,
       info: {
         pageNum: 1,
         pageSize: 10

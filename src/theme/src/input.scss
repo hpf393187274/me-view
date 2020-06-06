@@ -20,6 +20,9 @@
 		position: absolute;
 		height:100%;
 	}
+	.#{$prefix}-icon {
+		font-size: $input-icon--font-size;
+	}
 	.input-inner {
 		width: 1px;
 		min-width: 20px;

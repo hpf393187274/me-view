@@ -56,8 +56,8 @@ export default {
         this.$emit.apply(parent, [ eventName ].concat(params))
       }
     },
-    listenerUpward (componentName, eventName, callback) {
-      const parent = this.findParentComponent([ componentName ])
+    listenerUpward (componentNames, eventName, callback) {
+      const parent = this.findParentComponent([ ...[ componentNames ].flat() ])
       if (parent) {
         this.$off.apply(parent, [ eventName, callback ])
         this.$on.apply(parent, [ eventName, callback ])

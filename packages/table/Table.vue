@@ -14,14 +14,14 @@
           :checked="checkedHeader"
           :checked-half="checkedHeaderHalf"
           :columns="columns__"
-          :data-length="data.length"
+          :data-length="length"
           :multiple="multiple"
           @checked-change="handlerCheckboxHeader"
           header
         />
       </me-table-header>
-      <template v-if="data && data.length > 0">
-        <me-table-body @scroll-render-v="handlerDifference" @scroll-body="handlerScrollBody" class="me-flex" ref="tableBody">
+      <template v-if="length > 0">
+        <me-table-body v-show="rendered" class="me-flex" ref="tableBody">
           <me-table-row
             :center="center"
             :checkbox="checkbox"
@@ -53,7 +53,6 @@ import TableRow from './TableRow.vue'
 import TableHeader from './TableHeader.vue'
 import TableBody from './TableBody.vue'
 import emitter from 'me-view/src/mixins/emitter'
-// import Node from './Node'
 let idSeed = 1
 export default {
   name: 'MeTable',
@@ -75,6 +74,7 @@ export default {
     height: [ Number, String ],
     multiple: Boolean,
     width: [ Number, String ],
+    rendered: { type: Boolean, default: true },
     highlight: Boolean
   },
   computed: {
@@ -85,7 +85,10 @@ export default {
       }
     },
     styleTHead () {
-      return { 'padding-right': `${this.difference}px` }
+      if (this.hasScrollBar) {
+        return { 'padding-right': `${this.scrollBarWidth}px` }
+      }
+      return { }
     },
     length () {
       return Type.isArray(this.nodeList) ? this.nodeList.length : 0
@@ -117,6 +120,8 @@ export default {
       difference: 0,
       selectedNodeOld: null,
       scrollLeft: 0,
+      scrollBarWidth: 0,
+      hasScrollBar: false,
       show: true
     }
   },
@@ -126,6 +131,15 @@ export default {
     this.listener('MeTable-row-checked-true', ({ key, value }) => this.$set(this.checkedData, key, value))
     this.listener('MeTable-row-checked-false', ({ key }) => this.$delete(this.checkedData, key))
     this.listener('MeTable-row-sort', ({ field, order }) => this.sort(field, order))
+    this.listener('MeTable--scrollBar', flag => { this.hasScrollBar = flag })
+
+    this.listenerUpward([ 'MeDialog', 'MeCombo' ], 'me-attribute--visibility-change', visibility => {
+      if (visibility === true) {
+        visibility && this.layout()
+      }
+    })
+
+    this.scrollBarWidth = Tools.scrollBarWidth()
   },
   async mounted () {
     await this.$nextTick()
@@ -169,7 +183,8 @@ export default {
       this.checkedData.forEach(row => row.handlerCheckedChange(false))
     },
     layout () {
-
+      const tableBody = this.$refs.tableBody
+      tableBody && tableBody.monitorScrollBar()
     },
     /**
      * 设置选中的数据

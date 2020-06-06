@@ -6,8 +6,8 @@
       :width="width"
       :placeholder="placeholder"
       :readonly="readonly__"
-      @on-blur="handlerBlurInput"
-      @on-click="handlerClickInput"
+      @blur="handlerBlurInput"
+      @click="handlerClickInput"
       ref="input"
       v-model="label__"
     >
@@ -17,11 +17,11 @@
     </me-input>
     <transition appear name="transition-drop">
       <div
-        :style="{'z-index': status? 1000000 : 0, width: width__ + 'px'}"
+        :style="{'z-index': visibility? 1000000 : 0, width: width__ + 'px'}"
         @mouseout="closable=true"
         @mouseover="onMouseoverOther"
         class="me-column me-border combo-options"
-        v-show="data && data.length > 0 && status"
+        v-show="data && data.length > 0 && visibility"
       >
         <slot />
       </div>
@@ -39,7 +39,7 @@ export default {
   name: 'MeCombo',
   data () {
     return {
-      status: false,
+      visibility: false,
       rendered: false,
       valueSingle: {},
       valueMultiple: [],
@@ -61,16 +61,17 @@ export default {
   created () {
     this.deepFlatData(this.data, true)
     this.initValue(this.value)
-    this.listenerUpward('MeLabel', 'me-label--reset', this.initValue)
+    this.listenerUpward([ 'MeLabel' ], 'me-label--reset', this.initValue)
     this.listener('me-combo--select', this.handlerChange)
   },
   computed: {
     iconSuffix () {
-      return this.status ? 'icon-angle_down' : 'icon-angle_up'
+      return this.visibility ? 'icon-angle_down' : 'icon-angle_up'
     }
   },
   watch: {
-    status (newValue) {
+    visibility (newValue) {
+      this.$emit('me-attribute--visibility-change', newValue)
       if (newValue) {
         this.rendered = true
         this.width__ = this.$refs.input.$el.scrollWidth
@@ -137,13 +138,13 @@ export default {
       return list.findIndex(item => value === Reflect.get(item, this.fieldValue)) !== -1
     },
     onClickSuffix () {
-      this.status = !this.status
+      this.visibility = !this.visibility
     },
     handlerClickInput () {
       this.readonly__ && this.onClickSuffix()
     },
     selectSingle (data = {}) {
-      this.status = false
+      this.visibility = false
       this.label__ = Reflect.get(data, this.fieldLabel)
       this.value__ = Reflect.get(data, this.fieldValue)
       this.valueSingle = { ...data }
@@ -175,7 +176,7 @@ export default {
       index >= 0 ? this.handleMultipleRemove(index) : this.handleMultiplPush(data)
     },
     handlerBlurInput () {
-      this.closable && (this.status = false)
+      this.closable && (this.visibility = false)
     },
     onFocusInput () {
       this.$refs.input.$emit('focus-input')

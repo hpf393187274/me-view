@@ -1,6 +1,5 @@
 .#{$prefix}-label {
 	margin: 3px;
-	min-height: 60px;
 	.label-title {
 		text-align: right;
 		min-width: 100px;
@@ -11,10 +10,11 @@
 			font-size: 14px;
 			color: red;
 			margin-top: 2px;
+			height: 20px;
 		}
 		.label-content-slot {
 			color:red;
-			height:40px;
+			height: 40px;
 		}
 	}
 }

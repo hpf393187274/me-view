@@ -10,7 +10,10 @@
       <me-input v-model="data.label" />
     </template>
     <template #test>
-      <me-button>test</me-button>
+      <me-icon>icon-delete</me-icon>
+      <me-icon>icon-chakan</me-icon>
+      <me-icon>icon-bianji</me-icon>
+      <me-icon>icon-jiaoseguanli</me-icon>
     </template>
     <template #footer>
       <me-paging :total="50" class="me-flex"/>
@@ -22,8 +25,8 @@
     data() {
       return {
         columns: [
-          { label:'编号', field: 'id', sortable: true},
-          { label:'测试', field: 'test' },
+          { label:'编号', field: 'id', sortable: true, layout: 'center'},
+          { label:'测试', field: 'test', layout: 'center'},
           { label:'操作', field: 'action' }
         ],
         data: [
@@ -50,19 +53,13 @@
 <template>
   <me-table :height="height + 'px'" ref="tableList" primary-field ="id" checkbox multiple :data="data" :columns="columns" highlight>
     <template #header>
-      <me-button plain type="primary"  @click="height = height + 50"> + 50 </me-button>
-      <me-button plain type="primary"  @click="height = height - 50"> - 50 </me-button>
+      <me-button plain type="primary"  @click="height = height + 50" icon="icon-plus_strong"> 50 </me-button>
+      <me-button plain type="primary"  @click="height = height - 50" icon="icon-minus_strong"> 50 </me-button>
       <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
       <me-button plain type="primary" @click="getCheckedRows">获取选中的数据</me-button>
       <me-button plain type="primary" @click="setCheckedRows">设置选中</me-button>
       <me-button plain type="primary" @click="handlerData">变更数据</me-button>
       <me-button plain type="primary" @click="removeSelectData">批量删除</me-button>
-    </template>
-    <template #action="{data}">
-      <me-button @click="removeRow(data)">删除</me-button>
-    </template>
-    <template #test>
-      <me-button>test</me-button>
     </template>
   </me-table>
 </template>

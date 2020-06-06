@@ -1,6 +1,7 @@
 import Type from './type'
 import Assert from './assert'
 import Qs from 'qs'
+import Validator from 'async-validator'
 export default class Tools {
   static ASC = 'ASC'
   static DESC = 'DESC'
@@ -340,5 +341,48 @@ export default class Tools {
       charset: 'utf-8'
     }, options || {})
     return Qs.parse(target, newOptions)
+  }
+
+  static hasScrollBar (el, direction = 'vertical') {
+    Assert.notEmpty(el, 'html 元素不能为空')
+    if ([ 'vertical', 'horizontal' ].includes(direction) === false) {
+      console.debug('Tools -> direction 不属于 "vertical" or "horizontal", 则默认初始化为："vertical"')
+      direction = 'vertical'
+    }
+    return direction === 'vertical' ? el.scrollHeight > el.clientHeight : el.scrollWidth > el.clientWidth
+  }
+
+  static scrollBarWidth (el) {
+    if (this.notEmpty(el)) {
+      if (this.hasScrollBar(el)) {
+        return el.offsetWidth - el.clientWidth
+      }
+      return el.offsetWidth - el.clientWidth
+    }
+    el = document.createElement('div')
+    Object.assign(el.style, { width: '100px', height: '100px', overflowY: 'scroll' })
+    document.body.appendChild(el)
+    const bool = this.scrollBarWidth(el)
+    el.remove()
+    // document.body.removeChild(el)
+    return bool
+  }
+
+  static validate (value, rules = []) {
+    if (Type.notArray(rules)) {
+      return Promise.resolve()
+    }
+    const key = this.UUId()
+    const validator = new Validator({ [key]: rules })
+    return new Promise((resolve, reject) => {
+      validator.validate({ [key]: value }, { firstFields: true })
+        .then(() => {
+          resolve('success')
+        })
+        .catch(({ errors }) => {
+          const [ error ] = errors
+          reject(error.message)
+        })
+    })
   }
 }

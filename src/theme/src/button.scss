@@ -2,23 +2,27 @@
 	color: $color;
 	background-color: $background;
 	border-color: $border;
+	.#{$prefix}-icon { color: $color;}
 }
 
 @mixin btn-hover($background: none, $color: none, $border: none){
 	color: $color !important;
 	background-color: $background !important;
 	border-color: $border !important;
+	.#{$prefix}-icon { color: $color !important;}
 }
 
 @mixin btn-focus($background: none, $color: none, $border: none){
 	color: $color !important;
 	background-color: $background !important;
 	border-color: $border !important;
+	.#{$prefix}-icon { color: $color;}
 }
 
 @mixin btn-plain($color: none, $background: none){
 	color: $color;
 	background-color: $background;
+	.#{$prefix}-icon { color: $color;}
 }
 
 
@@ -42,27 +46,23 @@
 }
 
 
-.#{$prefix}-btn-default { 
-	@include btn-model($color-default, $color-default-font, $color-default-border);
-	&:hover { @include btn-model($color-default-hover, $color-default-hover-font, $color-default-hover-border) }
-	&:active,
-	&:focus { @include btn-focus($color-default-focus, $color-default-focus-font, $color-default-focus-border) }
-}
+
 .#{$prefix}-btn-primary { 
 	@include btn-model($color-primary, $color-primary-font, $color-primary-border);
-	&:hover { @include btn-hover($color-primary-hover, $color-primary-hover-font, $color-primary-hover-border) }
-	&:active,
-	&:focus { @include btn-focus($color-primary-focus, $color-primary-focus-font, $color-primary-focus-border) }
+	&:hover {  @include btn-hover($color-primary-hover, $color-primary-hover-font, $color-primary-hover-border); }
+	&:active, &:focus { @include btn-focus($color-primary-focus, $color-primary-focus-font, $color-primary-focus-border); }
+	
 }
 .#{$prefix}-btn-info {
 	@include btn-model($color-info, $color-info-font, $color-info-border);
 	&:hover { @include btn-hover($color-info-hover, $color-info-hover-font, $color-info-hover-border) }
-	&:active,
-	&:focus { @include btn-focus($color-info-focus, $color-info-focus-font, $color-info-focus-border) }
+	&:active,&:focus { @include btn-focus($color-info-focus, $color-info-focus-font, $color-info-focus-border) }
 }
 .#{$prefix}-btn-success {
 	@include btn-model($color-success, $color-success-font, $color-success-border);
-	&:hover { @include btn-hover($color-success-hover, $color-success-hover-font, $color-success-hover-border) }
+	&:hover { 
+		@include btn-hover($color-success-hover, $color-success-hover-font, $color-success-hover-border);
+	}
 	&:active,
 	&:focus { @include btn-focus($color-success-focus, $color-success-focus-font, $color-success-focus-border) }
 }
@@ -84,30 +84,26 @@
 	&:active,
 	&:focus { @include btn-focus($color-disabled-focus, $color-disabled-focus-font) }
 	@include btn-model($color-disabled, $color-disabled-font, $color-disabled-border);
-	 cursor: not-allowed;
+	cursor: not-allowed;
 }
 
 .#{$prefix}-btn-plain {
-	&.#{$prefix}-btn-default {
-		@include btn-plain($color-default-font, $color-default-plain)
-	}
 	&.#{$prefix}-btn-primary { 
-		@include btn-plain($color-primary, $color-primary-plain)
+		@include btn-plain($color-primary, $color-primary-plain);
   }
 	&.#{$prefix}-btn-info {
-		@include btn-plain($color-info, $color-info-plain)
+		@include btn-plain($color-info, $color-info-plain);
 	}
 	&.#{$prefix}-btn-success {
-		@include btn-plain($color-success, $color-success-plain)
+		@include btn-plain($color-success, $color-success-plain);
 	}
 	&.#{$prefix}-btn-warning {
-		@include btn-plain($color-warning, $color-warning-plain)
+		@include btn-plain($color-warning, $color-warning-plain);
 	}
 	&.#{$prefix}-btn-error {
-		@include btn-plain($color-error, $color-error-plain)
+		@include btn-plain($color-error, $color-error-plain);
 	}
 }
-
 
 .#{$prefix}-btn-shape--circle{
 	border-radius: 50%;
@@ -119,3 +115,9 @@
 	padding: 15px;
 }
 
+.#{$prefix}-btn-default { 
+	@include btn-model($color-default, $color-default-font, $color-default-border);
+	&:hover { @include btn-model($color-default-hover, $color-default-hover-font, $color-default-hover-border) }
+	&:active,
+	&:focus { @include btn-focus($color-default-focus, $color-default-focus-font, $color-default-focus-border) }
+}

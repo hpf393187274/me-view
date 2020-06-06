@@ -37,14 +37,7 @@ export default {
       ])
     }
 
-    return this.renderRoot(h, [
-      h('div', {
-        class: 'cell-inner',
-        attr: {
-          title: this.fieldValue
-        }
-      }, this.fieldValue)
-    ])
+    return this.renderRoot(h, h('span', { class: 'cell-inner' }, [ this.fieldValue ]))
   },
   computed: {
     fieldValue () {
@@ -53,7 +46,17 @@ export default {
   },
   methods: {
     renderRoot (h, children) {
-      return h('td', { style: this.styles }, children)
+      return h('td', { style: this.styles }, [
+        h('div', {
+          class: [
+            'table-cell me-row me-cross-center',
+            `me-main-${this.layout}`
+          ],
+          attr: {
+            title: this.fieldValue
+          }
+        }, [ ...[ children ].flat() ])
+      ])
     }
   }
 }

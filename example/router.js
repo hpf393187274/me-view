@@ -2,11 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { local } from 'me-view/src/index'
 Vue.use(Router)
-console.log('---------------e-------')
 // 动态获取路由： 根据目录结构
 const routeDoc = require.context('./src/docs/', true, /.md$/).keys()
 local.set('routeDoc', routeDoc)
-console.log('---------------route-doc-------', routeDoc)
+console.debug('---------------route-doc-------', routeDoc)
 const childrenDoc = routeDoc.flatMap(item => {
   const path = item.replace('./', '/').replace('.md', '')
   const filePath = item.replace('./', '')
@@ -18,7 +17,7 @@ const childrenDoc = routeDoc.flatMap(item => {
 
 const routeDemo = require.context('./src/demo/', true, /.vue$/).keys()
 local.set('routeDemo', routeDemo)
-console.log('---------------route-demo-------', routeDemo)
+console.debug('---------------route-demo-------', routeDemo)
 const childrenDemo = routeDemo.flatMap(item => {
   const path = item.replace('./', '/').replace('.vue', '')
   const filePath = item.replace('./', '')

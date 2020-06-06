@@ -23,7 +23,7 @@
     </span>
     <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{`${currentPage} / ${pageNumber}`}}</span>
     <span :class="itemClass()">共 {{total}} 条</span>
-    <me-input :max="pageNumber" :min="1" type="number" width="40px" v-model="currentPage" />
+    <me-input type="number" width="40px" v-model="currentPage" :rules="rules" />
   </div>
 </template>
 
@@ -46,11 +46,21 @@ export default {
   },
   data () {
     return {
-      currentPage: this.value
+      currentPage: this.value,
+      rules: [ ]
     }
   },
+  created () {
+    this.rules = [
+      { required: true },
+      { type: 'number', min: 1, max: this.pageNumber }
+    ]
+  },
   computed: {
-    pageNumber () { return Math.ceil(this.total / this.pageSize) },
+    pageNumber () {
+      const pageNumber = Math.ceil(this.total / this.pageSize)
+      return pageNumber <= 0 ? 1 : pageNumber
+    },
     /**
      * 两边最大占用
      */
@@ -120,9 +130,20 @@ export default {
     pageSize () {
       this.$emit('change-page', { ...this.info })
       this.$emit('change-page-size', { ...this.info })
+      this.handlerChangeRule()
+    },
+    total () {
+      this.handlerChangeRule()
     }
   },
   methods: {
+    handlerChangeRule () {
+      for (const rule of this.rules) {
+        if (rule.type === 'number') {
+          Reflect.set(rule, 'max', this.pageNumber)
+        }
+      }
+    },
     itemClass (value) {
       return [
         'me-row me-center',
@@ -130,12 +151,14 @@ export default {
       ]
     },
     setCurrentPage (value) {
-      if (value > this.pageNumber) {
-        this.currentPage = this.pageNumber
-      } else if (value < 1) {
-        this.currentPage = 1
-      } else {
-        this.currentPage = value
+      if (Type.isNumber(value)) {
+        if (value > this.pageNumber) {
+          this.currentPage = this.pageNumber
+        } else if (value < 1) {
+          this.currentPage = 1
+        } else {
+          this.currentPage = value
+        }
       }
     }
   }

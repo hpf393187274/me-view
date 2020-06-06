@@ -29,6 +29,9 @@
 			margin: 0px 3px;
 			> span { margin: 0px 1px; }
 		}
+		.#{$prefix}-icon {
+			font-size: $tree-node-icon--font-size;
+		}
 		&.is-selected {
 			background-color: $tree-node--active;
 		}

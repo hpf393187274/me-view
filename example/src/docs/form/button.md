@@ -14,10 +14,10 @@
 <template>
   <div>
     <me-row>
-      <me-button v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+      <me-button v-for="type in types" :type="type" :key="type" icon="icon-plus-square">{{type}}</me-button>
     </me-row>
     <me-row>
-      <me-button disabled v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+      <me-button disabled v-for="type in types" :type="type" icon="icon-plus-square" :key="type">{{type}}</me-button>
     </me-row>
   </div>
 </template>
@@ -42,10 +42,10 @@ export default {
 <template>
   <div>
     <me-row>
-      <me-button plain v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+      <me-button plain v-for="type in types" :type="type" icon="icon-plus-square" :key="type">{{type}}</me-button>
     </me-row>
     <me-row>
-      <me-button disabled v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+      <me-button disabled v-for="type in types" :type="type" icon="icon-plus-square" :key="type">{{type}}</me-button>
     </me-row>
   </div>
 </template>
@@ -70,16 +70,16 @@ export default {
 <template>
   <div>
     <me-row>
-      <me-button shape="round" v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+      <me-button shape="round" v-for="type in types" :type="type" icon="icon-plus-square" :key="type">{{type}}</me-button>
     </me-row>
     <me-row>
-      <me-button disabled shape="round" v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+      <me-button disabled shape="round" v-for="type in types" icon="icon-plus-square" :type="type" :key="type">{{type}}</me-button>
     </me-row>
     <me-row>
-      <me-button shape="circle" v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+      <me-button shape="circle" v-for="type in types" :type="type" icon="icon-plus-square" :key="type">{{type}}</me-button>
     </me-row>
     <me-row>
-      <me-button disabled shape="circle" v-for="type in types" :type="type" :key="type">{{type}}</me-button>
+      <me-button disabled shape="circle" v-for="type in types" icon="icon-plus-square" :type="type" :key="type">{{type}}</me-button>
     </me-row>
   </div>
 </template>

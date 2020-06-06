@@ -9,14 +9,19 @@
 </template>
 
 <script>
+import Tools from 'me-view/src/script/tools'
+import emitter from 'me-view/src/mixins/emitter'
 export default {
   name: 'MeTableBody',
+  mixins: [ emitter ],
+  updated () {
+    this.monitorScrollBar()
+  },
   methods: {
-    onScroll () {
-      this.$emit('scroll-body', this.$el.scrollLeft)
-    },
-    handlerDifference (value) {
-      this.$emit('scroll-render-v', value)
+    async monitorScrollBar () {
+      await this.$nextTick()
+      const hasScrollBar = Tools.hasScrollBar(this.$el)
+      this.dispatchUpward('MeTable', 'MeTable--scrollBar', hasScrollBar)
     }
   }
 }

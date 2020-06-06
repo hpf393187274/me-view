@@ -8,7 +8,11 @@
       <slot>
         <div class="me-row me-cross-center label-content-slot">请在插巢填充元素</div>
       </slot>
-      <div class="label-content-error" v-if="errorStatus" v-show="validateStatus==='error'">{{validateMessage}}</div>
+      <div class="label-content-error" v-if="errorHide === false" >
+        <template v-show="validateStatus==='error'">
+          {{validateMessage}}
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -18,7 +22,6 @@ import Tools from 'me-view/src/script/tools'
 import Assert from 'me-view/src/script/assert'
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
-import Validator from 'async-validator'
 export default {
   name: 'MeLabel',
   mixins: [ common, emitter ],
@@ -28,7 +31,7 @@ export default {
       default: () => {},
       validator: value => Type.isArray(value)
     },
-    errorStatus: { type: Boolean, default: true },
+    errorHide: Boolean,
     errorWay: {
       type: String,
       default: 'down',
@@ -141,24 +144,15 @@ export default {
     /**
      * 校验表单元素
      */
-    validate () {
-      if (Type.notArray(this.rules__)) {
-        return Promise.resolve()
+    async validate () {
+      try {
+        const message = await Tools.validate(this.valueCurrent, this.rules__)
+        this.setValidateInfo(message)
+        return Promise.resolve(message)
+      } catch (message) {
+        this.setValidateInfo('error', message)
+        return await Promise.reject(message)
       }
-      const validator = new Validator({ [this.prop]: this.rules__ })
-      const _this = this
-      return new Promise((resolve, reject) => {
-        validator.validate({ [this.prop]: this.valueCurrent }, { firstFields: true })
-          .then(() => {
-            _this.setValidateInfo('success')
-            resolve('success')
-          })
-          .catch(({ errors }) => {
-            const [ error ] = errors
-            _this.setValidateInfo('error', error.message)
-            reject(error.message)
-          })
-      })
     },
     reset () {
       this.$emit('me-label--reset', this.valueDefault)
