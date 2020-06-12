@@ -17,7 +17,7 @@ export default {
     checkbox: Boolean,
     disabled: Boolean,
     highlight: Boolean,
-    value: String,
+    value: [ Number, String ],
     label: String,
     data: { type: Object, default () { return {} } },
     fieldValue: { type: String, default: 'value' },

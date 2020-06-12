@@ -21,7 +21,7 @@ export default {
   components: { [ListItem.name]: ListItem },
   props: {
     data: Array,
-    value: [ String, Array ],
+    value: [ Number, String, Array ],
     checkbox: Boolean,
     highlight: Boolean,
     multiple: Boolean,

@@ -1,30 +1,34 @@
 <template>
-  <div class="me-combo me-flex">
+  <div class="me-combo me-flex" :style="styles">
     <me-input
       :clearable="clearable"
       :disabled="disabled"
-      :width="width"
       :placeholder="placeholder"
       :readonly="readonly__"
+      :align-content="alignContent"
       @blur="handlerBlurInput"
       @click="handlerClickInput"
       ref="input"
       v-model="label__"
     >
       <template #suffix>
-        <me-icon :disabled="disabled" @click="onClickSuffix" @mouseout="closable=true" @mouseover="onMouseoverOther">{{iconSuffix}}</me-icon>
+        <me-icon :disabled="disabled" @click="onClickSuffix" @mouseout="closable=true" @mouseover="handlerMouseoverOther">{{iconSuffix}}</me-icon>
       </template>
     </me-input>
-    <transition appear name="transition-drop">
+    <transition :name="`slide-${slideDirection}`">
       <div
-        :style="{'z-index': visibility? 1000000 : 0, width: width__ + 'px'}"
+        :style="{
+          'z-index': visibility? 1000000 : 0,
+          width: `${width__}px`,
+          visibility: visibility ? '' : 'hidden',
+          top: `${top}px`
+        }"
+        ref="options"
         @mouseout="closable=true"
-        @mouseover="onMouseoverOther"
+        @mouseover="handlerMouseoverOther"
         class="me-column me-border combo-options"
-        v-show="data && data.length > 0 && visibility"
-      >
-        <slot />
-      </div>
+        v-show="rendered === false || visibility"
+      ><slot /></div>
     </transition>
   </div>
 </template>
@@ -44,6 +48,9 @@ export default {
       valueSingle: {},
       valueMultiple: [],
       width__: undefined,
+      thisTop: undefined,
+      thisHeight: undefined,
+      optionsHeight: undefined,
       dataFlat: [],
       readonly__: this.readonly || this.multiple,
       /** input 失焦 移入 body 区域 */
@@ -51,12 +58,19 @@ export default {
     }
   },
   mounted () {
-    if (this.rendered) {
-      this.rendered = false
-      this.$nextTick(() => {
+    this.$nextTick(() => {
+      this.thisTop = this.$el.offsetTop
+      this.thisHeight = this.$el.clientHeight
+      if (this.rendered === false) {
+        this.optionsHeight = this.$refs.options.clientHeight
         this.rendered = true
-      })
-    }
+      }
+    })
+  },
+  updated () {
+    this.$nextTick(() => {
+      this.thisTop = this.$el.offsetTop
+    })
   },
   created () {
     this.deepFlatData(this.data, true)
@@ -67,6 +81,25 @@ export default {
   computed: {
     iconSuffix () {
       return this.visibility ? 'icon-angle_down' : 'icon-angle_up'
+    },
+    length () {
+      return this.dataFlat.length
+    },
+    top () {
+      if (this.slideDirection === 'up') {
+        if (this.thisTop > 0 && this.thisHeight > 0) {
+          return this.thisTop + this.thisHeight
+        }
+        return undefined
+      }
+      return this.thisTop - this.optionsHeight
+    },
+    styles () {
+      const width = this.width
+      if (width) {
+        return { width, flex: '0 1 auto' }
+      }
+      return { }
     }
   },
   watch: {
@@ -75,7 +108,7 @@ export default {
       if (newValue) {
         this.rendered = true
         this.width__ = this.$refs.input.$el.scrollWidth
-        this.onFocusInput()
+        this.handlerFocusInput()
       }
     },
     value () {
@@ -109,24 +142,31 @@ export default {
       }
     },
     findItem (value) {
-      return this.dataFlat.find(item => Reflect.get(item, this.fieldValue) === value)
+      return this.dataFlat.find(item => this.uniqueValue(item) === value)
     },
     initValueSingle (value) {
+      if (Tools.isBlank(value)) {
+        if (Tools.notBlank(this.defaultValue)) {
+          value = this.defaultValue
+        } else if (this.defaultIndex >= 0 && this.defaultIndex <= this.length) {
+          value = this.uniqueValue(this.dataFlat[this.defaultIndex])
+        }
+      }
       let data = this.findItem(value)
       if (Type.notObject(data)) { data = {} }
       Object.assign(this.valueSingle, data)
-      this.label__ = Reflect.get(data, this.fieldLabel)
-      this.value__ = Reflect.get(data, this.fieldValue)
+      this.label__ = this.uniqueLabel(data)
+      this.value__ = this.uniqueValue(data)
     },
     initValueMultiple (value) {
       this.label__ = []
       this.value__ = []
       const list = Type.isArray(value) ? [ ...value ] : [ value || '' ]
-      this.valueMultiple = this.data.filter(item => list.includes(Reflect.get(item, this.fieldValue)))
+      this.valueMultiple = this.data.filter(item => list.includes(this.uniqueValue(item)))
 
       for (const item of this.valueMultiple) {
-        this.label__.push(Reflect.get(item, this.fieldLabel))
-        this.value__.push(Reflect.get(item, this.fieldValue))
+        this.label__.push(this.uniqueLabel(item))
+        this.value__.push(this.uniqueValue(item))
       }
     },
     initValue (value) {
@@ -135,18 +175,20 @@ export default {
     },
     isSelected (value) {
       const list = this.multiple ? this.valueMultiple : [ this.valueSingle ]
-      return list.findIndex(item => value === Reflect.get(item, this.fieldValue)) !== -1
+      return list.findIndex(item => value === this.uniqueValue(item)) !== -1
     },
     onClickSuffix () {
       this.visibility = !this.visibility
     },
+    uniqueValue (data = {}) { return Reflect.get(data, this.fieldValue) },
+    uniqueLabel (data = {}) { return Reflect.get(data, this.fieldLabel) },
     handlerClickInput () {
       this.readonly__ && this.onClickSuffix()
     },
     selectSingle (data = {}) {
       this.visibility = false
-      this.label__ = Reflect.get(data, this.fieldLabel)
-      this.value__ = Reflect.get(data, this.fieldValue)
+      this.label__ = this.uniqueLabel(data)
+      this.value__ = this.uniqueValue(data)
       this.valueSingle = { ...data }
     },
     handlerChange (data, index) {
@@ -167,23 +209,23 @@ export default {
       Tools.arrayRemove(this.valueMultiple, index).catch(error => { console.debug(error) })
     },
     handleMultiplPush (data) {
-      this.label__.push(Reflect.get(data, this.fieldLabel))
-      this.value__.push(Reflect.get(data, this.fieldValue))
+      this.label__.push(this.uniqueLabel(data))
+      this.value__.push(this.uniqueValue(data))
       this.valueMultiple.push({ ...data })
     },
     selectMultiple (data) {
-      const index = this.valueMultiple.findIndex(item => item[this.fieldValue] === data[this.fieldValue])
+      const index = this.valueMultiple.findIndex(item => this.uniqueValue(item) === this.uniqueValue(data))
       index >= 0 ? this.handleMultipleRemove(index) : this.handleMultiplPush(data)
     },
     handlerBlurInput () {
       this.closable && (this.visibility = false)
     },
-    onFocusInput () {
+    handlerFocusInput () {
       this.$refs.input.$emit('focus-input')
     },
-    onMouseoverOther () {
+    handlerMouseoverOther () {
       this.closable = false
-      this.onFocusInput()
+      this.handlerFocusInput()
     }
   }
 }

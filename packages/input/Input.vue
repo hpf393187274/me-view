@@ -34,8 +34,11 @@ import Tools from 'me-view/src/script/tools'
 import Type from 'me-view/src/script/type'
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
-const types = [ 'text', 'number', 'email', 'password' ]
-
+const typeNumberEnum = [ 'number', 'integer', 'float' ]
+const typeEnum = [
+  'text', 'email', 'password', ...typeNumberEnum
+]
+const alignEnum = [ 'left', 'center', '' ]
 export default {
   name: 'MeInput',
   mixins: [ common, emitter ],
@@ -46,8 +49,9 @@ export default {
     required: Boolean,
     disabled: Boolean,
     clearable: Boolean,
+    alignContent: { type: String, default: 'left', validator: value => alignEnum.includes(value) },
     width: String,
-    type: { type: String, default: 'text', validator: value => types.includes(value) },
+    type: { type: String, default: 'text', validator: value => typeEnum.includes(value) },
     value: [ Number, String, Array ],
     rules: Array,
     min: Number,
@@ -82,7 +86,10 @@ export default {
     this.$on('focus-input', this.onFocusInput)
     this.listenerUpward([ 'MeLabel' ], 'me-label--status', status => { this.validateStatus = status })
     this.handlerLableEvent(() => {
-      this.listenerUpward([ 'MeLabel' ], 'me-label--reset', this.valueUpdate)
+      this.listenerUpward([ 'MeLabel' ], 'me-label--reset', value => {
+        this.valueUpdate(value)
+        this.$emit('change', this.value__)
+      })
     })
   },
   computed: {
@@ -104,7 +111,8 @@ export default {
     styleInput () {
       return {
         'padding-left': `${this.left}px`,
-        'padding-right': `${this.right}px`
+        'padding-right': `${this.right}px`,
+        'text-align': this.alignContent
       }
     },
     styles () {
@@ -135,7 +143,7 @@ export default {
   methods: {
     convertType (value) {
       if (Tools.isBlank(value)) { return value }
-      if (this.type === 'number' && /^(-?\d+)(\.\d+)?$/.test(value)) {
+      if (typeNumberEnum.includes(this.type) && /^(-?\d+)(\.\d+)?$/.test(value)) {
         // 转换为数字类型
         return Number(value)
       }
@@ -146,7 +154,7 @@ export default {
       this.value__ = newValue
       if (Type.isArray(this.rules__) && Tools.notBlank(this.rules__)) {
         try {
-          await Tools.validate(this.value__, this.rules__)
+          await Tools.validate(undefined, this.value__, this.rules__)
           console.debug(`me-input valueUpdate -> type=${this.type}, then`)
         } catch (message) {
           console.debug(`me-input valueUpdate -> type=${this.type}, catch message=${message}`)

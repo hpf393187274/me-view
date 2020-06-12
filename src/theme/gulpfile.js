@@ -13,10 +13,10 @@ function compile () {
     .pipe(dest('./lib'))
 }
 
-function copyfont () {
-  return src('./src/fonts/**')
+function copyIconfont () {
+  return src('./fonts/**')
     .pipe(cssmin())
     .pipe(dest('./lib/fonts'))
 }
 
-exports.build = series(compile, copyfont)
+exports.build = series(compile, copyIconfont)

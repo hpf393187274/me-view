@@ -24,6 +24,6 @@ export default {
      *
      * @param {String} value
      */
-    isBoolean (value) { return Tools.notEmpty(value) }
+    isBoolean (value) { return Tools.notBlank(value) }
   }
 }

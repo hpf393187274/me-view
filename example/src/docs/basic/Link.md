@@ -8,6 +8,7 @@
   <template v-for="(item,index) in list" >
     <me-link :key="index" :url="item.url" :target="item.target">{{item.text}}</me-link>
   </template>
+  <me-link icon="icon-minus-square">我是 link</me-link>
 </div>
 </template>
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <a :class="class__" @click="handlerClick" href="javascript:void(0)">
+  <a :class="class__" :title="title" @click="handlerClick" href="javascript:void(0)">
     <me-icon v-if="isBoolean(icon)">{{icon}}</me-icon>
     <slot />
   </a>
@@ -13,6 +13,7 @@ export default {
   mixins: [ common ],
   props: {
     icon: String,
+    title: { type: String, default: '' },
     target: { type: String, default: '_blank', validator: value => [ '_blank', '_parent', '_self', '_top' ].includes(value) },
     url: String
   },

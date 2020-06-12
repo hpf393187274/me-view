@@ -9,6 +9,7 @@
       :disabled="nodeNumber === 0"
       :header-label="headerLabel"
       :lazy="lazy"
+      :indent-size="indentSize"
       :expandable="expandable"
       :nodeNumber="nodeNumber"
       :statistics="statistics"
@@ -36,6 +37,7 @@
           :click-checked="clickChecked"
           :key="uniqueValue(node)"
           :lazy="lazy"
+          :indent-size="indentSize"
           :parent-grandson="parentGrandson__"
           :statistics="statistics"
           :highlight="highlight"
@@ -148,12 +150,12 @@ export default {
     },
     setChecked (target, checked = false, deep = false) {
       if (Tools.isBlank(target)) {
-        return this.handlerNodeCheck(checked)
+        return this.handlerNodeCheck(checked, deep)
       }
       const uniqueValue = Type.isObject(target) ? this.uniqueValue(target) : target
       const targetNode = this.nodesMap.get(uniqueValue)
       if (targetNode && targetNode.component) {
-        targetNode.component.handlerNodeCheck(checked)
+        targetNode.component.handlerNodeCheck(checked, deep)
       }
     },
     removeNode (value) {

@@ -116,10 +116,12 @@ export default {
         this.dispatchParent('notification-parent')
       }
     },
-    handlerNodeCheck (value) {
+    handlerNodeCheck (value, deep = true) {
       this.setCheckedAll(value)
       if (this.checkbox === true && this.checkedStrictly === true) {
-        this.dispatch('broadcast-children', value)
+        if (deep === true) {
+          this.dispatch('broadcast-children', value)
+        }
         this.dispatchParent('notification-parent')
       }
     },

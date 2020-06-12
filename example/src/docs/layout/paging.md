@@ -28,14 +28,14 @@ export default {
       pageNum = {{info.pageNum}}, pageSize = {{info.pageSize}}
       <me-button @click="total = 10000">变更</me-button>
     </div>
-    <me-paging :total="total" border @change-page="handlerPaging"/>
+    <me-paging :total="total" :page-size="info.pageSize" v-model="info.pageNum" border @change-page="handlerPaging"/>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      total: undefined,
+      total: 500,
       info: {
         pageNum: 1,
         pageSize: 10

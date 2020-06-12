@@ -1,7 +1,7 @@
 <template>
   <div class="tree-node-body" >
     <div :style="styleIndent" :title="nodeLabel" :class="classes">
-      <me-icon @click="doExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
+      <me-icon @click="handlerExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
       <me-checkbox :checkedHalf="checkedHalf" :value="checkedAll" @click="handlerNodeCheck" v-if="checkbox" />
       <div @click="handlerClickLabel" class="me-row me-flex me-cross-center tree-node-label">
         <slot :data="data" name="node-label">
@@ -30,6 +30,7 @@
         :click-expanded="clickExpanded"
         :click-checked="clickChecked"
         :indent="indent__"
+        :indent-size="indentSize"
         :key="uniqueValue(node)"
         :lazy="lazy"
         :level="level + 1"
@@ -64,11 +65,11 @@ export default {
     level: { type: Number, default: 1 }
   },
   created () {
-    this.renderFirst = this.nodeBranch && (this.expandable === false || this.expandedAll || this.expandedLevel >= this.level)
-
-    this.listenerParent('broadcast-children', value => {
-      this.setCheckedAll(value)
-      this.dispatch('broadcast-children', value)
+    this.initRenderFirst()
+    this.initExpanded()
+    this.listenerParent('broadcast-children', checked => {
+      this.setCheckedAll(checked)
+      this.dispatch('broadcast-children', checked)
     })
 
     this.listener('notification-parent', this.handlerChildrenNotification)
@@ -85,7 +86,7 @@ export default {
   },
   data () {
     return {
-      expanded__: this.expandable === false || this.expandedAll || this.expandedLevel >= this.level,
+      expanded__: false,
       statusHighlight: false,
       /**
        * 第一次渲染
@@ -109,7 +110,7 @@ export default {
     },
     styleIndent () {
       return {
-        'padding-left': `${this.indent__ * 16}px`
+        'padding-left': `${this.indent__ * this.indentSize}px`
       }
     },
     indent__ () {
@@ -140,6 +141,23 @@ export default {
     }
   },
   methods: {
+    initExpanded () {
+      if (this.checkbox === true) {
+        this.setExpanded(true)
+      }
+      this.setExpanded(this.expandable === false || this.expandedAll || this.expandedLevel >= this.level)
+    },
+    setExpanded (value) {
+      this.expanded__ = value
+    },
+    initRenderFirst () {
+      if (this.checkbox === true) {
+        return (this.renderFirst = true)
+      }
+      if (this.nodeBranch === true) {
+        this.renderFirst = this.expandable === false || this.expandedAll || this.expandedLevel >= this.level
+      }
+    },
     /**
     * 获取节点数据
     */
@@ -157,9 +175,9 @@ export default {
     /**
      * 展开子节点
      */
-    doExpanded () {
+    handlerExpanded () {
       if (this.expandable === false) { return }
-      this.expanded__ = !this.expanded__
+      this.setExpanded(!this.expanded__)
       if (this.renderFirst === false) {
         this.renderFirst = true
       }
@@ -198,7 +216,7 @@ export default {
     },
     handlerClickLabel () {
       if (this.nodeBranch && this.clickExpanded) {
-        this.doExpanded()
+        this.handlerExpanded()
       }
       this.statusHighlight = !this.statusHighlight
       this.dispatchUpward('MeTree', 'me-tree-node--click', this)

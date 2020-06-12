@@ -368,21 +368,19 @@ export default class Tools {
     return bool
   }
 
-  static validate (value, rules = []) {
-    if (Type.notArray(rules)) {
-      return Promise.resolve()
-    }
-    const key = this.UUId()
+  static async validate (key = this.UUId(), value, rules = []) {
+    if (Type.notArray(rules)) { return 'success' }
     const validator = new Validator({ [key]: rules })
-    return new Promise((resolve, reject) => {
-      validator.validate({ [key]: value }, { firstFields: true })
-        .then(() => {
-          resolve('success')
-        })
-        .catch(({ errors }) => {
-          const [ error ] = errors
-          reject(error.message)
-        })
-    })
+    try {
+      await validator.validate({ [key]: value }, { firstFields: true })
+      return 'success'
+    } catch ({ errors }) {
+      const [ error ] = errors
+      await Promise.reject(error.message)
+    }
+  }
+
+  static clientHeight () {
+    return document.body.clientHeigh
   }
 }

@@ -2,27 +2,23 @@
 	color: $color;
 	background-color: $background;
 	border-color: $border;
-	.#{$prefix}-icon { color: $color;}
 }
 
 @mixin btn-hover($background: none, $color: none, $border: none){
 	color: $color !important;
 	background-color: $background !important;
 	border-color: $border !important;
-	.#{$prefix}-icon { color: $color !important;}
 }
 
 @mixin btn-focus($background: none, $color: none, $border: none){
 	color: $color !important;
 	background-color: $background !important;
 	border-color: $border !important;
-	.#{$prefix}-icon { color: $color;}
 }
 
 @mixin btn-plain($color: none, $background: none){
 	color: $color;
 	background-color: $background;
-	.#{$prefix}-icon { color: $color;}
 }
 
 
@@ -43,6 +39,7 @@
 	.button-inner {
 		margin: 0px 2px;
 	}
+	.#{$prefix}-icon { color: inherit; }
 }
 
 

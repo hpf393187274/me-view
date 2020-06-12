@@ -1,11 +1,11 @@
 <template>
   <div class="me-column tree-node-header">
-    <div :style="{'padding-left': `${indent__ * 16}px`}" class="me-row tree-node-item">
+    <div :style="{'padding-left': `${indent__ * indentSize}px`}" class="me-row tree-node-item">
       <me-checkbox :checkedHalf="checkedHalf" :disabled="disabled" :value="checkedAll" @click="clickCheckbox" v-if="checkbox" />
       <div class="me-row me-flex me-cross-center tree-node-label">
         <slot name="node-label">{{headerLabel}}</slot>
       </div>
-      <div class="tree-node-statistics" v-if="statistics && nodeNumber!==0">
+      <div class="tree-node-statistics" v-if="statistics && nodeNumber !== 0">
         <span>{{checkedNumber}}</span>
         <span>/</span>
         <span>{{nodeNumber}}</span>

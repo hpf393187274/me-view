@@ -1,8 +1,8 @@
 {
   "name": "me-view",
-  "version": "1.1.73",
+  "version": "1.2.21",
   "private": false,
-  "main": "lib/me-view.common.js",
+  "main": "lib/index.common.js",
   "files": [
     "lib",
     "src",
@@ -15,7 +15,8 @@
     "build:common": "webpack --config build/webpack.common.js",
     "build:theme": "gulp build --gulpfile src/theme/gulpfile.js && cp-cli src/theme/lib theme",
     "build:component": "webpack --config build/webpack.component.js",
-    "package": "vue-cli-service build --dest lib --target lib ./src/index.js",
+    "report": "vue-cli-service build --dest lib --target lib --name index --report ./src/index.js",
+    "package": "vue-cli-service build --dest lib --target lib --name index ./src/index.js",
     "build:all": "npm run package && npm run build:component && npm run build:tools && npm run build:theme && npm run build:common",
     "lint": "vue-cli-service lint"
   },
@@ -52,6 +53,7 @@
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-cssmin": "^0.2.0",
+    "gulp-header": "^2.0.9",
     "gulp-sass": "^4.0.2",
     "lint-staged": "^9.5.0",
     "markdown-it": "^8.4.2",

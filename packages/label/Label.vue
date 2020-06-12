@@ -1,6 +1,6 @@
 <template>
   <div :class="classes" :style="styles">
-    <label :style="labelStyle" class="label-title" v-if="isBoolean(title)">
+    <label :style="labelStyles" class="label-title" v-if="isBoolean(title)">
       <span style="color:red;" v-if="required__">*</span>
       {{title}}：
     </label>
@@ -41,6 +41,7 @@ export default {
     prop: String,
     required: Boolean,
     title: String,
+    labelWidth: String,
     labelStyle: { type: Object, default () { return {} } },
     readonly: Boolean
   },
@@ -83,6 +84,12 @@ export default {
         return { width: this.width, flex: '0 1 auto' }
       }
       return { }
+    },
+    labelStyles () {
+      return {
+        ...this.labelStyle,
+        width: this.labelWidth
+      }
     }
   },
   mounted () {
@@ -146,7 +153,7 @@ export default {
      */
     async validate () {
       try {
-        const message = await Tools.validate(this.valueCurrent, this.rules__)
+        const message = await Tools.validate(this.prop, this.valueCurrent, this.rules__)
         this.setValidateInfo(message)
         return Promise.resolve(message)
       } catch (message) {

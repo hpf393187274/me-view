@@ -1,5 +1,8 @@
 .#{$prefix}-paging {
 	padding: 5px;
+	.#{$prefix}-input {
+    margin: 0px;
+  }
 	span {
 		min-width: 30px;
 		min-height: 30px;
@@ -22,12 +25,5 @@
 	.is-selected {
 		color: $color-selected;
 		border-color: $color-selected;
-	}
-
-	input {
-		text-align: center;
-	}
-	.#{$prefix}-input {
-		margin: 0px 5px;
 	}
 }

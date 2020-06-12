@@ -1,8 +1,8 @@
 <template>
-  <div class="me-row me-center me-paging me-border">
+  <div class="me-row me-center me-paging">
     <span class="me-cursor-pointer" :class="itemClass()" @click="setCurrentPage(--currentPage)" title="上一页">
       <template v-if="isBoolean(prevText)">{{prevText}}</template>
-      <me-icon v-else>icon-angle_left</me-icon>
+      <me-icon v-else title="上一页">icon-angle_left</me-icon>
     </span>
     <div class="me-row me-center me-flex">
       <template v-for="value in visibleLeft">
@@ -19,11 +19,12 @@
     </div>
     <span :class="itemClass()" @click="setCurrentPage(++currentPage)" title="下一页">
       <template v-if="isBoolean(nextText)">{{nextText}}</template>
-      <me-icon v-else>icon-angle_right</me-icon>
+      <me-icon v-else title="下一页">icon-angle_right</me-icon>
     </span>
-    <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{`${currentPage} / ${pageNumber}`}}</span>
+    <me-combo-select :align-content="alignContent" slide-direction="down" width="80px" readonly :data="pageSizes" v-model="pageSize__" />
+    <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{` 第 ${currentPage} 页 / 共 ${pageNumber} 页 `}}</span>
     <span :class="itemClass()">共 {{total}} 条</span>
-    <me-input type="number" width="40px" v-model="currentPage" :rules="rules" />
+    <me-input :align-content="alignContent" type="number" width="40px" v-model="currentPage" :rules="rules" />
   </div>
 </template>
 
@@ -38,7 +39,19 @@ export default {
     border: Boolean,
     total: { type: Number, default: 0, validator: value => Type.isNumber(value) },
     pageSize: { type: Number, default: 10, validator: value => Type.isNumber(value) && value !== 0 },
-    pageSizes: { type: Number, default: 10 },
+    pageSizes: {
+      type: Array,
+      default () {
+        return [
+          { value: 10, label: '10' },
+          { value: 15, label: '15' },
+          { value: 20, label: '20' },
+          { value: 30, label: '30' },
+          { value: 40, label: '40' },
+          { value: 50, label: '50' }
+        ]
+      }
+    },
     prevText: { type: String, default: '' },
     nextText: { type: String, default: '' },
     sizeSide: { type: Number, default: 2 },
@@ -47,6 +60,8 @@ export default {
   data () {
     return {
       currentPage: this.value,
+      pageSize__: this.pageSize,
+      alignContent: 'center',
       rules: [ ]
     }
   },
@@ -119,7 +134,7 @@ export default {
       return result
     },
     info () {
-      return { pageNum: this.currentPage, pageSize: this.pageSize }
+      return { pageNum: this.currentPage, pageSize: this.pageSize__ }
     }
   },
   watch: {
@@ -127,10 +142,14 @@ export default {
       this.$emit('change-page', { ...this.info })
       this.$emit('change-page-num', { ...this.info })
     },
-    pageSize () {
+    pageSize__ (value) {
       this.$emit('change-page', { ...this.info })
       this.$emit('change-page-size', { ...this.info })
+      this.$emit('update:page-size', value)
       this.handlerChangeRule()
+    },
+    pageSize (value) {
+      this.pageSize__ = value
     },
     total () {
       this.handlerChangeRule()

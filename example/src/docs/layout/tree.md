@@ -13,7 +13,8 @@
       <me-button @click="handlerCheckedData">选中数据</me-button>
       <me-button @click="handlerCheckedRemove">移出选中的数据</me-button>
     </div>
-    <me-tree ref="tree" highlight action :data="data" :expandable="false" checkbox statistics header header-label="全选">
+    <me-tree expandedAll ref="tree" highlight action :data="data"  checkbox statistics header header-label="全选">
+      
     </me-tree>
   </div>
 </template>

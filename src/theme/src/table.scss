@@ -22,9 +22,10 @@
 	.table-cell {
 		min-width: $table-cell--width-min !important;
 		min-height: $table-cell--height-min !important;
-		> * {
-			margin: 0px 1px;
+		:nth-child(n) {
+			margin-right: $table-cell-children--margin;
 		}
+		:last-child { margin-right: 0px; }
 	}
 
 	.table-wrapper {
@@ -37,13 +38,11 @@
 			text-overflow: ellipsis;/*文字隐藏后添加省略号*/
 			white-space: nowrap;/*强制不换行*/
 		}
-		.cell-sort {
-			padding-top: 3px;
-		}
+		.cell-sort { padding-top: 3px; }
 		.table-body { 
 			overflow: auto;
 			.#{$prefix}-icon {
-				font-size: $table-body-icon--font-size ;
+				font-size: $table-body-icon--font-size;
 			}
 			tr {
 				&:nth-child(odd){ background-color: $table-body-row-odd !important; }
@@ -63,7 +62,7 @@
 				background-color: $table-header;
 			}
 			.#{$prefix}-icon {
-				font-size: $table-header-icon--font-size ;
+				font-size: $table-header-icon--font-size;
 			}
 		}
 	}
