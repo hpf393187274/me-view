@@ -45,15 +45,26 @@ export default {
     }
   },
   methods: {
+    handlerClick () {
+      this.$copy(this.$el.querySelector('.table-cell'), {
+        prompt: this.clipboardPrompt,
+        message: this.clipboardMessage
+      })
+    },
     renderRoot (h, children) {
+      const attrs = { title: this.fieldValue }
+      if (this.clipboard === true) {
+        Reflect.set(attrs, 'data-clipboard-text', this.fieldValue)
+      }
       return h('td', { style: this.styles }, [
         h('div', {
           class: [
             'table-cell me-row me-cross-center',
             `me-main-${this.layout}`
           ],
-          attr: {
-            title: this.fieldValue
+          attrs,
+          on: {
+            click: this.handlerClick
           }
         }, [ ...[ children ].flat() ])
       ])

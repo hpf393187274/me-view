@@ -18,17 +18,18 @@
         <me-icon @click="handlerCancel" v-if="closable">icon-cross</me-icon>
       </slot>
     </div>
-    <me-line-h />
     <div @mousedown.stop class="me-row me-flex dialog-body">
       <slot />
     </div>
-    <me-line-h />
-    <div @mousedown.stop class="me-row dialog-footer">
-      <slot name="footer">
-        <me-button @click="handlerCancel" width="80px">取 消</me-button>
-        <me-button :disabled="btnDisabledConfirm" @click="handlerConfirm" type="primary" width="80px">确 定</me-button>
-      </slot>
-    </div>
+    <template v-if="hideFooter !== true">
+      <me-line-h />
+      <div @mousedown.stop class="me-row dialog-footer">
+        <slot name="footer">
+          <me-button @click="handlerCancel">取 消</me-button>
+          <me-button :disabled="btnDisabledConfirm" @click="handlerConfirm" type="primary">确 定</me-button>
+        </slot>
+      </div>
+    </template>
   </me-modal>
 </template>
 
@@ -50,6 +51,7 @@ export default {
     minWidth: String,
     height: String,
     width: String,
+    hideFooter: Boolean,
     draggable: { type: Boolean, default: true },
     closable: { type: Boolean, default: true }
   },

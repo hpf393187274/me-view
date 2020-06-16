@@ -15,15 +15,23 @@ export default {
       Vue.component(item.name, item)
     }
 
-    Vue.prototype.$copy = function (classes) {
-      const _this = this
-      const clipboard = new Clipboard(classes)
+    Vue.prototype.$copy = function (target, { prompt = false, message = '复制成功' } = {}) {
+      const clipboard = new Clipboard(target)
       clipboard.on('success', () => {
-        _this.$message.info('复制成功')
+        if (prompt === true) {
+          this.$message.info(message)
+        } else {
+          console.info('Clipboard ----> copy error：', message)
+        }
         clipboard.destroy()
       })
       clipboard.on('error', () => {
-        _this.$message.error('该浏览器不支持自动复制')
+        const message = '该浏览器不支持自动复制'
+        if (prompt === true) {
+          this.$message.error(message)
+        } else {
+          console.warn('Clipboard ----> copy error：', message)
+        }
         clipboard.destroy()
       })
     }

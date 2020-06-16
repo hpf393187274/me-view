@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <template v-for="item in data">
-      <div class="item" :title="item" :data-clipboard-text="item" :key="item" @click="$copy('.item')">
+      <div class="item" :title="item" :data-clipboard-text="item" :key="item" @click="$copy('.item', { prompt: true})">
         <me-icon>{{item}}</me-icon>
       </div>
     </template>
@@ -33,13 +33,6 @@ export default {
       font-size: 40px !important;
       // color: red;
     }
-    // .title {
-    //   /* width: 80%; */
-    //   margin-bottom: 10px;
-    //   overflow: hidden; /*自动隐藏文字*/
-    //   text-overflow: ellipsis !important;/*文字隐藏后添加省略号*/
-    //   white-space: nowrap;/*强制不换行*/
-    // }
   }
 }
 </style>

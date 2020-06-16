@@ -1,18 +1,14 @@
 import Tools from 'me-view/src/script/tools'
 import Assert from 'me-view/src/script/assert'
-function findChildren (componentName, callback = () => { }) {
-  const children = this.$children
-  if (!children || children.length === 0) { return }
+
+function broadcast (componentName, eventName, params) {
   this.$children.forEach(child => {
     const name = child.$options.name
     if (name === componentName) {
-      try {
-        callback && callback(child)
-      } catch (error) {
-        console.debug(`组件 ${name} 执行 callback error, message：${error}`)
-      }
+      child.$emit.apply(child, [ eventName ].concat(params))
     } else {
-      findChildren.call(child, componentName, callback)
+      // todo 如果 params 是空数组，接收到的会是 undefined
+      broadcast.apply(child, [ componentName, eventName ].concat([ params ]))
     }
   })
 }
@@ -22,9 +18,6 @@ export default {
     existParentComponent (componentNames) {
       const parent = this.findParentComponent(componentNames)
       return Tools.notEmpty(parent)
-    },
-    findChildrenComponent (componentName, callback = () => { }) {
-      findChildren.call(this, componentName, callback)
     },
     findParentComponent (componentNames) {
       Assert.isArray(componentNames, '必须是一个数组')
@@ -73,6 +66,9 @@ export default {
         this.$off.apply(parent, [ eventName, callback ])
         this.$on.apply(parent, [ eventName, callback ])
       }
+    },
+    broadcast (componentName, eventName, params) {
+      broadcast.call(this, componentName, eventName, params)
     }
   }
 }

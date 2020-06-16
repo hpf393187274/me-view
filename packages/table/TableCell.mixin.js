@@ -11,6 +11,9 @@ export default {
     label: String,
     index: Number,
     field: String,
+    clipboard: Boolean, /** 是否支持剪切 */
+    clipboardPrompt: Boolean,
+    clipboardMessage: String,
     type: {
       type: String, default: ''
     },

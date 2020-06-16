@@ -25,7 +25,7 @@
         <me-label title="省份">
           <me-combo-select clearable :data="provinceList" v-model="form.province"></me-combo-select>
         </me-label>
-        <!-- <me-label title="主机" prop="domain">
+        <me-label title="主机" prop="domain">
           <me-input clearable v-model="form.domain"></me-input>
         </me-label>
         <me-label title="端口" prop="port">
@@ -42,7 +42,7 @@
         </me-label>
         <me-label class="me-grid-self-center">
           <me-button plain type="primary">变更数据源</me-button>
-        </me-label> -->
+        </me-label>
       </me-form>
     </me-dialog>
     <me-button @click="statusTable=!statusTable">Dialog - Table</me-button>

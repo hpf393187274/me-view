@@ -15,20 +15,12 @@
         <me-icon :disabled="disabled" @click="onClickSuffix" @mouseout="closable=true" @mouseover="handlerMouseoverOther">{{iconSuffix}}</me-icon>
       </template>
     </me-input>
-    <transition :name="`slide-${slideDirection}`">
-      <div
-        :style="{
-          'z-index': visibility? 1000000 : 0,
-          width: `${width__}px`,
-          visibility: visibility ? '' : 'hidden',
-          top: `${top}px`
-        }"
-        ref="options"
+    <transition name="transition-drop">
+      <combo-dropdown
+        :style="{ 'z-index': visibility? 1000000 : 0 }"
         @mouseout="closable=true"
         @mouseover="handlerMouseoverOther"
-        class="me-column me-border combo-options"
-        v-show="rendered === false || visibility"
-      ><slot /></div>
+        v-show="visibility"><slot /></combo-dropdown>
     </transition>
   </div>
 </template>
@@ -38,39 +30,21 @@ import ComboCommon from './combo.common'
 import emitter from 'me-view/src/mixins/emitter'
 import Type from 'me-view/src/script/type'
 import Tools from 'me-view/src/script/tools'
+import ComboDropdown from './ComboDropdown'
 export default {
   mixins: [ emitter, ComboCommon ],
+  components: { ComboDropdown },
   name: 'MeCombo',
   data () {
     return {
       visibility: false,
-      rendered: false,
       valueSingle: {},
       valueMultiple: [],
-      width__: undefined,
-      thisTop: undefined,
-      thisHeight: undefined,
-      optionsHeight: undefined,
       dataFlat: [],
       readonly__: this.readonly || this.multiple,
       /** input 失焦 移入 body 区域 */
       closable: true
     }
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.thisTop = this.$el.offsetTop
-      this.thisHeight = this.$el.clientHeight
-      if (this.rendered === false) {
-        this.optionsHeight = this.$refs.options.clientHeight
-        this.rendered = true
-      }
-    })
-  },
-  updated () {
-    this.$nextTick(() => {
-      this.thisTop = this.$el.offsetTop
-    })
   },
   created () {
     this.deepFlatData(this.data, true)
@@ -85,15 +59,6 @@ export default {
     length () {
       return this.dataFlat.length
     },
-    top () {
-      if (this.slideDirection === 'up') {
-        if (this.thisTop > 0 && this.thisHeight > 0) {
-          return this.thisTop + this.thisHeight
-        }
-        return undefined
-      }
-      return this.thisTop - this.optionsHeight
-    },
     styles () {
       const width = this.width
       if (width) {
@@ -106,8 +71,7 @@ export default {
     visibility (newValue) {
       this.$emit('me-attribute--visibility-change', newValue)
       if (newValue) {
-        this.rendered = true
-        this.width__ = this.$refs.input.$el.scrollWidth
+        this.broadcast('ComboDropdown', 'ComboDropdown--update-popper')
         this.handlerFocusInput()
       }
     },
