@@ -50,7 +50,7 @@ export default {
     this.deepFlatData(this.data, true)
     this.initValue(this.value)
     this.listenerUpward([ 'MeLabel' ], 'me-label--reset', this.initValue)
-    this.listener('me-combo--select', this.handlerChange)
+    this.listener('me-combo--select', this.handlerSelectChange)
   },
   computed: {
     iconSuffix () {
@@ -134,6 +134,12 @@ export default {
       }
     },
     initValue (value) {
+      if (Tools.isBlank(this.dataFlat)) { return }
+      if (
+        Tools.isBlank(value) &&
+        Tools.isBlank(this.defaultValue) &&
+        (Tools.isEmpty(this.defaultIndex) || this.defaultIndex < 0 || this.defaultIndex > this.length)
+      ) { return }
       this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
       this.handlerChangeValue(this.value__)
     },
@@ -155,7 +161,7 @@ export default {
       this.value__ = this.uniqueValue(data)
       this.valueSingle = { ...data }
     },
-    handlerChange (data, index) {
+    handlerSelectChange (data, index) {
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
       this.handlerChangeValue(this.value__, data, index)
     },
