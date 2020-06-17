@@ -8,7 +8,7 @@
           <span>{{content}}</span>
         </div>
       </slot>
-      <me-icon @click="$emit('remove', primaryKey)" v-if="closable">icon-cross</me-icon>
+      <me-icon @click="$emit('remove', uniqueValue)" v-if="closable">icon-cross</me-icon>
     </div>
   </transition>
 </template>
@@ -23,7 +23,7 @@ export default {
   props: {
     icon: String,
     content: String,
-    primaryKey: String,
+    uniqueValue: String,
     background: { type: String, default: '#ffffff' },
     type: String,
     duration: { type: Number, default: 2 },
@@ -35,7 +35,7 @@ export default {
   created () {
     this.clearCloseTimer()
     this.closeTimer = setTimeout(() => {
-      this.$emit('remove', this.primaryKey)
+      this.$emit('remove', this.uniqueValue)
     }, this.duration * 1000)
   },
   methods: {

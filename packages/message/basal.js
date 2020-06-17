@@ -21,7 +21,7 @@ Message.newInstance = (options = {}) => {
           if (message.container.length >= this.capacity) {
             Tools.arrayRemove(message.container, 0)
           }
-          message.container.push({ ...options, primaryKey: Tools.UUId() })
+          message.container.push({ ...options, uniqueValue: Tools.UUId() })
         }
 
         modal.$parent.onRemove = onRemove

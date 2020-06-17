@@ -1,5 +1,5 @@
 <template>
-  <me-table ref="tableList" primary-field ="id" checkbox multiple :data="data" :columns="columns" highlight>
+  <me-table ref="tableList" checkbox multiple :data="data" :columns="columns" highlight>
     <template #header>
       <me-button plain type="primary"  @click="height = height + 50"> + 50 </me-button>
       <me-button plain type="primary"  @click="height = height - 50"> - 50 </me-button>

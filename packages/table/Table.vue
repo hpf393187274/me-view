@@ -5,10 +5,9 @@
         <slot name="header" />
       </div>
     </template>
-    <div class="me-flex table-wrapper" v-show="show">
-      <me-table-header :scroll-left="scrollLeft" :style="styleTHead">
+    <div class="me-flex table-wrapper">
+      <me-table-header :style="styleTHead">
         <me-table-row
-          :center="center"
           :checkbox="checkbox"
           :has-index="hasIndex"
           :checked="checkedHeader"
@@ -21,18 +20,17 @@
         />
       </me-table-header>
       <template v-if="length > 0">
-        <me-table-body v-show="rendered" class="me-flex" ref="tableBody">
+        <me-table-body class="me-flex" ref="tableBody">
           <me-table-row
-            :center="center"
             :checkbox="checkbox"
             :columns="columns__"
             :node="item"
             :has-index="hasIndex"
             :highlight="highlight"
             :index="index"
-            :key="getPrimaryValue(item.data) || index"
+            :key="uniqueValue(item.data) || index"
             :multiple="multiple"
-            :primary-field = "primaryField"
+            :field-value = "fieldValue"
             v-for="(item,index) in nodeList"
           />
         </me-table-body>
@@ -53,7 +51,6 @@ import TableRow from './TableRow.vue'
 import TableHeader from './TableHeader.vue'
 import TableBody from './TableBody.vue'
 import emitter from 'me-view/src/mixins/emitter'
-let idSeed = 1
 export default {
   name: 'MeTable',
   mixins: [ emitter ],
@@ -63,18 +60,15 @@ export default {
     [TableBody.name]: TableBody
   },
   props: {
-    field: { type: String, default: '' },
     data: { type: Array, default: () => [] },
     columns: { type: Array, default: () => [] },
     checked: { type: Boolean, default: false },
-    primaryField: { type: String, default: 'id' },
+    fieldValue: { type: String, default: 'id' },
     hasIndex: Boolean,
-    center: Boolean,
     checkbox: Boolean,
     height: [ Number, String ],
     multiple: Boolean,
     width: [ Number, String ],
-    rendered: { type: Boolean, default: true },
     highlight: Boolean
   },
   computed: {
@@ -111,22 +105,16 @@ export default {
   },
   data () {
     return {
-      id__: '',
       columns__: [],
       checkedHeader: this.checked,
       checkedHeaderHalf: false,
       checkedData: {},
       nodeList: [],
-      difference: 0,
-      selectedNodeOld: null,
-      scrollLeft: 0,
       scrollBarWidth: 0,
-      hasScrollBar: false,
-      show: true
+      hasScrollBar: false
     }
   },
   created () {
-    this.id__ = `me-table_${idSeed++}`
     this.initData(this.data)
     this.listener('MeTable-row-checked-true', ({ key, value }) => this.$set(this.checkedData, key, value))
     this.listener('MeTable-row-checked-false', ({ key }) => this.$delete(this.checkedData, key))
@@ -161,20 +149,15 @@ export default {
     sort (field, order = Tools.ASC) {
       Tools.sort(this.nodeList, item => Reflect.get(item.data, field), order)
     },
-    handlerDifference ({ status, size }) {
-      this.difference = status ? size : 0
-    },
     clear () { this.checkedData = {} },
     removeRows (data = []) {
       Tools.forEach(data, item => {
-        const primaryValue = this.getPrimaryValue(data)
-        Reflect.deleteProperty(this.checkedData, primaryValue)
-        Tools.arrayRemove(this.nodeList, target => this.getPrimaryValue(target.data) === primaryValue)
+        const uniqueValue = this.uniqueValue(data)
+        Reflect.deleteProperty(this.checkedData, uniqueValue)
+        Tools.arrayRemove(this.nodeList, target => this.uniqueValue(target.data) === uniqueValue)
       })
     },
-    getPrimaryValue (target) {
-      return Reflect.get(target, this.primaryField)
-    },
+    uniqueValue (data = {}) { return Reflect.get(data, this.fieldValue) },
     getCheckedRows () {
       const values = Object.values(this.checkedData)
       return values && values.map(item => item.data)
@@ -195,7 +178,7 @@ export default {
       console.debug('Table.setCheckedRows -> begin......')
       clear && this.cancelChecked()
       Tools.forEach(data, item => {
-        const uniqueValue = this.getPrimaryValue(item)
+        const uniqueValue = this.uniqueValue(item)
         const node = this.nodeList.find(item => uniqueValue === item.uniqueValue)
         if (node && node.component) {
           node.component.handlerCheckedChange(true)
@@ -210,9 +193,6 @@ export default {
       this.checkedHeaderHalf = false
       this.clear()
       this.nodeList.forEach(({ component }) => { component.handlerCheckedChange(status) })
-    },
-    handlerScrollBody (scrollLeft) {
-      this.scrollLeft = scrollLeft
     },
     handlerSlots () {
       const excludeSlots = [ 'header', 'footer', 'default' ]

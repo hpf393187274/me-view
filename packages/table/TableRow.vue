@@ -36,7 +36,7 @@ export default {
     },
     highlight: Boolean,
     checkedHalf: Boolean,
-    primaryField: String,
+    fieldValue: String,
     checked: { type: Boolean, default: false },
     checkbox: Boolean,
     multiple: Boolean,
@@ -47,7 +47,7 @@ export default {
     const $this = this
     this.$nextTick(() => {
       if ($this.header === false) {
-        $this.node.uniqueValue = $this.getPrimaryValue()
+        $this.node.uniqueValue = $this.uniqueValue
         $this.node.component = $this
       }
     })
@@ -76,7 +76,7 @@ export default {
       return this.node.data
     },
     uniqueValue () {
-      return Reflect.get(this.data, this.primaryField) || this.index
+      return Reflect.get(this.data, this.fieldValue) || this.index
     },
     classes () {
       return [
@@ -85,9 +85,6 @@ export default {
     }
   },
   methods: {
-    getPrimaryValue () {
-      return Reflect.get(this.data, this.primaryField) || this.index
-    },
     handlerRow (checked) {
       if (this.header === false) {
         this.handlerCheckedChange(checked)
@@ -99,7 +96,7 @@ export default {
       console.debug(`Table.row.handlerCheckedChange ->  checked = ${checked}`)
       if (this.header === false) {
         this.node.checked = checked
-        this.dispatchUpward('MeTable', `MeTable-row-checked-${checked}`, { key: this.node.uniqueValue, value: this })
+        this.dispatchUpward('MeTable', `MeTable-row-checked-${checked}`, { key: this.uniqueValue, value: this })
       }
       this.$emit('checked-change', checked, this.data, this)
     }

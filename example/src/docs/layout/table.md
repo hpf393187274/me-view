@@ -52,10 +52,10 @@
 
 ```html
 <template>
-  <me-table :height="height + 'px'" ref="tableList" primary-field ="id" checkbox multiple :data="data" :columns="columns" highlight>
+  <me-table :height="height + 'px'" ref="tableList" field-value ="id" checkbox multiple :data="data" :columns="columns" highlight>
     <template #header>
-      <me-button plain type="primary"  @click="height = height + 50" icon="icon-plus_strong"> 50 </me-button>
-      <me-button plain type="primary"  @click="height = height - 50" icon="icon-minus_strong"> 50 </me-button>
+      <me-button plain type="primary" @click="height = height + 50" icon="icon-plus_strong"> 50 </me-button>
+      <me-button plain type="primary" @click="height = height - 50" icon="icon-minus_strong"> 50 </me-button>
       <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
       <me-button plain type="primary" @click="getCheckedRows">获取选中的数据</me-button>
       <me-button plain type="primary" @click="setCheckedRows">设置选中</me-button>
