@@ -1,5 +1,8 @@
 <template>
-  <me-tree :data="data" highlight :expandable="false" @click-leaf="handleClick" />
+  <div class="me-row me-flex">
+    <me-tree class="layout-left" :data="data" highlight :expandable="false" @click-leaf="handleClick" />
+    <router-view class="layout-right me-flex" />
+  </div>
 </template>
 <script>
 export default {
@@ -68,3 +71,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.layout-left {
+  width: 300px;
+  overflow: auto;
+  margin: 0px 20px;
+}
+
+.layout-right {
+  overflow: auto;
+  padding: 0px 100px;
+}
+</style>

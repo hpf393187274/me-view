@@ -20,9 +20,20 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/doc/guide/install',
+      // redirect: '/doc/guide/install',
       component: () => import('../layout/index.vue'),
-      children: [...children]
+      children: [
+        {
+          path: '/doc',
+          component: () => import('../layout/MainDocs.vue'),
+          children: [...children]
+        },
+        {
+          path: '/demo',
+          component: () => import('../layout/MainDemo.vue'),
+          children: [...children]
+        }
+      ]
     }
   ]
 })
