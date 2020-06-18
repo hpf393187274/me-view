@@ -1,0 +1,24 @@
+.#{$prefix}-list {
+  .list-item {
+    padding: 0px 8px;
+    min-height: 32px;
+    align-items: center;
+    &:nth-child(odd){
+      background: $combo-row-odd;
+    }
+    &:nth-child(even){
+      background: $combo-row-even;
+    }
+    &:hover{
+      cursor: pointer;
+      background-color: $combo-hover;
+    }
+    .list-item-inner {
+      flex: 1;
+    }
+  }
+  
+  &.is-selected {
+    background-color: $combo-active !important;
+  }
+}

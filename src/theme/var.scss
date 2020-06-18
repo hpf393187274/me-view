@@ -1,0 +1,207 @@
+// 选择器前缀
+$prefix                                : me !default;
+$font-size                             : 16px !default;
+$color                                 : #fff !default;
+$color-base                            : rgb(239, 242, 245) !default;
+// 边框主色
+$color-border                          : #e3e5eb !default;
+$color-placeholder                     : #9c9da0 !default;
+// 填充颜色
+$color-fill                            : #F5F6FA !default;
+$color-font                            : #606266 !default;
+// 悬浮的颜色
+$color-hover                           : #96c5f7 !default;
+// 焦点颜色
+$color-focus                           : #96c5f7 !default;
+// 选中的颜色
+$color-selected                        : #96c5f7 !default;
+$color-active                          : #96c5f7 !default;
+$color-disabled                        : #606266 !default;
+// 异常颜色
+$color-error                           : red !default;
+$color-disabled                        : #fff !default;
+$color-disabled-plain                  : #fff !default;
+$color-disabled-border                 : #c0c4cc !default;
+$color-disabled-font                   : #c0c4cc !default;
+$color-disabled-hover                  : #fff !default;
+$color-disabled-hover-font             : $color-disabled-font !default;
+$color-disabled-active                 : #fff !default;
+$color-disabled-active-font            : $color-disabled-font !default;
+$color-disabled-focus                  : #fff !default;
+$color-disabled-focus-font             : $color-disabled-font !default;
+
+
+$color-default                         : #fff !default;
+$color-default-plain                   : #fff !default;
+$color-default-border                  : $color-border !default;
+$color-default-font                    : rgb(37, 36, 36) !default;
+$color-default-hover                   : #ecf5ff !default;
+$color-default-hover-border            : #2d8cf0 !default;
+$color-default-hover-font              : #2d8cf0 !default;
+$color-default-active                  : #ecf5ff !default;
+$color-default-active-border           : #2d8cf0 !default;
+$color-default-active-font             : #2d8cf0 !default;
+$color-default-focus                   : #ecf5ff !default;
+$color-default-focus-border            : #2d8cf0 !default;
+$color-default-focus-font              : #2d8cf0 !default;
+
+
+$color-primary                         : #117ef3 !default;
+$color-primary-plain                   : #FFFFFF !default;
+$color-primary-border                  : #2d8cf0 !default;
+$color-primary-font                    : #fff !default;
+$color-primary-hover                   : $color-primary !default;
+$color-primary-hover-border            : $color-primary !default;
+$color-primary-hover-font              : #f2f2f2 !default;
+$color-primary-active                  : #FFFFFF !default;
+$color-primary-active-border           : #2b85e4 !default;
+$color-primary-active-font             : #f2f2f2 !default;
+$color-primary-focus                   : #2b85e4 !default;
+$color-primary-focus-border            : #2b85e4 !default;
+$color-primary-focus-font              : #f2f2f2 !default;
+
+// color - info
+$color-info                            : #909399 !default;
+$color-info-plain                      : #FFFFFF !default;
+$color-info-border                     : #909399 !default;
+$color-info-font                       : #fff !default;
+$color-info-hover                      : #909399 !default;
+$color-info-hover-border               : #909399 !default;
+$color-info-hover-font                 : #f2f2f2 !default;
+$color-info-active                     : #909510 !default;
+$color-info-active-border              : #909399 !default;
+$color-info-active-font                : #fff !default;
+$color-info-focus                      : #909510 !default;
+$color-info-focus-border               : #909399 !default;
+$color-info-focus-font                 : #fff !default;
+
+// color - success
+$color-success                         : #19be6b !default;
+$color-success-plain                   : #FFFFFF !default;
+$color-success-border                  : #19be6b !default;
+$color-success-font                    : #fff !default;
+$color-success-hover                   : #19be6b !default;
+$color-success-hover-border            : #19be6b !default;
+$color-success-hover-font              : #f2f2f2 !default;
+$color-success-active                  : #19be6b !default;
+$color-success-active-border           : #19be6b !default;
+$color-success-active-font             : #f2f2f2 !default;
+$color-success-focus                   : #1dbd6d !default;
+$color-success-focus-border            : #19be6b !default;
+$color-success-focus-font              : #f2f2f2 !default;
+
+$color-warning                         : #ebb563 !default;
+$color-warning-plain                   : #FFFFFF !default;
+$color-warning-border                  : #ebb563 !default;
+$color-warning-font                    : #fff !default;
+$color-warning-hover                   : #ebb563 !default;
+$color-warning-hover-border            : #ebb563 !default;
+$color-warning-hover-font              : #f2f2f2 !default;
+$color-warning-active                  : #ebb563 !default;
+$color-warning-active-border           : #ebb563 !default;
+$color-warning-active-font             : #f2f2f2 !default;
+$color-warning-focus                   : #ebb563 !default;
+$color-warning-focus-border            : #ebb563 !default;
+$color-warning-focus-font              : #f2f2f2 !default;
+
+$color-error                           : #ed4014 !default;
+$color-error-plain                     : #FFFFFF !default;
+$color-error-border                    : #ed4014 !default;
+$color-error-font                      : #fff !default;
+$color-error-hover                     : #ed4014 !default;
+$color-error-hover-border              : #ed4014 !default;
+$color-error-hover-font                : #f2f2f2 !default;
+$color-error-active                    : #ed4125 !default;
+$color-error-active-border             : #ed4014 !default;
+$color-error-active-font               : #f2f2f2 !default;
+$color-error-focus                     : #ed4125 !default;
+$color-error-focus-border              : #ed4014 !default;
+$color-error-focus-font                : #f2f2f2 !default;
+
+// form -- input
+$input-border-error                    : $color-error !default;
+$input-icon--font-size                 : 13px !default;
+// form -- link
+$link-color                            : rgb(141, 141, 141) !default;
+$link-hover-color : red;
+$link-hover-color                      : rgb(76, 91, 97) !default;
+$link-visited-color                    : rgb(92, 94, 92) !default;
+$link-link-color                       : rgb(26, 24, 24) !default;
+
+// form -- combo
+$combo-border                          : #ebeef5 !default;
+$combo-color                           : #FFFFFF !default;
+$combo-row-odd                         : #FFFFFF !default;
+$combo-row-even                        : #F8F8F9 !default;
+$combo-hover                           : #ebf7ff !default;
+$combo-active                          : #ebf7ff !default;
+
+// Animation
+$animation-time                        : .3s !default;
+$animation-time-quick                  : .15s !default;
+$transition-time                       : .2s !default;
+$ease-in-out                           : ease-in-out !default;
+// Notice
+$notice-width                          : 335px !default;
+$notice-padding                        : 16px !default;
+$notice-margin-bottom                  : 10px !default;
+
+// basic -- slidebar
+$slidebar-base                        : rgb(243, 240, 240) !default;
+$slidebar                             : rgb(194, 191, 191) !default;
+$slidebar-axis                        : #409eff !default;
+$slidebar-hover                       : rgb(209, 209, 209) !default;
+$slidebar-active                      : #747474 !default;
+
+// basic -- slidebar
+$scrollbar-base                       : rgb(243, 240, 240) !default;
+$scrollbar                            : rgb(194, 191, 191) !default;
+$scrollbar-hover                      : rgb(209, 209, 209) !default;
+
+// view -- dialog
+$dialog-border                        : #4aacee !default;
+$dialog-shadow                        : #a5b0b8 !default;
+$dialog-header-background             : $color-primary !default;
+$dialog-header-color                  : #FFFFFF !default;
+$dialog-header-icon                   : #FFFFFF !default;
+
+// view -- message
+$message-border                       : #4aacee !default;
+$message-shadow                       : #a5b0b8 !default;
+$message-header                       : #4aacee !default;
+
+// view -- table
+$table-border                         : rgba(218, 214, 214, 0.514) !default;
+$table-color                          : rgba(211, 207, 207, 0.863) !default;
+$table-header                         : rgba(226, 224, 224, 0.397) !default;
+$table-body                           : #FFFFFF !default;
+$table-body-row-odd                   : #FFFFFF !default;
+$table-body-row-even                  : #F8F8F9 !default;
+$table-body-hover                     : #ebf7ff !default;
+$table-tr-active                      : #4aacee !default;
+$table-cell--height-min               : 35px !default;
+$table-cell--width-min                : 45px !default;
+$table-cell-children--margin          : 5px !default;
+$table-header-icon--font-size         : 13px !default;
+$table-body-icon--font-size           : 18px !default;
+// view -- tree
+$tree-header                          : #F8F8F9 !default;
+$tree-node--active                    : #4aacee !default;
+$tree-node--hover                     : #4aacee !default;
+$tree-node-icon--font-size            : 13px !default;
+
+// view -- paging
+
+$paging-color-hover                   : $color-hover !default;
+$paging-color-font-hover              : #FFFFFF !default;
+
+
+// view -- icon
+$icon-color                           : $color-primary !default;
+$icon--font-size                      : $font-size !default;
+
+// view -- form
+$form-element--height-min             : 35px !default;
+
+
+$font--path                           : '/fonts' !default;
