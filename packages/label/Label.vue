@@ -1,8 +1,8 @@
 <template>
   <div :class="classes" :style="styles">
-    <label :style="labelStyles" class="label-title" v-if="isBoolean(title)">
+    <label :style="labelStyles" class="me-row label-title" v-if="isBoolean(title)">
       <span style="color:red;" v-if="required__">*</span>
-      {{title}}：
+      <span>{{title}}：</span>
     </label>
     <div class="label-content me-flex" :title="validateStatus==='error' ? validateMessage :''">
       <slot>
@@ -41,7 +41,18 @@ export default {
     prop: String,
     required: Boolean,
     title: String,
+    layout: {
+      type: String,
+      default: 'row',
+      validator: value => [ 'row', 'column' ].includes(value)
+    },
     labelWidth: String,
+    labelLayout: {
+      type: String,
+      default: 'flex-end',
+      validator: value => [ 'flex-end', 'center', 'flex-start' ].includes(value)
+    },
+    labelHeight: { type: String, default: '35px' },
     labelStyle: { type: Object, default () { return {} } },
     readonly: Boolean
   },
@@ -53,7 +64,8 @@ export default {
       FormInstance: null,
       rules__: [],
       valueCurrent: null,
-      valueDefault: null
+      valueDefault: null,
+      labelHeight__: this.labelHeight
     }
   },
   created () {
@@ -76,7 +88,8 @@ export default {
   computed: {
     classes () {
       return [
-        'me-row me-label me-cross-start me-flex'
+        `me-${this.layout}`,
+        'me-label me-flex'
       ]
     },
     styles () {
@@ -88,7 +101,9 @@ export default {
     labelStyles () {
       return {
         ...this.labelStyle,
-        width: this.labelWidth
+        width: this.labelWidth,
+        height: this.labelHeight__,
+        'justify-content': this.labelLayout
       }
     }
   },
@@ -112,6 +127,7 @@ export default {
     },
     listenerEvents () {
       this.listener('me-label--change', this.handlerElementChange)
+      this.listener('me-label--label-height', value => { this.labelHeight__ = value })
     },
     handlerElementChange (value) {
       this.valueCurrent = value

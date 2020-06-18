@@ -52,6 +52,11 @@ export default {
     this.listenerUpward([ 'MeLabel' ], 'me-label--reset', this.initValue)
     this.listener('me-combo--select', this.handlerSelectChange)
   },
+  async mounted () {
+    await this.$nextTick()
+    const height = this.$el.getBoundingClientRect().height
+    this.dispatchUpward('MeLabel', 'me-label--label-height', `${height}px`)
+  },
   computed: {
     iconSuffix () {
       return this.visibility ? 'icon-angle_down' : 'icon-angle_up'

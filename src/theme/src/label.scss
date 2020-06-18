@@ -1,9 +1,14 @@
 .#{$prefix}-label {
 	margin: 3px;
 	.label-title {
-		text-align: right;
 		min-width: 100px;
-		margin-top: 10px;
+		justify-content: flex-end;
+		align-items: center;
+		> span {
+			display: flex;
+			align-items: center;
+			margin-left: 2px;
+		}
 	}
 	.label-content {
 		.label-content-error {

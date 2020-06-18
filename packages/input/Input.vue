@@ -85,7 +85,10 @@ export default {
     this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
     this.$on('focus-input', this.onFocusInput)
     this.listenerUpward([ 'MeLabel' ], 'me-label--status', status => { this.validateStatus = status })
+
     this.handlerLableEvent(() => {
+      const height = this.$el.getBoundingClientRect().height
+      this.dispatchUpward('MeLabel', 'me-label--label-height', `${height}px`)
       this.listenerUpward([ 'MeLabel' ], 'me-label--reset', value => {
         this.valueUpdate(value)
         this.$emit('change', this.value__)
