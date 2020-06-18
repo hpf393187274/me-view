@@ -1,5 +1,5 @@
 <template>
-  <div :style="styleContainer" class="me-table-container me-column">
+  <div :style="styleContainer" class="me-table me-column">
     <template v-if="$slots.header">
       <div class="me-row table-toolbar" v-if="$slots.header">
         <slot name="header" />

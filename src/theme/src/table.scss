@@ -1,4 +1,5 @@
-.#{$prefix}-table-container {
+.#{$prefix}-table {
+	overflow: auto;
 	table{ width: 100%; }
 	td,th {
 		border: 1px solid $table-border !important;
