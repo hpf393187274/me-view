@@ -52,23 +52,30 @@
 
 ```html
 <template>
-  <me-table :height="height + 'px'" ref="tableList" field-value ="id" checkbox multiple :data="data" :columns="columns" highlight>
-    <template #header>
-      <me-button plain type="primary" @click="height = height + 50" icon="icon-plus_strong"> 50 </me-button>
-      <me-button plain type="primary" @click="height = height - 50" icon="icon-minus_strong"> 50 </me-button>
-      <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
-      <me-button plain type="primary" @click="getCheckedRows">获取选中的数据</me-button>
-      <me-button plain type="primary" @click="setCheckedRows">设置选中</me-button>
-      <me-button plain type="primary" @click="handlerData">变更数据</me-button>
-      <me-button plain type="primary" @click="removeSelectData">批量删除</me-button>
-    </template>
-  </me-table>
+  <div class="me-column" style="height: 400px;">
+      <div class="me-column me-flex">
+        <me-table class="me-border-red" ref="tableList" field-value ="id" checkbox multiple :data="data" :columns="columns" highlight>
+        <template #header>
+          <me-button plain type="primary" @click="height = height + 50" icon="icon-plus_strong"> 50 </me-button>
+          <me-button plain type="primary" @click="height = height - 50" icon="icon-minus_strong"> 50 </me-button>
+          <me-button plain type="primary" icon="icon-plus-square">新增</me-button>
+          <me-button plain type="primary" @click="getCheckedRows">获取选中的数据</me-button>
+          <me-button plain type="primary" @click="setCheckedRows">设置选中</me-button>
+          <me-button plain type="primary" @click="handlerData">变更数据</me-button>
+          <me-button plain type="primary" @click="removeSelectData">批量删除</me-button>
+        </template>
+        <template #footer>
+          <me-paging :total="50" class="me-flex"/>
+        </template>
+      </me-table>
+      </div>
+  </div>
 </template>
 <script>
   export default {
     data() {
       return {
-        height: 400,
+        // height: 400,
         columns: [
           { label:'编号', field: 'id', sortable: true},
           { label:'测试', field: 'test' },

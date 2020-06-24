@@ -28,7 +28,7 @@ const childrenDoc = fileDoc.flatMap(item => {
   }
 })
 local.set('routeDoc', routeDoc)
-const fileDemo = require.context('./src/demo/', true, /.vue$/).keys()
+const fileDemo = require.context('./src/demo/', true, /(.vue|.md)$/).keys()
 
 console.debug('---------------route-demo-------', fileDemo)
 const routeDemo = []
@@ -48,16 +48,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/doc/guide/install',
+      redirect: '/doc',
       component: () => import('./src/layout/index.vue'),
       children: [
         {
           path: '/doc',
+          redirect: '/doc/guide/install',
           component: () => import('./src/layout/MainDocs.vue'),
           children: [...childrenDoc]
         },
         {
           path: '/demo',
+          redirect: '/demo/index',
           component: () => import('./src/layout/MainDemo.vue'),
           children: [...childrenDemo]
         }

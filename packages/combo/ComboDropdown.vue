@@ -35,9 +35,11 @@ export default {
     async update () {
       await this.$nextTick()
       if (this.popper) {
-        this.popper.update()
+        console.log('methods --> update ----- this.popper = true')
+        this.popper.forceUpdate()
         this.popperStatus = true
       } else {
+        console.log('methods --> update ----- this.popper = false')
         this.popper = createPopper(this.$parent.$refs.input.$el, this.$el, {
           placement: this.placement,
           modifiers: [
@@ -55,12 +57,10 @@ export default {
               }
             }
           ],
-          onCreate: () => {
+          onFirstUpdate: () => {
+            console.log('popper --> onFirstUpdate')
             this.resetTransformOrigin()
-            this.$nextTick(this.popper.update())
-          },
-          onUpdate: () => {
-            this.resetTransformOrigin()
+            this.$nextTick(this.popper.forceUpdate())
           }
         })
       }
@@ -81,14 +81,11 @@ export default {
     },
     resetTransformOrigin () {
       // 不判断，Select 会报错，不知道为什么
-      if (!this.popper) return
-
-      const placement = this.popper.getAttribute('x-placement')
-      const [ placementStart, placementEnd ] = placement.split('-')
-      const leftOrRight = placement === 'left' || placement === 'right'
-      if (leftOrRight === false) {
-        this.popper.popper.style.transformOrigin =
-          placementStart === 'bottom' || (placementStart !== 'top' && placementEnd === 'start') ? 'center top' : 'center bottom'
+      if (!this.popper) { return }
+      const { placement } = this.popper.state
+      const [ direction ] = placement.split('-')
+      if ([ 'bottom', 'top' ].includes(direction)) {
+        this.popper.state.styles.popper.transformOrigin = direction === 'bottom' ? 'center top' : 'center bottom'
       }
     }
   },

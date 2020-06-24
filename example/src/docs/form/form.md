@@ -71,8 +71,8 @@ export default {
   data() {
     return {
       form: {
-        name: '男',
-        sex: '1',
+        name: '男2',
+        sex: '',
         age: 12,
         province: '2',
         region: '2'

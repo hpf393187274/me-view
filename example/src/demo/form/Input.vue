@@ -4,8 +4,8 @@
       <pre>{{form}}</pre>
     </div>
     <me-form ref="form">
-      <me-label title="省份" prop="value1">
-        <me-combo-select clearable readonly :data="dataValue1" v-model="form.value1" />
+      <me-label title="姓名" prop="value1">
+        <me-input clearable v-model="form.value1" />
       </me-label>
       <me-label><me-button @click="reset">重 置</me-button></me-label>
       <me-label><me-button @click="changeDefault">更新默认值</me-button></me-label>
@@ -17,22 +17,9 @@ export default {
   data () {
     return {
       form: {
-        value1: '3'
-      },
-      defaultData: [
-        { label: '山西省', value: '1' },
-        { label: '陕西省', value: '2' },
-        { label: '四川省', value: '3' },
-        { label: '河南省', value: '4' },
-        { label: '江苏省', value: '5' }
-      ],
-      dataValue1: []
+        value1: 12
+      }
     }
-  },
-  created () {
-    setTimeout(() => {
-      this.dataValue1 = [...this.defaultData]
-    }, 10 * 1000)
   },
   watch: {
     'form.value1' (newValue, oldValue) {

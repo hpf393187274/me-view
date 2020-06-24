@@ -133,8 +133,15 @@ export default {
     }
   },
   watch: {
-    value (newValue) {
-      this.valueUpdate(newValue)
+    value () {
+      const newValue = Type.isArray(this.value) ? this.value.toString() : this.value
+      const oldValue = Type.isArray(this.value__) ? this.value__.toString() : this.value__
+      if (newValue !== oldValue) {
+        this.handlerLableEvent(() => {
+          this.dispatchUpward('MeLabel', 'me-label--default-change', newValue)
+        })
+        this.valueUpdate(newValue)
+      }
     },
     rules: {
       deep: true,

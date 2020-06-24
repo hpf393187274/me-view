@@ -1,5 +1,6 @@
 .#{$prefix}-table {
 	overflow: auto;
+	min-height: 100px;
 	table{ width: 100%; }
 	td,th {
 		border: 1px solid $table-border !important;

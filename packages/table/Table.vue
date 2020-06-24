@@ -1,5 +1,5 @@
 <template>
-  <div :style="styleContainer" class="me-table me-column">
+  <div :style="styleContainer" class="me-table me-flex me-column">
     <template v-if="$slots.header">
       <div class="me-row table-toolbar" v-if="$slots.header">
         <slot name="header" />
@@ -75,7 +75,7 @@ export default {
     styleContainer () {
       return {
         width: Type.isNumber(this.width) ? `${this.width}px` : this.width,
-        height: Type.isNumber(this.height) ? `${this.height}px` : this.height
+        height: Type.isNumber(this.height__) ? `${this.height__}px` : this.height__
       }
     },
     styleTHead () {
@@ -111,7 +111,8 @@ export default {
       checkedData: {},
       nodeList: [],
       scrollBarWidth: 0,
-      hasScrollBar: false
+      hasScrollBar: false,
+      height__: this.height
     }
   },
   created () {
@@ -131,6 +132,9 @@ export default {
   },
   async mounted () {
     await this.$nextTick()
+    if (Tools.isEmpty(this.height__)) {
+      this.height__ = this.$el.getBoundingClientRect().height
+    }
     this.handlerSlots()
   },
   methods: {

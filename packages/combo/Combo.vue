@@ -12,7 +12,7 @@
       v-model="label__"
     >
       <template #suffix>
-        <me-icon :disabled="disabled" @click="onClickSuffix" @mouseout="closable=true" @mouseover="handlerMouseoverOther">{{iconSuffix}}</me-icon>
+        <me-icon :disabled="disabled" @click="handlerClickSuffix" @mouseout="closable=true" @mouseover="handlerMouseoverOther">{{iconSuffix}}</me-icon>
       </template>
     </me-input>
     <transition name="transition-drop">
@@ -80,10 +80,11 @@ export default {
         this.handlerFocusInput()
       }
     },
-    value () {
+    value (nValue, oValue) {
       const newValue = Type.isArray(this.value) ? this.value.toString() : this.value
       const oldValue = Type.isArray(this.value__) ? this.value__.toString() : this.value__
       if (newValue !== oldValue) {
+        this.dispatchUpward('MeLabel', 'me-label--default-change', newValue)
         this.initValue(newValue)
       }
     },
@@ -95,6 +96,7 @@ export default {
     },
     data (value) {
       this.deepFlatData(value, true)
+      this.dispatchUpward('MeLabel', 'me-label--default-change', this.value)
       this.initValue(this.value)
     }
   },
@@ -114,7 +116,7 @@ export default {
       return this.dataFlat.find(item => this.uniqueValue(item) === value)
     },
     initValueSingle (value) {
-      if (Tools.isBlank(value)) {
+      if (Tools.isEmpty(value)) {
         if (Tools.notBlank(this.defaultValue)) {
           value = this.defaultValue
         } else if (this.defaultIndex >= 0 && this.defaultIndex <= this.length) {
@@ -141,7 +143,7 @@ export default {
     initValue (value) {
       if (Tools.isBlank(this.dataFlat)) { return }
       if (
-        Tools.isBlank(value) &&
+        Tools.isEmpty(value) &&
         Tools.isBlank(this.defaultValue) &&
         (Tools.isEmpty(this.defaultIndex) || this.defaultIndex < 0 || this.defaultIndex > this.length)
       ) { return }
@@ -152,13 +154,13 @@ export default {
       const list = this.multiple ? this.valueMultiple : [ this.valueSingle ]
       return list.findIndex(item => value === this.uniqueValue(item)) !== -1
     },
-    onClickSuffix () {
+    handlerClickSuffix () {
       this.visibility = !this.visibility
     },
-    uniqueValue (data = {}) { return Reflect.get(data, this.fieldValue) },
-    uniqueLabel (data = {}) { return Reflect.get(data, this.fieldLabel) },
+    uniqueValue (data = {}) { return Reflect.get(data, this.fieldValue) || '' },
+    uniqueLabel (data = {}) { return Reflect.get(data, this.fieldLabel) || '' },
     handlerClickInput () {
-      this.readonly__ && this.onClickSuffix()
+      this.readonly__ && this.handlerClickSuffix()
     },
     selectSingle (data = {}) {
       this.visibility = false

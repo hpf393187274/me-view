@@ -2,20 +2,20 @@
 export default class Watermark {
   #id = '1.23452384164.123412416'
   #canvas
-  createCanvas (value) {
+  createCanvas (value, { width = 400, height = 200, color = 'rgba(200, 200, 200, 0.40)', fontSize = '18px' } = {}) {
     // 创建一个画布
     if (this.#canvas) { return }
     this.#canvas = document.createElement('canvas')
     // 设置画布的长宽
-    this.#canvas.width = 300
-    this.#canvas.height = 150
+    this.#canvas.width = width
+    this.#canvas.height = height
 
     const cans = this.#canvas.getContext('2d')
     // 旋转角度
-    cans.rotate(-15 * Math.PI / 180)
-    cans.font = '18px Vedana'
+    cans.rotate(-20 * Math.PI / 180)
+    cans.font = `${fontSize} Vedana`
     // 设置填充绘画的颜色、渐变或者模式
-    cans.fillStyle = 'rgba(200, 200, 200, 0.40)'
+    cans.fillStyle = color
     // 设置文本内容的当前对齐方式
     cans.textAlign = 'left'
     // 设置在绘制文本时使用的当前文本基线
@@ -36,11 +36,12 @@ export default class Watermark {
     div.style.width = document.documentElement.clientWidth + 'px'
     div.style.height = document.documentElement.clientHeight + 'px'
     div.style.background = 'url(' + this.#canvas.toDataURL('image/png') + ') left top repeat'
+    // div.style.background = 'url(' + this.#canvas.toDataURL('image/png') + ') left top'
     document.body.appendChild(div)
   }
 
-  init (value) {
-    this.createCanvas(value)
+  init (value, options = {}) {
+    this.createCanvas(value, options)
     this.createDiv()
   }
 }
