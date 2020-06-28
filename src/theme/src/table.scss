@@ -1,7 +1,7 @@
 .#{$prefix}-table {
 	overflow: auto;
-	min-height: 100px;
 	table{ width: 100%; }
+	min-height: 150px;
 	td,th {
 		border: 1px solid $table-border !important;
 		height: auto;
@@ -32,16 +32,16 @@
 			white-space: nowrap;/*强制不换行*/
 		}
 		.cell-sort { padding-top: 3px; }
+		.table-cell {
+			min-width: $table-cell--width-min !important;
+			min-height: $table-cell--height-min !important;
+		}
 		.table-body { 
 			overflow: auto;
 			.#{$prefix}-icon {
 				font-size: $table-body-icon--font-size;
 				margin-right: $table-cell-children--margin;
 				margin-left: $table-cell-children--margin;
-			}
-			.table-cell {
-				min-width: $table-cell--width-min !important;
-				min-height: $table-cell--height-min !important;
 			}
 			tr {
 				&:nth-child(odd){ background-color: $table-body-row-odd !important; }

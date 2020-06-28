@@ -122,22 +122,27 @@ export default {
     this.listener('MeTable-row-sort', ({ field, order }) => this.sort(field, order))
     this.listener('MeTable--scrollBar', flag => { this.hasScrollBar = flag })
 
-    this.listenerUpward([ 'MeDialog', 'MeCombo' ], 'me-attribute--visibility-change', visibility => {
-      if (visibility === true) {
-        visibility && this.layout()
-      }
+    this.listenerUpward([ 'MeDialog', 'MeCombo' ], 'me-attribute--visible-true', () => {
+      this.layout()
+    })
+    this.listenerUpward([ 'MeDialog' ], 'me-dialog--visible-frist', () => {
+      this.dialogInit && this.dialogInit()
     })
 
     this.scrollBarWidth = Tools.scrollBarWidth()
   },
   async mounted () {
     await this.$nextTick()
-    if (Tools.isEmpty(this.height__)) {
-      this.height__ = this.$el.getBoundingClientRect().height
-    }
+    this.computeHeight()
     this.handlerSlots()
   },
   methods: {
+    computeHeight () {
+      if (this.existParentComponent([ 'MeDialog' ])) { return }
+      if (Tools.isEmpty(this.height__) || this.height__ === 0) {
+        this.height__ = this.$el.getBoundingClientRect().height
+      }
+    },
     append (...list) {
       if (Type.isArray(list)) {
         for (const item of list) {
@@ -169,9 +174,11 @@ export default {
     cancelChecked () {
       this.checkedData.forEach(row => row.handlerCheckedChange(false))
     },
-    layout () {
+    async layout () {
+      await this.$nextTick()
       const tableBody = this.$refs.tableBody
       tableBody && tableBody.monitorScrollBar()
+      this.computeHeight()
     },
     /**
      * 设置选中的数据
