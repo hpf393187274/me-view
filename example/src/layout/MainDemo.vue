@@ -46,7 +46,7 @@ export default {
           children: [
             { label: 'Panel 面板', path: '/demo/layout/panel' },
             { label: 'Tabs 标签页', path: '/demo/layout/tabs' },
-            { label: 'Table 表格', path: '/demo/database' },
+            { label: 'Table 表格', path: '/demo/layout/table' },
             { label: 'Paging 分页', path: '/demo/layout/paging' },
             { label: 'Tree 树型控件', path: '/demo/layout/tree' },
             { label: 'Dialog 对话框', path: '/demo/layout/dialog' },

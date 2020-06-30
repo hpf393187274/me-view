@@ -17,7 +17,7 @@ module.exports = {
     proxy: {
       '/api': {
         // target: 'http://10.130.36.240:7091',
-        target: 'http://localhost:8081',
+        target: 'http://10.130.36.240:1024',
         ws: false,
         // 将主机标头的原点更改为目标URL~
         changeOrigin: false
