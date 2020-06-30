@@ -32,6 +32,7 @@ export default {
     parentGrandson: Boolean,
     checked: Boolean,
     headerLabel: String,
+    indentSize: Number,
     data: { type: Array, default () { return [] } }
   },
   data () {

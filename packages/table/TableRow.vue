@@ -42,24 +42,19 @@ export default {
     multiple: Boolean,
     columns: { type: Array, default: () => [] }
   },
-  mounted () {
-    console.debug('Table.Row -> mounted begin ......')
-    const $this = this
-    this.$nextTick(() => {
-      if ($this.header === false) {
-        $this.node.uniqueValue = $this.uniqueValue
-        $this.node.component = $this
-      }
-    })
+  async mounted () {
+    await this.$nextTick()
+    if (this.header === false) {
+      this.node.uniqueValue = this.uniqueValue
+      this.node.component = this
+    }
   },
-  updated () {
-    const $this = this
-    this.$nextTick(function () {
-      if ($this.header === false) {
-        $this.node.uniqueValue = $this.uniqueValue
-        $this.node.component = $this
-      }
-    })
+  async updated () {
+    await this.$nextTick()
+    if (this.header === false) {
+      this.node.uniqueValue = this.uniqueValue
+      this.node.component = this
+    }
   },
   data () {
     return {

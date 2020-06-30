@@ -38,6 +38,7 @@
           :key="uniqueValue(node)"
           :lazy="lazy"
           :indent-size="indentSize"
+          :checkbox-width = "checkboxWidth"
           :parent-grandson="parentGrandson__"
           :statistics="statistics"
           :highlight="highlight"
@@ -80,6 +81,8 @@ export default {
       nodesMap: new Map(),
       clickNode: undefined,
       nodesSize: 0,
+      indentSize: 0,
+      checkboxWidth: 0,
       checkedChildren: false
     }
   },
@@ -140,6 +143,17 @@ export default {
       this.nodesMap.delete(key)
       this.refreshSize()
     })
+  },
+  async mounted () {
+    await this.$nextTick()
+    const meIcon = this.$el.querySelector('.me-icon')
+    if (meIcon) {
+      this.indentSize = meIcon.getBoundingClientRect().width
+    }
+    const meCheckbox = this.$el.querySelector('.me-checkbox')
+    if (meCheckbox) {
+      this.checkboxWidth = meCheckbox.getBoundingClientRect().width
+    }
   },
   methods: {
     refreshSize () {

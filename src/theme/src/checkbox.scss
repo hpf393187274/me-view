@@ -1,9 +1,12 @@
 
 .#{$prefix}-checkbox {
-	 margin: 3px;
+	padding: 3px;
 	.checkbox-inner {
 		width: 15px;
 		height: 15px;
-		
+	}
+
+	input[type="checkbox" i] {
+		margin: auto;
 	}
 }

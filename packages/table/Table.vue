@@ -154,6 +154,7 @@ export default {
       this.nodeList = []
       this.handlerCheckboxHeader(false)
       this.append(...data)
+      this.layout()
     },
     sort (field, order = Tools.ASC) {
       Tools.sort(this.nodeList, item => Reflect.get(item.data, field), order)

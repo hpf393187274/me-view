@@ -1,7 +1,7 @@
 <template>
   <div class="tree-node-body" >
     <div :style="styleIndent" :title="nodeLabel" :class="classes">
-      <me-icon @click="handlerExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
+      <me-icon style="width: 13px;" @click="handlerExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
       <me-checkbox :checkedHalf="checkedHalf" :value="checkedAll" @click="handlerNodeCheck" v-if="checkbox" />
       <div @click="handlerClickLabel" class="me-row me-flex me-cross-center tree-node-label">
         <slot :data="data" name="node-label">
@@ -31,6 +31,7 @@
         :click-checked="clickChecked"
         :indent="indent__"
         :indent-size="indentSize"
+        :checkbox-width = "checkboxWidth"
         :key="uniqueValue(node)"
         :lazy="lazy"
         :level="level + 1"
@@ -62,6 +63,8 @@ export default {
     data: { type: Object, default () { return {} } },
     parentGrandson: Boolean,
     indent: { type: Number, default: 0 },
+    indentSize: { type: Number, default: 16 },
+    checkboxWidth: { type: Number, default: 16 },
     level: { type: Number, default: 1 }
   },
   created () {
