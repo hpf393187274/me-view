@@ -179,7 +179,7 @@ export default {
       })
     },
     handlerChange ({ target }) {
-      console.log('handlerChange ---------> value')
+      console.debug('handlerChange ---------> value')
       this.valueUpdate(target.value, false)
       this.$emit('change', this.value__)
     },

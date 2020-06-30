@@ -103,7 +103,7 @@ export default {
         }
       })
       this.listener('tab-title-add', item => {
-        console.log('--------------------------------')
+        console.debug('--------------------------------')
         const target = this.paneList.find(this.handlerCompare(item))
         if (target && !target.nodeTitle) {
           Reflect.set(target, 'nodeTitle', item.nodeTitle)

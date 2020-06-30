@@ -45,8 +45,14 @@
         </me-label>
       </me-form>
     </me-dialog>
+    <me-dialog title="dialog" min-height="100px" min-width="600px" v-model="statusTree">
+      <me-tree class="me-flex" expandedAll highlight action :data="dataTree" checkbox statistics header header-label="全选">
+      
+    </me-tree>
+    </me-dialog>
     <me-button @click="statusTable=!statusTable">Dialog - Table</me-button>
     <me-button @click="statusForm=!statusForm">Dialog - Form</me-button>
+    <me-button @click="statusTree=!statusTree">Dialog - Tree</me-button>
   </div>
 </template>
 <script>
@@ -55,6 +61,7 @@ export default {
     return {
       statusTable: false,
       statusForm: false,
+      statusTree: false,
       checkedRows:[],
       form: {
         province: '陕西省'
@@ -84,6 +91,24 @@ export default {
         { id: '9', label: '江苏省'},
         { id: '10', label: '河南省'},
         { id: '11', label: '河南省'}
+      ],
+      dataTree: [
+        {
+          code: '1', label: '陕西省', children: [
+            {
+              code: '1-1', label: '西安市', children: [
+                { code: '1-1-1', label: '雁塔区' },
+                { code: '1-1-2', label: '长安区' }
+              ]
+            }
+          ]
+        },
+        {
+          code: '2', label: '四川省', children: [
+            { code: '2-1', label: '成都市' },
+            { code: '2-2', label: '汶川市' }
+          ]
+        }
       ]
     }
   },

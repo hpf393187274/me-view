@@ -99,16 +99,18 @@ export default {
     this.nodesMap.clear()
     this.listener('notification-parent', this.handlerChildrenNotification)
     this.listener('me-tree--clear', () => {
-      const newData = [ ...this.data ]
-      for (const item of newData) {
+      for (const item of [ ...this.data ]) {
         this.removeNode(this.uniqueValue(item))
       }
     })
+    this.listenerUpward([ 'MeDialog', 'MeCombo' ], 'me-attribute--visible-true', () => {
+      this.layout()
+    })
 
     this.listener('me-tree-node--click', node => {
-      console.log('me-tree-node--click ---> node, ', node.data)
+      console.debug('me-tree-node--click ---> node, ', node.data)
       if (Tools.notEmpty(this.clickNode)) {
-        console.log('me-tree-node--click ---> clickNode =', this.clickNode.data)
+        console.debug('me-tree-node--click ---> clickNode =', this.clickNode.data)
         this.clickNode.statusHighlight = false
       }
       this.clickNode = node
@@ -144,18 +146,21 @@ export default {
       this.refreshSize()
     })
   },
-  async mounted () {
-    await this.$nextTick()
-    const meIcon = this.$el.querySelector('.me-icon')
-    if (meIcon) {
-      this.indentSize = meIcon.getBoundingClientRect().width
-    }
-    const meCheckbox = this.$el.querySelector('.me-checkbox')
-    if (meCheckbox) {
-      this.checkboxWidth = meCheckbox.getBoundingClientRect().width
-    }
+  mounted () {
+    this.layout()
   },
   methods: {
+    async layout () {
+      await this.$nextTick()
+      const meIcon = this.$el.querySelector('.me-icon')
+      if (meIcon) {
+        this.indentSize = meIcon.getBoundingClientRect().width
+      }
+      const meCheckbox = this.$el.querySelector('.me-checkbox')
+      if (meCheckbox) {
+        this.checkboxWidth = meCheckbox.getBoundingClientRect().width
+      }
+    },
     refreshSize () {
       this.nodesSize = this.nodesMap.size
     },
