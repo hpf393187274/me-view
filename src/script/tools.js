@@ -286,6 +286,38 @@ export default class Tools {
     return url.replace(/:\/+/g, '**').replace(/\\+/g, '/').replace(/\/+|\\+/g, '/').replace('**', '://')
   }
 
+  static urlLocation (href) {
+    let other = Tools.urlFormat(href)
+    const location = {}
+    if (other.includes('?')) {
+      const [ inner, params ] = other.split('?')
+      other = inner
+      Reflect.set(location, 'params', params)
+    }
+    if (other.includes('://')) {
+      const [ protocol, inner ] = other.split('://')
+      other = inner
+      Reflect.set(location, 'protocol', protocol)
+    }
+    if (other.includes(':')) {
+      other = other.replace(':', '')
+      const index = other.indexOf('/')
+      Reflect.set(location, 'port', other.substr(0, index))
+      Reflect.set(location, 'path', other.substr(index))
+    } else {
+      Reflect.set(location, 'path', other)
+    }
+    return location
+  }
+
+  static urlPath (url) {
+    return Reflect.get((Tools.urlParse(url) || {}), 'path')
+  }
+
+  static urlParams (url) {
+    return Reflect.get((Tools.urlParse(url) || {}), 'params')
+  }
+
   /**
    * URL 绝对化
    * @param {String} url 目标url
@@ -382,5 +414,17 @@ export default class Tools {
 
   static clientHeight () {
     return document.body.clientHeigh
+  }
+
+  static message (target) {
+    if (Tools.isBlank(target)) { return target }
+    if (Type.isError(target)) {
+      return target.message
+    }
+    if (Type.isObject(target)) {
+      const { message, data } = target
+      return message || data.message
+    }
+    return target
   }
 }

@@ -46,7 +46,7 @@
       </me-form>
     </me-dialog>
     <me-dialog title="dialog" min-height="100px" min-width="600px" v-model="statusTree">
-      <me-tree class="me-flex" expandedAll highlight action :data="dataTree" checkbox statistics header header-label="全选">
+      <me-tree class="me-flex" expandedAll highlight action :data="treeData" checkbox statistics header header-label="全选">
       
     </me-tree>
     </me-dialog>
@@ -92,6 +92,7 @@ export default {
         { id: '10', label: '河南省'},
         { id: '11', label: '河南省'}
       ],
+      treeData: [],
       dataTree: [
         {
           code: '1', label: '陕西省', children: [
@@ -111,6 +112,11 @@ export default {
         }
       ]
     }
+  },
+  created () {
+    setTimeout(() => {
+      this.treeData = [ ...this.dataTree ]
+    }, 1000 * 2)
   },
   methods: {
     handlerConfirm () {

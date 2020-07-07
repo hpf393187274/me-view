@@ -46,6 +46,10 @@ export default {
       ]
     }
   },
+  created () {
+    const location = this.$tools.urlLocation('http://sssf.cn:50/sfsfsfs/afsf/wrewr/?sfss=sfsw')
+    console.log('222222222222222222222222', location)
+  },
   methods: {
     handlerAdd () {
       const uuid = this.$tools.UUId()

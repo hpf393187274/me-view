@@ -95,6 +95,11 @@ export default {
       return Type.isArray(this.data) ? this.data.length : 0
     }
   },
+  watch: {
+    data () {
+      this.layout()
+    }
+  },
   created () {
     this.nodesMap.clear()
     this.listener('notification-parent', this.handlerChildrenNotification)
