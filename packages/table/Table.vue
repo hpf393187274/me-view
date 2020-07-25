@@ -122,9 +122,7 @@ export default {
     this.listener('MeTable-row-sort', ({ field, order }) => this.sort(field, order))
     this.listener('MeTable--scrollBar', flag => { this.hasScrollBar = flag })
 
-    this.listenerUpward([ 'MeDialog', 'MeCombo' ], 'me-attribute--visible-true', () => {
-      this.layout()
-    })
+    this.listenerUpward([ 'MeDialog', 'MeCombo' ], 'me-attribute--visible-true', () => this.layout())
     this.listenerUpward([ 'MeDialog' ], 'me-dialog--visible-frist', () => {
       this.dialogInit && this.dialogInit()
     })

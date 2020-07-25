@@ -18,6 +18,9 @@
       class="node-header"
       v-if="header"
     >
+      <template #node-header-label>
+        <slot name="node-header-label" />
+      </template>
       <template #node-header>
         <slot name="node-header" />
       </template>
