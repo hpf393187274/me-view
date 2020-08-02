@@ -124,6 +124,8 @@ export default class Tools {
     return s.join('')
   }
 
+  static UUID () { return Tools.UUId() }
+
   /**
    * 数组元素移出
    * @param {Array} target

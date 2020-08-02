@@ -1,6 +1,6 @@
 <template>
   <div class="me-row me-flex">
-    <me-tree class="layout-left" :data="data" highlight :expandable="false" @click-leaf="handleClick" />
+    <me-tree class="layout-left" :data="data" highlight @click-leaf="handleClick" />
     <router-view class="layout-right me-flex" />
   </div>
 </template>

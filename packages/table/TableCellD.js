@@ -20,7 +20,9 @@ export default {
     }
     const params = {
       data: this.data,
-      value: this.fieldValue,
+      field: this.field,
+      label: this.label,
+      fieldValue: this.fieldValue,
       indexRow: this.indexRow,
       indexCell: this.indexCell
     }
@@ -33,8 +35,9 @@ export default {
 
     if (Type.isFunction(this.render)) {
       return this.renderRoot(h, [
-        this.render(h, params)
-      ])
+        this.render(h, params),
+        h('div', this.data[this.field])
+      ].flat())
     }
 
     return this.renderRoot(h, h('span', { class: 'cell-inner' }, [ this.fieldValue ]))

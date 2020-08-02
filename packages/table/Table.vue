@@ -101,6 +101,9 @@ export default {
       }
       this.checkedHeader = this.length === value
       this.checkedHeaderHalf = this.length !== value
+    },
+    columns () {
+      this.handlerSlots()
     }
   },
   data () {
@@ -144,7 +147,9 @@ export default {
     append (...list) {
       if (Type.isArray(list)) {
         for (const item of list) {
-          this.nodeList.push({ data: item, checked: false, component: null })
+          let uniqueValue = this.uniqueValue(item)
+          if (Tools.isBlank(uniqueValue)) { uniqueValue = Tools.UUID() }
+          this.nodeList.push({ data: item, uniqueValue, checked: false, component: null })
         }
       }
     },

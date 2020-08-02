@@ -38,3 +38,8 @@ import '//at.alicdn.com/t/font_1180504_afedrcmrmt.css'
 Vue.use(MeView)
 
 ```
+
+
+## 代办功能
+
+- table 若没有指定主键字段， 则默认指定主键字段并赋值
