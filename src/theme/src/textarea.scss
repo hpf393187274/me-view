@@ -1,0 +1,56 @@
+.#{$prefix}-textarea {
+	min-height: $form-element--height-min;
+	position: relative;
+  min-width: 35px;
+  min-height: 100px;
+	textarea::placeholder {
+		color: $color-placeholder;
+	}
+	
+	textarea {
+		resize: none;
+	}
+	.textarea-required {
+		color: red;
+	}
+	.textarea-icon {
+		position: absolute;
+		height:100%;
+	}
+	.#{$prefix}-icon {
+		font-size: $textarea-icon--font-size;
+	}
+	.textarea-inner {
+		width: 1px;
+		min-width: 20px;
+		outline: none;
+		border: 1px solid $color-border;
+		color: $color-font;
+    border-radius: 5px;
+    padding: 5px;
+		&:focus {
+			border-color: $color-focus;
+			box-shadow:0 0 3px $color-focus;
+		}
+	}
+}
+
+
+.#{$prefix}-textarea-error {
+	.textarea-inner {
+		border-color: $textarea-border-error ;
+		&:focus {
+			border-color: $textarea-border-error;
+			box-shadow:0 0 3px $textarea-border-error;
+		}
+	}
+}
+
+.#{$prefix}-disabled .#{$prefix}-textarea {
+	.textarea-inner {
+		&:hover {
+			border-color: $color-disabled;
+			box-shadow: none;
+		}
+	}
+}

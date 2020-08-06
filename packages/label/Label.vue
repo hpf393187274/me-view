@@ -128,7 +128,7 @@ export default {
     listenerEvents () {
       this.listener('me-label--change', this.handlerElementChange)
       this.listener('me-label--default-change', this.initialize)
-      this.listener('me-label--label-height', value => { if (value > 0) { this.labelHeight__ = value } })
+      this.listener('me-label--label-height', value => { if (value > 0) { this.labelHeight__ = `${value}px` } })
     },
     handlerElementChange (value) {
       this.valueCurrent = value

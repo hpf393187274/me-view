@@ -12,6 +12,7 @@ import Modal from 'me-view/packages/modal/index'
 import Message from 'me-view/packages/message/index'
 
 import Input from 'me-view/packages/input/index'
+import Textarea from 'me-view/packages/textarea/index'
 import Checkbox from 'me-view/packages/checkbox/index'
 import Button from 'me-view/packages/button/index'
 import ComboSelect from 'me-view/packages/combo-select/index'
@@ -45,6 +46,7 @@ export {
   Modal,
   Message,
   Input,
+  Textarea,
   Checkbox,
   Button,
   ComboSelect,

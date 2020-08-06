@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <pre>{{data}}</pre>
+      <pre>{{target}}</pre>
     </div>
     <me-table ref="tableList" checkbox multiple :data="data" :columns="columns" highlight>
       <template #header>
@@ -30,6 +30,7 @@ import Vue from 'vue'
 export default {
   data () {
     return {
+      target: { name: '张三', sex: '男', age: 1 },
       height: 400,
       checkedRows: [],
       sourceColumns: [
@@ -58,6 +59,12 @@ export default {
   created () {
     const location = this.$tools.urlLocation('http://sssf.cn:50/sfsfsfs/afsf/wrewr/?sfss=sfsw')
     console.log('222222222222222222222222', location)
+
+    // this.$tools.assign(this.target, { name: '李四', age: 23 }, { sex: '女', phone: '15829669905' })
+
+    const result = this.$tools.pathConvert('/NaMeSex/AGe/HeLloWord')
+
+    console.log('11111111111111111111111111', result)
   },
   methods: {
     handlerColumnAdd () {

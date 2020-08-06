@@ -34,10 +34,7 @@ export default {
     }
 
     if (Type.isFunction(this.render)) {
-      return this.renderRoot(h, [
-        this.render(h, params),
-        h('div', this.data[this.field])
-      ].flat())
+      return this.renderRoot(h, [ this.render(h, params) ].flat())
     }
 
     return this.renderRoot(h, h('span', { class: 'cell-inner' }, [ this.fieldValue ]))

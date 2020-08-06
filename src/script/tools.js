@@ -288,6 +288,35 @@ export default class Tools {
     return url.replace(/:\/+/g, '**').replace(/\\+/g, '/').replace(/\/+|\\+/g, '/').replace('**', '://')
   }
 
+  /**
+   * 驼峰式路径转换为连接符路径
+   * /auth/RoleMenu/contentEdit = /auth/role-menu/content-edit
+   * @param {String} target 目标 路径
+   * @param {String} connector 连接符 -
+   */
+  static pathConvert (target, connector = '-') {
+    const { path } = Tools.urlLocation(target || '') || {}
+    if (path) {
+      return Tools.humpConvert(path.replace(/(\/[A-Z])/g, $1 => $1.toLowerCase()), connector)
+    }
+    return target
+  }
+
+  /**
+   * 驼峰式字符串转换为连接符路径
+   * /auth/RoleMenu/contentEdit = /auth/role-menu/content-edit
+   * @param {String} target 目标 路径
+   * @param {String} connector 连接符 -
+   */
+  static humpConvert (target = '', connector = '-') {
+    if (Type.notString(target)) { target = '' }
+    const newTarget = target.replace(/([A-Z])/g, $1 => connector + $1.toLowerCase())
+    if (target.startsWith(connector)) {
+      return newTarget.substr(1)
+    }
+    return newTarget
+  }
+
   static urlLocation (href) {
     let other = Tools.urlFormat(href)
     const location = {}
@@ -428,5 +457,26 @@ export default class Tools {
       return message || data.message
     }
     return target
+  }
+
+  /**
+   * 只复制目标对象可枚举的属性
+   * @param {Object} target 目标对象
+   * @param {Array} args 源对象集合
+   */
+  static assign (target, ...args) {
+    if (Tools.isEmpty(target) || Tools.isEmpty(args)) {
+      throw new TypeError('Cannot convert undefined or null to object')
+    }
+    const targetKeys = Object.keys(target)
+    for (const source of args) {
+      if (Tools.isEmpty(source) || Type.notObject(source)) { continue }
+      for (const key of targetKeys) {
+        const value = Reflect.get(source, key)
+        if (Tools.isEmpty(value)) { continue }
+        Reflect.set(target, key, value)
+      }
+    }
+    return Tools.clone(target, { deep: true })
   }
 }

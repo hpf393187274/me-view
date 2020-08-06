@@ -1,30 +1,20 @@
 <template>
   <div :class="classes" :style="styles">
-    <input
+    <textarea
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
-      :style="styleInput"
-      :type="type__"
+      :style="styletextarea"
       @change="handlerChange"
       @blur="handleBlur"
       @click.stop="handleClick"
       @focus="handleFocus"
-      class="me-flex input-inner"
+      class="me-flex textarea-inner"
       ref="target"
       :value="value__"
-    />
-    <div class="me-row input-icon" ref="prefix" style="left: 5px;" v-if="isBoolean(iconPrefix) || $slots.prefix">
-      <slot name="prefix">
-        <me-icon :disabled="disabled" @click="handlerClickPrefix" v-if="isBoolean(iconPrefix)">{{iconPrefix}}</me-icon>
-      </slot>
-    </div>
-
-    <div class="me-row input-icon" ref="suffix" style="right: 5px;" v-if="showClear || isBoolean(iconSuffix) || $slots.suffix">
+    ></textarea>
+    <div class="me-row textarea-icon" style="right: 5px;" v-if="showClear">
       <me-icon :disabled="disabled" @click="handlerClear" v-if="showClear">icon-cross</me-icon>
-      <slot name="suffix">
-        <me-icon :disabled="disabled" @click="handlerClickSuffix" v-if="isBoolean(iconSuffix)">{{iconSuffix}}</me-icon>
-      </slot>
     </div>
   </div>
 </template>
@@ -34,13 +24,10 @@ import Tools from 'me-view/src/script/tools'
 import Type from 'me-view/src/script/type'
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
-const typeNumberEnum = [ 'number', 'integer', 'float' ]
-const typeEnum = [
-  'text', 'email', 'password', ...typeNumberEnum
-]
+
 const alignEnum = [ 'left', 'center', '' ]
 export default {
-  name: 'MeInput',
+  name: 'MeTextarea',
   mixins: [ common, emitter ],
   model: {
     props: 'value', event: 'change'
@@ -52,24 +39,15 @@ export default {
     alignContent: { type: String, default: 'left', validator: value => alignEnum.includes(value) },
     width: String,
     height: String,
-    type: { type: String, default: 'text', validator: value => typeEnum.includes(value) },
-    value: [ Number, String, Array ],
+    value: String,
     rules: Array,
-    min: Number,
-    max: Number,
-    minLength: Number,
-    maxLength: Number,
-    iconPrefix: String,
-    iconSuffix: String,
     placeholder: String,
-    pattern: String,
     readonly: Boolean
   },
   data () {
     return {
       left: 8,
       right: 8,
-      type__: this.type === 'number' ? 'text' : this.type,
       value__: undefined,
       valueValid: undefined,
       validateStatus: '',
@@ -82,14 +60,10 @@ export default {
   },
   async mounted () {
     await this.$nextTick()
-    this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
-    this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
-    this.$on('focus-input', this.handlerFocusInput)
+    this.$on('focus-textarea', this.handlerFocustextarea)
     this.listenerUpward([ 'MeLabel' ], 'me-label--status', status => { this.validateStatus = status })
 
     this.handlerLableEvent(() => {
-      const height = this.$el.getBoundingClientRect().height
-      this.dispatchUpward('MeLabel', 'me-label--label-height', height)
       this.listenerUpward([ 'MeLabel' ], 'me-label--reset', value => {
         this.valueUpdate(value)
         this.$emit('change', this.value__)
@@ -103,16 +77,16 @@ export default {
     classes () {
       return [
         'me-row',
-        'me-input',
+        'me-textarea',
         'me-flex',
         {
           'me-readonly': this.readonly,
           'me-disabled': this.disabled,
-          'me-input-error': this.validateStatus === 'error'
+          'me-textarea-error': this.validateStatus === 'error'
         }
       ]
     },
-    styleInput () {
+    styletextarea () {
       return {
         'padding-left': `${this.left}px`,
         'padding-right': `${this.right}px`,
@@ -140,8 +114,8 @@ export default {
   },
   watch: {
     value () {
-      const newValue = Type.isArray(this.value) ? this.value.toString() : this.value
-      const oldValue = Type.isArray(this.value__) ? this.value__.toString() : this.value__
+      const newValue = this.value
+      const oldValue = this.value__
       if (newValue !== oldValue) {
         this.handlerLableEvent(() => {
           this.dispatchUpward('MeLabel', 'me-label--default-change', newValue)
@@ -157,14 +131,6 @@ export default {
     }
   },
   methods: {
-    convertType (value) {
-      if (Tools.isBlank(value)) { return value }
-      if (typeNumberEnum.includes(this.type) && /^(-?\d+)(\.\d+)?$/.test(value)) {
-        // 转换为数字类型
-        return Number(value)
-      }
-      return value
-    },
     async validateValue (value) {
       if (Type.isArray(this.rules__) && Tools.notBlank(this.rules__)) {
         try {
@@ -180,16 +146,14 @@ export default {
       }
     },
     async valueUpdate (value, verify = true) {
-      const newValue = this.convertType(value)
-      this.value__ = newValue
-      this.validateValue(this.value__)
+      this.value__ = value
       if (verify) {
         const verify = await this.validateValue(value)
         if (verify === false) { return }
       }
-      this.valueValid = newValue
+      this.valueValid = value
       this.handlerLableEvent(() => {
-        this.dispatchUpward('MeLabel', 'me-label--change', newValue)
+        this.dispatchUpward('MeLabel', 'me-label--change', value)
       })
     },
     handlerChange ({ target }) {
@@ -198,10 +162,9 @@ export default {
       this.$emit('change', this.value__)
     },
     /**
-     * MeInput
+     * Metextarea
      */
     handlerLableEvent (callback = () => { }) {
-      if (this.existParentComponent([ 'MeCombo' ])) { return }
       callback && callback.call(this)
     },
     /**
@@ -220,18 +183,8 @@ export default {
     handleClick () {
       this.$emit('click', this.value__)
     },
-    handlerFocusInput () {
+    handlerFocustextarea () {
       this.$refs.target.focus()
-    },
-    handlerClickPrefix () {
-      this.$emit('click-prefix-before', this.value__)
-      this.$emit('click-prefix', this.value__)
-      this.$emit('click-prefix-after', this.value__)
-    },
-    handlerClickSuffix () {
-      this.$emit('click-suffix-before', this.value__)
-      this.$emit('click-suffix', this.value__)
-      this.$emit('click-suffix-after', this.value__)
     }
   }
 }
