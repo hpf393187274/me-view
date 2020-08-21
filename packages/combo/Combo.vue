@@ -177,7 +177,7 @@ export default {
       this.dispatchUpward('MeLabel', 'me-label--change', value)
       this.$emit('input', value)
       this.dispatchParent('input', value)
-      if (Tools.notBlank(data) && index !== -1) {
+      if (Tools.notBlank(data)) {
         this.dispatchParent('change', { value, data, index })
       }
     },
