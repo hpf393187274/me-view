@@ -8,6 +8,8 @@
         :multiple="multiple"
         @click-row="handlerClick">
         <slot />
+        <slot name="header" slot="header" />
+        <slot name="footer" slot="footer" />
     </me-table>
   </me-combo>
 </template>

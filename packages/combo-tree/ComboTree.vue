@@ -9,9 +9,7 @@
       :field-value="fieldValue"
       :field-label="fieldLabel"
       @click="handlerClick">
-      <template #node-label="{data}">
-        <slot :data="data" name="node-label" />
-      </template>
+      <slot :data="data" name="node-label" slot="node-label" />
     </me-tree>
   </me-combo>
 </template>

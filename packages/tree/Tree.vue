@@ -18,12 +18,8 @@
       class="node-header"
       v-if="header"
     >
-      <template #node-header-label>
-        <slot name="node-header-label" />
-      </template>
-      <template #node-header>
-        <slot name="node-header" />
-      </template>
+      <slot name="node-header-label" slot="node-header-label" />
+      <slot name="node-header" slot="node-header" />
     </me-tree-header>
     <template v-if="nodeNumber > 0">
       <div style="overflow: auto;">
@@ -49,9 +45,7 @@
           :field-label="fieldLabel"
           v-for="node in data"
         >
-          <template #node-label="{data}">
-            <slot :data="data" name="node-label" />
-          </template>
+          <slot :data="data" name="node-label" slot="node-label" />
         </me-tree-node>
       </div>
     </template>
