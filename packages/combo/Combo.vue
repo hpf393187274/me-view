@@ -114,7 +114,8 @@ export default {
       }
     },
     findItem (value) {
-      return this.dataFlat.find(item => this.uniqueValue(item) === value)
+      const newValue = Type.isNumber(value) ? value + '' : value
+      return this.dataFlat.find(item => this.uniqueValue(item, true) === newValue)
     },
     initValueSingle (value) {
       if (Tools.isEmpty(value)) {
@@ -158,7 +159,13 @@ export default {
     handlerClickSuffix () {
       this.visibility = !this.visibility
     },
-    uniqueValue (data = {}) { return Reflect.get(data, this.fieldValue) || '' },
+    uniqueValue (data = {}, toString = false) {
+      const value = Reflect.get(data, this.fieldValue) || ''
+      if (toString === true) {
+        return String(value)
+      }
+      return value
+    },
     uniqueLabel (data = {}) { return Reflect.get(data, this.fieldLabel) || '' },
     handlerClickInput () {
       this.readonly__ && this.handlerClickSuffix()
