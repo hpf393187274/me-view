@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="me-row">
     <router-view />
   </div>
 </template>
@@ -15,3 +15,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+#app {
+  height: 100%;
+}
+</style>

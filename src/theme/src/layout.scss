@@ -123,11 +123,6 @@ html, body {
 	cursor: pointer;
 }
 
-#app {
-	height: 100%;
-  @include flex(row);
-}
-
 .#{$prefix}-icon {
 	cursor: pointer;
 	align-self: center;
