@@ -1,7 +1,7 @@
 <template>
   <div class="me-tabs">
     <div class="tabs-title-wrap" :class="[`tabs-title-${mode}`]">
-      <me-tab-title :closable="analyzeClosable(item)" v-for="item in paneList" :key="item.name" :name="item.name">{{item.title}}</me-tab-title>
+      <tab-title :closable="analyzeClosable(item)" v-for="item in paneList" :key="item.name" :name="item.name">{{item.title}}</tab-title>
     </div>
     <slot />
     <div class="me-empty" v-show="paneList.length === 0">暂无页签</div>
@@ -12,7 +12,7 @@ import Tools from 'me-view/src/script/tools'
 import TabTitle from './TabTitle'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTabs',
+  name: 'Tabs',
   mixins: [ emitter ],
   components: { [TabTitle.name]: TabTitle },
   props: {

@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'MePanel',
+  name: 'Panel',
   props: {
     title: String,
     border: Boolean,

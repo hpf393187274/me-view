@@ -1,5 +1,10 @@
 <template>
-  <button :class="classes" :disabled="disabled" :margin="margin" :style="{ width }" @click.stop="click" type="button">
+  <button
+    v-bind="$props"
+    v-on="$listeners"
+    :class="classes"
+    :style="{ width }"
+    @click.stop="handlerClick">
     <me-icon v-if="isBoolean(icon)">{{icon}}</me-icon>
     <span class="button-inner">
       <slot />
@@ -8,13 +13,13 @@
 </template>
 
 <script>
-import MeIcon from '../icon/index'
+import emitter from 'me-view/src/mixins/emitter'
 import Common from 'me-view/src/mixins/common'
 export default {
-  name: 'MeButton',
-  mixins: [ Common ],
-  components: { MeIcon },
+  name: 'Button',
+  mixins: [ Common, emitter ],
   props: {
+    name: { type: [ String, Number ], default: new Date().getTime() + '' },
     type: { type: String, default: 'default' },
     disabled: Boolean,
     width: String,
@@ -29,7 +34,7 @@ export default {
         'me-btn',
         'me-row',
         'me-center',
-        `me-btn-${this.type}`,
+        `me-btn-${this.type__}`,
         {
           'me-btn-plain': this.plain,
           'me-btn-disabled': this.disabled,
@@ -39,9 +44,29 @@ export default {
       ]
     }
   },
+  data () {
+    return {
+      type__: this.type
+    }
+  },
+  created () {
+    this.dispatchParent(`${this.prefix}-button-group--register`, { name: this.name, component: this })
+  },
+  beforeDestroy () {
+    this.dispatchParent(`${this.prefix}-button-group--destroy`, { name: this.name })
+  },
   methods: {
-    click () {
-      this.$emit('click')
+    resetType () {
+      this.type__ = this.type
+    },
+    handlerActivate () {
+      this.type__ = 'primary'
+    },
+    handlerClick () {
+      if (this.existParentComponent([ 'ButtonGroup' ])) {
+        this.dispatchParent(`${this.prefix}-button-group--click`, { name: this.name, component: this })
+        this.handlerActivate()
+      }
     }
   }
 }

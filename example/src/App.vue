@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="me-row">
+  <div id="app" class="yto-row">
     <router-view />
   </div>
 </template>

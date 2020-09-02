@@ -1,4 +1,6 @@
 import Form from './Form.vue'
 
-Form.install = Vue => { Vue.component(Form.name, Form) }
+Form.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${Form.name}`, Form)
+}
 export default Form

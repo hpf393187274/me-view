@@ -1,6 +1,6 @@
 <template>
   <div class="me-column me-tree" style="overflow: auto;">
-    <me-tree-header
+    <tree-header
       :action="action"
       :checkbox="checkbox"
       :checked="checkedAll"
@@ -20,10 +20,10 @@
     >
       <slot name="node-header-label" slot="node-header-label" />
       <slot name="node-header" slot="node-header" />
-    </me-tree-header>
+    </tree-header>
     <template v-if="nodeNumber > 0">
       <div style="overflow: auto;">
-        <me-tree-node
+        <tree-node
           :action="action"
           :checkbox="checkbox"
           :checked="checkedChildren"
@@ -46,7 +46,7 @@
           v-for="node in data"
         >
           <slot :data="data" name="node-label" slot="node-label" />
-        </me-tree-node>
+        </tree-node>
       </div>
     </template>
     <div class="me-empty" v-else>暂无数据</div>
@@ -62,7 +62,7 @@ import emitter from 'me-view/src/mixins/emitter'
 import TreeHeader from './TreeHeader'
 import TreeNode from './TreeNode'
 export default {
-  name: 'MeTree',
+  name: 'Tree',
   mixins: [ TreeCommon, TreeProp, emitter ],
   components: {
     [TreeHeader.name]: TreeHeader,
@@ -105,7 +105,7 @@ export default {
         this.removeNode(this.uniqueValue(item))
       }
     })
-    this.listenerUpward([ 'MeDialog', 'MeCombo' ], 'me-attribute--visible-true', () => {
+    this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => {
       this.layout()
     })
 
@@ -127,10 +127,10 @@ export default {
       const parent = component.$parent
       if (Tools.isEmpty(parent)) { return }
       const parentName = parent?.$options?.name
-      if ([ 'MeTree', 'MeTreeNode' ].includes(parentName) === false) { return }
+      if ([ 'Tree', 'TreeNode' ].includes(parentName) === false) { return }
       const data = parent?.data // 组件当前数据
-      const children = (parentName === 'MeTree' ? data : data?.children) || []
-      if (name === 'MeTreeNode') {
+      const children = (parentName === 'Tree' ? data : data?.children) || []
+      if (name === 'TreeNode') {
         component.handlerNodeCheck(false)
       }
       const index = Tools.arrayRemove(children, item => this.uniqueValue(item) === key)

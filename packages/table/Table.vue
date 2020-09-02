@@ -6,8 +6,8 @@
       </div>
     </template>
     <div class="me-flex table-wrapper">
-      <me-table-header :style="styleTHead">
-        <me-table-row
+      <table-header :style="styleTHead">
+        <table-row
           :checkbox="checkbox"
           :has-index="hasIndex"
           :checked="checkedHeader"
@@ -18,10 +18,10 @@
           @checked-change="handlerCheckboxHeader"
           header
         />
-      </me-table-header>
+      </table-header>
       <template v-if="length > 0">
-        <me-table-body class="me-flex" ref="tableBody">
-          <me-table-row
+        <table-body class="me-flex" ref="tableBody">
+          <table-row
             :checkbox="checkbox"
             :columns="columns__"
             :node="item"
@@ -33,7 +33,7 @@
             :field-value = "fieldValue"
             v-for="(item,index) in nodeList"
           />
-        </me-table-body>
+        </table-body>
       </template>
       <div class="me-empty me-border" v-else>暂无数据</div>
     </div>
@@ -52,7 +52,7 @@ import TableHeader from './TableHeader.vue'
 import TableBody from './TableBody.vue'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTable',
+  name: 'Table',
   mixins: [ emitter ],
   components: {
     [TableRow.name]: TableRow,
@@ -120,13 +120,13 @@ export default {
   },
   created () {
     this.initData(this.data)
-    this.listener('MeTable-row-checked-true', ({ key, value }) => this.$set(this.checkedData, key, value))
-    this.listener('MeTable-row-checked-false', ({ key }) => this.$delete(this.checkedData, key))
-    this.listener('MeTable-row-sort', ({ field, order }) => this.sort(field, order))
-    this.listener('MeTable--scrollBar', flag => { this.hasScrollBar = flag })
+    this.listener('Table-row-checked-true', ({ key, value }) => this.$set(this.checkedData, key, value))
+    this.listener('Table-row-checked-false', ({ key }) => this.$delete(this.checkedData, key))
+    this.listener('Table-row-sort', ({ field, order }) => this.sort(field, order))
+    this.listener('Table--scrollBar', flag => { this.hasScrollBar = flag })
 
-    this.listenerUpward([ 'MeDialog', 'MeCombo' ], 'me-attribute--visible-true', () => this.layout())
-    this.listenerUpward([ 'MeDialog' ], 'me-dialog--visible-frist', () => {
+    this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => this.layout())
+    this.listenerUpward([ 'Dialog' ], 'me-dialog--visible-frist', () => {
       this.dialogInit && this.dialogInit()
     })
 
@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     computeHeight () {
-      if (this.existParentComponent([ 'MeDialog' ])) { return }
+      if (this.existParentComponent([ 'Dialog' ])) { return }
       if (Tools.isEmpty(this.height__) || this.height__ === 0) {
         this.height__ = this.$el.getBoundingClientRect().height
       }

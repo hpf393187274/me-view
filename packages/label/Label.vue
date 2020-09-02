@@ -23,7 +23,7 @@ import Assert from 'me-view/src/script/assert'
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeLabel',
+  name: 'Label',
   mixins: [ common, emitter ],
   props: {
     rules: {

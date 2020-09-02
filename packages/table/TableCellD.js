@@ -3,7 +3,7 @@ import TableCell from './TableCell.mixin'
 import Type from 'me-view/src/script/type'
 let idSeed = 1
 export default {
-  name: 'MeTableCellD',
+  name: 'TableCellD',
   mixins: [ TableCell ],
   props: {
     data: { type: Object, default: () => ({}) },

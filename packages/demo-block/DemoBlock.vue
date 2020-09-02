@@ -39,7 +39,7 @@ function stripTemplate (content) {
 }
 
 export default {
-  name: 'MeDemoBlock',
+  name: 'DemoBlock',
   data () {
     return {
       codepen: {

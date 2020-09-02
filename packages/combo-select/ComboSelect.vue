@@ -7,11 +7,9 @@
 <script>
 import ComboCommon from '../combo/combo.common'
 import ComboExtend from '../combo/combo.extend'
-import Combo from '../combo/index'
 export default {
-  components: { [Combo.name]: Combo },
   mixins: [ ComboCommon, ComboExtend ],
-  name: 'MeComboSelect',
+  name: 'ComboSelect',
   props: {
     columns: { type: Array, default: () => [] }
   }

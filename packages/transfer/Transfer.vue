@@ -53,7 +53,7 @@
 import Tools from 'me-view/src/script/tools'
 import TreeProp from '../tree/tree-prop'
 export default {
-  name: 'MeTransfer',
+  name: 'Transfer',
   mixins: [ TreeProp ],
   props: {
     value: { type: Array, default () { return [] } },

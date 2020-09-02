@@ -5,5 +5,5 @@
 </template>
 
 <script>
-export default { name: 'MeColumn' }
+export default { name: 'Column' }
 </script>

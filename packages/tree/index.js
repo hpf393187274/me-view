@@ -1,5 +1,6 @@
 import Tree from './Tree.vue'
-// import TreeNode from './TreeNode.vue'
 
-Tree.install = Vue => { Vue.component(Tree.name, Tree) }
+Tree.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${Tree.name}`, Tree)
+}
 export default Tree

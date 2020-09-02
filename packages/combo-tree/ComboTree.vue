@@ -17,11 +17,9 @@
 <script>
 import ComboCommon from '../combo/combo.common'
 import ComboExtend from '../combo/combo.extend'
-import Combo from '../combo'
 export default {
-  components: { [Combo.name]: Combo },
   mixins: [ ComboCommon, ComboExtend ],
-  name: 'MeComboTree',
+  name: 'ComboTree',
   props: {
     expandedLevel: Number
   }

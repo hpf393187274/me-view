@@ -9,7 +9,7 @@
 <script>
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeListItem',
+  name: 'ListItem',
   mixins: [ emitter ],
   props: {
     checked: Boolean,

@@ -40,7 +40,7 @@ const typeEnum = [
 ]
 const alignEnum = [ 'left', 'center', '' ]
 export default {
-  name: 'MeInput',
+  name: 'Input',
   mixins: [ common, emitter ],
   model: {
     props: 'value', event: 'change'

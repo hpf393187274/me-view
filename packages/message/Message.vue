@@ -11,7 +11,7 @@ import MeMessageItem from './MessageItem'
 import Tools from 'me-view/src/script/tools'
 import MeModal from '../modal/index'
 export default {
-  name: 'MeMessage',
+  name: 'Message',
   mixins: [ Modal ],
   components: {
     MeModal, MeMessageItem

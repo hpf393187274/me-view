@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'MeMenu'
+  name: 'Menu'
 }
 </script>

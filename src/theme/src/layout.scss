@@ -2,17 +2,15 @@
 *,:after, :before {
 	box-sizing: border-box;
 }
-
 @mixin flex($type){
-	-webkit-display:flex;
-	display: flex;
-	flex-direction: $type;
+  -webkit-display: flex;
+  display: flex;
+  flex-direction: $type;
 }
 
 @mixin grid-column($columns) {
 	display: grid;
   grid-template-columns: repeat($columns, auto);
-  grid-auto-rows: auto-fill;
 }
 
 @for $i from 2 through 12 {

@@ -16,7 +16,7 @@
 <script>
 import MeIcon from '../icon/index'
 export default {
-  name: 'MeMessageItem',
+  name: 'MessageItem',
   components: {
     MeIcon
   },

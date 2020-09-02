@@ -19,7 +19,7 @@ import MeButton from '../button/index'
 import Tools from 'me-view/src/script/tools'
 
 export default {
-  name: 'MeModal',
+  name: 'Modal',
   mixins: [ Modal, Draggable ],
   components: { MeButton },
   props: {

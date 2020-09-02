@@ -42,7 +42,7 @@ import MeIcon from '../icon/index'
 import MeLineH from '../line-h/index'
 let zIndex = 1000
 export default {
-  name: 'MeDialog',
+  name: 'Dialog',
   components: { MeButton, MeIcon, MeLineH, MeModal },
   mixins: [ Modal ],
   props: {

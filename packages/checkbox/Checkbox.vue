@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'MeCheckbox',
+  name: 'Checkbox',
   model: {
     props: 'value', event: 'change'
   },

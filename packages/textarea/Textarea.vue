@@ -27,7 +27,7 @@ import emitter from 'me-view/src/mixins/emitter'
 
 const alignEnum = [ 'left', 'center', '' ]
 export default {
-  name: 'MeTextarea',
+  name: 'Textarea',
   mixins: [ common, emitter ],
   model: {
     props: 'value', event: 'change'

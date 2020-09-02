@@ -73,11 +73,18 @@ export default class Tools {
    * @param {String} order 排序方式：ASC 升序，DESC 降序
    */
   static sort (target, callback = item => item, order = Tools.ASC) {
-    if (Type.notArray(target) || target.length === 0) { return }
+    Assert.isArray(target, '第一参数必须为 Array ')
+    Assert.isFunction(callback, '第二参数必须为 Function ')
     target.sort((a, b) => {
-      const valueA = callback && callback(a)
-      const valueB = callback && callback(b)
-      return order === Tools.ASC ? valueA - valueB : valueB - valueA
+      let valueA = callback(a)
+      let valueB = callback(b)
+      if (Type.notString(valueA)) { valueA = JSON.stringify(valueA) }
+      if (Type.notString(valueB)) { valueB = JSON.stringify(valueB) }
+      if (valueA === valueB) { return 0 }
+      if (order === Tools.ASC) {
+        return valueA > valueB ? 1 : -1
+      }
+      return valueB > valueA ? 1 : -1
     })
   }
 
@@ -466,7 +473,7 @@ export default class Tools {
    */
   static assign (target, ...args) {
     if (Tools.isEmpty(target) || Tools.isEmpty(args)) {
-      throw new TypeError('Cannot convert undefined or null to object')
+      throw new TypeError('Cannot convert Undefined or null to Object')
     }
     const targetKeys = Object.keys(target)
     for (const source of args) {

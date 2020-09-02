@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="tree-node-children" v-if="renderFirst" v-show="expanded__">
-      <me-tree-node
+      <tree-node
         :action="action"
         :checkbox="checkbox"
         :checked-strictly="checkedStrictly"
@@ -43,7 +43,7 @@
         v-for="node in data.children"
       >
         <slot :data="data" name="node-label" slot="node-label"/>
-      </me-tree-node>
+      </tree-node>
     </div>
   </div>
 </template>
@@ -55,7 +55,7 @@ import TreeCommon from './tree-common'
 import TreeProp from './tree-prop'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTreeNode',
+  name: 'TreeNode',
   mixins: [ TreeCommon, TreeProp, emitter ],
   props: {
     data: { type: Object, default () { return {} } },
@@ -77,13 +77,13 @@ export default {
   },
   async mounted () {
     await this.$nextTick()
-    this.dispatchUpward('MeTree', 'me-tree-map--append', {
+    this.dispatchUpward('Tree', 'me-tree-map--append', {
       key: this.uniqueValue(this.data),
       value: { data: this.data, component: this }
     })
   },
   beforeDestroy () {
-    this.dispatchUpward('MeTree', 'me-tree-map--remove', this.uniqueValue(this.data))
+    this.dispatchUpward('Tree', 'me-tree-map--remove', this.uniqueValue(this.data))
   },
   data () {
     return {
@@ -170,7 +170,7 @@ export default {
      */
     removeCurrentNode () {
       const uniqueValue = this.uniqueValue(this.data)
-      this.dispatchUpward('MeTree', 'me-tree-node--remove', uniqueValue)
+      this.dispatchUpward('Tree', 'me-tree-node--remove', uniqueValue)
       this.handlerEvent('remove')
     },
     /**
@@ -220,7 +220,7 @@ export default {
         this.handlerExpanded()
       }
       this.statusHighlight = !this.statusHighlight
-      this.dispatchUpward('MeTree', 'me-tree-node--click', this)
+      this.dispatchUpward('Tree', 'me-tree-node--click', this)
       this.handlerEvent('click')
       if (this.nodeLeaf) {
         this.handlerEvent('click-leaf')
@@ -230,7 +230,7 @@ export default {
       }
     },
     handlerEvent (eventName) {
-      this.dispatchUpward('MeTree', eventName, { data: this.getData(), node: this })
+      this.dispatchUpward('Tree', eventName, { data: this.getData(), node: this })
     }
   }
 }

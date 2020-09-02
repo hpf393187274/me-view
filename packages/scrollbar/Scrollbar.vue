@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'MeScrollbar',
+  name: 'Scrollbar',
   data () {
     return {
       vertical: false,

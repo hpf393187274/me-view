@@ -1,18 +1,18 @@
 <template>
   <tr :class="classes" @click.stop="handlerRow(!checked__)">
     <template v-if="header">
-      <me-table-cell-header width="50px" layout="center" v-if="checkbox">
+      <table-cell-header width="50px" layout="center" v-if="checkbox">
         <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerCheckedChange(!checked__)" v-model="checked__" />
-      </me-table-cell-header>
-      <me-table-cell-header width="50px" layout="center" v-if="hasIndex">序号</me-table-cell-header>
-      <me-table-cell-header :key="column.label" v-bind="column" v-for="column in columns" />
+      </table-cell-header>
+      <table-cell-header width="50px" layout="center" v-if="hasIndex">序号</table-cell-header>
+      <table-cell-header :key="column.label" v-bind="column" v-for="column in columns" />
     </template>
     <template v-else>
-      <me-table-cell-d width="50px" layout="center" v-if="checkbox">
+      <table-cell-d width="50px" layout="center" v-if="checkbox">
         <me-checkbox :disabled="multiple === false" @click="handlerCheckedChange(!checked__)" v-model="node.checked" />
-      </me-table-cell-d>
-      <me-table-cell-d width="50px" layout="center" v-if="hasIndex">{{index + 1}}</me-table-cell-d>
-      <me-table-cell-d :data="data" :key="column.field" v-bind="column" v-for="column in columns" />
+      </table-cell-d>
+      <table-cell-d width="50px" layout="center" v-if="hasIndex">{{index + 1}}</table-cell-d>
+      <table-cell-d :data="data" :key="column.field" v-bind="column" v-for="column in columns" />
     </template>
   </tr>
 </template>
@@ -21,7 +21,7 @@ import TableCellD from './TableCellD'
 import TableCellHeader from './TableCellHeader'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTableRow',
+  name: 'TableRow',
   mixins: [ emitter ],
   components: {
     [TableCellD.name]: TableCellD,
@@ -83,7 +83,7 @@ export default {
     handlerRow (checked) {
       if (this.header === false) {
         this.handlerCheckedChange(checked)
-        this.dispatchUpward('MeTable', 'click-row', { data: this.data, index: this.index, node: this })
+        this.dispatchUpward('Table', 'click-row', { data: this.data, index: this.index, node: this })
       }
     },
     handlerCheckedChange (checked) {
@@ -91,7 +91,7 @@ export default {
       console.debug(`Table.row.handlerCheckedChange ->  checked = ${checked}`)
       if (this.header === false) {
         this.node.checked = checked
-        this.dispatchUpward('MeTable', `MeTable-row-checked-${checked}`, { key: this.uniqueValue, value: this })
+        this.dispatchUpward('Table', `Table-row-checked-${checked}`, { key: this.uniqueValue, value: this })
       }
       this.$emit('checked-change', checked, this.data, this)
     }

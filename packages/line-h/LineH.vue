@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'MeLineH',
+  name: 'LineH',
   props: {
     color: { type: String, default: '#DDE9F6' }
   }

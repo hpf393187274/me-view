@@ -64,7 +64,7 @@ export default {
           }
         })
       }
-      if (this.$parent.$options.name === 'MeCombo') {
+      if (this.$parent.$options.name === 'Combo') {
         this.width = this.$parent.$el.getBoundingClientRect().width
       }
     },

@@ -32,7 +32,7 @@
 import Type from 'me-view/src/script/type'
 import common from 'me-view/src/mixins/common'
 export default {
-  name: 'MePaging',
+  name: 'Paging',
   mixins: [ common ],
   props: {
     value: { type: Number, default: 1 },

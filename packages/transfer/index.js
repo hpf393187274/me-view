@@ -1,4 +1,6 @@
 import Transfer from './Transfer.vue'
 
-Transfer.install = Vue => { Vue.component(Transfer.name, Transfer) }
+Transfer.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${Transfer.name}`, Transfer)
+}
 export default Transfer

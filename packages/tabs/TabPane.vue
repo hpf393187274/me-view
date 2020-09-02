@@ -11,7 +11,7 @@
 import Tools from 'me-view/src/script/tools'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTabPane',
+  name: 'TabPane',
   mixins: [ emitter ],
   props: {
     activated: Boolean,

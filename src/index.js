@@ -3,16 +3,14 @@ import Clipboard from 'clipboard'
 import * as components from './index-component'
 import { local, session, Type, Tools, Watermark } from './script/index'
 
-// import './test/index'
-
 export * from './script/index'
 export * from './index-component'
 
 export default {
-  install (Vue) {
+  install (Vue, { prefix = 'Me' } = {}) {
     for (const key in components) {
       const item = Reflect.get(components, key)
-      Vue.component(item.name, item)
+      Vue.component(`${prefix}${item.name}`, item)
     }
 
     Vue.prototype.$copy = function (target, { prompt = false, message = '复制成功' } = {}) {
@@ -44,5 +42,6 @@ export default {
     Vue.prototype.$tools = Tools
     Vue.prototype.$local = local
     Vue.prototype.$session = session
+    Vue.prototype.prefix = prefix.toLowerCase()
   }
 }

@@ -1,3 +1,6 @@
 import Paging from './Paging'
-Paging.install = Vue => { Vue.component(Paging.name, Paging) }
+
+Paging.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${Paging.name}`, Paging)
+}
 export default Paging
