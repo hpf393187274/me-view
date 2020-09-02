@@ -109,13 +109,13 @@ export default {
   },
   mounted () {
     if (this.prop) {
-      this.dispatchUpward('MeForm', 'me-form--add', this)
+      this.dispatchUpward('Form', 'me-form--add', this)
       this.initialize(this.valueCurrent)
       this.bindFormInstance()
     }
   },
   beforeDestroy () {
-    this.dispatchUpward('MeForm', 'me-form--remove', this)
+    this.dispatchUpward('Form', 'me-form--remove', this)
   },
   methods: {
     initialize (value) {
@@ -135,19 +135,19 @@ export default {
       this.validate().catch(() => {})
     },
     bindFormInstance () {
-      this.FormInstance = this.findParentComponent([ 'MeForm' ])
+      this.FormInstance = this.findParentComponent([ 'Form' ])
       this.bindFormRules(/* 解析表达元素 prop */)
     },
     setRules (value) {
       if (Tools.isBlank(value)) { return }
-      Assert.isArray(value, 'MeLabel rules 必须为数组')
+      Assert.isArray(value, 'Label rules 必须为数组')
       this.rules__.push(...value)
     },
     bindFormRules () {
       if (this.prop && this.FormInstance) {
         const formRules = this.FormInstance.rules
         if (Type.notObject(formRules)) {
-          console.debug('MeForm.rules is not Object --> rules：', formRules)
+          console.debug('Form.rules is not Object --> rules：', formRules)
           return
         }
         const ruleProp = Tools.findPath(formRules, this.prop)

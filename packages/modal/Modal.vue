@@ -15,18 +15,17 @@
 <script>
 import Modal from './modal.mixin'
 import Draggable from 'me-view/src/mixins/draggable'
-import MeButton from '../button/index'
 import Tools from 'me-view/src/script/tools'
 
 export default {
   name: 'Modal',
   mixins: [ Modal, Draggable ],
-  components: { MeButton },
   props: {
     height: String,
     width: String,
     minHeight: String,
     minWidth: String,
+    verticalAlign: { type: String, default: 'center' },
     background: { type: String, default: '#ffffff' },
     zIndex: { type: Number, default: 1000 }
   },
@@ -60,11 +59,25 @@ export default {
     handlerDrag () {
       this.position = { ...this.pointEnd }
     },
+    /**
+     * 初始化定位
+     */
     initPosition () {
-      Object.assign(this.position, {
-        x: (this.containerMax.x - this.width__) / 2,
-        y: (this.containerMax.y - this.height__) / 2
-      })
+      /** 水平默认居中 */
+      this.position.x = (this.containerMax.x - this.width__) / 2
+      switch (this.verticalAlign) {
+        case 'center':
+          this.position.y = (this.containerMax.y - this.height__) / 2
+          break
+        case 'top':
+          this.position.y = 0
+          break
+        case 'bottom':
+          this.position.y = this.containerMax.y - this.height__
+          break
+        default:
+          this.position.y = Tools.convertToNumber(this.verticalAlign)
+      }
       if (this.left) {
         Reflect.set(this.position, 'x', Tools.convertToNumber(this.left))
       }
@@ -89,9 +102,9 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      var container = window.document.body
+      const container = window.document.body.getBoundingClientRect()
       Object.assign(this.containerMax, {
-        x: container.scrollWidth, y: container.scrollHeight
+        x: container.width, y: container.height
       })
       this.pointMax = { ...this.containerMax }
       if (this.visibility) {
@@ -112,9 +125,7 @@ export default {
         top: `${this.position.y}px`
       }
       if (this.modal === false) {
-        Object.assign(styleBasal, {
-          position: 'fixed'
-        })
+        Object.assign(styleBasal, { position: 'fixed' })
       }
       return styleBasal
     }

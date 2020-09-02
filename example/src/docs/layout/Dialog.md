@@ -20,9 +20,9 @@
         </template>
       </me-table>
     </me-dialog>
-    <me-dialog title="dialog" min-height="100px" min-width="600px" v-model="statusForm" @confirm="handlerConfirm">
-      <me-form class="me-flex me-grid-column-2" ref="form">
-        <me-label title="省份">
+    <me-dialog title="dialog" min-height="100px" min-width="600px" v-model="statusForm" @confirm="handlerFormConfirm">
+      <me-form class="me-flex me-grid-column-2" :rules="rules" ref="form">
+        <me-label title="省份" prop="province">
           <me-combo-select clearable :data="provinceList" v-model="form.province"></me-combo-select>
         </me-label>
         <me-label title="主机" prop="domain">
@@ -64,7 +64,12 @@ export default {
       statusTree: false,
       checkedRows:[],
       form: {
-        province: '陕西省'
+        province: null
+      },
+      rules: {
+        province: [
+          { required: true, message: '请选择省份' }
+        ]
       },
       provinceList:[
         { label: '山西省', value: '1' },
@@ -119,6 +124,14 @@ export default {
     }, 1000 * 2)
   },
   methods: {
+    async handlerFormConfirm () {
+      try {
+        const message = await this.$refs.form.validate()
+        this.$message.success('表单校验成功')
+      } catch (message) {
+        this.$message.error(message)
+      }
+    },
     handlerConfirm () {
       const selectedData = this.$refs.tableList.getCheckedRows()
       if(!selectedData || selectedData.length < 1) {

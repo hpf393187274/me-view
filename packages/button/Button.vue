@@ -4,6 +4,7 @@
     v-on="$listeners"
     :class="classes"
     :style="{ width }"
+    type="button"
     @click.stop="handlerClick">
     <me-icon v-if="isBoolean(icon)">{{icon}}</me-icon>
     <span class="button-inner">

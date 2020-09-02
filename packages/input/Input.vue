@@ -85,12 +85,14 @@ export default {
     this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
     this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
     this.$on('focus-input', this.handlerFocusInput)
-    this.listenerUpward([ 'MeLabel' ], 'me-label--status', status => { this.validateStatus = status })
+    this.listenerUpward([ 'Label' ], 'me-label--status', status => {
+      this.validateStatus = status
+    })
 
     this.handlerLableEvent(() => {
       const height = this.$el.getBoundingClientRect().height
-      this.dispatchUpward('MeLabel', 'me-label--label-height', height)
-      this.listenerUpward([ 'MeLabel' ], 'me-label--reset', value => {
+      this.dispatchUpward('Label', 'me-label--label-height', height)
+      this.listenerUpward([ 'Label' ], 'me-label--reset', value => {
         this.valueUpdate(value)
         this.$emit('change', this.value__)
       })
@@ -144,7 +146,7 @@ export default {
       const oldValue = Type.isArray(this.value__) ? this.value__.toString() : this.value__
       if (newValue !== oldValue) {
         this.handlerLableEvent(() => {
-          this.dispatchUpward('MeLabel', 'me-label--default-change', newValue)
+          this.dispatchUpward('Label', 'me-label--default-change', newValue)
         })
         this.valueUpdate(newValue)
       }
@@ -189,7 +191,7 @@ export default {
       }
       this.valueValid = newValue
       this.handlerLableEvent(() => {
-        this.dispatchUpward('MeLabel', 'me-label--change', newValue)
+        this.dispatchUpward('Label', 'me-label--change', newValue)
       })
     },
     handlerChange ({ target }) {
@@ -198,10 +200,10 @@ export default {
       this.$emit('change', this.value__)
     },
     /**
-     * MeInput
+     * Input
      */
     handlerLableEvent (callback = () => { }) {
-      if (this.existParentComponent([ 'MeCombo' ])) { return }
+      if (this.existParentComponent([ 'Combo' ])) { return }
       callback && callback.call(this)
     },
     /**

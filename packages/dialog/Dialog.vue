@@ -9,6 +9,7 @@
     :width="width"
     :z-index="zIndex"
     @cancel="$emit('cancel')"
+    :vertical-align='verticalAlign'
     class-container="me-dialog"
     v-model="visibility"
   >
@@ -36,14 +37,9 @@
 <script>
 
 import Modal from '../modal/modal.mixin'
-import MeModal from '../modal/index'
-import MeButton from '../button/index'
-import MeIcon from '../icon/index'
-import MeLineH from '../line-h/index'
 let zIndex = 1000
 export default {
   name: 'Dialog',
-  components: { MeButton, MeIcon, MeLineH, MeModal },
   mixins: [ Modal ],
   props: {
     title: { type: String, default: '' },
@@ -52,6 +48,7 @@ export default {
     height: String,
     width: String,
     hideFooter: Boolean,
+    verticalAlign: String,
     draggable: { type: Boolean, default: true },
     closable: { type: Boolean, default: true }
   },
