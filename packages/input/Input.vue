@@ -7,9 +7,9 @@
       :style="styleInput"
       :type="type__"
       @change="handlerChange"
-      @blur="handleBlur"
-      @click.stop="handleClick"
-      @focus="handleFocus"
+      @blur="$emit('blur', value__)"
+      @focus="$emit('focus', value__)"
+      @click.stop="$emit('click', value__)"
       class="me-flex input-inner"
       ref="target"
       :value="value__"
@@ -171,32 +171,32 @@ export default {
       if (Type.isArray(this.rules__) && Tools.notBlank(this.rules__)) {
         try {
           await Tools.validate(undefined, this.value__, this.rules__)
-          console.debug('me-textarea valueUpdate -> then')
+          console.debug('me-input valueUpdate -> then')
           return true
         } catch (message) {
-          console.debug(`me-textarea valueUpdate ->catch message=${message}`)
+          console.debug(`me-input valueUpdate ->catch message=${message}`)
           this.value__ = this.valueValid
           this.$emit('change', this.value__)
           return false
         }
       }
     },
-    async valueUpdate (value, verify = true) {
+    async valueUpdate (value, verify = false) {
       const newValue = this.convertType(value)
       this.value__ = newValue
       this.validateValue(this.value__)
-      if (verify) {
+      if (verify === true) {
         const verify = await this.validateValue(value)
         if (verify === false) { return }
       }
       this.valueValid = newValue
       this.handlerLableEvent(() => {
-        this.dispatchUpward('Label', 'me-label--change', newValue)
+        this.dispatchUpward('Label', 'me-label--change', { value: newValue, verify })
       })
     },
     handlerChange ({ target }) {
       console.debug('handlerChange ---------> value')
-      this.valueUpdate(target.value, false)
+      this.valueUpdate(target.value, true)
       this.$emit('change', this.value__)
     },
     /**
@@ -210,17 +210,8 @@ export default {
      * 重置
      */
     handlerClear () {
-      this.valueUpdate(null, false)
+      this.valueUpdate(null)
       this.$emit('change', null)
-    },
-    handleFocus () {
-      this.$emit('focus', this.value__)
-    },
-    handleBlur () {
-      this.$emit('blur', this.value__)
-    },
-    handleClick () {
-      this.$emit('click', this.value__)
     },
     handlerFocusInput () {
       this.$refs.target.focus()

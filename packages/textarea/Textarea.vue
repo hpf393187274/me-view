@@ -145,7 +145,7 @@ export default {
         }
       }
     },
-    async valueUpdate (value, verify = true) {
+    async valueUpdate (value, verify = false) {
       this.value__ = value
       if (verify) {
         const verify = await this.validateValue(value)
@@ -153,12 +153,12 @@ export default {
       }
       this.valueValid = value
       this.handlerLableEvent(() => {
-        this.dispatchUpward('MeLabel', 'me-label--change', value)
+        this.dispatchUpward('MeLabel', 'me-label--change', { value, verify })
       })
     },
     handlerChange ({ target }) {
       console.debug('handlerChange ---------> value')
-      this.valueUpdate(target.value, false)
+      this.valueUpdate(target.value, true)
       this.$emit('change', this.value__)
     },
     /**
@@ -171,7 +171,7 @@ export default {
      * 重置
      */
     handlerClear () {
-      this.valueUpdate(null, false)
+      this.valueUpdate(null)
       this.$emit('change', null)
     },
     handleFocus () {

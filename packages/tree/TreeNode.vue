@@ -42,7 +42,7 @@
         :parent-grandson="parentGrandson__"
         v-for="node in data.children"
       >
-        <slot :data="data" name="node-label" slot="node-label"/>
+        <slot :data="data" name="node-label" slot="node-label" slot-scope="{data}"/>
       </tree-node>
     </div>
   </div>

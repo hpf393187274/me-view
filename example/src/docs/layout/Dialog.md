@@ -20,30 +20,40 @@
         </template>
       </me-table>
     </me-dialog>
-    <me-dialog title="dialog" min-height="100px" min-width="600px" v-model="statusForm" @confirm="handlerFormConfirm">
+    <me-dialog title="dialog" min-height="100px" min-width="900px" v-model="statusForm" @confirm="handlerFormConfirm">
       <me-form class="me-flex me-grid-column-2" :rules="rules" ref="form">
-        <me-label title="省份" prop="province">
-          <me-combo-select clearable :data="provinceList" v-model="form.province"></me-combo-select>
-        </me-label>
-        <me-label title="主机" prop="domain">
-          <me-input clearable v-model="form.domain"></me-input>
-        </me-label>
-        <me-label title="端口" prop="port">
-          <me-input clearable v-model="form.port"></me-input>
-        </me-label>
-        <me-label title="数据库" prop="databaseName">
-          <me-input clearable v-model="form.databaseName"></me-input>
-        </me-label>
-        <me-label title="用户名" prop="userName">
-          <me-input clearable v-model="form.userName"></me-input>
-        </me-label>
-        <me-label title="密码" prop="password">
-          <me-input clearable v-model="form.password"></me-input>
-        </me-label>
-        <me-label class="me-grid-self-center">
-          <me-button plain type="primary">变更数据源</me-button>
-        </me-label>
-      </me-form>
+        <div class="me-row">
+          <me-label required title="姓名" prop="name">
+            <me-input clearable placeholder="请输入姓名" v-model="form.name"></me-input>
+          </me-label>
+          <me-label title="年龄" prop="age">
+            <me-input type="number" clearable placeholder="请输入年龄" v-model="form.age"></me-input>
+          </me-label>
+        </div>
+        <div class="me-row">
+          <me-label title="性别" prop="sex">
+            <me-combo-select readonly :data="sexList" v-model="form.sex" clearable placeholder="请选择性别">
+            </me-combo-select>
+          </me-label>
+        </div>
+        <div class="me-row">
+          <me-label title="省份" prop="province">
+            <me-combo-table clearable v-model="form.province" readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
+            </me-combo-table>
+          </me-label>
+          <me-label title="行政区域" prop="region">
+            <me-combo-tree 
+              readonly 
+              v-model="form.region"
+              :data="regionList"
+              :expanded-level="2"
+              field-value="id"
+              field-label="title">
+              <template #node-label="{data}">{{data.title}}</template>
+            </me-combo-tree>
+          </me-label>
+        </div>
+      </me-form>`
     </me-dialog>
     <me-dialog title="dialog" min-height="100px" min-width="600px" v-model="statusTree">
       <me-tree class="me-flex" expandedAll highlight action :data="treeData" checkbox statistics header header-label="全选">
@@ -63,12 +73,58 @@ export default {
       statusForm: false,
       statusTree: false,
       checkedRows:[],
+      regionList:[
+        {
+          id: '1', title:'陕西', children: [
+            {
+              id: '1-1', title: '西安', children: [
+                { id: '1-1-1', title: '雁塔' },
+                { id: '1-1-2', title: '长安' }
+              ]
+            }
+          ]
+        },
+        {
+          id: '2', title:'四川', children: [
+            { id: '2-1', title: '成都' },
+            { id: '2-2', title: '汶川' }
+          ]
+        }
+      ],
+      sexList:[ 
+        { label: '男', value: '1' },
+        { label: '女', value: '0' },
+        { label: '未知', value: '-1' }
+      ],
+      columnsRegion: [
+        { label:'编号', field: 'value'},
+        { label:'名称', field: 'label' },
+      ],
       form: {
-        province: null
+        name: '1',
+        sex: '2',
+        age: null,
+        province: '2',
+        region: '2'
       },
       rules: {
-        province: [
-          { required: true, message: '请选择省份' }
+        name: [
+          { required: true, message: '姓名不能为空' },
+          { 
+            asyncValidator(rule,value,callback) {
+              if(value.length <= 1){ callback(new Error('长度必须大于1位'))}
+              else {callback()}
+            }
+          }
+        ],
+        age: [
+          { required: true, message: '年龄不能为空' },
+          { type:'number', message: '年龄必须为数字' },
+          { type:'number', min:10, max:100, message: '年龄不能小于10岁，不能大于100岁' }
+        ],
+        sex: [
+          { required: true, message: '性别不能为空' },
+          { type: 'enum', message:'性别必须是 男 或 女', enum:['1','0']}
         ]
       },
       provinceList:[
@@ -131,6 +187,9 @@ export default {
       } catch (message) {
         this.$message.error(message)
       }
+    },
+    handlerChange () {
+
     },
     handlerConfirm () {
       const selectedData = this.$refs.tableList.getCheckedRows()

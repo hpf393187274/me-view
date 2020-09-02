@@ -92,7 +92,7 @@ export default {
     label__ (value) {
       if (Tools.isEmpty(value)) {
         /** 处理清空无法选择问题 */
-        this.handlerChangeValue(null)
+        this.handlerChangeValue({})
       }
     },
     data (value) {
@@ -149,7 +149,7 @@ export default {
         (Tools.isEmpty(this.defaultIndex) || this.defaultIndex < 0 || this.defaultIndex > this.length)
       ) { return }
       this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
-      this.handlerChangeValue(this.value__)
+      this.handlerChangeValue({ value: this.value__ })
     },
     isSelected (value) {
       const list = this.multiple ? this.valueMultiple : [ this.valueSingle ]
@@ -177,13 +177,14 @@ export default {
     },
     handlerSelectChange (data, index) {
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
-      this.handlerChangeValue(this.value__, data, index)
+      debugger
+      this.handlerChangeValue({ value: this.value__, data, index, verify: true })
     },
-    handlerChangeValue (value = null, data = null, index = -1) {
-      this.dispatchUpward('Label', 'me-label--change', value)
+    handlerChangeValue ({ value = null, data = null, index = -1, verify = false } = {}) {
+      this.dispatchUpward('Label', 'me-label--change', { value, verify })
       this.$emit('input', value)
       this.dispatchParent('input', value)
-      if (Tools.notBlank(data)) {
+      if (Tools.notBlank(data) && verify === true) {
         this.dispatchParent('change', { value, data, index })
       }
     },

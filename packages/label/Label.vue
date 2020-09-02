@@ -130,9 +130,12 @@ export default {
       this.listener('me-label--default-change', this.initialize)
       this.listener('me-label--label-height', value => { if (value > 0) { this.labelHeight__ = `${value}px` } })
     },
-    handlerElementChange (value) {
+    handlerElementChange ({ value, verify } = {}) {
+      debugger
       this.valueCurrent = value
-      this.validate().catch(() => {})
+      if (verify === true) {
+        this.validate().catch(() => {})
+      }
     },
     bindFormInstance () {
       this.FormInstance = this.findParentComponent([ 'Form' ])

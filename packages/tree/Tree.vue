@@ -45,7 +45,7 @@
           :field-label="fieldLabel"
           v-for="node in data"
         >
-          <slot :data="data" name="node-label" slot="node-label" />
+          <slot :data="data" name="node-label" slot="node-label" slot-scope="{data}"/>
         </tree-node>
       </div>
     </template>
