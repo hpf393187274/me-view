@@ -1,5 +1,5 @@
 import Textarea from './Textarea'
-Textarea.install = (Vue, { prefix = 'Me' } = {}) => {
-  Vue.component(`${prefix}${Textarea.name}`, Textarea)
+Textarea.install = (Vue, { mePrefix = 'Me' } = {}) => {
+  Vue.component(`${mePrefix}${Textarea.name}`, Textarea)
 }
 export default Textarea

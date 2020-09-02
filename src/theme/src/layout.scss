@@ -14,16 +14,16 @@
 }
 
 @for $i from 2 through 12 {
-.#{$prefix}-grid-column-#{$i} {
+.#{$me-prefix}-grid-column-#{$i} {
 	@include grid-column($i)
 }
 }
 
-.#{$prefix}-border-red {
+.#{$me-prefix}-border-red {
 	border: 1px solid red;
 }
 
-.#{$prefix}-grid-self-center {
+.#{$me-prefix}-grid-self-center {
 	place-self: center center;
 }
 
@@ -31,7 +31,7 @@
 	border: 1px solid $color;
 }
 
-.#{$prefix}-empty {
+.#{$me-prefix}-empty {
 	@include flex(row);
 	flex: 1;
 	justify-content:center;
@@ -39,73 +39,73 @@
 	color: darkgray;
 }
 
-.#{$prefix}-row { 
+.#{$me-prefix}-row { 
 	@include flex(row);
 }
-.#{$prefix}-column {
+.#{$me-prefix}-column {
 	@include flex(column);
 }
 
-.#{$prefix}-center {
+.#{$me-prefix}-center {
 	justify-content: center !important;
 	align-items: center !important;
 }
 
-.#{$prefix}-flex {
+.#{$me-prefix}-flex {
 	flex: 1 1 0%;
 }
-.#{$prefix}-border {
+.#{$me-prefix}-border {
 	@include border();
 }
 
-.#{$prefix}-main-center {
+.#{$me-prefix}-main-center {
 	justify-content: center !important;
 }
-.#{$prefix}-main-start {
+.#{$me-prefix}-main-start {
 	justify-content: flex-start !important;
 }
-.#{$prefix}-main-end{
+.#{$me-prefix}-main-end{
 	justify-content: flex-end !important;
 }
-.#{$prefix}-cross-center {
+.#{$me-prefix}-cross-center {
 	align-items: center !important;
 }
-.#{$prefix}-cross-start{
+.#{$me-prefix}-cross-start{
 	align-items: flex-start !important;
 }
-.#{$prefix}-cross-end{
+.#{$me-prefix}-cross-end{
 	align-items: flex-end !important;
 }
 
 /* 空间不足，可换行 */
-.#{$prefix}-wrap {
+.#{$me-prefix}-wrap {
 	flex-wrap: wrap !important;
 }
 
-.#{$prefix}-min-width {
+.#{$me-prefix}-min-width {
 	width: 50px;
 }
 
 
-.#{$prefix}-border-red {
+.#{$me-prefix}-border-red {
 	border: 1px solid red;
 }
 
-.#{$prefix}-margin-child-5 {
+.#{$me-prefix}-margin-child-5 {
 	> * { margin: 5px; }
 }
-.#{$prefix}-margin-child-10 {
+.#{$me-prefix}-margin-child-10 {
 	> * { margin: 10px; }
 	> * { margin: 10px; }
 }
 
-.#{$prefix}-padding-child {
+.#{$me-prefix}-padding-child {
 	> * {
 		padding: 10px;
 	}
 }
 
-.#{$prefix}-border-green {
+.#{$me-prefix}-border-green {
 	border: 1px solid green;
 }
 
@@ -114,37 +114,37 @@ html, body {
 	margin: auto;
 }
 
-.#{$prefix}-cursor-move{
+.#{$me-prefix}-cursor-move{
 	cursor: move;
 }
-.#{$prefix}-cursor-pointer{
+.#{$me-prefix}-cursor-pointer{
 	cursor: pointer;
 }
 
-.#{$prefix}-icon {
+.#{$me-prefix}-icon {
 	cursor: pointer;
 	align-self: center;
 	font-size: 16px;
 	margin: 0px;
 }
 
-.#{$prefix}-grid-center {
+.#{$me-prefix}-grid-center {
   display: grid;
   justify-items: center;
   align-items: center;
 }
 
-.#{$prefix}-disabled {
+.#{$me-prefix}-disabled {
 	* {
 		cursor: not-allowed;
 	}
 }
 
-.#{$prefix}-readonly {
+.#{$me-prefix}-readonly {
 	* { cursor: pointer; }
 }
 
-.#{$prefix}-cursor-pointer {
+.#{$me-prefix}-cursor-pointer {
 	&:hover { 
 		cursor: pointer; 
 	} 

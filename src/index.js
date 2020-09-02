@@ -7,10 +7,10 @@ export * from './script/index'
 export * from './index-component'
 
 export default {
-  install (Vue, { prefix = 'Me' } = {}) {
+  install (Vue, { mePrefix = 'Me' } = {}) {
     for (const key in components) {
       const item = Reflect.get(components, key)
-      Vue.component(`${prefix}${item.name}`, item)
+      Vue.component(`${mePrefix}${item.name}`, item)
     }
 
     Vue.prototype.$copy = function (target, { prompt = false, message = '复制成功' } = {}) {
@@ -42,6 +42,6 @@ export default {
     Vue.prototype.$tools = Tools
     Vue.prototype.$local = local
     Vue.prototype.$session = session
-    Vue.prototype.prefix = prefix.toLowerCase()
+    Vue.prototype.mePrefix = mePrefix.toLowerCase()
   }
 }

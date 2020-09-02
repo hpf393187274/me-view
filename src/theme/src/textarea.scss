@@ -1,4 +1,4 @@
-.#{$prefix}-textarea {
+.#{$me-prefix}-textarea {
 	min-height: $form-element--height-min;
 	position: relative;
   min-width: 35px;
@@ -17,7 +17,7 @@
 		position: absolute;
 		height:100%;
 	}
-	.#{$prefix}-icon {
+	.#{$me-prefix}-icon {
 		font-size: $textarea-icon--font-size;
 	}
 	.textarea-inner {
@@ -36,7 +36,7 @@
 }
 
 
-.#{$prefix}-textarea-error {
+.#{$me-prefix}-textarea-error {
 	.textarea-inner {
 		border-color: $textarea-border-error ;
 		&:focus {
@@ -46,7 +46,7 @@
 	}
 }
 
-.#{$prefix}-disabled .#{$prefix}-textarea {
+.#{$me-prefix}-disabled .#{$me-prefix}-textarea {
 	.textarea-inner {
 		&:hover {
 			border-color: $color-disabled;

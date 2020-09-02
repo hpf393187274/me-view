@@ -1,4 +1,4 @@
-.#{$prefix}-table {
+.#{$me-prefix}-table {
 	overflow: auto;
 	table{ width: 100%; }
 	min-height: 150px;
@@ -38,7 +38,7 @@
 		}
 		.table-body { 
 			overflow: auto;
-			.#{$prefix}-icon {
+			.#{$me-prefix}-icon {
 				font-size: $table-body-icon--font-size;
 				margin-right: $table-cell-children--margin;
 				margin-left: $table-cell-children--margin;
@@ -60,7 +60,7 @@
 			tr {
 				background-color: $table-header;
 			}
-			.#{$prefix}-icon {
+			.#{$me-prefix}-icon {
 				font-size: $table-header-icon--font-size;
 			}
 		}

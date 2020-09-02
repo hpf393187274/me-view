@@ -61,7 +61,7 @@ Dialog.prompt = (options = {}) => {
   }))
 }
 
-Dialog.install = (Vue, { prefix = 'Me' } = {}) => {
-  Vue.component(`${prefix}${Dialog.name}`, Dialog)
+Dialog.install = (Vue, { mePrefix = 'Me' } = {}) => {
+  Vue.component(`${mePrefix}${Dialog.name}`, Dialog)
 }
 export default Dialog

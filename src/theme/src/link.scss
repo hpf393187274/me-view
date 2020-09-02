@@ -1,4 +1,4 @@
-.#{$prefix}-link {
+.#{$me-prefix}-link {
 	margin: 0px 2px;
 	text-decoration:none;
 	color: inherit;
@@ -12,5 +12,5 @@
 		color: $link-hover-color; 
 	}    /* 当有鼠标悬停在链接上 */
 
-	.#{$prefix}-icon { color: inherit; }
+	.#{$me-prefix}-icon { color: inherit; }
 }

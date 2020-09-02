@@ -1,5 +1,5 @@
 <template>
-  <div :class="[`${prefix}-button-group`]" :style="styles">
+  <div :class="[`${mePrefix}-button-group`]" :style="styles">
     <slot />
   </div>
 </template>
@@ -53,7 +53,7 @@ export default {
       }
     },
     handlerEvent () {
-      this.listener(`${this.prefix}-button-group--click`, ({ name, component }) => {
+      this.listener(`${this.mePrefix}-button-group--click`, ({ name, component }) => {
         if (this.activeButton) {
           this.activeButton.resetType()
         }
@@ -61,10 +61,10 @@ export default {
         this.activeButton = component
         this.$emit('click', name)
       })
-      this.listener(`${this.prefix}-button-group--register`, ({ name, component }) => {
+      this.listener(`${this.mePrefix}-button-group--register`, ({ name, component }) => {
         this.$set(this.buttonMap, name, component)
       })
-      this.listener(`${this.prefix}-button-group--destroy`, ({ name }) => {
+      this.listener(`${this.mePrefix}-button-group--destroy`, ({ name }) => {
         Reflect.deleteProperty(this.buttonMap, name)
       })
     }
