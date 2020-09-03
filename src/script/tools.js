@@ -486,4 +486,19 @@ export default class Tools {
     }
     return Tools.clone(target, { deep: true })
   }
+
+  /**
+   * 元素的大小及其相对于视口的位置
+   * @param {Element} target 目标元素
+   */
+  static clientRect (target) {
+    if (Tools.notEmpty(target)) {
+      const element = target.$el || target
+      if (element instanceof Element) {
+        const clientRect = element.getBoundingClientRect()
+        return clientRect.toJSON()
+      }
+    }
+    return {}
+  }
 }
