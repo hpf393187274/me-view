@@ -131,7 +131,6 @@ export default {
       this.listener('me-label--label-height', value => { if (value > 0) { this.labelHeight__ = `${value}px` } })
     },
     handlerElementChange ({ value, verify } = {}) {
-      debugger
       this.valueCurrent = value
       if (verify === true) {
         this.validate().catch(() => {})

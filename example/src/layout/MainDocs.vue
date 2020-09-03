@@ -67,6 +67,8 @@ export default {
   },
   methods: {
     handleClick ({ data }) {
+      const clientRect = this.$tools.clientRect(this)
+      console.log('---------------------', clientRect)
       this.$router.push(data.path).catch(error => { console.debug(error) })
     }
   }
