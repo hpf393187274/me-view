@@ -3,7 +3,7 @@ import TableCell from './TableCell.mixin'
 import Type from 'me-view/src/script/type'
 let idSeed = 1
 export default {
-  name: 'MeTableCellD',
+  name: 'TableCellD',
   mixins: [ TableCell ],
   props: {
     data: { type: Object, default: () => ({}) },
@@ -20,7 +20,9 @@ export default {
     }
     const params = {
       data: this.data,
-      value: this.fieldValue,
+      field: this.field,
+      label: this.label,
+      fieldValue: this.fieldValue,
       indexRow: this.indexRow,
       indexCell: this.indexCell
     }
@@ -32,9 +34,7 @@ export default {
     }
 
     if (Type.isFunction(this.render)) {
-      return this.renderRoot(h, [
-        this.render(h, params)
-      ])
+      return this.renderRoot(h, [ this.render(h, params) ].flat())
     }
 
     return this.renderRoot(h, h('span', { class: 'cell-inner' }, [ this.fieldValue ]))

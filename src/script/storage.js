@@ -2,14 +2,15 @@
 import Tools from './tools'
 import Assert from './assert'
 export default class Storage {
+  #storage
   constructor (storage) {
-    this.storage = Tools.isEmpty(storage) ? window.localStorage : storage
+    this.#storage = Tools.isEmpty(storage) ? window.localStorage : storage
   }
 
   get (key, { defaultValue = undefined } = { }) {
     console.debug(`storage.arrayAppend：key = ${key}`)
     Assert.notEmpty(key, 'storage.get：key is empty')
-    const value = this.storage.getItem(key)
+    const value = this.#storage.getItem(key)
     if (Tools.isBlank(value)) {
       return defaultValue
     }
@@ -20,15 +21,15 @@ export default class Storage {
     console.debug(`storage.set：key = ${key}`)
     Assert.notEmpty(key, 'storage.set：key is empty')
     if (Tools.isBlank(value)) { value = '' }
-    this.storage.setItem(key, JSON.stringify(value))
+    this.#storage.setItem(key, JSON.stringify(value))
   }
 
-  clear () { }
+  clear () { this.#storage.clear() }
 
   remove (key) {
     console.debug(`storage.remove：key = ${key}`)
     Assert.notEmpty(key, 'storage.remove：key is empty')
-    this.storage.removeItem(key)
+    this.#storage.removeItem(key)
   }
 
   deepGetMap (key, property, defaultValue) {

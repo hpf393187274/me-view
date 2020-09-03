@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'MeIcon',
+  name: 'Icon',
   props: {
     /**
      * 标题

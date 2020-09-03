@@ -12,7 +12,7 @@
 import Tools from 'me-view/src/script/tools'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTableBody',
+  name: 'TableBody',
   mixins: [ emitter ],
   updated () {
     this.monitorScrollBar()
@@ -21,7 +21,8 @@ export default {
     async monitorScrollBar () {
       await this.$nextTick()
       const hasScrollBar = Tools.hasScrollBar(this.$el)
-      this.dispatchUpward('MeTable', 'MeTable--scrollBar', hasScrollBar)
+      console.debug('me-table-body ---- updated ----------------monitorScrollBar--- time=', new Date().getTime())
+      this.dispatchUpward('Table', 'Table--scrollBar', hasScrollBar)
     }
   }
 }

@@ -1,4 +1,7 @@
 
 import ComboSelect from './ComboSelect'
-ComboSelect.install = Vue => { Vue.component(ComboSelect.name, ComboSelect) }
+
+ComboSelect.install = (Vue, { mePrefix = 'Me' } = {}) => {
+  Vue.component(`${mePrefix}${ComboSelect.name}`, ComboSelect)
+}
 export default ComboSelect

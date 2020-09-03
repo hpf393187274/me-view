@@ -6,15 +6,15 @@
     </span>
     <div class="me-row me-center me-flex">
       <template v-for="value in visibleLeft">
-        <span class="me-cursor-pointer" :class="itemClass(value)" :key="value" @click="currentPage = value">{{value}}</span>
+        <span class="me-cursor-pointer" :class="itemClass(value)" :key="value" @click="setCurrentPage(value)">{{value}}</span>
       </template>
       <me-icon :title="`向前${sizeCenter}页`" @click="setCurrentPage(currentPage - sizeCenter)" v-if="start > minCenter">icon-more</me-icon>
       <template v-for="value in visibleCenter">
-        <span class="me-cursor-pointer" :class="itemClass(value)" :key="value" @click="currentPage = value">{{value}}</span>
+        <span class="me-cursor-pointer" :class="itemClass(value)" :key="value" @click="setCurrentPage(value)">{{value}}</span>
       </template>
       <me-icon :title="`向后${sizeCenter}页`" @click="setCurrentPage(currentPage + sizeCenter)" v-if="end < maxCenter">icon-more</me-icon>
       <template v-for="value in visibleRight">
-        <span class="me-cursor-pointer" :class="itemClass(value)" :key="value" @click="currentPage =value">{{value}}</span>
+        <span class="me-cursor-pointer" :class="itemClass(value)" :key="value" @click="setCurrentPage(value)">{{value}}</span>
       </template>
     </div>
     <span :class="itemClass()" @click="setCurrentPage(++currentPage)" title="下一页">
@@ -32,7 +32,7 @@
 import Type from 'me-view/src/script/type'
 import common from 'me-view/src/mixins/common'
 export default {
-  name: 'MePaging',
+  name: 'Paging',
   mixins: [ common ],
   props: {
     value: { type: Number, default: 1 },
@@ -61,19 +61,12 @@ export default {
     return {
       currentPage: this.value,
       pageSize__: this.pageSize,
-      alignContent: 'center',
-      rules: [ ]
+      alignContent: 'center'
     }
-  },
-  created () {
-    this.rules = [
-      { required: true },
-      { type: 'number', min: 1, max: this.pageNumber }
-    ]
   },
   computed: {
     pageNumber () {
-      const pageNumber = Math.ceil(this.total / this.pageSize)
+      const pageNumber = Math.ceil(this.total / this.pageSize__)
       return pageNumber <= 0 ? 1 : pageNumber
     },
     /**
@@ -135,38 +128,39 @@ export default {
     },
     info () {
       return { pageNum: this.currentPage, pageSize: this.pageSize__ }
+    },
+    rules () {
+      return [
+        { required: true },
+        { type: 'number', min: 1, max: this.pageNumber }
+      ]
     }
   },
   watch: {
-    currentPage () {
+    currentPage (newValue, oldValue) {
+      console.debug(`me-paging-----watch-------currentPage----------new=${newValue}, old=${oldValue}, time=`, new Date().getTime())
       this.$emit('change-page', { ...this.info })
       this.$emit('change-page-num', { ...this.info })
     },
-    pageSize__ (value) {
-      this.$emit('change-page', { ...this.info })
+    pageSize__ (newValue, oldValue) {
       this.$emit('change-page-size', { ...this.info })
-      this.$emit('update:page-size', value)
-      this.handlerChangeRule()
+      this.$emit('update:page-size', newValue)
     },
-    pageSize (value) {
-      this.pageSize__ = value
+    pageNumber (newValue, oldValue) {
+      this.currentPage = 1
+      console.debug(`me-paging-----watch-------pageNumber----------new=${newValue}, old=${oldValue}, time=`, new Date().getTime())
+      this.$emit('change-page', { ...this.info })
     },
-    total () {
-      this.handlerChangeRule()
-    }
+    pageSize (value) { this.pageSize__ = value }
   },
   methods: {
-    handlerChangeRule () {
-      for (const rule of this.rules) {
-        if (rule.type === 'number') {
-          Reflect.set(rule, 'max', this.pageNumber)
-        }
-      }
-    },
     itemClass (value) {
       return [
         'me-row me-center',
-        { 'paging-border': this.border, 'is-selected': value && this.currentPage === value }
+        {
+          'paging-border': this.border,
+          'is-selected': value && this.currentPage === value
+        }
       ]
     },
     setCurrentPage (value) {

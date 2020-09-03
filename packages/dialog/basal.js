@@ -1,22 +1,8 @@
 import Vue from 'vue'
-import Icon from '../icon/index'
-
-import Button from '../button/index'
-import Label from '../label/index'
-import Input from '../input/index'
-
-import Modal from '../modal/index'
 import Dialog from './Dialog'
 
 Dialog.newInstance = (options = {}) => {
   const instance = new Vue({
-    components: {
-      [Modal.name]: Modal,
-      [Button.name]: Button,
-      [Icon.name]: Icon,
-      [Label.name]: Label,
-      [Input.name]: Input
-    },
     data () {
       return Object.assign({}, options, {
         width: '416px',

@@ -11,7 +11,7 @@
 import Tools from 'me-view/src/script/tools'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTabPane',
+  name: 'TabPane',
   mixins: [ emitter ],
   props: {
     activated: Boolean,
@@ -48,7 +48,7 @@ export default {
     setActivated (value) { this.activated__ = value },
     setRendered (value) { this.rendered = value },
     getParams () {
-      console.log('tab-pane ----------------------------------------------')
+      console.debug('tab-pane ----------------------------------------------')
       return { name: this.name__, title: this.title, nodePane: this, closable: this.closable, activated: this.activated__ }
     }
   }

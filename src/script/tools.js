@@ -73,11 +73,18 @@ export default class Tools {
    * @param {String} order 排序方式：ASC 升序，DESC 降序
    */
   static sort (target, callback = item => item, order = Tools.ASC) {
-    if (Type.notArray(target) || target.length === 0) { return }
+    Assert.isArray(target, '第一参数必须为 Array ')
+    Assert.isFunction(callback, '第二参数必须为 Function ')
     target.sort((a, b) => {
-      const valueA = callback && callback(a)
-      const valueB = callback && callback(b)
-      return order === Tools.ASC ? valueA - valueB : valueB - valueA
+      let valueA = callback(a)
+      let valueB = callback(b)
+      if (Type.notString(valueA)) { valueA = JSON.stringify(valueA) }
+      if (Type.notString(valueB)) { valueB = JSON.stringify(valueB) }
+      if (valueA === valueB) { return 0 }
+      if (order === Tools.ASC) {
+        return valueA > valueB ? 1 : -1
+      }
+      return valueB > valueA ? 1 : -1
     })
   }
 
@@ -123,6 +130,8 @@ export default class Tools {
     s[8] = s[13] = s[18] = s[23] = '-'
     return s.join('')
   }
+
+  static UUID () { return Tools.UUId() }
 
   /**
    * 数组元素移出
@@ -287,6 +296,67 @@ export default class Tools {
   }
 
   /**
+   * 驼峰式路径转换为连接符路径
+   * /auth/RoleMenu/contentEdit = /auth/role-menu/content-edit
+   * @param {String} target 目标 路径
+   * @param {String} connector 连接符 -
+   */
+  static pathConvert (target, connector = '-') {
+    const { path } = Tools.urlLocation(target || '') || {}
+    if (path) {
+      return Tools.humpConvert(path.replace(/(\/[A-Z])/g, $1 => $1.toLowerCase()), connector)
+    }
+    return target
+  }
+
+  /**
+   * 驼峰式字符串转换为连接符路径
+   * /auth/RoleMenu/contentEdit = /auth/role-menu/content-edit
+   * @param {String} target 目标 路径
+   * @param {String} connector 连接符 -
+   */
+  static humpConvert (target = '', connector = '-') {
+    if (Type.notString(target)) { target = '' }
+    const newTarget = target.replace(/([A-Z])/g, $1 => connector + $1.toLowerCase())
+    if (target.startsWith(connector)) {
+      return newTarget.substr(1)
+    }
+    return newTarget
+  }
+
+  static urlLocation (href) {
+    let other = Tools.urlFormat(href)
+    const location = {}
+    if (other.includes('?')) {
+      const [ inner, params ] = other.split('?')
+      other = inner
+      Reflect.set(location, 'params', params)
+    }
+    if (other.includes('://')) {
+      const [ protocol, inner ] = other.split('://')
+      other = inner
+      Reflect.set(location, 'protocol', protocol)
+    }
+    if (other.includes(':')) {
+      other = other.replace(':', '')
+      const index = other.indexOf('/')
+      Reflect.set(location, 'port', other.substr(0, index))
+      Reflect.set(location, 'path', other.substr(index))
+    } else {
+      Reflect.set(location, 'path', other)
+    }
+    return location
+  }
+
+  static urlPath (url) {
+    return Reflect.get((Tools.urlParse(url) || {}), 'path')
+  }
+
+  static urlParams (url) {
+    return Reflect.get((Tools.urlParse(url) || {}), 'params')
+  }
+
+  /**
    * URL 绝对化
    * @param {String} url 目标url
    * @param {String} origin 默认当前环境
@@ -382,5 +452,38 @@ export default class Tools {
 
   static clientHeight () {
     return document.body.clientHeigh
+  }
+
+  static message (target) {
+    if (Tools.isBlank(target)) { return target }
+    if (Type.isError(target)) {
+      return target.message
+    }
+    if (Type.isObject(target)) {
+      const { message, data } = target
+      return message || data.message
+    }
+    return target
+  }
+
+  /**
+   * 只复制目标对象可枚举的属性
+   * @param {Object} target 目标对象
+   * @param {Array} args 源对象集合
+   */
+  static assign (target, ...args) {
+    if (Tools.isEmpty(target) || Tools.isEmpty(args)) {
+      throw new TypeError('Cannot convert Undefined or null to Object')
+    }
+    const targetKeys = Object.keys(target)
+    for (const source of args) {
+      if (Tools.isEmpty(source) || Type.notObject(source)) { continue }
+      for (const key of targetKeys) {
+        const value = Reflect.get(source, key)
+        if (Tools.isEmpty(value)) { continue }
+        Reflect.set(target, key, value)
+      }
+    }
+    return Tools.clone(target, { deep: true })
   }
 }

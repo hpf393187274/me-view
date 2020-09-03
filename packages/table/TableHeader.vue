@@ -9,6 +9,6 @@
 </template>
 <script>
 export default {
-  name: 'MeTableHeader'
+  name: 'TableHeader'
 }
 </script>

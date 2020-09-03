@@ -8,6 +8,7 @@ Message.newInstance = (options = {}) => {
         width: '416px',
         capacity: 10,
         top: '30px',
+        close: () => {},
         ...(options || {})
       }
     },
@@ -26,6 +27,9 @@ Message.newInstance = (options = {}) => {
 
         modal.$parent.onRemove = onRemove
       },
+      itemClose () {
+        this.close && this.close()
+      },
       destroy () {
         this.$destroy()
         document.body.removeChild(this.$el)
@@ -42,6 +46,7 @@ Message.newInstance = (options = {}) => {
         ref: 'message',
         props: { value: true, top, width },
         on: {
+          itemClose: this.itemClose,
           destroy: this.destroy
         }
       })

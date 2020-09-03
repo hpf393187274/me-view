@@ -10,6 +10,7 @@ export default class Type {
   static TYPE_BLOB = '[object Blob]'
   static TYPE_FILE = '[object File]'
   static TYPE_DATE = '[object Date]'
+  static TYPE_ERROR = '[object Error]'
 
   /**
    * 获取类型
@@ -164,5 +165,9 @@ export default class Type {
    */
   static notFunction (target) {
     return !Type.isFunction(target)
+  }
+
+  static isError (target) {
+    return Type.getType(target) === Type.TYPE_ERROR
   }
 }

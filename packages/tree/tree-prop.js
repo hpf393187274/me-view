@@ -5,7 +5,6 @@ export default {
      * 展开所有
      */
     expandedAll: Boolean,
-    indentSize: { type: Number, default: 16 },
     /**
      * 可展开的
      */

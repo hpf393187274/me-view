@@ -6,8 +6,8 @@
       </div>
     </template>
     <div class="me-flex table-wrapper">
-      <me-table-header :style="styleTHead">
-        <me-table-row
+      <table-header :style="styleTHead">
+        <table-row
           :checkbox="checkbox"
           :has-index="hasIndex"
           :checked="checkedHeader"
@@ -18,10 +18,10 @@
           @checked-change="handlerCheckboxHeader"
           header
         />
-      </me-table-header>
+      </table-header>
       <template v-if="length > 0">
-        <me-table-body class="me-flex" ref="tableBody">
-          <me-table-row
+        <table-body class="me-flex" ref="tableBody">
+          <table-row
             :checkbox="checkbox"
             :columns="columns__"
             :node="item"
@@ -33,7 +33,7 @@
             :field-value = "fieldValue"
             v-for="(item,index) in nodeList"
           />
-        </me-table-body>
+        </table-body>
       </template>
       <div class="me-empty me-border" v-else>暂无数据</div>
     </div>
@@ -52,7 +52,7 @@ import TableHeader from './TableHeader.vue'
 import TableBody from './TableBody.vue'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTable',
+  name: 'Table',
   mixins: [ emitter ],
   components: {
     [TableRow.name]: TableRow,
@@ -101,6 +101,9 @@ export default {
       }
       this.checkedHeader = this.length === value
       this.checkedHeaderHalf = this.length !== value
+    },
+    columns () {
+      this.handlerSlots()
     }
   },
   data () {
@@ -117,31 +120,36 @@ export default {
   },
   created () {
     this.initData(this.data)
-    this.listener('MeTable-row-checked-true', ({ key, value }) => this.$set(this.checkedData, key, value))
-    this.listener('MeTable-row-checked-false', ({ key }) => this.$delete(this.checkedData, key))
-    this.listener('MeTable-row-sort', ({ field, order }) => this.sort(field, order))
-    this.listener('MeTable--scrollBar', flag => { this.hasScrollBar = flag })
+    this.listener('Table-row-checked-true', ({ key, value }) => this.$set(this.checkedData, key, value))
+    this.listener('Table-row-checked-false', ({ key }) => this.$delete(this.checkedData, key))
+    this.listener('Table-row-sort', ({ field, order }) => this.sort(field, order))
+    this.listener('Table--scrollBar', flag => { this.hasScrollBar = flag })
 
-    this.listenerUpward([ 'MeDialog', 'MeCombo' ], 'me-attribute--visibility-change', visibility => {
-      if (visibility === true) {
-        visibility && this.layout()
-      }
+    this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => this.layout())
+    this.listenerUpward([ 'Dialog' ], 'me-dialog--visible-frist', () => {
+      this.dialogInit && this.dialogInit()
     })
 
     this.scrollBarWidth = Tools.scrollBarWidth()
   },
   async mounted () {
     await this.$nextTick()
-    if (Tools.isEmpty(this.height__)) {
-      this.height__ = this.$el.getBoundingClientRect().height
-    }
+    this.computeHeight()
     this.handlerSlots()
   },
   methods: {
+    computeHeight () {
+      if (this.existParentComponent([ 'Dialog' ])) { return }
+      if (Tools.isEmpty(this.height__) || this.height__ === 0) {
+        this.height__ = this.$el.getBoundingClientRect().height
+      }
+    },
     append (...list) {
       if (Type.isArray(list)) {
         for (const item of list) {
-          this.nodeList.push({ data: item, checked: false, component: null })
+          let uniqueValue = this.uniqueValue(item)
+          if (Tools.isBlank(uniqueValue)) { uniqueValue = Tools.UUID() }
+          this.nodeList.push({ data: item, uniqueValue, checked: false, component: null })
         }
       }
     },
@@ -149,6 +157,7 @@ export default {
       this.nodeList = []
       this.handlerCheckboxHeader(false)
       this.append(...data)
+      this.layout()
     },
     sort (field, order = Tools.ASC) {
       Tools.sort(this.nodeList, item => Reflect.get(item.data, field), order)
@@ -169,9 +178,11 @@ export default {
     cancelChecked () {
       this.checkedData.forEach(row => row.handlerCheckedChange(false))
     },
-    layout () {
+    async layout () {
+      await this.$nextTick()
       const tableBody = this.$refs.tableBody
       tableBody && tableBody.monitorScrollBar()
+      this.computeHeight()
     },
     /**
      * 设置选中的数据

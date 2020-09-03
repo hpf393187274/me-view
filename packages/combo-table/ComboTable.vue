@@ -8,6 +8,8 @@
         :multiple="multiple"
         @click-row="handlerClick">
         <slot />
+        <slot name="header" slot="header" />
+        <slot name="footer" slot="footer" />
     </me-table>
   </me-combo>
 </template>
@@ -15,11 +17,9 @@
 <script>
 import ComboCommon from '../combo/combo.common'
 import ComboExtend from '../combo/combo.extend'
-import Combo from '../combo'
 export default {
-  components: { [Combo.name]: Combo },
   mixins: [ ComboCommon, ComboExtend ],
-  name: 'MeComboTable',
+  name: 'ComboTable',
   props: {
     columns: { type: Array, default: () => [] }
   }

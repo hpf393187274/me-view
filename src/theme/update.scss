@@ -1,0 +1,244 @@
+
+@import './var.scss';
+
+.icon-triangle_fill_up,.icon-triangle_fill_down{
+  color: #606266;
+  &.me-icon{
+    font-size: $font-defalt-size;
+  }
+}
+.label-content .me-input{
+  min-height: $form-input-height;
+  
+}
+.me-input .input-inner{
+  line-height: $form-input-height;
+  height: $form-input-height;
+  padding:  0 $font-defalt-size !important;
+  &:focus{
+    border-color:  $color-primary;
+    box-shadow: none;
+  }
+  &[readonly]{
+    background-color: #F5F7FA;
+  }
+  &[disabled]{
+    background-color: #F5F7FA;
+  }
+}
+// select（下拉框）存在 disabled 和 readonly属性样式控制
+.me-combo{
+  .me-input .input-inner{
+    &[disabled]{ // 置灰
+      background-color: #F5F7FA;
+    }
+    &[readonly]{  //只读-白色背景
+      background-color: #fff;
+    }
+    &[disabled][readonly]{  // 同时存在——置灰
+      background-color: #F5F7FA;
+    }
+  }
+}
+// btn
+.me-btn{
+  height: $form-input-height;
+  line-height:  $form-input-height;
+  padding: 0 $space-normal-wdith;
+  min-width: 98px;
+  //主要按钮
+  &.me-btn-primary{
+    &:hover{
+      background-color: $color-plain-hover  !important;
+    }
+  }
+  // 次要按钮
+  &.me-btn-plain{
+    background-color:#e4edff !important; // 因为原样式有important
+    border-color: $color-primary !important;
+    color: $color-primary !important;
+    &:hover{
+      background-color:#c8dbff !important;
+      border-color: $color-hover-primary !important;
+      color: $color-hover-primary !important;
+    }
+  }
+}
+
+// table tool
+.table-toolbar{
+  .me-btn-plain{
+    .me-icon{
+      color:$color-hover-primary !important;
+      &:hover{
+        color: $color-hover-primary !important;
+      }
+    }
+  }
+  .me-btn-primary{
+    .me-icon{
+      color:#fff;
+      font-size: 16px !important;
+      margin-right: 4px;
+    }
+  }
+}
+.me-row.table-toolbar{
+  padding-bottom: $space-normal-wdith;
+}
+.me-dialog .dialog-footer{
+  padding: $space-normal-wdith 0;
+}
+
+
+// table
+.me-table{
+  .table-wrapper {
+    .table-header{
+      tr{
+        background-color: #f3f3f3;
+        color: #666;
+        font-weight: bold;
+      }
+      tr:first-child{
+        td, th{
+          border-top: solid 1px #e1e5ee !important;
+        }
+      }
+      .table-cell{
+        min-height: 30px !important;
+      }
+    }
+    table {
+      td, th{
+        border:none !important;
+        border-right: solid 1px #e1e5ee !important;
+        border-bottom: solid 1px #e1e5ee !important;
+        padding: 4px;
+      }
+    }
+    .table-body{
+      font-size: $font-defalt-size;
+      tr{
+        &:hover {
+          background-color:  #dee8fd !important;
+        }
+        .iconfont {
+          font-size: 19px;
+          margin-right: 7px;
+        }
+      }
+      .table-cell {
+        min-height: 30px !important;
+      }
+    }
+  }
+}
+
+.me-modal{
+  background: rgba(0,0,0,0.5)
+}
+// dialog
+.me-dialog {
+  box-shadow: none;
+  .dialog-header{
+    padding: $space-normal-wdith $space-middle-wdith;
+    color: #fff;
+    background: linear-gradient(to right, $dialog-header-gradient-left , $dialog-header-gradient-right);
+  }
+  .dialog-body{
+    padding: $space-normal-wdith $space-middle-wdith;
+    .me-label{
+      margin-right: $space-large-wdith;
+    }
+  }
+  // 取消按钮
+  .me-btn-default{
+    background-color:#e4edff !important; // 因为原样式有important
+    border-color: $color-primary !important;
+    color: $color-primary !important;
+    &:hover{
+      background-color:#c8dbff !important;
+      border-color: $color-hover-primary !important;
+      color: $color-hover-primary !important;
+    }
+  }
+}
+
+// Pagination 
+.me-paging{
+  >div,span{
+    text-align: center;
+  }
+  span:hover{
+    color: $color-primary;
+  }
+  .me-row{
+    display: inline-block;
+  }
+  .me-flex.me-row{
+    display: flex
+  }
+ 
+  .me-row.me-center.me-flex{
+    flex: 0;
+  }
+  .me-input{
+    align-items: center;
+    .input-icon{
+      height: auto;
+    }
+  }
+  .is-selected{
+    color: $color-primary;
+  }
+  .me-input{
+    min-height: auto;
+    .input-inner {
+      line-height: 28px;
+      height: 28px;
+    }
+  }
+}
+
+// 下拉框
+.me-list .list-item:hover{
+  background-color:  #dee8fd !important;
+}
+.me-combo .combo-options{
+  box-shadow:0 2px 12px 0 rgba(0,0,0,.1)
+}
+//穿梭
+.me-transfer{
+  .transfer-item{
+    .tree-node-item{
+      padding-left: 10px !important;
+      .me-checkbox{
+        padding-right: 10px !important;
+      }
+    }
+  }
+  .transfer-center{
+    .me-btn{
+      min-width: 46px;
+    }
+    .me-icon{
+      font-size: 14px;
+    }
+  }
+}
+
+
+.me-tree .tree-node-body {
+  .tree-node-item{
+    .me-icon{
+      margin-right: 4px;
+    }
+    &:hover,&.is-selected{
+      color: #fff;
+      .me-icon{
+        color: #fff;
+      }
+    }
+  }
+}

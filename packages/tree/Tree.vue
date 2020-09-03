@@ -1,6 +1,6 @@
 <template>
   <div class="me-column me-tree" style="overflow: auto;">
-    <me-tree-header
+    <tree-header
       :action="action"
       :checkbox="checkbox"
       :checked="checkedAll"
@@ -18,13 +18,12 @@
       class="node-header"
       v-if="header"
     >
-      <template #node-header>
-        <slot name="node-header" />
-      </template>
-    </me-tree-header>
+      <slot name="node-header-label" slot="node-header-label" />
+      <slot name="node-header" slot="node-header" />
+    </tree-header>
     <template v-if="nodeNumber > 0">
       <div style="overflow: auto;">
-        <me-tree-node
+        <tree-node
           :action="action"
           :checkbox="checkbox"
           :checked="checkedChildren"
@@ -38,6 +37,7 @@
           :key="uniqueValue(node)"
           :lazy="lazy"
           :indent-size="indentSize"
+          :checkbox-width = "checkboxWidth"
           :parent-grandson="parentGrandson__"
           :statistics="statistics"
           :highlight="highlight"
@@ -45,10 +45,8 @@
           :field-label="fieldLabel"
           v-for="node in data"
         >
-          <template #node-label="{data}">
-            <slot :data="data" name="node-label" />
-          </template>
-        </me-tree-node>
+          <slot :data="data" name="node-label" slot="node-label" slot-scope="{data}"/>
+        </tree-node>
       </div>
     </template>
     <div class="me-empty" v-else>暂无数据</div>
@@ -64,7 +62,7 @@ import emitter from 'me-view/src/mixins/emitter'
 import TreeHeader from './TreeHeader'
 import TreeNode from './TreeNode'
 export default {
-  name: 'MeTree',
+  name: 'Tree',
   mixins: [ TreeCommon, TreeProp, emitter ],
   components: {
     [TreeHeader.name]: TreeHeader,
@@ -80,6 +78,8 @@ export default {
       nodesMap: new Map(),
       clickNode: undefined,
       nodesSize: 0,
+      indentSize: 0,
+      checkboxWidth: 0,
       checkedChildren: false
     }
   },
@@ -92,20 +92,27 @@ export default {
       return Type.isArray(this.data) ? this.data.length : 0
     }
   },
+  watch: {
+    data () {
+      this.layout()
+    }
+  },
   created () {
     this.nodesMap.clear()
     this.listener('notification-parent', this.handlerChildrenNotification)
     this.listener('me-tree--clear', () => {
-      const newData = [ ...this.data ]
-      for (const item of newData) {
+      for (const item of [ ...this.data ]) {
         this.removeNode(this.uniqueValue(item))
       }
     })
+    this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => {
+      this.layout()
+    })
 
     this.listener('me-tree-node--click', node => {
-      console.log('me-tree-node--click ---> node, ', node.data)
+      console.debug('me-tree-node--click ---> node, ', node.data)
       if (Tools.notEmpty(this.clickNode)) {
-        console.log('me-tree-node--click ---> clickNode =', this.clickNode.data)
+        console.debug('me-tree-node--click ---> clickNode =', this.clickNode.data)
         this.clickNode.statusHighlight = false
       }
       this.clickNode = node
@@ -120,10 +127,10 @@ export default {
       const parent = component.$parent
       if (Tools.isEmpty(parent)) { return }
       const parentName = parent?.$options?.name
-      if ([ 'MeTree', 'MeTreeNode' ].includes(parentName) === false) { return }
+      if ([ 'Tree', 'TreeNode' ].includes(parentName) === false) { return }
       const data = parent?.data // 组件当前数据
-      const children = (parentName === 'MeTree' ? data : data?.children) || []
-      if (name === 'MeTreeNode') {
+      const children = (parentName === 'Tree' ? data : data?.children) || []
+      if (name === 'TreeNode') {
         component.handlerNodeCheck(false)
       }
       const index = Tools.arrayRemove(children, item => this.uniqueValue(item) === key)
@@ -141,7 +148,21 @@ export default {
       this.refreshSize()
     })
   },
+  mounted () {
+    this.layout()
+  },
   methods: {
+    async layout () {
+      await this.$nextTick()
+      const meIcon = this.$el.querySelector('.me-icon')
+      if (meIcon) {
+        this.indentSize = meIcon.getBoundingClientRect().width
+      }
+      const meCheckbox = this.$el.querySelector('.me-checkbox')
+      if (meCheckbox) {
+        this.checkboxWidth = meCheckbox.getBoundingClientRect().width
+      }
+    },
     refreshSize () {
       this.nodesSize = this.nodesMap.size
     },

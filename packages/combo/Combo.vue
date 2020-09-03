@@ -33,8 +33,8 @@ import Tools from 'me-view/src/script/tools'
 import ComboDropdown from './ComboDropdown'
 export default {
   mixins: [ emitter, ComboCommon ],
-  components: { ComboDropdown },
-  name: 'MeCombo',
+  components: { [ComboDropdown.name]: ComboDropdown },
+  name: 'Combo',
   data () {
     return {
       visibility: false,
@@ -49,13 +49,13 @@ export default {
   created () {
     this.deepFlatData(this.data, true)
     this.initValue(this.value)
-    this.listenerUpward([ 'MeLabel' ], 'me-label--reset', this.initValue)
+    this.listenerUpward([ 'Label' ], 'me-label--reset', this.initValue)
     this.listener('me-combo--select', this.handlerSelectChange)
   },
   async mounted () {
     await this.$nextTick()
     const height = this.$el.getBoundingClientRect().height
-    this.dispatchUpward('MeLabel', 'me-label--label-height', `${height}px`)
+    this.dispatchUpward('Label', 'me-label--label-height', `${height}px`)
   },
   computed: {
     iconSuffix () {
@@ -74,7 +74,8 @@ export default {
   },
   watch: {
     visibility (newValue) {
-      this.$emit('me-attribute--visibility-change', newValue)
+      this.$emit('me-attribute--visible-change', newValue)
+      this.$emit(`me-attribute--visible-${newValue}`)
       if (newValue) {
         this.broadcast('ComboDropdown', 'ComboDropdown--update-popper')
         this.handlerFocusInput()
@@ -84,19 +85,19 @@ export default {
       const newValue = Type.isArray(this.value) ? this.value.toString() : this.value
       const oldValue = Type.isArray(this.value__) ? this.value__.toString() : this.value__
       if (newValue !== oldValue) {
-        this.dispatchUpward('MeLabel', 'me-label--default-change', newValue)
+        this.dispatchUpward('Label', 'me-label--default-change', newValue)
         this.initValue(newValue)
       }
     },
     label__ (value) {
       if (Tools.isEmpty(value)) {
         /** 处理清空无法选择问题 */
-        this.handlerChangeValue(null)
+        this.handlerChangeValue({})
       }
     },
     data (value) {
       this.deepFlatData(value, true)
-      this.dispatchUpward('MeLabel', 'me-label--default-change', this.value)
+      this.dispatchUpward('Label', 'me-label--default-change', this.value)
       this.initValue(this.value)
     }
   },
@@ -113,7 +114,8 @@ export default {
       }
     },
     findItem (value) {
-      return this.dataFlat.find(item => this.uniqueValue(item) === value)
+      const newValue = Type.isNumber(value) ? value + '' : value
+      return this.dataFlat.find(item => this.uniqueValue(item, true) === newValue)
     },
     initValueSingle (value) {
       if (Tools.isEmpty(value)) {
@@ -123,21 +125,20 @@ export default {
           value = this.uniqueValue(this.dataFlat[this.defaultIndex])
         }
       }
+      this.value__ = value
       let data = this.findItem(value)
       if (Type.notObject(data)) { data = {} }
       Object.assign(this.valueSingle, data)
       this.label__ = this.uniqueLabel(data)
-      this.value__ = this.uniqueValue(data)
     },
     initValueMultiple (value) {
       this.label__ = []
-      this.value__ = []
       const list = Type.isArray(value) ? [ ...value ] : [ value || '' ]
+      this.value__ = [ ...list ]
       this.valueMultiple = this.data.filter(item => list.includes(this.uniqueValue(item)))
 
       for (const item of this.valueMultiple) {
         this.label__.push(this.uniqueLabel(item))
-        this.value__.push(this.uniqueValue(item))
       }
     },
     initValue (value) {
@@ -148,7 +149,7 @@ export default {
         (Tools.isEmpty(this.defaultIndex) || this.defaultIndex < 0 || this.defaultIndex > this.length)
       ) { return }
       this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
-      this.handlerChangeValue(this.value__)
+      this.handlerChangeValue({ value: this.value__ })
     },
     isSelected (value) {
       const list = this.multiple ? this.valueMultiple : [ this.valueSingle ]
@@ -157,7 +158,13 @@ export default {
     handlerClickSuffix () {
       this.visibility = !this.visibility
     },
-    uniqueValue (data = {}) { return Reflect.get(data, this.fieldValue) || '' },
+    uniqueValue (data = {}, toString = false) {
+      const value = Reflect.get(data, this.fieldValue)
+      if (Tools.notEmpty(value) && toString === true) {
+        return String(value)
+      }
+      return value
+    },
     uniqueLabel (data = {}) { return Reflect.get(data, this.fieldLabel) || '' },
     handlerClickInput () {
       this.readonly__ && this.handlerClickSuffix()
@@ -170,13 +177,14 @@ export default {
     },
     handlerSelectChange (data, index) {
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
-      this.handlerChangeValue(this.value__, data, index)
+      debugger
+      this.handlerChangeValue({ value: this.value__, data, index, verify: true })
     },
-    handlerChangeValue (value = null, data = null, index = -1) {
-      this.dispatchUpward('MeLabel', 'me-label--change', value)
+    handlerChangeValue ({ value = null, data = null, index = -1, verify = false } = {}) {
+      this.dispatchUpward('Label', 'me-label--change', { value, verify })
       this.$emit('input', value)
       this.dispatchParent('input', value)
-      if (Tools.notBlank(data) && index !== -1) {
+      if (Tools.notBlank(data) && verify === true) {
         this.dispatchParent('change', { value, data, index })
       }
     },
@@ -186,8 +194,11 @@ export default {
       Tools.arrayRemove(this.valueMultiple, index).catch(error => { console.debug(error) })
     },
     handleMultiplPush (data) {
-      this.label__.push(this.uniqueLabel(data))
-      this.value__.push(this.uniqueValue(data))
+      const label = this.uniqueLabel(data)
+      if (label) { this.label__.push(label) }
+
+      const value = this.uniqueValue(data)
+      if (value) { this.value__.push(value) }
       this.valueMultiple.push({ ...data })
     },
     selectMultiple (data) {

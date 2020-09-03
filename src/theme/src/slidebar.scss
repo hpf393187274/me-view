@@ -1,4 +1,4 @@
-.#{$prefix}-slidebar {
+.#{$me-prefix}-slidebar {
   position: relative;
   background: $slidebar-base;
   .slidebar-axis {
@@ -21,7 +21,7 @@
   }
 }
 
-.#{$prefix}-slidebar-vertical {
+.#{$me-prefix}-slidebar-vertical {
   height: 100%;
   .slidebar-axis {
     height: 100%;
@@ -31,7 +31,7 @@
     width: 100%;
   }
 }
-.#{$prefix}-slidebar-horizontal {
+.#{$me-prefix}-slidebar-horizontal {
   width: 100%;
   .slidebar-axis {
     height: 100%;

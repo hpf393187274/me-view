@@ -9,7 +9,7 @@
 import emitter from 'me-view/src/mixins/emitter'
 export default {
   mixins: [ emitter ],
-  name: 'MeTabTitle',
+  name: 'TabTitle',
   props: {
     title: String,
     name: String,

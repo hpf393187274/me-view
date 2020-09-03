@@ -28,7 +28,7 @@ export default {
     justify-items: center;
     align-items: center;
     cursor: pointer;
-    border: 1px solid #0099ff;
+    border: 1px solid #4c84ff;
     .me-icon {
       font-size: 40px !important;
       // color: red;

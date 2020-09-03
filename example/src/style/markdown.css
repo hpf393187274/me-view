@@ -38,7 +38,7 @@ h5 {
   list-style: 23px;
 }
 a {
-  color: #0099ff;
+  color: #4c84ff;
   margin: 0;
   padding: 0;
   vertical-align: baseline;
@@ -91,7 +91,7 @@ pre > code {
   margin: 0;
   overflow: initial;
   line-height: inherit;
-  font-size: .85em;
+  font-size: 14px;
   white-space: pre;
   background: 0 0;
 

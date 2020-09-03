@@ -22,7 +22,7 @@
 }
 
 
-.#{$prefix}-btn {
+.#{$me-prefix}-btn {
 	white-space: nowrap;
 	background: #fff;
 	border: 1px solid $color-border;
@@ -39,23 +39,23 @@
 	.button-inner {
 		margin: 0px 2px;
 	}
-	.#{$prefix}-icon { color: inherit; }
+	.#{$me-prefix}-icon { color: inherit; }
 }
 
 
 
-.#{$prefix}-btn-primary { 
+.#{$me-prefix}-btn-primary { 
 	@include btn-model($color-primary, $color-primary-font, $color-primary-border);
 	&:hover {  @include btn-hover($color-primary-hover, $color-primary-hover-font, $color-primary-hover-border); }
 	&:active, &:focus { @include btn-focus($color-primary-focus, $color-primary-focus-font, $color-primary-focus-border); }
 	
 }
-.#{$prefix}-btn-info {
+.#{$me-prefix}-btn-info {
 	@include btn-model($color-info, $color-info-font, $color-info-border);
 	&:hover { @include btn-hover($color-info-hover, $color-info-hover-font, $color-info-hover-border) }
 	&:active,&:focus { @include btn-focus($color-info-focus, $color-info-focus-font, $color-info-focus-border) }
 }
-.#{$prefix}-btn-success {
+.#{$me-prefix}-btn-success {
 	@include btn-model($color-success, $color-success-font, $color-success-border);
 	&:hover { 
 		@include btn-hover($color-success-hover, $color-success-hover-font, $color-success-hover-border);
@@ -63,20 +63,20 @@
 	&:active,
 	&:focus { @include btn-focus($color-success-focus, $color-success-focus-font, $color-success-focus-border) }
 }
-.#{$prefix}-btn-warning { 
+.#{$me-prefix}-btn-warning { 
 	@include btn-model($color-warning, $color-warning-font, $color-warning-border);
 	&:hover { @include btn-hover($color-warning-hover, $color-warning-hover-font, $color-warning-hover-border) }
 	&:active,
 	&:focus { @include btn-focus($color-warning-focus, $color-warning-focus-font, $color-warning-focus-border) }
 }
-.#{$prefix}-btn-error { 
+.#{$me-prefix}-btn-error { 
 	@include btn-model($color-error, $color-error-font, $color-error-border);
 	&:hover { @include btn-hover($color-error-hover, $color-error-hover-font, $color-error-hover-border) }
 	&:active,
 	&:focus { @include btn-focus($color-error-focus, $color-error-focus-font, $color-error-focus-border) }
 }
 
-.#{$prefix}-btn-disabled {
+.#{$me-prefix}-btn-disabled {
 	&:hover { @include btn-hover($color-disabled-hover, $color-disabled-hover-font, $color-disabled-border) }
 	&:active,
 	&:focus { @include btn-focus($color-disabled-focus, $color-disabled-focus-font) }
@@ -84,35 +84,35 @@
 	cursor: not-allowed;
 }
 
-.#{$prefix}-btn-plain {
-	&.#{$prefix}-btn-primary { 
+.#{$me-prefix}-btn-plain {
+	&.#{$me-prefix}-btn-primary { 
 		@include btn-plain($color-primary, $color-primary-plain);
   }
-	&.#{$prefix}-btn-info {
+	&.#{$me-prefix}-btn-info {
 		@include btn-plain($color-info, $color-info-plain);
 	}
-	&.#{$prefix}-btn-success {
+	&.#{$me-prefix}-btn-success {
 		@include btn-plain($color-success, $color-success-plain);
 	}
-	&.#{$prefix}-btn-warning {
+	&.#{$me-prefix}-btn-warning {
 		@include btn-plain($color-warning, $color-warning-plain);
 	}
-	&.#{$prefix}-btn-error {
+	&.#{$me-prefix}-btn-error {
 		@include btn-plain($color-error, $color-error-plain);
 	}
 }
 
-.#{$prefix}-btn-shape--circle{
+.#{$me-prefix}-btn-shape--circle{
 	border-radius: 50%;
 	padding: 15px;
 }
 
-.#{$prefix}-btn-shape--round{
+.#{$me-prefix}-btn-shape--round{
 	border-radius: 2rem;
 	padding: 15px;
 }
 
-.#{$prefix}-btn-default { 
+.#{$me-prefix}-btn-default { 
 	@include btn-model($color-default, $color-default-font, $color-default-border);
 	&:hover { @include btn-model($color-default-hover, $color-default-hover-font, $color-default-hover-border) }
 	&:active,

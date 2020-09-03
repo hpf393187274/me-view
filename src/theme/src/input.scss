@@ -1,4 +1,4 @@
-.#{$prefix}-input {
+.#{$me-prefix}-input {
 	min-height: $form-element--height-min;
 	position: relative;
 	min-width: 35px;
@@ -20,7 +20,7 @@
 		position: absolute;
 		height:100%;
 	}
-	.#{$prefix}-icon {
+	.#{$me-prefix}-icon {
 		font-size: $input-icon--font-size;
 	}
 	.input-inner {
@@ -40,7 +40,7 @@
 }
 
 
-.#{$prefix}-input-error {
+.#{$me-prefix}-input-error {
 	.input-inner {
 		border-color: $input-border-error ;
 		&:focus {
@@ -50,7 +50,7 @@
 	}
 }
 
-.#{$prefix}-disabled.#{$prefix}-input {
+.#{$me-prefix}-disabled.#{$me-prefix}-input {
 	.input-inner {
 		&:hover {
 			border-color: $color-disabled;

@@ -1,80 +1,86 @@
 <template>
-  <me-table ref="tableList" checkbox multiple :data="data" :columns="columns" highlight>
+  <me-table
+    style="overflow: auto;"
+    class="me-flex"
+    field-value="code"
+    :columns="columns"
+    :data="list"
+    checkbox
+    multiple
+    ref="table"
+  >
     <template #header>
-      <me-button plain type="primary"  @click="height = height + 50"> + 50 </me-button>
-      <me-button plain type="primary"  @click="height = height - 50"> - 50 </me-button>
-      <me-button plain type="primary" @click="handlerAdd">新增</me-button>
-      <me-button plain type="primary" @click="getCheckedRows">获取选中的数据</me-button>
-      <me-button plain type="primary" @click="setCheckedRows">设置选中</me-button>
-      <me-button plain type="primary" @click="handlerData">变更数据</me-button>
-      <me-button plain type="primary" @click="removeSelectData">批量删除</me-button>
+      <div class="me-row me-flex">
+        <div class="me-flex">&nbsp;</div>
+        <div class="me-row">
+          <me-button @click="handlerLoadMenuList('click')" type="primary" icon="icon-search">查 询</me-button>
+        </div>
+      </div>
     </template>
-    <template #action="{data}">
-      <me-button @click="removeRow(data)">删除</me-button>
-    </template>
-    <template #test>
-      <me-button>test</me-button>
+    <template #footer>
+      <me-paging
+        :pageSize="form.pageSize"
+        :total="total"
+        class="me-flex"
+        @change-page="handlerPaging"
+      />
     </template>
   </me-table>
 </template>
 
 <script>
+import api from '../../http/authority/Menu.api'
 export default {
   data () {
     return {
       height: 400,
       checkedRows: [],
       columns: [
-        { label: '编号', field: 'id', sortable: true },
-        { label: '测试', field: 'test' },
-        { label: '操作', field: 'action' }
+        { label: '操作', field: 'action', layout: 'center', width: '200px' },
+        {
+          label: '所属系统',
+          field: 'systemName',
+          layout: 'center',
+          width: '200px'
+        },
+        {
+          label: '所属模块',
+          field: 'moduleName',
+          layout: 'center',
+          width: '200px'
+        },
+        { label: '菜单名称', field: 'name' },
+        { label: '菜单地址', field: 'url' },
+        { label: '菜单排序', field: 'order' }
       ],
-      selectedData: [
-        { id: '2', label: '四川省' },
-        { id: '3', label: '江苏省' },
-        { id: '4', label: '河南省' }
-      ],
-      data: [
-        { id: '1', label: '陕西省1' },
-        { id: '2', label: '四川省2' },
-        { id: '3', label: '江苏省3' },
-        { id: '4', label: '河南省4' },
-        { id: '5', label: '陕西省5' },
-        { id: '6', label: '四川省6' },
-        { id: '7', label: '江苏省7' },
-        { id: '8', label: '河南省8' }
-      ]
+      form: {
+        systemCode: '',
+        moduleCode: '',
+        code: '',
+        name: '',
+        parentCode: '',
+        url: '',
+        pageSize: 50,
+        pageNum: 1
+      },
+      list: [],
+      total: 0
     }
   },
+  created () {
+    this.handlerLoadMenuList()
+  },
   methods: {
-    handlerAdd () {
-      const uuid = this.$tools.UUId()
-      this.data.push({ id: uuid, label: `新增的-${uuid}` })
-
-      // this.$refs.tableList.appendRow({ id: uuid, label: `新增的-${uuid}` })
+    handlerPaging (data) {
+      Object.assign(this.form, data)
+      this.handlerLoadMenuList()
     },
-    handlerData () {
-      this.data.push(...this.selectedData)
-    },
-    setCheckedRows () {
-      this.$refs.tableList.setCheckedRows(this.selectedData)
-    },
-    getCheckedRows () {
-      const result = this.$refs.tableList.getCheckedRows()
-      this.checkedRows = [...result]
-      console.debug('table.getCheckedRows -->', result)
-    },
-    async removeRow (data) {
-      await this.$dialog.confirm('确定要删除当前行？')
-      this.$refs.tableList.removeRows([data])
-    },
-    removeSelectData () {
-      const result = this.$refs.tableList.getCheckedRows()
-      if (this.$type.notArray(result) || result.length < 1) {
-        this.$message.info('请选择要删除的数据！')
-        return
-      }
-      this.$refs.tableList.removeRows(result)
+    handlerLoadMenuList (action) {
+      if (action === 'click') { this.form.parentCode = '' }
+      api.findPage(this.form).then(({ list, total }) => {
+        this.list = [...list || []]
+        this.total = total || 0
+      })
     }
   }
 }

@@ -1,5 +1,5 @@
 @import "./Modal.scss";
-.#{$prefix}-dialog {
+.#{$me-prefix}-dialog {
 	border-color: $dialog-border;
 	box-shadow: 0px 0px 10px 5px $dialog-shadow;
 	.dialog-body {
@@ -17,7 +17,7 @@
 		align-items: center;
 		color: $dialog-header-color;
 		padding: 15px 10px;
-		.#{$prefix}-icon {
+		.#{$me-prefix}-icon {
 			color: $dialog-header-color;
 		}
 	}

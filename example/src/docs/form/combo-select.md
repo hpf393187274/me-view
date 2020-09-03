@@ -14,7 +14,7 @@
 export default {
   data() {
     return {
-      modelA:'1',
+      modelA: 2,
       modelB:['河南省','2','3'],
       form: {
         provinces: ['1'],

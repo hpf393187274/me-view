@@ -9,7 +9,7 @@
 import common from 'me-view/src/mixins/common'
 import Tools from 'me-view/src/script/tools'
 export default {
-  name: 'MeLink',
+  name: 'Link',
   mixins: [ common ],
   props: {
     icon: String,

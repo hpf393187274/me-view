@@ -1,6 +1,6 @@
 <template>
   <div class="me-row me-flex">
-    <me-tree class="layout-left" :data="data" highlight :expandable="false" @click-leaf="handleClick" />
+    <me-tree class="layout-left" :data="data" highlight @click-leaf="handleClick" />
     <router-view class="layout-right me-flex" />
   </div>
 </template>
@@ -41,6 +41,7 @@ export default {
           children: [
             { label: 'Form 表单', path: '/doc/form/form' },
             { label: 'Input 输入框', path: '/doc/form/input' },
+            { label: 'Textarea 文本域', path: '/doc/form/textarea' },
             { label: 'Button 按钮', path: '/doc/form/button' },
             { label: 'Checkbox 复选框', path: '/doc/form/checkbox' },
             { label: 'ComboSelect 组合框', path: '/doc/form/combo-select' },

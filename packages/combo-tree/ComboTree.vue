@@ -9,9 +9,7 @@
       :field-value="fieldValue"
       :field-label="fieldLabel"
       @click="handlerClick">
-      <template #node-label="{data}">
-        <slot :data="data" name="node-label" />
-      </template>
+      <slot :data="data" name="node-label" slot="node-label" slot-scope="{data}"/>
     </me-tree>
   </me-combo>
 </template>
@@ -19,11 +17,9 @@
 <script>
 import ComboCommon from '../combo/combo.common'
 import ComboExtend from '../combo/combo.extend'
-import Combo from '../combo'
 export default {
-  components: { [Combo.name]: Combo },
   mixins: [ ComboCommon, ComboExtend ],
-  name: 'MeComboTree',
+  name: 'ComboTree',
   props: {
     expandedLevel: Number
   }

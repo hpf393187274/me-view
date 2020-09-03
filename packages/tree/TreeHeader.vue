@@ -23,7 +23,7 @@
 import TreeProp from './tree-prop'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTreeHeader',
+  name: 'TreeHeader',
   mixins: [ emitter, TreeProp ],
   props: {
     nodeNumber: Number,
@@ -32,6 +32,7 @@ export default {
     parentGrandson: Boolean,
     checked: Boolean,
     headerLabel: String,
+    indentSize: Number,
     data: { type: Array, default () { return [] } }
   },
   data () {
@@ -58,7 +59,7 @@ export default {
     },
     removeNodeAll () {
       this.clickCheckbox(false)
-      this.dispatchUpward('MeTree', 'me-tree--clear')
+      this.dispatchUpward('Tree', 'me-tree--clear')
     }
   }
 }

@@ -6,7 +6,8 @@
 ```html
 
 <me-column>
-  <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">
+{{valueData}}
+  <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id" @change="handlerChange">
     <template #node-label="{data}">{{data.title}}--{{data.id}}</template>
   </me-combo-tree>
   <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">
@@ -20,6 +21,7 @@
 export default {
   data() {
     return {
+      valueData: null,
       regionList:[
         {
           id: '1', label: '陕西省', title:'陕西', children: [
@@ -38,6 +40,11 @@ export default {
           ]
         }
       ]
+    }
+  },
+  methods: {
+    handlerChange ({ value, data, index }) {
+      this.valueData = data
     }
   }
 }

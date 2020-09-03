@@ -54,5 +54,7 @@ Message.loading = (options = {}) => {
   }))
 }
 
-Message.install = Vue => { Vue.component(Message.name, Message) }
+Message.install = (Vue, { mePrefix = 'Me' } = {}) => {
+  Vue.component(`${mePrefix}${Message.name}`, Message)
+}
 export default Message

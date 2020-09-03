@@ -1,5 +1,5 @@
 // 选择器前缀
-$prefix                                : me !default;
+$me-prefix                                : me !default;
 $font-size                             : 16px !default;
 $color                                 : #fff !default;
 $color-base                            : rgb(239, 242, 245) !default;
@@ -17,6 +17,11 @@ $color-focus                           : #96c5f7 !default;
 $color-selected                        : #96c5f7 !default;
 $color-active                          : #96c5f7 !default;
 $color-disabled                        : #606266 !default;
+
+//全局主色调
+$color-primary                         :#4c84ff !default;
+
+
 // 异常颜色
 $color-error                           : red !default;
 $color-disabled                        : #fff !default;
@@ -36,28 +41,27 @@ $color-default-plain                   : #fff !default;
 $color-default-border                  : $color-border !default;
 $color-default-font                    : rgb(37, 36, 36) !default;
 $color-default-hover                   : #ecf5ff !default;
-$color-default-hover-border            : #2d8cf0 !default;
-$color-default-hover-font              : #2d8cf0 !default;
+$color-default-hover-border            : $color-primary !default;
+$color-default-hover-font              : $color-primary !default;
 $color-default-active                  : #ecf5ff !default;
-$color-default-active-border           : #2d8cf0 !default;
-$color-default-active-font             : #2d8cf0 !default;
+$color-default-active-border           : $color-primary !default;
+$color-default-active-font             : $color-primary !default;
 $color-default-focus                   : #ecf5ff !default;
-$color-default-focus-border            : #2d8cf0 !default;
-$color-default-focus-font              : #2d8cf0 !default;
+$color-default-focus-border            : $color-primary !default;
+$color-default-focus-font              : $color-primary !default;
 
 
-$color-primary                         : #117ef3 !default;
 $color-primary-plain                   : #FFFFFF !default;
-$color-primary-border                  : #2d8cf0 !default;
+$color-primary-border                  : $color-primary  !default;
 $color-primary-font                    : #fff !default;
-$color-primary-hover                   : $color-primary !default;
-$color-primary-hover-border            : $color-primary !default;
+$color-primary-hover                   : $color-primary  !default;
+$color-primary-hover-border            : $color-primary  !default;
 $color-primary-hover-font              : #f2f2f2 !default;
 $color-primary-active                  : #FFFFFF !default;
-$color-primary-active-border           : #2b85e4 !default;
+$color-primary-active-border           : #3f76ec !default;
 $color-primary-active-font             : #f2f2f2 !default;
-$color-primary-focus                   : #2b85e4 !default;
-$color-primary-focus-border            : #2b85e4 !default;
+$color-primary-focus                   : #3f76ec !default;
+$color-primary-focus-border            : #3f76ec !default;
 $color-primary-focus-font              : #f2f2f2 !default;
 
 // color - info
@@ -121,9 +125,13 @@ $color-error-focus-font                : #f2f2f2 !default;
 // form -- input
 $input-border-error                    : $color-error !default;
 $input-icon--font-size                 : 13px !default;
+
+// form -- textarea
+$textarea-border-error                    : $color-error !default;
+$textarea-icon--font-size                 : 13px !default;
+
 // form -- link
 $link-color                            : rgb(141, 141, 141) !default;
-$link-hover-color : red;
 $link-hover-color                      : rgb(76, 91, 97) !default;
 $link-visited-color                    : rgb(92, 94, 92) !default;
 $link-link-color                       : rgb(26, 24, 24) !default;
@@ -149,7 +157,7 @@ $notice-margin-bottom                  : 10px !default;
 // basic -- slidebar
 $slidebar-base                        : rgb(243, 240, 240) !default;
 $slidebar                             : rgb(194, 191, 191) !default;
-$slidebar-axis                        : #409eff !default;
+$slidebar-axis                        : #4c84ff !default;
 $slidebar-hover                       : rgb(209, 209, 209) !default;
 $slidebar-active                      : #747474 !default;
 
@@ -159,16 +167,18 @@ $scrollbar                            : rgb(194, 191, 191) !default;
 $scrollbar-hover                      : rgb(209, 209, 209) !default;
 
 // view -- dialog
-$dialog-border                        : #4aacee !default;
+$dialog-border                        : #447bf1 !default;
 $dialog-shadow                        : #a5b0b8 !default;
 $dialog-header-background             : $color-primary !default;
 $dialog-header-color                  : #FFFFFF !default;
 $dialog-header-icon                   : #FFFFFF !default;
+$dialog-header-gradient-left          :#4c83fe !default;
+$dialog-header-gradient-right         :#4d34ce !default;
 
 // view -- message
-$message-border                       : #4aacee !default;
+$message-border                       : #4c84ff !default;
 $message-shadow                       : #a5b0b8 !default;
-$message-header                       : #4aacee !default;
+$message-header                       : #4c84ff !default;
 
 // view -- table
 $table-border                         : rgba(218, 214, 214, 0.514) !default;
@@ -178,7 +188,7 @@ $table-body                           : #FFFFFF !default;
 $table-body-row-odd                   : #FFFFFF !default;
 $table-body-row-even                  : #F8F8F9 !default;
 $table-body-hover                     : #ebf7ff !default;
-$table-tr-active                      : #4aacee !default;
+$table-tr-active                      : #4c84ff !default;
 $table-cell--height-min               : 35px !default;
 $table-cell--width-min                : 45px !default;
 $table-cell-children--margin          : 5px !default;
@@ -186,8 +196,8 @@ $table-header-icon--font-size         : 13px !default;
 $table-body-icon--font-size           : 18px !default;
 // view -- tree
 $tree-header                          : #F8F8F9 !default;
-$tree-node--active                    : #4aacee !default;
-$tree-node--hover                     : #4aacee !default;
+$tree-node--active                    : #4c84ff !default;
+$tree-node--hover                     : #4c84ff !default;
 $tree-node-icon--font-size            : 13px !default;
 
 // view -- paging
@@ -203,5 +213,22 @@ $icon--font-size                      : $font-size !default;
 // view -- form
 $form-element--height-min             : 35px !default;
 
+// rest btn
+$color-hover-primary                   :#4f85fc !default;
+$color-plain-hover                     :#76a1ff !default;
+
+
+// size
+$form-input-height:   32px;
+$space-normal-wdith:  10px;
+$space-middle-wdith:  16px;
+$space-large-wdith:   24px;
+
+// font
+$font-normal-size:    14px;
+$font-defalt-size:    12px;
+
+//dialo
 
 $font--path                           : '/fonts' !default;
+

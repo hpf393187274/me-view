@@ -9,6 +9,7 @@
     :width="width"
     :z-index="zIndex"
     @cancel="$emit('cancel')"
+    :vertical-align='verticalAlign'
     class-container="me-dialog"
     v-model="visibility"
   >
@@ -36,14 +37,9 @@
 <script>
 
 import Modal from '../modal/modal.mixin'
-import MeModal from '../modal/index'
-import MeButton from '../button/index'
-import MeIcon from '../icon/index'
-import MeLineH from '../line-h/index'
 let zIndex = 1000
 export default {
-  name: 'MeDialog',
-  components: { MeButton, MeIcon, MeLineH, MeModal },
+  name: 'Dialog',
   mixins: [ Modal ],
   props: {
     title: { type: String, default: '' },
@@ -52,12 +48,14 @@ export default {
     height: String,
     width: String,
     hideFooter: Boolean,
+    verticalAlign: String,
     draggable: { type: Boolean, default: true },
     closable: { type: Boolean, default: true }
   },
   data () {
     return {
       zIndex,
+      visibleFirst: false,
       btnDisabledConfirm: false
     }
   },
@@ -70,9 +68,16 @@ export default {
      * dialog 添加事件：显示 隐藏
      */
     value (newValue) {
-      this.$emit('status-change', newValue)
-      this.$emit('me-attribute--visibility-change', newValue)
-      this.$emit(newValue === true ? 'status-show' : 'status-hide', newValue)
+      if (this.visibleFirst === false && newValue === true) {
+        this.visibleFirst = true
+      }
+      this.$emit('me-dialog--visible-change', newValue)
+      this.$emit('me-attribute--visible-change', newValue)
+      this.$emit(`me-attribute--visible-${newValue}`)
+      this.$emit(`me-dialog--visible-${newValue}`)
+    },
+    visibleFirst (value) {
+      value === true && this.$emit('me-dialog--visible-frist')
     }
   },
   methods: {

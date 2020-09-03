@@ -8,7 +8,7 @@
 <script>
 import Draggable from 'me-view/src/mixins/draggable'
 export default {
-  name: 'MeSlidebar',
+  name: 'Slidebar',
   mixins: [ Draggable ],
   props: {
     layout: { type: String, default: 'center', validator: value => [ 'center', 'incircle' ].includes(value) },

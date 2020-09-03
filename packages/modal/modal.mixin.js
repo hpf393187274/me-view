@@ -6,7 +6,7 @@ export default {
     classContainer: String,
     top: { type: String, default: null },
     left: { type: String, default: null },
-    closableModal: { type: Boolean, default: true },
+    closableModal: Boolean,
     moveable: Boolean
   },
   data () {

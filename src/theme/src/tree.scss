@@ -1,4 +1,4 @@
-.#{$prefix}-tree {
+.#{$me-prefix}-tree {
 	.tree-node-header{ 
 		font-weight: bold;
 		background: $tree-header;
@@ -29,7 +29,7 @@
 			margin: 0px 3px;
 			> span { margin: 0px 1px; }
 		}
-		.#{$prefix}-icon {
+		.#{$me-prefix}-icon {
 			font-size: $tree-node-icon--font-size;
 		}
 		&.is-selected {

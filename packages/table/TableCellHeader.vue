@@ -20,7 +20,7 @@
 import TableCell from './TableCell.mixin'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTableCellHeader',
+  name: 'TableCellHeader',
   mixins: [ emitter, TableCell ],
   props: {
     sortable: Boolean
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     handlerSort (order) {
-      this.dispatchUpward('MeTable', 'MeTable-row-sort', { field: this.field, order })
+      this.dispatchUpward('Table', 'Table-row-sort', { field: this.field, order })
     }
   }
 }

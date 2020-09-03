@@ -35,11 +35,11 @@ export default {
     async update () {
       await this.$nextTick()
       if (this.popper) {
-        console.log('methods --> update ----- this.popper = true')
+        console.debug('methods --> update ----- this.popper = true')
         this.popper.forceUpdate()
         this.popperStatus = true
       } else {
-        console.log('methods --> update ----- this.popper = false')
+        console.debug('methods --> update ----- this.popper = false')
         this.popper = createPopper(this.$parent.$refs.input.$el, this.$el, {
           placement: this.placement,
           modifiers: [
@@ -58,13 +58,13 @@ export default {
             }
           ],
           onFirstUpdate: () => {
-            console.log('popper --> onFirstUpdate')
+            console.debug('popper --> onFirstUpdate')
             this.resetTransformOrigin()
             this.$nextTick(this.popper.forceUpdate())
           }
         })
       }
-      if (this.$parent.$options.name === 'MeCombo') {
+      if (this.$parent.$options.name === 'Combo') {
         this.width = this.$parent.$el.getBoundingClientRect().width
       }
     },

@@ -82,7 +82,7 @@ export default {
     getChildrenNodeList () {
       const children = this.$children
       if (Tools.isEmpty(children)) { return [] }
-      return children.filter(item => item.$options.name === 'MeTreeNode')
+      return children.filter(item => item.$options.name === 'TreeNode')
     },
     /**
      * 获取子节点选中个数
@@ -112,7 +112,7 @@ export default {
           this.checkedHalf = checkedNumber > 0 && checkedNumber < this.nodeNumber
         }
       }
-      if (this.$options.name === 'MeTreeNode') {
+      if (this.$options.name === 'TreeNode') {
         this.dispatchParent('notification-parent')
       }
     },

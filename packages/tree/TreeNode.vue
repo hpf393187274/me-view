@@ -1,7 +1,7 @@
 <template>
   <div class="tree-node-body" >
     <div :style="styleIndent" :title="nodeLabel" :class="classes">
-      <me-icon @click="handlerExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
+      <me-icon style="width: 13px;" @click="handlerExpanded" v-if="expandable && nodeBranch">{{iconExpanded}}</me-icon>
       <me-checkbox :checkedHalf="checkedHalf" :value="checkedAll" @click="handlerNodeCheck" v-if="checkbox" />
       <div @click="handlerClickLabel" class="me-row me-flex me-cross-center tree-node-label">
         <slot :data="data" name="node-label">
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="tree-node-children" v-if="renderFirst" v-show="expanded__">
-      <me-tree-node
+      <tree-node
         :action="action"
         :checkbox="checkbox"
         :checked-strictly="checkedStrictly"
@@ -31,6 +31,7 @@
         :click-checked="clickChecked"
         :indent="indent__"
         :indent-size="indentSize"
+        :checkbox-width = "checkboxWidth"
         :key="uniqueValue(node)"
         :lazy="lazy"
         :level="level + 1"
@@ -41,10 +42,8 @@
         :parent-grandson="parentGrandson__"
         v-for="node in data.children"
       >
-        <template #node-label="{data}">
-          <slot :data="data" name="node-label" />
-        </template>
-      </me-tree-node>
+        <slot :data="data" name="node-label" slot="node-label" slot-scope="{data}"/>
+      </tree-node>
     </div>
   </div>
 </template>
@@ -56,12 +55,14 @@ import TreeCommon from './tree-common'
 import TreeProp from './tree-prop'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
-  name: 'MeTreeNode',
+  name: 'TreeNode',
   mixins: [ TreeCommon, TreeProp, emitter ],
   props: {
     data: { type: Object, default () { return {} } },
     parentGrandson: Boolean,
     indent: { type: Number, default: 0 },
+    indentSize: { type: Number, default: 16 },
+    checkboxWidth: { type: Number, default: 16 },
     level: { type: Number, default: 1 }
   },
   created () {
@@ -76,13 +77,13 @@ export default {
   },
   async mounted () {
     await this.$nextTick()
-    this.dispatchUpward('MeTree', 'me-tree-map--append', {
+    this.dispatchUpward('Tree', 'me-tree-map--append', {
       key: this.uniqueValue(this.data),
       value: { data: this.data, component: this }
     })
   },
   beforeDestroy () {
-    this.dispatchUpward('MeTree', 'me-tree-map--remove', this.uniqueValue(this.data))
+    this.dispatchUpward('Tree', 'me-tree-map--remove', this.uniqueValue(this.data))
   },
   data () {
     return {
@@ -169,7 +170,7 @@ export default {
      */
     removeCurrentNode () {
       const uniqueValue = this.uniqueValue(this.data)
-      this.dispatchUpward('MeTree', 'me-tree-node--remove', uniqueValue)
+      this.dispatchUpward('Tree', 'me-tree-node--remove', uniqueValue)
       this.handlerEvent('remove')
     },
     /**
@@ -219,7 +220,7 @@ export default {
         this.handlerExpanded()
       }
       this.statusHighlight = !this.statusHighlight
-      this.dispatchUpward('MeTree', 'me-tree-node--click', this)
+      this.dispatchUpward('Tree', 'me-tree-node--click', this)
       this.handlerEvent('click')
       if (this.nodeLeaf) {
         this.handlerEvent('click-leaf')
@@ -229,7 +230,7 @@ export default {
       }
     },
     handlerEvent (eventName) {
-      this.dispatchUpward('MeTree', eventName, { data: this.getData(), node: this })
+      this.dispatchUpward('Tree', eventName, { data: this.getData(), node: this })
     }
   }
 }

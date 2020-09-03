@@ -12,17 +12,18 @@ import Modal from 'me-view/packages/modal/index'
 import Message from 'me-view/packages/message/index'
 
 import Input from 'me-view/packages/input/index'
+import Textarea from 'me-view/packages/textarea/index'
 import Checkbox from 'me-view/packages/checkbox/index'
 import Button from 'me-view/packages/button/index'
+import ButtonGroup from 'me-view/packages/button-group/index'
+import Combo from 'me-view/packages/combo/index'
 import ComboSelect from 'me-view/packages/combo-select/index'
 import ComboTable from 'me-view/packages/combo-table/index'
 import ComboTree from 'me-view/packages/combo-tree/index'
 import Label from 'me-view/packages/label/index'
 import Form from 'me-view/packages/form/index'
-
 import LineH from 'me-view/packages/line-h/index'
 import LineV from 'me-view/packages/line-v/index'
-
 import Row from 'me-view/packages/row/index'
 import Column from 'me-view/packages/column/index'
 import Icon from 'me-view/packages/icon/index'
@@ -45,8 +46,11 @@ export {
   Modal,
   Message,
   Input,
+  Textarea,
   Checkbox,
   Button,
+  ButtonGroup,
+  Combo,
   ComboSelect,
   ComboTable,
   ComboTree,

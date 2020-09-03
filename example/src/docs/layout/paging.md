@@ -44,6 +44,7 @@ export default {
   },
   methods: {
     handlerPaging (info) {
+      console.log('------------handlerPaging-----------------', new Date().getTime())
       Object.assign(this.info, info)
     }
   }

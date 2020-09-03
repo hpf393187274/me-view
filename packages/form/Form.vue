@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'MeForm',
+  name: 'Form',
   props: {
     rules: { type: Object, default: () => {} }
   },
