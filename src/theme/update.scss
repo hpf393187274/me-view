@@ -167,6 +167,10 @@
 
 // Pagination 
 .me-paging{
+  font-size: 14px;
+  input{
+    font-size: 14px;
+  }
   >div,span{
     text-align: center;
   }
@@ -204,6 +208,9 @@
 // 下拉框
 .me-list .list-item:hover{
   background-color:  #dee8fd !important;
+}
+.me-list span{
+  display: block;
 }
 .me-combo .combo-options{
   box-shadow:0 2px 12px 0 rgba(0,0,0,.1)
