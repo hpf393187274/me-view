@@ -2,7 +2,7 @@
   <div :class="classes" @click="handleClick">
     <me-checkbox v-if="checkbox" v-model="checked__" />
     <span class="list-item-inner">
-      <slot>{{data[fieldLabel]}}</slot>
+      <slot :data="data">{{data[fieldLabel]}}</slot>
     </span>
   </div>
 </template>

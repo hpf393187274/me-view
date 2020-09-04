@@ -10,6 +10,7 @@
         :field-value="fieldValue"
         :field-label="fieldLabel"
         v-model="value">
+        <slot :data="data" slot-scope="{data}"/>
       </list-item>
     </template>
   </div>

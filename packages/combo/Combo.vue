@@ -177,7 +177,6 @@ export default {
     },
     handlerSelectChange (data, index) {
       this.multiple ? this.selectMultiple(data) : this.selectSingle(data)
-      debugger
       this.handlerChangeValue({ value: this.value__, data, index, verify: true })
     },
     handlerChangeValue ({ value = null, data = null, index = -1, verify = false } = {}) {
