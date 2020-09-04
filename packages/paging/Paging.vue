@@ -1,5 +1,7 @@
 <template>
   <div class="me-row me-center me-paging">
+    <span :class="itemClass()">共 {{total}} 条</span>
+    <me-combo-select :align-content="alignContent" slide-direction="down" width="80px" readonly :data="pageSizes" v-model="pageSize__" />
     <span class="me-cursor-pointer" :class="itemClass()" @click="setCurrentPage(--currentPage)" title="上一页">
       <template v-if="isBoolean(prevText)">{{prevText}}</template>
       <me-icon v-else title="上一页">icon-angle_left</me-icon>
@@ -21,10 +23,12 @@
       <template v-if="isBoolean(nextText)">{{nextText}}</template>
       <me-icon v-else title="下一页">icon-angle_right</me-icon>
     </span>
-    <me-combo-select :align-content="alignContent" slide-direction="down" width="80px" readonly :data="pageSizes" v-model="pageSize__" />
-    <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{` 第 ${currentPage} 页 / 共 ${pageNumber} 页 `}}</span>
-    <span :class="itemClass()">共 {{total}} 条</span>
-    <me-input :align-content="alignContent" type="number" width="40px" v-model="currentPage" :rules="rules" />
+
+    <!-- <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{` 第 ${currentPage} 页 / 共 ${pageNumber} 页 `}}</span> -->
+    <span>前往</span>
+    <me-input :align-content="alignContent" type="number" width="50px" v-model="currentPage" :rules="rules" />
+    <span>页</span>
+
   </div>
 </template>
 
