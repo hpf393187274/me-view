@@ -85,7 +85,6 @@ export default {
       const newValue = Type.isArray(this.value) ? this.value.toString() : this.value
       const oldValue = Type.isArray(this.value__) ? this.value__.toString() : this.value__
       if (newValue !== oldValue) {
-        debugger
         this.dispatchUpward('Label', 'me-label--default-change', newValue)
         this.initValue(newValue)
       }

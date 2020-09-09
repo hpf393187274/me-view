@@ -4,8 +4,10 @@
   </form>
 </template>
 <script>
+import emitter from 'me-view/src/mixins/emitter'
 export default {
   name: 'Form',
+  mixins: [ emitter ],
   props: {
     rules: { type: Object, default: () => {} }
   },
@@ -22,6 +24,10 @@ export default {
     this.$on('me-form--remove', (field) => {
       if (field.prop) this.fields.splice(this.fields.indexOf(field), 1)
       return false
+    })
+
+    this.listenerUpward([ 'Dialog' ], 'me-dialog--visible-true', () => {
+      this.reset()
     })
   },
   methods: {
