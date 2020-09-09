@@ -6,14 +6,14 @@
       :readonly="readonly"
       :style="styletextarea"
       @change="handlerChange"
-      @blur="handleBlur"
-      @click.stop="handleClick"
-      @focus="handleFocus"
+      @blur="$emit('blur', value__)"
+      @focus="$emit('focus', value__)"
+      @click.stop="$emit('click', value__)"
       class="me-flex textarea-inner"
       ref="target"
       :value="value__"
     ></textarea>
-    <div class="me-row textarea-icon" style="right: 5px;" v-if="showClear">
+    <div class="me-row textarea-icon" ref="suffix" style="right: 5px;" v-if="showClear || isBoolean(iconSuffix) || $slots.suffix">
       <me-icon :disabled="disabled" @click="handlerClear" v-if="showClear">icon-cross</me-icon>
     </div>
   </div>
@@ -24,7 +24,6 @@ import Tools from 'me-view/src/script/tools'
 import Type from 'me-view/src/script/type'
 import common from 'me-view/src/mixins/common'
 import emitter from 'me-view/src/mixins/emitter'
-
 const alignEnum = [ 'left', 'center', '' ]
 export default {
   name: 'Textarea',
@@ -41,6 +40,10 @@ export default {
     height: String,
     value: String,
     rules: Array,
+    minLength: Number,
+    maxLength: Number,
+    iconPrefix: String,
+    iconSuffix: String,
     placeholder: String,
     readonly: Boolean
   },
@@ -60,14 +63,16 @@ export default {
   },
   async mounted () {
     await this.$nextTick()
-    this.$on('focus-textarea', this.handlerFocustextarea)
-    this.listenerUpward([ 'MeLabel' ], 'me-label--status', status => { this.validateStatus = status })
+    this.$refs.prefix && (this.left += this.$refs.prefix.offsetWidth)
+    this.$refs.suffix && (this.right += this.$refs.suffix.offsetWidth)
+    this.$on('focus-input', this.handlerFocusInput)
+    this.listenerUpward([ 'Label' ], 'me-label--status', status => {
+      this.validateStatus = status
+    })
 
-    this.handlerLableEvent(() => {
-      this.listenerUpward([ 'MeLabel' ], 'me-label--reset', value => {
-        this.valueUpdate(value)
-        this.$emit('change', this.value__)
-      })
+    this.listenerUpward([ 'Label' ], 'me-label--reset', value => {
+      this.valueUpdate(value)
+      this.$emit('change', this.value__)
     })
   },
   computed: {
@@ -114,12 +119,10 @@ export default {
   },
   watch: {
     value () {
-      const newValue = this.value
-      const oldValue = this.value__
+      const newValue = Type.isArray(this.value) ? this.value.toString() : this.value
+      const oldValue = Type.isArray(this.value__) ? this.value__.toString() : this.value__
       if (newValue !== oldValue) {
-        this.handlerLableEvent(() => {
-          this.dispatchUpward('MeLabel', 'me-label--default-change', newValue)
-        })
+        this.dispatchUpward('Label', 'me-label--default-change', newValue)
         this.valueUpdate(newValue)
       }
     },
@@ -146,26 +149,20 @@ export default {
       }
     },
     async valueUpdate (value, verify = false) {
-      this.value__ = value
-      if (verify) {
+      const newValue = value
+      this.value__ = newValue
+      this.validateValue(this.value__)
+      if (verify === true) {
         const verify = await this.validateValue(value)
         if (verify === false) { return }
       }
-      this.valueValid = value
-      this.handlerLableEvent(() => {
-        this.dispatchUpward('MeLabel', 'me-label--change', { value, verify })
-      })
+      this.valueValid = newValue
+      this.dispatchUpward('Label', 'me-label--change', { value: newValue, verify })
     },
     handlerChange ({ target }) {
       console.debug('handlerChange ---------> value')
       this.valueUpdate(target.value, true)
       this.$emit('change', this.value__)
-    },
-    /**
-     * Metextarea
-     */
-    handlerLableEvent (callback = () => { }) {
-      callback && callback.call(this)
     },
     /**
      * 重置
@@ -174,16 +171,7 @@ export default {
       this.valueUpdate(null)
       this.$emit('change', null)
     },
-    handleFocus () {
-      this.$emit('focus', this.value__)
-    },
-    handleBlur () {
-      this.$emit('blur', this.value__)
-    },
-    handleClick () {
-      this.$emit('click', this.value__)
-    },
-    handlerFocustextarea () {
+    handlerFocusInput () {
       this.$refs.target.focus()
     }
   }

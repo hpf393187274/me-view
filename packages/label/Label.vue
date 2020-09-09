@@ -181,7 +181,6 @@ export default {
       }
     },
     reset () {
-      debugger
       this.$emit('me-label--reset', this.valueDefault)
     }
   }

@@ -37,6 +37,9 @@
         </me-combo-tree>
       </me-label>
     </div>
+    <me-label title="描述" prop="description">
+      <me-textarea clearable placeholder="请输入描述" v-model="form.description"> </me-textarea>
+    </me-label>
     <div class="me-row me-center">
       <me-button type="primary" @click="confirm">确 定</me-button>
       <me-button @click="reset">重 置</me-button>
@@ -75,6 +78,7 @@ export default {
         sex: '',
         age: 12,
         province: '2',
+        description: undefined,
         region: '2'
       },
       rules: {

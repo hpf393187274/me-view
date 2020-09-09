@@ -13,7 +13,6 @@
 
   <me-label title="姓名">
     <me-textarea clearable placeholder="请输入姓名" v-model="userName" :rules="rules">
-
     </me-textarea>
   </me-label>
 </me-column>
