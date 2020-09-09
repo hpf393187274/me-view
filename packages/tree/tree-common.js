@@ -15,7 +15,8 @@ export default {
     children () {
       return this.level ? this.data.children : this.data
     },
-    parentGrandson__ () {
+    /** 是否存在孙子节点 */
+    grandson__ () {
       return this.children.some(item => Tools.notBlank(item.children))
     }
   },

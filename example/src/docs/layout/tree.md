@@ -6,6 +6,7 @@
 ```html
 <template>
   <div>
+    <pre>{{checkList}}</pre>
     <div class="me-row">
       <me-button @click="handlerClearCheck">撤销选中</me-button>
       <me-input v-model="key" />
@@ -26,6 +27,7 @@ export default {
     return {
       key: '1-1',
       status: false,
+      checkList: [],
       data: [
         {
           code: '1', label: '陕西省', children: [
@@ -56,6 +58,7 @@ export default {
     },
     handlerCheckedData () {
       const data = this.$refs.tree.getCheckedData()
+      this.checkList = [...data]
       console.log('handlerCheckedData -> ', data)
     },
     handlerCheckedRemove () {

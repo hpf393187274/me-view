@@ -39,7 +39,7 @@
         :field-value="fieldValue"
         :field-label="fieldLabel"
         :statistics="statistics"
-        :parent-grandson="parentGrandson__"
+        :grandson="grandson__"
         v-for="node in data.children"
       >
         <slot :data="data" name="node-label" slot="node-label" slot-scope="{data}"/>
@@ -59,7 +59,7 @@ export default {
   mixins: [ TreeCommon, TreeProp, emitter ],
   props: {
     data: { type: Object, default () { return {} } },
-    parentGrandson: Boolean,
+    grandson: Boolean,
     indent: { type: Number, default: 0 },
     indentSize: { type: Number, default: 16 },
     checkboxWidth: { type: Number, default: 16 },
@@ -119,7 +119,7 @@ export default {
         return this.level === 1 ? this.indent : this.indent + 1
       }
       const indent = this.level === 1 ? this.indent : this.indent + 1
-      if (this.parentGrandson) {
+      if (this.grandson) {
         return this.nodeNumber === 0 ? indent + 1 : indent
       }
       if (this.level === 1) {

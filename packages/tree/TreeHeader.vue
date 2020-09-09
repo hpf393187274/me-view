@@ -29,7 +29,7 @@ export default {
     nodeNumber: Number,
     checkedNumber: Number,
     checkedHalf: Boolean,
-    parentGrandson: Boolean,
+    grandson: Boolean,
     checked: Boolean,
     headerLabel: String,
     indentSize: Number,
@@ -43,7 +43,7 @@ export default {
   computed: {
     indent__ () {
       if (this.expandable === false) { return 0 }
-      if (this.parentGrandson) { return 1 }
+      if (this.grandson) { return 1 }
       return 0
     }
   },
