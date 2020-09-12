@@ -25,10 +25,7 @@ export default {
       if (field.prop) this.fields.splice(this.fields.indexOf(field), 1)
       return false
     })
-
-    this.listenerUpward([ 'Dialog' ], 'me-dialog--visible-true', () => {
-      this.reset()
-    })
+    this.listenerUpward([ 'Dialog' ], 'me-dialog--visible-true', () => this.reset())
   },
   methods: {
     reset () {

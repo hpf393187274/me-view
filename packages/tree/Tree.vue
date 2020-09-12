@@ -105,9 +105,7 @@ export default {
         this.removeNode(this.uniqueValue(item))
       }
     })
-    this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => {
-      this.layout()
-    })
+    this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => this.layout())
 
     this.listener('me-tree-node--click', node => {
       console.debug('me-tree-node--click ---> node, ', node.data)

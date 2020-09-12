@@ -8,12 +8,15 @@ import Database from './database'
 import CustomError from './custom-error'
 import Socket from './socket'
 import Watermark from './watermark'
+import EventMonitor, { eventMonitor } from './event-monitor'
 import Node from './node'
 const type = Type
 const tools = Tools
 export {
   Type,
   type,
+  EventMonitor,
+  eventMonitor,
   Tools,
   Node,
   tools,

@@ -126,9 +126,6 @@ export default {
     this.listener('Table--scrollBar', flag => { this.hasScrollBar = flag })
 
     this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => this.layout())
-    this.listenerUpward([ 'Dialog' ], 'me-dialog--visible-frist', () => {
-      this.dialogInit && this.dialogInit()
-    })
 
     this.scrollBarWidth = Tools.scrollBarWidth()
   },

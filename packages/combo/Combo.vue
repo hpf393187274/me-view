@@ -74,7 +74,6 @@ export default {
   },
   watch: {
     visibility (newValue) {
-      this.$emit('me-attribute--visible-change', newValue)
       this.$emit(`me-attribute--visible-${newValue}`)
       if (newValue) {
         this.broadcast('ComboDropdown', 'ComboDropdown--update-popper')

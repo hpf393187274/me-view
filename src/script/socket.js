@@ -53,12 +53,12 @@ export default class Socket extends EventMonitor {
       }
     }
 
-    this.dispatchEvent('message', data)
+    this.dispatch('message', data)
 
     if (Type.isObject(data)) {
       const { topic } = data || {}
       if (topic) {
-        this.dispatchEvent(`message-${topic}`, data)
+        this.dispatch(`message-${topic}`, data)
       }
     }
   }

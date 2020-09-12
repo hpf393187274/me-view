@@ -1,7 +1,7 @@
 import './theme/index.scss'
 import Clipboard from 'clipboard'
 import * as components from './index-component'
-import { local, session, Type, Tools, Watermark } from './script/index'
+import { local, session, Type, Tools, Watermark, eventMonitor } from './script/index'
 
 export * from './script/index'
 export * from './index-component'
@@ -42,6 +42,7 @@ export default {
     Vue.prototype.$tools = Tools
     Vue.prototype.$local = local
     Vue.prototype.$session = session
+    Vue.prototype.$eventMonitor = eventMonitor
     Vue.prototype.mePrefix = mePrefix.toLowerCase()
   }
 }

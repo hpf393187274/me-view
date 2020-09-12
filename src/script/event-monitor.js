@@ -1,19 +1,21 @@
 export default class EventMonitor {
   #targetElement
-
-  constructor (tagName = 'div') {
-    this.#targetElement = document.createElement('div')
+  constructor (target = document.createElement('div')) {
+    this.#targetElement = target || document
   }
 
-  registerEvent (name, callback) {
+  register (name, callback) {
     this.#targetElement.addEventListener(name, ({ detail }) => callback(detail))
   }
 
-  dispatchEvent (name, data) {
+  dispatch (name, data) {
     this.#targetElement.dispatchEvent(new CustomEvent(name, { detail: data }))
   }
 
-  removeEvent (name) {
-
+  remove (name) {
+    this.#targetElement.removeEventListener(name)
   }
 }
+
+const eventMonitor = new EventMonitor(window)
+export { eventMonitor }

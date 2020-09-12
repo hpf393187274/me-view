@@ -31,7 +31,7 @@ import Link from 'me-view/packages/link/index'
 import Scrollbar from 'me-view/packages/scrollbar/index'
 import Slidebar from 'me-view/packages/slidebar/index'
 import DemoBlock from 'me-view/packages/demo-block/index'
-
+import EditorText from 'me-view/packages/editor-text/index'
 export {
   Panel,
   Dialog,
@@ -64,5 +64,6 @@ export {
   Link,
   Scrollbar,
   Slidebar,
+  EditorText,
   DemoBlock
 }

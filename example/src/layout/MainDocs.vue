@@ -46,7 +46,8 @@ export default {
             { label: 'Checkbox 复选框', path: '/doc/form/checkbox' },
             { label: 'ComboSelect 组合框', path: '/doc/form/combo-select' },
             { label: 'ComboTree 组合树', path: '/doc/form/combo-tree' },
-            { label: 'ComboTable 组合表', path: '/doc/form/combo-table' }
+            { label: 'ComboTable 组合表', path: '/doc/form/combo-table' },
+            { label: 'EditorText 文本编辑器', path: '/doc/form/editor-text' }
           ]
         },
         {

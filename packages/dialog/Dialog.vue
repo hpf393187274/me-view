@@ -67,10 +67,9 @@ export default {
      * dialog 添加事件：显示 隐藏
      */
     value (newValue) {
-      this.$emit('me-dialog--visible-change', newValue)
-      this.$emit('me-attribute--visible-change', newValue)
       this.$emit(`me-attribute--visible-${newValue}`)
       this.$emit(`me-dialog--visible-${newValue}`)
+      setTimeout(() => { this.$emit(`visible-${newValue}`) }, 0)
     }
   },
   methods: {

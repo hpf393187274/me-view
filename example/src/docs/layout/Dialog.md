@@ -22,21 +22,21 @@
     </me-dialog>
     <me-dialog title="dialog" min-height="100px" min-width="900px" v-model="statusForm" @confirm="handlerFormConfirm">
       <me-form class="me-flex me-grid-column-2" :rules="rules" ref="form">
-        <div class="me-row">
+        <!-- <div class="me-row">
           <me-label required title="姓名" prop="name">
             <me-input clearable placeholder="请输入姓名" v-model="form.name"></me-input>
           </me-label>
           <me-label title="年龄" prop="age">
             <me-input type="number" clearable placeholder="请输入年龄" v-model="form.age"></me-input>
           </me-label>
-        </div>
+        </div> -->
         <div class="me-row">
           <me-label title="性别" prop="sex">
             <me-combo-select readonly :data="sexList" v-model="form.sex" clearable placeholder="请选择性别">
             </me-combo-select>
           </me-label>
         </div>
-        <div class="me-row">
+        <!-- <div class="me-row">
           <me-label title="省份" prop="province">
             <me-combo-table clearable v-model="form.province" readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title">
             </me-combo-table>
@@ -52,7 +52,7 @@
               <template #node-label="{data}">{{data.title}}</template>
             </me-combo-tree>
           </me-label>
-        </div>
+        </div> -->
       </me-form>`
     </me-dialog>
     <me-dialog title="dialog" min-height="100px" min-width="600px" v-model="statusTree">
@@ -61,7 +61,7 @@
     </me-tree>
     </me-dialog>
     <me-button @click="statusTable=!statusTable">Dialog - Table</me-button>
-    <me-button @click="statusForm=!statusForm">Dialog - Form</me-button>
+    <me-button @click="dialogForm">Dialog - Form</me-button>
     <me-button @click="statusTree=!statusTree">Dialog - Tree</me-button>
   </div>
 </template>
@@ -91,18 +91,20 @@ export default {
           ]
         }
       ],
-      sexList:[ 
-        { label: '男', value: '1' },
-        { label: '女', value: '0' },
-        { label: '未知', value: '-1' }
-      ],
+      sexList: (() => {
+        return [ 
+          { label: '男', value: '1' },
+          { label: '女', value: '0' },
+          { label: '未知', value: '-1' }
+        ]
+      })(),
       columnsRegion: [
         { label:'编号', field: 'value'},
         { label:'名称', field: 'label' },
       ],
       form: {
         name: '1',
-        sex: '2',
+        sex: '-1',
         age: null,
         province: '2',
         region: '2'
@@ -187,6 +189,19 @@ export default {
       } catch (message) {
         this.$message.error(message)
       }
+    },
+    dialogForm () {
+      this.statusForm = true
+      // setTimeout(() => {
+      //   this.sexList = [ 
+      //     { label: '男', value: '1' },
+      //     { label: '女', value: '0' },
+      //     { label: '未知', value: '-1' }
+      //   ]
+      // })
+      setTimeout(() => {
+        this.form.sex = '1'
+      })
     },
     handlerChange () {
 
