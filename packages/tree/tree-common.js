@@ -103,6 +103,9 @@ export default {
     handleClick (...param) {
       this.$emit('click', param)
     },
+    /**
+     * 处理：子节点通知
+     */
     handlerChildrenNotification () {
       const { checkedNumber, checkedHalfNumber } = this.getCheckedNumber()
       if (this.checkedStrictly) {
@@ -117,26 +120,47 @@ export default {
         this.dispatchParent('notification-parent')
       }
     },
+    /**
+     * 处理：点击节点选中
+     * @param {Boolean} value 选中状态
+     */
+    handlerClickNode (value) {
+      this.setCheckedAll(value)
+      /** 复选框存在 And 严格选择 */
+      if (this.checkbox === true && this.checkedStrictly === true) {
+        /** 向下广播子集元素 */
+        this.dispatch('broadcast-children', value)
+        /** 向上通知父集元素 */
+        this.dispatchParent('notification-parent')
+      }
+    },
+    /**
+     * 处理：点击节点选中
+     * @param {Boolean} value 选中状态
+     * @param {Boolean} deep 深度处理
+     */
     handlerNodeCheck (value, deep = true) {
       this.setCheckedAll(value)
       if (this.checkbox === true && this.checkedStrictly === true) {
+        /** 复选框存在 And 严格选择 */
         if (deep === true) {
+          /** 向下广播子集元素 */
           this.dispatch('broadcast-children', value)
         }
+        /** 向上通知父集元素 */
         this.dispatchParent('notification-parent')
       }
     },
     getCheckedChildren ({ leaf = true, tree = false, ...param } = {}) {
       const childrenList = []
       for (const node of this.getChildrenNodeList()) {
-        if (node.notHazyChecked()) { continue }
-        if (tree === false) {
-          childrenList.push(...node.getCheckedData({ leaf, tree, ...param }))
+        if (node.isCheckedAll()) {
+          childrenList.push(node.getData({ clone: false }))
           continue
         }
-
-        if (leaf === false && node.isLeaf()) { continue }
-        childrenList.push(node.getCheckedTreeData({ leaf, tree, ...param }))
+        if (node.isCheckedHalf()) {
+          childrenList.push(node.getCheckedTreeData({ leaf, tree, ...param }))
+        }
       }
       return childrenList
     },

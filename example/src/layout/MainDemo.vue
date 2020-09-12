@@ -1,6 +1,6 @@
 <template>
   <div class="me-row me-flex">
-    <me-tree class="layout-left" :data="data" highlight :expandable="false" @click-leaf="handleClick" />
+    <me-tree class="layout-left" :data="data" highlight @click-leaf="handleClick" />
     <router-view class="layout-right me-flex"/>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
             { label: 'Tabs 标签页', path: '/demo/layout/tabs' },
             { label: 'Table 表格', path: '/demo/layout/table' },
             { label: 'Paging 分页', path: '/demo/layout/paging' },
-            { label: 'Tree 树型控件', path: '/demo/layout/tree' },
+            { label: 'Tree 树型控件', path: '/demo/layout/demo-tree' },
             { label: 'Dialog 对话框', path: '/demo/layout/dialog' },
             { label: 'Message 提示', path: '/demo/layout/message' },
             { label: 'Transfer 穿梭框', path: '/demo/layout/transfer' }

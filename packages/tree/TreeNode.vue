@@ -72,6 +72,7 @@ export default {
       this.setCheckedAll(checked)
       this.dispatch('broadcast-children', checked)
     })
+    this.uniqueKey = this.uniqueValue(this.data)
 
     this.listener('notification-parent', this.handlerChildrenNotification)
   },
@@ -85,9 +86,18 @@ export default {
   beforeDestroy () {
     this.dispatchUpward('Tree', 'me-tree-map--remove', this.uniqueValue(this.data))
   },
+  watch: {
+    checkedAll (value) {
+      this.dispatchUpward('Tree', `me-tree-node--checked-${value}`, { key: this.uniqueKey, target: this })
+    },
+    checkedHalf (value) {
+      this.dispatchUpward('Tree', `me-tree-node--indeterminate-${value}`, { key: this.uniqueKey, target: this })
+    }
+  },
   data () {
     return {
       expanded__: false,
+      uniqueKey: '',
       statusHighlight: false,
       /**
        * 第一次渲染
@@ -162,8 +172,11 @@ export default {
     /**
     * 获取节点数据
     */
-    getData ({ deep = false, exclude = [ 'children' ] } = {}) {
-      return Tools.clone(this.data, { deep, exclude })
+    getData ({ deep = false, exclude = [ 'children' ], clone = true } = {}) {
+      if (clone === true) {
+        return Tools.clone(this.data, { deep, exclude })
+      }
+      return this.data
     },
     /**
      * 移除当前节点
@@ -188,26 +201,10 @@ export default {
      */
     getChildrenNodeNumber () { return this.nodeNumber },
     /**
-     * 获取选中的叶子节点数据
-     * @param {Boolean} param.leaf 是否包含叶子节点：默认：true
-     */
-    getCheckedData ({ filter, ...param } = {}) {
-      const list = []
-      if (this.nodeLeaf) {
-        const resource = this.getData()
-        list.push(Type.isFunction(filter) ? filter(resource) : resource)
-      }
-      list.push(...this.getCheckedChildren({ filter, ...param }))
-      return list
-    },
-    /**
      * 获取选中的数据(TreeData)
      * @param {Boolean} param.leaf 是否包含叶子节点：默认：true
      */
     getCheckedTreeData ({ ...param } = {}) {
-      if (this.checkedAll) {
-        return this.getData({ deep: true })
-      }
       const resource = this.getData()
       const childrenList = this.getCheckedChildren({ ...param })
       if (childrenList.length !== 0) {

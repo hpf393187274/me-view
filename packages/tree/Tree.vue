@@ -76,6 +76,8 @@ export default {
   data () {
     return {
       nodesMap: new Map(),
+      checkedNodeMap: {},
+      indeterminateNodeMap: {},
       clickNode: undefined,
       nodesSize: 0,
       indentSize: 0,
@@ -99,6 +101,20 @@ export default {
   },
   created () {
     this.nodesMap.clear()
+    this.listener('me-tree-node--checked-true', ({ key, target }) => {
+      this.$set(this.checkedNodeMap, key, target)
+    })
+    this.listener('me-tree-node--checked-false', ({ key }) => {
+      this.$delete(this.checkedNodeMap, key)
+    })
+
+    this.listener('me-tree-node--indeterminate-true', ({ key, target }) => {
+      this.$set(this.indeterminateNodeMap, key, target)
+    })
+    this.listener('me-tree-node--indeterminate-false', ({ key }) => {
+      this.$delete(this.indeterminateNodeMap, key)
+    })
+
     this.listener('notification-parent', this.handlerChildrenNotification)
     this.listener('me-tree--clear', () => {
       for (const item of [ ...this.data ]) {
@@ -181,31 +197,40 @@ export default {
       this.dispatch('me-tree-node--remove', value)
     },
     removeCheckedNode () {
-      const checkedData = this.getCheckedData()
+      const checkedData = this.getCheckedData({ checked: true })
       if (Type.isArray(checkedData)) {
         for (const item of checkedData) {
           this.removeNode(this.uniqueValue(item))
         }
       }
     },
-    getCheckedData ({ leaf = false, callback } = {}) {
+    /**
+     * 获取选中的数据
+     * @param {Boolean} param.leaf 只需要叶子节点
+     * @param {Boolean} param.checked 只需要严格选中节点
+     */
+    getCheckedData ({ leaf = false, checked = false } = {}) {
       const result = []
-      this.nodesMap.forEach(value => {
-        const { data, component } = value
-        if (component.isCheckedAll()) {
-          if (callback) {
-            if (callback(data) === true) {
-              result.push(data)
-            }
-          } else {
-            result.push(data)
-          }
+      for (const key in this.checkedNodeMap) {
+        const node = Reflect.get(this.checkedNodeMap, key)
+        if (leaf === false) {
+          result.push(node.getData())
+          continue
         }
-      })
+        if (node.isLeaf()) {
+          result.push(node.getData())
+        }
+      }
+      if (checked === false && leaf === false) {
+        for (const key in this.indeterminateNodeMap) {
+          const node = Reflect.get(this.indeterminateNodeMap, key)
+          result.push(node.getData())
+        }
+      }
       return result
     },
-    getCheckedTreeData ({ leaf = true } = {}) {
-      return this.getCheckedChildren({ leaf, tree: true })
+    getCheckedTreeData () {
+      return this.getCheckedChildren()
     }
   }
 }
