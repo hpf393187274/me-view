@@ -61,7 +61,8 @@ export default {
     },
     handlerChecked () {
       this.status = !this.status
-      this.$refs.tree.setChecked(this.key, this.status, true)
+      const keys = this.key.split(',')
+      this.$refs.tree.setBatchChecked(keys, this.status)
     },
     handlerCheckedData () {
       const data = this.$refs.tree.getCheckedData({ checked: true })

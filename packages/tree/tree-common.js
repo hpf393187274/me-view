@@ -139,15 +139,10 @@ export default {
      * @param {Boolean} value 选中状态
      * @param {Boolean} deep 深度处理
      */
-    handlerNodeCheck (value, deep = true) {
+    handlerNodeCheck (value) {
+      if (this.checkedStrictly === true && this.isBranch()) { return }
       this.setCheckedAll(value)
       if (this.checkbox === true && this.checkedStrictly === true) {
-        /** 复选框存在 And 严格选择 */
-        if (deep === true) {
-          /** 向下广播子集元素 */
-          this.dispatch('broadcast-children', value)
-        }
-        /** 向上通知父集元素 */
         this.dispatchParent('notification-parent')
       }
     },

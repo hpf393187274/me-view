@@ -14,7 +14,7 @@
       :nodeNumber="nodeNumber"
       :statistics="statistics"
       :grandson="grandson__"
-      @click="handlerNodeCheck"
+      @click="handlerClickNode"
       class="node-header"
       v-if="header"
     >
@@ -54,8 +54,7 @@
 </template>
 
 <script>
-import Type from 'me-view/src/script/type'
-import Tools from 'me-view/src/script/tools'
+import { Type, Assert, Tools } from 'me-view/src/script/index'
 import TreeCommon from './tree-common'
 import TreeProp from './tree-prop'
 import emitter from 'me-view/src/mixins/emitter'
@@ -183,14 +182,33 @@ export default {
     clearChecked () {
       this.setChecked(null, false, true)
     },
-    setChecked (target, checked = false, deep = false) {
-      if (Tools.isBlank(target)) {
-        return this.handlerNodeCheck(checked, deep)
+    /**
+     * 批量设置多个节点选中
+     * @param {String} key 主键，唯一键
+     * @param {Boolean} checked 设置选中状态
+     */
+    setBatchChecked (keyList, checked = false) {
+      Assert.isArray(keyList, '第一个参数必须为数组')
+      this.handlerClickNode(false/** 调用点击事件，清空状态 */)
+      for (const key of keyList) {
+        this.setChecked(key, checked, false)
       }
-      const uniqueValue = Type.isObject(target) ? this.uniqueValue(target) : target
-      const targetNode = this.nodesMap.get(uniqueValue)
+    },
+    /**
+     * 设置某个节点选中
+     * @param {String} key 主键，唯一键
+     * @param {Boolean} checked 设置选中状态
+     * @param {Boolean} clear 是否清空状态
+     */
+    setChecked (key, checked = false, clear = true) {
+      Assert.notBlank(key, '第一个参数不能为空')
+      if (clear === true) {
+        this.handlerClickNode(false/** 调用点击事件，清空状态 */)
+      }
+      if (checked === false) { return }
+      const targetNode = this.nodesMap.get(key)
       if (targetNode && targetNode.component) {
-        targetNode.component.handlerNodeCheck(checked, deep)
+        targetNode.component.handlerNodeCheck(checked)
       }
     },
     removeNode (value) {
