@@ -8,7 +8,7 @@
       <slot>
         <div class="me-row me-cross-center label-content-slot">请在插巢填充元素</div>
       </slot>
-      <div class="label-content-error" v-if="errorHide === false" >
+      <div class="label-content-error" v-if="errorHidden === false" >
         <template v-show="validateStatus==='error'">
           {{validateMessage}}
         </template>
@@ -31,8 +31,8 @@ export default {
       default: () => {},
       validator: value => Type.isArray(value)
     },
-    errorHide: Boolean,
-    errorWay: {
+    errorHidden: Boolean,
+    errorDirection: {
       type: String,
       default: 'down',
       validator: value => [ 'down', 'right' ].includes(value)
