@@ -26,6 +26,7 @@ export default {
     minHeight: String,
     minWidth: String,
     verticalAlign: { type: String, default: 'center' },
+    verticalValue: { type: [ Number, String ], default: 20 },
     background: { type: String, default: '#ffffff' },
     zIndex: { type: Number, default: 1000 }
   },
