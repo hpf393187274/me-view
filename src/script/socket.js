@@ -1,8 +1,8 @@
 
-import Assert from './assert'
-import Type from './type'
-import EventMonitor from './event-monitor'
-import Tools from './tools'
+import Assert from 'me-view/src/script/assert'
+import Type from 'me-view/src/script/type'
+import EventMonitor from 'me-view/src/script/event-monitor'
+import Tools from 'me-view/src/script/tools'
 export default class Socket extends EventMonitor {
   #socket
   constructor ({ host = 'localhost', port = 80, path = '' } = {}) {

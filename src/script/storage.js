@@ -1,6 +1,6 @@
 
-import Tools from './tools'
-import Assert from './assert'
+import Tools from 'me-view/src/script/tools'
+import Assert from 'me-view/src/script/assert'
 export default class Storage {
   #storage
   constructor (storage) {

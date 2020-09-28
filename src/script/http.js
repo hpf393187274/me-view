@@ -1,6 +1,6 @@
 import axios from 'axios'
-import Tools from './tools'
-import Type from './type'
+import Tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
 
 const defaultAction = {
   request: {

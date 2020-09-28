@@ -127,7 +127,7 @@ export default {
 
     this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => this.layout())
 
-    this.scrollBarWidth = Tools.scrollBarWidth()
+    this.scrollBarWidth = Tools.scrollBarByDirection()
   },
   async mounted () {
     await this.$nextTick()

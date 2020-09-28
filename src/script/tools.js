@@ -1,5 +1,5 @@
-import Type from './type'
-import Assert from './assert'
+import Type from 'me-view/src/script/type'
+import Assert from 'me-view/src/script/assert'
 import Qs from 'qs'
 import Validator from 'async-validator'
 export default class Tools {
@@ -349,11 +349,11 @@ export default class Tools {
   }
 
   static urlPath (url) {
-    return Reflect.get((Tools.urlParse(url) || {}), 'path')
+    return Reflect.get((Tools.urlLocation(url) || {}), 'path')
   }
 
   static urlParams (url) {
-    return Reflect.get((Tools.urlParse(url) || {}), 'params')
+    return Reflect.get((Tools.urlLocation(url) || {}), 'params')
   }
 
   /**
@@ -422,17 +422,17 @@ export default class Tools {
     return direction === 'vertical' ? el.scrollHeight > el.clientHeight : el.scrollWidth > el.clientWidth
   }
 
-  static scrollBarWidth (el) {
-    if (this.notEmpty(el)) {
-      if (this.hasScrollBar(el)) {
-        return el.offsetWidth - el.clientWidth
+  static scrollBarByDirection (direction = 'vertical', el) {
+    if (Tools.notEmpty(el)) {
+      if (Tools.hasScrollBar(el, direction)) {
+        return direction === 'vertical' ? el.offsetWidth - el.clientWidth : el.offsetHeight - el.clientHeight
       }
-      return el.offsetWidth - el.clientWidth
+      return 0
     }
     el = document.createElement('div')
     Object.assign(el.style, { width: '100px', height: '100px', overflowY: 'scroll' })
     document.body.appendChild(el)
-    const bool = this.scrollBarWidth(el)
+    const bool = Tools.scrollBarByDirection(direction, el)
     el.remove()
     // document.body.removeChild(el)
     return bool

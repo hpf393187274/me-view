@@ -1,7 +1,7 @@
 
-import Assert from './assert'
-import Type from './type'
-import Tools from './tools'
+import Assert from 'me-view/src/script/assert'
+import Type from 'me-view/src/script/type'
+import Tools from 'me-view/src/script/tools'
 
 export default class Database {
   // 数据库实例
