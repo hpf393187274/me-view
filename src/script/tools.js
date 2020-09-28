@@ -324,6 +324,10 @@ export default class Tools {
     return newTarget
   }
 
+  /**
+   * 地址解析
+   * @param {String} href 地址
+   */
   static urlLocation (href) {
     let other = Tools.urlFormat(href)
     const location = {}
@@ -346,14 +350,6 @@ export default class Tools {
       Reflect.set(location, 'path', other)
     }
     return location
-  }
-
-  static urlPath (url) {
-    return Reflect.get((Tools.urlLocation(url) || {}), 'path')
-  }
-
-  static urlParams (url) {
-    return Reflect.get((Tools.urlLocation(url) || {}), 'params')
   }
 
   /**
