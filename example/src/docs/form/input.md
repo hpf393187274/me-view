@@ -5,15 +5,16 @@
 ::: demo `clearable` 可清除的
 ```html
 <me-column>
-  <me-input type="number" clearable placeholder="请输入姓名" v-model="userName" :rules="rules"></me-input>
+<me-input type="number" clearable placeholder="请输入姓名" v-model="form.name"></me-input>
+  <me-input type="number" clearable placeholder="请输入年龄" v-model="form.age" :rules="rules"></me-input>
 </me-column>
 <script>
 export default {
   data() {
     return {
-      userName:'',
       form : {
-        userName:''
+        name:'',
+        age: 22
       },
       rules: [
         { required: true, message: '年龄不能为空' },

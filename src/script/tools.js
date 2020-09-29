@@ -418,19 +418,12 @@ export default class Tools {
     return direction === 'vertical' ? el.scrollHeight > el.clientHeight : el.scrollWidth > el.clientWidth
   }
 
-  static scrollBarByDirection (direction = 'vertical', el) {
-    if (Tools.notEmpty(el)) {
-      if (Tools.hasScrollBar(el, direction)) {
-        return direction === 'vertical' ? el.offsetWidth - el.clientWidth : el.offsetHeight - el.clientHeight
-      }
-      return 0
-    }
+  static scrollBarByDirection (el) {
     el = document.createElement('div')
     Object.assign(el.style, { width: '100px', height: '100px', overflowY: 'scroll' })
     document.body.appendChild(el)
-    const bool = Tools.scrollBarByDirection(direction, el)
-    el.remove()
-    // document.body.removeChild(el)
+    const bool = el.offsetWidth - el.clientWidth
+    document.body.removeChild(el)
     return bool
   }
 

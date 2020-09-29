@@ -1,7 +1,7 @@
 <template>
   <label class="me-checkbox">
     <input :disabled="disabled" @click.stop="onClick" class="checkbox-inner" ref="checkbox" type="checkbox" v-model="value__" />
-    <span v-if="label">{{ label }}</span>
+    <span class="checkbox-label" v-if="$slots.default"><slot /></span>
   </label>
 </template>
 

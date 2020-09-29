@@ -123,7 +123,9 @@ export default {
     this.listener('Table-row-checked-true', ({ key, value }) => this.$set(this.checkedData, key, value))
     this.listener('Table-row-checked-false', ({ key }) => this.$delete(this.checkedData, key))
     this.listener('Table-row-sort', ({ field, order }) => this.sort(field, order))
-    this.listener('Table--scrollBar', flag => { this.hasScrollBar = flag })
+    this.listener('Table--scrollBar', flag => {
+      this.hasScrollBar = flag
+    })
 
     this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => this.layout())
 

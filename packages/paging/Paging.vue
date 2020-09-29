@@ -1,7 +1,7 @@
 <template>
   <div class="me-row me-center me-paging">
     <span :class="itemClass()">共 {{total}} 条</span>
-    <me-combo-select :align-content="alignContent" slide-direction="down" width="80px" readonly :data="pageSizes" v-model="pageSize__" />
+    <me-combo-select :align-content="alignContent" slide-direction="down" width="80px" readonly :data="pageSizes" v-model="pageSize__" @change="handlerPageSize" />
     <span class="me-cursor-pointer" :class="itemClass()" @click="setCurrentPage(--currentPage)" title="上一页">
       <template v-if="isBoolean(prevText)">{{prevText}}</template>
       <me-icon v-else title="上一页">icon-angle_left</me-icon>
@@ -26,7 +26,7 @@
 
     <!-- <span :class="itemClass()" style="min-width:85px;justify-content: flex-end;">{{` 第 ${currentPage} 页 / 共 ${pageNumber} 页 `}}</span> -->
     <span>前往</span>
-    <me-input :align-content="alignContent" type="number" width="50px" v-model="currentPage" :rules="rules" />
+    <me-input :align-content="alignContent" type="number" width="50px" v-model="currentPage" :rules="rules" @change="setCurrentPage"/>
     <span>页</span>
 
   </div>
@@ -141,15 +141,6 @@ export default {
     }
   },
   watch: {
-    currentPage (newValue, oldValue) {
-      console.debug(`me-paging-----watch-------currentPage----------new=${newValue}, old=${oldValue}, time=`, new Date().getTime())
-      this.$emit('change-page', { ...this.info })
-      this.$emit('change-page-num', { ...this.info })
-    },
-    pageSize__ (newValue, oldValue) {
-      this.$emit('change-page-size', { ...this.info })
-      this.$emit('update:page-size', newValue)
-    },
     pageNumber (newValue, oldValue) {
       this.currentPage = 1
       console.debug(`me-paging-----watch-------pageNumber----------new=${newValue}, old=${oldValue}, time=`, new Date().getTime())
@@ -167,6 +158,12 @@ export default {
         }
       ]
     },
+    handlerPageSize ({ value }) {
+      this.info.pageSize__ = value
+      this.$emit('change-page', { ...this.info })
+      this.$emit('change-page-size', { ...this.info })
+      this.$emit('update:page-size', value)
+    },
     setCurrentPage (value) {
       if (Type.isNumber(value)) {
         if (value > this.pageNumber) {
@@ -176,6 +173,7 @@ export default {
         } else {
           this.currentPage = value
         }
+        this.$emit('change-page', { ...this.info })
       }
     }
   }

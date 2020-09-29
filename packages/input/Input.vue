@@ -43,7 +43,7 @@ export default {
   name: 'Input',
   mixins: [ common, emitter ],
   model: {
-    props: 'value', event: 'change'
+    props: 'value', event: 'input-change'
   },
   props: {
     required: Boolean,
@@ -94,7 +94,7 @@ export default {
       this.dispatchUpward('Label', 'me-label--label-height', height)
       this.listenerUpward([ 'Label' ], 'me-label--reset', value => {
         this.valueUpdate(value)
-        this.$emit('change', this.value__)
+        this.$emit('input-change', this.value__)
       })
     })
   },
@@ -176,7 +176,7 @@ export default {
         } catch (message) {
           console.debug(`me-input valueUpdate ->catch message=${message}`)
           this.value__ = this.valueValid
-          this.$emit('change', this.value__)
+          this.$emit('input-change', this.value__)
           return false
         }
       }
@@ -197,6 +197,7 @@ export default {
     handlerChange ({ target }) {
       console.debug('handlerChange ---------> value')
       this.valueUpdate(target.value, true)
+      this.$emit('input-change', this.value__)
       this.$emit('change', this.value__)
     },
     /**
@@ -211,6 +212,7 @@ export default {
      */
     handlerClear () {
       this.valueUpdate(null)
+      this.$emit('input-change', null)
       this.$emit('change', null)
     },
     handlerFocusInput () {
