@@ -5,7 +5,7 @@
 ::: demo `label` 设置标签 `clearable` 可清除的
 ```html
 <template>
-  <me-form ref="form" :rules="rules">
+  <me-form ref="form" :rules="rules" labelWidth="150px">
     <div class="me-row">
       <me-label required title="姓名" prop="name">
         <me-input clearable placeholder="请输入姓名" v-model="form.name"></me-input>

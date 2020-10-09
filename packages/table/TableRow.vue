@@ -5,14 +5,18 @@
         <me-checkbox :checkedHalf="checkedHalf" :disabled="multiple === false" @click="handlerCheckedChange(!checked__)" v-model="checked__" />
       </table-cell-header>
       <table-cell-header width="50px" layout="center" v-if="hasIndex">序号</table-cell-header>
-      <table-cell-header :key="column.label" v-bind="column" v-for="column in columns" />
+      <template v-for="column in columns">
+        <table-cell-header :key="column.label" v-bind="column" v-if="column.hidden !== true" />
+      </template>
     </template>
     <template v-else>
       <table-cell-d width="50px" layout="center" v-if="checkbox">
         <me-checkbox :disabled="multiple === false" @click="handlerCheckedChange(!checked__)" v-model="node.checked" />
       </table-cell-d>
       <table-cell-d width="50px" layout="center" v-if="hasIndex">{{index + 1}}</table-cell-d>
-      <table-cell-d :data="data" :key="column.field" v-bind="column" v-for="column in columns" />
+      <template v-for="column in columns">
+        <table-cell-d :data="data" :key="column.field" v-bind="column" v-if="column.hidden !== true"/>
+      </template>
     </template>
   </tr>
 </template>

@@ -26,9 +26,9 @@
       return {
         columns: [
           { label:'编号', field: 'id', sortable: true, layout: 'center'},
-          { label:'测试', field: 'test', layout: 'center'},
+          { label:'测试', field: 'test', layout: 'center', },
           { label:'标题', field: 'label', layout: 'center', clipboard: true, sortable: true, clipboardPrompt: true },
-          { label:'操作', field: 'action' }
+          { label:'操作', field: 'action', hidden: true }
         ],
         data: [
           { id: '1', label: '陕西省sssss'},

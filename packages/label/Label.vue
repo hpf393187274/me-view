@@ -65,6 +65,7 @@ export default {
       rules__: [],
       valueCurrent: null,
       valueDefault: null,
+      labelWidth__: this.labelWidth,
       labelHeight__: this.labelHeight
     }
   },
@@ -101,7 +102,7 @@ export default {
     labelStyles () {
       return {
         ...this.labelStyle,
-        width: this.labelWidth,
+        width: this.labelWidth__,
         height: this.labelHeight__,
         'justify-content': this.labelLayout
       }
@@ -109,15 +110,21 @@ export default {
   },
   mounted () {
     if (this.prop) {
-      this.dispatchUpward('Form', 'me-form--add', this)
+      this.dispatchUpward('Form', 'me-form--label-add', this)
       this.initialize(this.valueCurrent)
       this.bindFormInstance()
     }
   },
   beforeDestroy () {
-    this.dispatchUpward('Form', 'me-form--remove', this)
+    this.dispatchUpward('Form', 'me-form--label-remove', this)
   },
   methods: {
+    setLabelWidth (value) {
+      if (Tools.isBlank(value)) { return }
+      if (Tools.isBlank(this.labelWidth)) {
+        this.labelWidth__ = value
+      }
+    },
     initialize (value) {
       let initialValue = value
       if (Array.isArray(initialValue)) {

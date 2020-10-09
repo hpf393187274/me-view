@@ -6,10 +6,19 @@ export default {
     return {
       checkedAll: this.checked || (this.data && this.data.checked === true),
       checkedChildren: this.checked,
+      accordionNode: null,
       checkedHalf: false,
       checkedNumber: 0,
       checkedHalfNumber: 0
     }
+  },
+  created () {
+    this.listener('me-node-parent--node-accordion', target => {
+      if (Tools.notEmpty(this.accordionNode) && this.accordionNode !== target) {
+        this.accordionNode.setExpanded(false)
+      }
+      this.accordionNode = target
+    })
   },
   computed: {
     children () {

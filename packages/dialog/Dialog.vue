@@ -22,7 +22,7 @@
     <div @mousedown.stop class="me-row me-flex dialog-body">
       <slot />
     </div>
-    <template v-if="hideFooter !== true">
+    <template v-if="hiddenFooter !== true">
       <me-line-h />
       <div @mousedown.stop class="me-row dialog-footer">
         <slot name="footer">
@@ -47,7 +47,7 @@ export default {
     minWidth: String,
     height: String,
     width: String,
-    hideFooter: Boolean,
+    hiddenFooter: Boolean,
     verticalAlign: String,
     draggable: { type: Boolean, default: true },
     closable: { type: Boolean, default: true }

@@ -7,7 +7,7 @@
 
 <me-column>
 {{valueData}}
-  <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id" @change="handlerChange">
+  <me-combo-tree readonly accordion click-event="click-leaf" :data="regionList" :expanded-level="1" field-value="id" @change="handlerChange">
     <template #node-label="{data}">{{data.title}}--{{data.id}}</template>
   </me-combo-tree>
   <me-combo-tree readonly :data="regionList" :expanded-level="1" field-value="id">

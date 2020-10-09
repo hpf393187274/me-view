@@ -142,20 +142,20 @@ export default {
 ::: -->
 
 ### Tree Attributes
-| 名称                | 描述                                    |  类型   | 默认值 | 可选值       |
-| ------------------- | --------------------------------------- | :-----: | :----: | ------------ |
-| statistics          | 是否显示统计                            | Boolean | false  | true, false  |
-| checkbox            | 是否显示复选框                          | Boolean | false  | true, false  |
-| checked-strictly    | 是否严格模式- false 父子联动互不干涉    | Boolean |  true  | true, false  |
-| checked             | 是否选中                                | Boolean | false  | true, false  |
-| lazy                | 是否懒加载                              | Boolean | false  | true, false  |
-| expandable          | 可展开，false 展开全部节点              | Boolean |  true  | true, false  |
-| expanded-all        | 展开所有                                | Boolean | false  | true, false  |
-| click-expanded | 点击节点是否展开                        | Boolean |  true  | true, false  |
-| expanded-level      | 展开级别：expanded-all = true, 级别失效 | Number  |   0    | 1, 2, 3, ... |
-| accordion           | 待实现 - 是否手风琴模式                 | Boolean | false  | true, false  |
-| node-key            | 唯一标识的属性                          | String  |   id   | id           |
-| action              | 是否显示功能                            | Boolean | false  | true, false  |
+| 名称             | 描述                                   |  类型   | 默认值 | 可选值       |
+| ---------------- | -------------------------------------- | :-----: | :----: | ------------ |
+| statistics       | 是否显示统计                           | Boolean | false  | true, false  |
+| checkbox         | 是否显示复选框                         | Boolean | false  | true, false  |
+| checked-strictly | 是否严格模式- false 父子联动互不干涉   | Boolean |  true  | true, false  |
+| checked          | 是否选中                               | Boolean | false  | true, false  |
+| lazy             | 是否懒加载                             | Boolean | false  | true, false  |
+| expandable       | 可展开，false 展开全部节点             | Boolean |  true  | true, false  |
+| expanded-all     | 展开所有， true 则 expanded-level 失效 | Boolean | false  | true, false  |
+| click-expanded   | 点击节点是否展开                       | Boolean |  true  | true, false  |
+| expanded-level   | 展开级别                               | Number  |   0    | 1, 2, 3, ... |
+| accordion        | 风琴模式: true 则 expanded-level 失效  | Boolean | false  | true, false  |
+| node-key         | 唯一标识的属性                         | String  |   id   | id           |
+| action           | 是否显示功能                           | Boolean | false  | true, false  |
 
 
 ### Tree Methods

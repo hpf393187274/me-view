@@ -18,33 +18,35 @@
         <me-link @click="handlerEvent('refresh-node')" v-if="lazy">刷新</me-link>
       </div>
     </div>
-    <div class="tree-node-children" v-if="renderFirst" v-show="expanded__">
-      <tree-node
-        :action="action"
-        :checkbox="checkbox"
-        :checked-strictly="checkedStrictly"
-        :data="node"
-        :expandable="expandable"
-        :expanded-all="expandedAll"
-        :expanded-level="expandedLevel"
-        :click-expanded="clickExpanded"
-        :click-checked="clickChecked"
-        :indent="indent__"
-        :indent-size="indentSize"
-        :checkbox-width = "checkboxWidth"
-        :key="uniqueValue(node)"
-        :lazy="lazy"
-        :level="level + 1"
-        :highlight="highlight"
-        :field-value="fieldValue"
-        :field-label="fieldLabel"
-        :statistics="statistics"
-        :grandson="grandson__"
-        v-for="node in data.children"
-      >
-        <slot :data="data" name="node-label" slot="node-label" slot-scope="{data}"/>
-      </tree-node>
-    </div>
+    <me-collapse-transition :appear="renderFirst">
+      <div class="tree-node-children" v-show="expanded__">
+        <tree-node
+          :action="action"
+          :checkbox="checkbox"
+          :checked-strictly="checkedStrictly"
+          :data="node"
+          :expandable="expandable"
+          :expanded-all="expandedAll"
+          :expanded-level="expandedLevel"
+          :click-expanded="clickExpanded"
+          :click-checked="clickChecked"
+          :indent="indent__"
+          :indent-size="indentSize"
+          :checkbox-width = "checkboxWidth"
+          :key="uniqueValue(node)"
+          :lazy="lazy"
+          :level="level + 1"
+          :highlight="highlight"
+          :field-value="fieldValue"
+          :field-label="fieldLabel"
+          :statistics="statistics"
+          :grandson="grandson__"
+          v-for="node in data.children"
+        >
+          <slot :data="data" name="node-label" slot="node-label" slot-scope="{data}"/>
+        </tree-node>
+      </div>
+    </me-collapse-transition>
   </div>
 </template>
 
@@ -99,6 +101,7 @@ export default {
       expanded__: false,
       uniqueKey: '',
       statusHighlight: false,
+      appearByClickArrow: false,
       /**
        * 第一次渲染
        */
@@ -191,7 +194,11 @@ export default {
      */
     handlerExpanded () {
       if (this.expandable === false) { return }
+      this.appearByClickArrow = true
       this.setExpanded(!this.expanded__)
+      if (this.accordion === true && this.expanded__ === true) {
+        this.dispatchParent('me-node-parent--node-accordion', this)
+      }
       if (this.renderFirst === false) {
         this.renderFirst = true
       }

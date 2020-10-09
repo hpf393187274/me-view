@@ -39,6 +39,7 @@
           :indent-size="indentSize"
           :checkbox-width = "checkboxWidth"
           :grandson="grandson__"
+          :accordion="accordion"
           :statistics="statistics"
           :highlight="highlight"
           :field-value="fieldValue"
@@ -99,6 +100,13 @@ export default {
     }
   },
   created () {
+    if (this.expandedAll === true) {
+      this.accordion = false
+      this.expandedLevel = 0
+    }
+    if (this.accordion === true) {
+      this.expandedLevel = 0
+    }
     this.nodesMap.clear()
     this.listener('me-tree-node--checked-true', ({ key, target }) => {
       this.$set(this.checkedNodeMap, key, target)
@@ -123,9 +131,7 @@ export default {
     this.listenerUpward([ 'Dialog', 'Combo' ], 'me-attribute--visible-true', () => this.layout())
 
     this.listener('me-tree-node--click', node => {
-      console.debug('me-tree-node--click ---> node, ', node.data)
       if (Tools.notEmpty(this.clickNode)) {
-        console.debug('me-tree-node--click ---> clickNode =', this.clickNode.data)
         this.clickNode.statusHighlight = false
       }
       this.clickNode = node
