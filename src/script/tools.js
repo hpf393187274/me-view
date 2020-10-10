@@ -10,7 +10,7 @@ export default class Tools {
    * @param {Object} target 目标
    */
   static isEmpty (target) {
-    return target === null || target === undefined
+    return Type.isEmpty(target)
   }
 
   /**
@@ -18,18 +18,7 @@ export default class Tools {
    * @param {Object} target 目标
    */
   static isBlank (target) {
-    if (Tools.isEmpty(target)) { return true }
-    if (Type.isString(target)) {
-      const value = Tools.trim(target)
-      return value === '' || value === 'null' || value === 'undefined'
-    }
-    if (Type.isArray(target)) {
-      return target.length === 0
-    }
-    if (Type.isObject(target)) {
-      return Object.keys(target).length === 0
-    }
-    return false
+    return Type.isBlank(target)
   }
 
   /**
@@ -37,7 +26,7 @@ export default class Tools {
    * @param {Object} target 目标
    */
   static notBlank (target) {
-    return Tools.isBlank(target) === false
+    return Type.isBlank(target) === false
   }
 
   /**
@@ -45,7 +34,7 @@ export default class Tools {
    * @param {Object} target 目标
    */
   static notEmpty (target) {
-    return Tools.isEmpty(target) === false
+    return Type.isEmpty(target) === false
   }
 
   /**
@@ -93,10 +82,7 @@ export default class Tools {
    * @param {String} target 目标字符串
    */
   static trim (target) {
-    if (Type.isString(target)) {
-      return target.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
-    }
-    return target
+    return Type.trim(target)
   }
 
   static findPath (target, path) {

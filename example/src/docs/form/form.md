@@ -20,6 +20,9 @@
         </me-combo-select>
       </me-label>
     </div>
+    <me-label required title="姓名" prop="name">
+      <me-input clearable placeholder="请输入姓名" v-model="form.name"></me-input>
+    </me-label> 
     <div class="me-row">
       <me-label title="省份" prop="province">
         <me-combo-table clearable v-model="form.province" readonly :columns="columnsRegion" :data="provinceList" field-value="id" field-label="title" @change="handlerChangeProvince">

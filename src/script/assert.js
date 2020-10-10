@@ -1,15 +1,14 @@
 import CustomError from 'me-view/src/script/custom-error'
 import Type from 'me-view/src/script/type'
-import Tools from 'me-view/src/script/tools'
 export default class Assert {
   static notEmpty (target, message) {
-    if (Tools.isEmpty(target)) {
+    if (Type.isEmpty(target)) {
       throw new CustomError(message, target)
     }
   }
 
   static notBlank (target, message) {
-    if (Tools.isBlank(target)) {
+    if (Type.isBlank(target)) {
       throw new CustomError(message, target)
     }
   }

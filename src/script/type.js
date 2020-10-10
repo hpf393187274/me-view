@@ -170,4 +170,42 @@ export default class Type {
   static isError (target) {
     return Type.getType(target) === Type.TYPE_ERROR
   }
+
+  /**
+   * 校验：对象是否为空
+   * @param {Object} target 目标
+   */
+  static isEmpty (target) {
+    return target === null || target === undefined
+  }
+
+  /**
+   * 校验：是否为空值
+   * @param {Object} target 目标
+   */
+  static isBlank (target) {
+    if (Type.isEmpty(target)) { return true }
+    if (Type.isString(target)) {
+      const value = Type.trim(target)
+      return value === '' || value === 'null' || value === 'undefined'
+    }
+    if (Type.isArray(target)) {
+      return target.length === 0
+    }
+    if (Type.isObject(target)) {
+      return Object.keys(target).length === 0
+    }
+    return false
+  }
+
+  /**
+   * 去除字符串两边的空格
+   * @param {String} target 目标字符串
+   */
+  static trim (target) {
+    if (Type.isString(target)) {
+      return target.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
+    }
+    return target
+  }
 }

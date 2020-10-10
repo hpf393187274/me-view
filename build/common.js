@@ -45,12 +45,15 @@ const entryMixin = entry('src/mixins', file => `mixins/${file}`)
 const entryConfig = entry('src/config', file => `config/${file}`)
 const entryComponent = entry('packages')
 const externals = { }
-Object.keys(entryComponent).forEach(function (key) {
+Object.keys({ ...entryComponent }).forEach(key => {
   Reflect.set(externals, `me-view/packages/${key}`, `me-view/lib/${key}`)
 })
-
-Object.keys({ ...entryMixin, ...entryConfig, ...entryScript }).forEach(function (key) {
+Object.keys({ ...entryMixin, ...entryScript, ...entryConfig }).forEach(key => {
   Reflect.set(externals, `me-view/src/${key}`, `me-view/lib/${key}`)
+})
+
+Object.keys({ ...externals }).forEach(key => {
+  console.log(`-----------key=${key},----------value=${Reflect.get(externals, key)}`)
 })
 
 exports.externals = [ Object.assign({ vue: 'vue' }, externals), nodeExternals() ]

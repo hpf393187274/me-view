@@ -125,6 +125,7 @@ export default {
         this.labelWidth__ = value
       }
     },
+    setReadonly (value) { this.readonly = value },
     initialize (value) {
       let initialValue = value
       if (Array.isArray(initialValue)) {
