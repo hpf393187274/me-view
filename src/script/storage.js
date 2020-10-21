@@ -8,7 +8,7 @@ export default class Storage {
   }
 
   get (key, { defaultValue = undefined } = { }) {
-    console.debug(`storage.arrayAppend：key = ${key}`)
+    console.debug(`storage.get：key = ${key}`)
     Assert.notEmpty(key, 'storage.get：key is empty')
     const value = this.#storage.getItem(key)
     if (Tools.isBlank(value)) {
