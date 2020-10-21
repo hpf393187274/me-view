@@ -1,27 +1,36 @@
-
 import Tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
 import Assert from 'me-view/src/script/assert'
 export default class Storage {
   #storage
+  #encryptPrefix = 'encrypt__'
   constructor (storage) {
-    this.#storage = Tools.isEmpty(storage) ? window.localStorage : storage
+    this.#storage = Type.isEmpty(storage) ? window.localStorage : storage
   }
 
-  get (key, { defaultValue = undefined } = { }) {
+  get (key, option) {
+    const { defaultValue } = option || {}
     console.debug(`storage.get：key = ${key}`)
     Assert.notEmpty(key, 'storage.get：key is empty')
     const value = this.#storage.getItem(key)
-    if (Tools.isBlank(value)) {
+    if (Type.isEmpty(value)) {
       return defaultValue
+    }
+    if (Type.isEmptyString(value)) { return '' }
+    if (value.startsWith(this.#encryptPrefix)) {
+      return JSON.parse(Tools.decryption(value.replace(this.#encryptPrefix, '')))
     }
     return JSON.parse(value)
   }
 
-  set (key, value) {
+  set (key, value, encrypt = false) {
     console.debug(`storage.set：key = ${key}`)
     Assert.notEmpty(key, 'storage.set：key is empty')
-    if (Tools.isBlank(value)) { value = '' }
-    this.#storage.setItem(key, JSON.stringify(value))
+    if (Type.isEmpty(value)) { return }
+    if (Type.isEmptyString(value)) { value = '' }
+    const stringifyValue = JSON.stringify(value)
+    const newValue = encrypt === true ? this.#encryptPrefix + Tools.encryption(stringifyValue) : stringifyValue
+    this.#storage.setItem(key, newValue)
   }
 
   clear () { this.#storage.clear() }
@@ -34,34 +43,6 @@ export default class Storage {
 
   deepGetMap (key, property, defaultValue) {
     return Reflect.get(this.get(key, { defaultValue: {} }), property) || defaultValue
-  }
-
-  arrayAppend (key, value, callback) {
-    console.debug(`storage.arrayAppend：key = ${key}，value = `, value)
-    Assert.notEmpty(key, 'storage.arrayAppend：key is empty')
-    Assert.isFunction(callback, `storage.arrayAppend: key = ${key} callback is not function`)
-    if (Tools.isEmpty(value)) { return }
-    const list = this.get(key)
-    if (Tools.isEmpty(list)) {
-      return this.set(key, [ value ])
-    }
-
-    if (list.findIndex(callback) === -1) {
-      list.push(value)
-      this.set(key, list)
-    }
-  }
-
-  arrayRemove (key, callback) {
-    Assert.notEmpty(key, 'storage.arrayRemove：key is empty')
-    Assert.isFunction(callback, `storage.arrayRemove: key = ${key} callback is not function`)
-    const list = this.get(key)
-    if (Tools.isEmpty(list)) { return }
-    const index = list.findIndex(callback)
-    if (index > -1) {
-      list.splice(index, 1)
-      this.set(key, list)
-    }
   }
 }
 

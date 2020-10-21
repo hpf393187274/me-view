@@ -476,4 +476,20 @@ export default class Tools {
     }
     return {}
   }
+
+  /**
+   * 加密
+   * @param {String} value
+   */
+  static encryption (value) {
+    return window.btoa(unescape(encodeURIComponent(value)))
+  }
+
+  /**
+   * 解密
+   * @param {String} value
+   */
+  static decryption (value) {
+    return decodeURIComponent(escape(window.atob(value)))
+  }
 }

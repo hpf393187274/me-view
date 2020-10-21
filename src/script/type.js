@@ -180,6 +180,43 @@ export default class Type {
   }
 
   /**
+   * 校验：是否为空 或 空串
+   * @param {Object} target 目标
+   */
+  static isEmptyString (target) {
+    if (Type.isEmpty(target)) { return true }
+    if (Type.isString(target)) {
+      const value = Type.trim(target)
+      return value === '' || value === 'null' || value === 'undefined'
+    }
+    return false
+  }
+
+  /**
+   * 校验：是否为空 或 空对象
+   * @param {Object} target 目标
+   */
+  static isEmptyObject (target) {
+    if (Type.isEmpty(target)) { return true }
+    if (Type.isObject(target)) {
+      return Object.keys(target).length === 0
+    }
+    return false
+  }
+
+  /**
+   * 校验：是否为空 或 空数组
+   * @param {Object} target 目标
+   */
+  static isEmptyArray (target) {
+    if (Type.isEmpty(target)) { return true }
+    if (Type.isArray(target)) {
+      return target.length === 0
+    }
+    return false
+  }
+
+  /**
    * 校验：是否为空值
    * @param {Object} target 目标
    */
