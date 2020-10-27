@@ -1,16 +1,17 @@
 <template>
-  <div class="me-image">
-    <img :src="valueInner" :width="width" :height="height" @click="handlerPreview"/>
+  <div class="me-row me-center me-image" :style="styleImg" @click="handlerPreview">
+    <img :src="valueInner" />
     <me-modal
       draggable
       closable-modal
       v-if="preview"
       :z-index="10000"
       @cancel="handlerCancel"
+      ref="imageModal"
       class-container="image-modal"
       v-model="visible"
     >
-      <me-image ref="imageModel" class="me-flex" :value="valueInner" />
+      <me-image :width="modalWidth" :height="modalHeight" ref="imageModel" class="me-flex" :value="valueInner" />
       <div class="image-action-container">
         <me-row class="image-action me-center">
           <me-icon @click="handlerScale(true)" title="放大">icon-plus_strong</me-icon>
@@ -22,18 +23,29 @@
   </div>
 </template>
 <script>
+import Tools from 'me-view/src/script/tools'
 import ModelString from 'me-view/src/mixins/model-string'
 export default {
   mixins: [ ModelString ],
   name: 'Image-',
   props: {
     preview: Boolean,
-    width: String,
-    height: String
+    width: [ String, Number ],
+    height: [ String, Number ]
   },
   data () {
     return {
-      visible: false
+      visible: false,
+      modalWidth: undefined,
+      modalHeight: undefined
+    }
+  },
+  computed: {
+    styleImg () {
+      return {
+        width: `${Tools.convertToNumber(this.width)}px`,
+        height: `${Tools.convertToNumber(this.height)}px`
+      }
     }
   },
   methods: {
@@ -44,13 +56,14 @@ export default {
       this.visible = false
     },
     handlerScale (scale) {
-      const img = this.$refs.imageModel.$el.querySelector('img')
+      const img = this.$refs.imageModal.$el.querySelector('div.image-modal')
+      const { width, height } = Tools.clientRect(img)
       if (scale === true) {
-        img.width *= 1.1
-        img.height *= 1.1
+        this.modalWidth = width * 1.1
+        this.modalHeight = height * 1.1
       } else {
-        img.width /= 1.1
-        img.height /= 1.1
+        this.modalWidth = width / 1.1
+        this.modalHeight = height / 1.1
       }
     }
   }

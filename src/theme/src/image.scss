@@ -2,11 +2,17 @@
 @import "./Modal.scss";
 .#{$me-prefix}-image {
   cursor: pointer;
+  border: 4px solid green;
+  > img {
+    width: 80%;
+    display: block;
+  }
   .image-modal {
     position: fixed;
+    border: 5px solid red;
     .image-action-container {
       position: absolute;
-      width: 100%;
+      // width: 100%;
       bottom: -10px;
     }
   }
