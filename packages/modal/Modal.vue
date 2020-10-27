@@ -1,12 +1,12 @@
 <template>
-  <div @click.self="handlerClick" class="me-row me-center me-modal" :style="{ 'z-index': zIndex}" v-if="modal" v-show="visibility">
+  <div @click.self="handlerClick" class="me-row me-center me-modal" :style="{ 'z-index': zIndex}" v-if="modal" v-show="visible">
     <div :class="classContainer" :style="styles" @mousedown="onMouseDown" class="me-column modal-container" ref="target">
       <slot>
         <me-button @click="handlerCancel">关闭</me-button>
       </slot>
     </div>
   </div>
-  <div :class="classContainer" :style="{...styles, 'z-index': zIndex}" @mousedown="onMouseDown" class="me-column modal-container" ref="target" v-else v-show="visibility" >
+  <div :class="classContainer" :style="{...styles, 'z-index': zIndex}" @mousedown="onMouseDown" class="me-column modal-container" ref="target" v-else v-show="visible" >
     <slot>
       <me-button @click="handlerCancel">关闭</me-button>
     </slot>
@@ -43,7 +43,7 @@ export default {
     height (newValue) {
       this.height__ = Tools.convertToNumber(newValue)
     },
-    visibility (newValue) {
+    visible (newValue) {
       if (newValue) {
         this.initPointMax()
       }
@@ -108,7 +108,7 @@ export default {
         x: container.width, y: container.height
       })
       this.pointMax = { ...this.containerMax }
-      if (this.visibility) {
+      if (this.visible) {
         // 创建就显示的 场景
         this.initPointMax()
       }

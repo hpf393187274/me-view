@@ -1,5 +1,5 @@
 <template>
-  <me-combo ref="combo" v-bind="$props" v-model="value__">
+  <me-combo ref="combo" v-bind="$props" v-on="$listeners">
     <me-tree
       ref="comboTree"
       :border="border"
@@ -16,10 +16,9 @@
 
 <script>
 import emitter from 'me-view/src/mixins/emitter'
-import ComboCommon from '../combo/combo.common'
-import ComboExtend from '../combo/combo.extend'
+import ComboProps from '../combo/combo.props'
 export default {
-  mixins: [ ComboCommon, ComboExtend, emitter ],
+  mixins: [ ComboProps, emitter ],
   name: 'ComboTree',
   props: {
     expandedLevel: Number,
@@ -38,6 +37,9 @@ export default {
     this.loadTreeEvent()
   },
   methods: {
+    handlerClick ({ data, index }) {
+      this.$refs.combo.$emit('me-combo--select', data, index)
+    },
     loadTreeEvent () {
       if (this.$refs.comboTree) {
         this.$refs.comboTree.listener(this.clickEvent, this.handlerClick)

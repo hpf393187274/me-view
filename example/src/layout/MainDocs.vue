@@ -62,6 +62,12 @@ export default {
             { label: 'Message 提示', path: '/doc/layout/message' },
             { label: 'Transfer 穿梭框', path: '/doc/layout/transfer' }
           ]
+        },
+        {
+          label: 'View 视图',
+          children: [
+            { label: 'Image 图片', path: '/doc/view/image' }
+          ]
         }
       ]
     }

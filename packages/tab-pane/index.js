@@ -1,7 +1,7 @@
 
 import TabPane from '../tabs/TabPane'
 
-TabPane.install = (Vue, { mePrefix = 'Me' } = {}) => {
-  Vue.component(`${mePrefix}${TabPane.name}`, TabPane)
+TabPane.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${TabPane.name}`, TabPane)
 }
 export default TabPane

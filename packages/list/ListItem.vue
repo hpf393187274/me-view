@@ -12,24 +12,22 @@ export default {
   name: 'ListItem',
   mixins: [ emitter ],
   props: {
-    checked: Boolean,
     index: Number,
     checkbox: Boolean,
     disabled: Boolean,
     highlight: Boolean,
-    value: [ Number, String ],
-    label: String,
+    value: Boolean,
     data: { type: Object, default () { return {} } },
     fieldValue: { type: String, default: 'value' },
     fieldLabel: { type: String, default: 'label' }
   },
   data () {
     return {
-      checked__: this.checked
+      checked__: this.value
     }
   },
   created () {
-    this.__data = this.data ? this.data : { value: this.value, label: this.label }
+    this.__data = { ...this.data }
   },
   watch: {
     checked (value) {

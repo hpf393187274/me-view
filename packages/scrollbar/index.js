@@ -1,6 +1,6 @@
 import Scrollbar from './Scrollbar'
 
-Scrollbar.install = (Vue, { mePrefix = 'Me' } = {}) => {
-  Vue.component(`${mePrefix}${Scrollbar.name}`, Scrollbar)
+Scrollbar.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${Scrollbar.name}`, Scrollbar)
 }
 export default Scrollbar

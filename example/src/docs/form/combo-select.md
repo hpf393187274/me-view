@@ -7,7 +7,7 @@
 ```html
 
 <div class="me-column">
-  <me-combo-select :data="data" v-model="modelA"> </me-combo-select>
+  <me-combo-select :data="data" readonly v-model="modelA"> </me-combo-select>
 </div>
 <script>
 
@@ -15,6 +15,36 @@ export default {
   data() {
     return {
       modelA: 2,
+      form: {
+        provinces: ['1'],
+        province:''
+      },
+      data: [
+        { label: '山西省', value: '1' },
+        { label: '陕西省', value: '2' },
+        { label: '四川省', value: '3' },
+        { label: '河南省', value: '4' },
+        { label: '江苏省', value: '5' }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
+## 多选用法
+::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的  `multiple` 多选
+```html
+
+<div class="me-column">
+  <me-combo-select multiple checkbox :data="data" v-model="modelB"> </me-combo-select>
+</div>
+<script>
+
+export default {
+  data() {
+    return {
       modelB:['河南省','2','3'],
       form: {
         provinces: ['1'],
@@ -43,7 +73,7 @@ export default {
 | readonly    | 只读状态                | Boolean | false  | true, false |
 | clearable   | 可清除的                | Boolean | false  | true, false |
 | placeholder | 原生属性 - 提示表述     | String  |   -    | -           |
-| multiple    | 只读状态                | Boolean | false  | true, false |
+| multiple    | 多选状态                | Boolean | false  | true, false |
 | checkbox    | multiple = true，复选框 | Boolean | false  | true, false |
 
 ## ComboSelect Events

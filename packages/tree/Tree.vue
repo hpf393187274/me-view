@@ -31,7 +31,7 @@
           :data="node"
           :expandable="expandable"
           :expanded-all="expandedAll"
-          :expanded-level="expandedLevel"
+          :expanded-level="expandedLevel__"
           :click-expanded="clickExpanded"
           :click-checked="clickChecked"
           :key="uniqueValue(node)"
@@ -77,6 +77,7 @@ export default {
     return {
       nodesMap: new Map(),
       checkedNodeMap: {},
+      expandedLevel__: this.expandedLevel,
       indeterminateNodeMap: {},
       clickNode: undefined,
       nodesSize: 0,
@@ -102,10 +103,10 @@ export default {
   created () {
     if (this.expandedAll === true) {
       this.accordion = false
-      this.expandedLevel = 0
+      this.expandedLevel__ = 0
     }
     if (this.accordion === true) {
-      this.expandedLevel = 0
+      this.expandedLevel__ = 0
     }
     this.nodesMap.clear()
     this.listener('me-tree-node--checked-true', ({ key, target }) => {

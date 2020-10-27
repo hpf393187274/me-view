@@ -1,6 +1,6 @@
 
 <template>
-  <me-modal background="none" :z-index="100000" :draggable="draggable" :left="left" :modal="false" :top="top" :width="width" v-model="visibility">
+  <me-modal background="none" :z-index="100000" :draggable="draggable" :left="left" :modal="false" :top="top" :width="width" v-model="visible">
     <message-item :key="item.uniqueValue" :unique-value="item.uniqueValue" @remove="handlerRemove" v-bind="item" v-for="item in container" />
   </me-modal>
 </template>
@@ -30,7 +30,7 @@ export default {
       Tools.arrayRemove(this.container, item => item.uniqueValue === key)
       this.$emit('item-close')
       if (this.container.length === 0) {
-        this.visibility = false
+        this.visible = false
         this.$emit('destroy')
       }
     }

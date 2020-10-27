@@ -1,6 +1,6 @@
 import Button from './Button'
 
-Button.install = (Vue, { mePrefix = 'Me' } = {}) => {
-  Vue.component(`${mePrefix}${Button.name}`, Button)
+Button.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${Button.name}`, Button)
 }
 export default Button

@@ -1,7 +1,7 @@
 
 import CollapseTransition from './CollapseTransition'
 
-CollapseTransition.install = (Vue, { mePrefix = 'Me' } = {}) => {
-  Vue.component(`${mePrefix}${CollapseTransition.name}`, CollapseTransition)
+CollapseTransition.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${CollapseTransition.name}`, CollapseTransition)
 }
 export default CollapseTransition

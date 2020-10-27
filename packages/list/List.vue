@@ -9,13 +9,16 @@
         :highlight="highlight"
         :field-value="fieldValue"
         :field-label="fieldLabel"
-        v-model="value">
+        v-model="item.checked"
+        >
         <slot :data="data" slot-scope="{data}"/>
       </list-item>
     </template>
   </div>
 </template>
 <script>
+import Tools from 'me-view/src/script/tools'
+import Type from 'me-view/src/script/type'
 import ListItem from '../list/ListItem'
 export default {
   name: 'List',
@@ -28,6 +31,29 @@ export default {
     multiple: Boolean,
     fieldValue: { type: String, default: 'value' },
     fieldLabel: { type: String, default: 'label' }
+  },
+  created () {
+    this.initChecked()
+  },
+  watch: {
+    value () { this.initChecked() }
+  },
+  methods: {
+    initChecked () {
+      if (Type.isArray(this.value)) {
+        for (const item of this.data) {
+          const value = this.uniqueValue(item, true)
+          this.$set(item, 'checked', this.value.findIndex(item => value === String(item)) > -1)
+        }
+      }
+    },
+    uniqueValue (data = {}, toString = false) {
+      const value = Reflect.get(data, this.fieldValue)
+      if (Tools.notEmpty(value) && toString === true) {
+        return String(value)
+      }
+      return value
+    }
   }
 }
 </script>

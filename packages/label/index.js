@@ -1,6 +1,6 @@
 import Label from './Label'
 
-Label.install = (Vue, { mePrefix = 'Me' } = {}) => {
-  Vue.component(`${mePrefix}${Label.name}`, Label)
+Label.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${Label.name}`, Label)
 }
 export default Label

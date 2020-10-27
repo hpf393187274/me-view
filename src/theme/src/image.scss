@@ -1,0 +1,21 @@
+
+@import "./Modal.scss";
+.#{$me-prefix}-image {
+  cursor: pointer;
+  .image-modal {
+    position: fixed;
+    .image-action-container {
+      position: absolute;
+      width: 100%;
+      bottom: -10px;
+    }
+  }
+  .image-action {
+    opacity: 0.3;
+    .#{$me-prefix}-icon {
+      font-size: 40px !important;
+      color: #cac4c4;
+      margin: 10px;
+    }
+  }
+}

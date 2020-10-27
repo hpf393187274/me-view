@@ -31,7 +31,7 @@ export default {
       if (label.prop) this.labelList.splice(this.labelList.indexOf(label), 1)
       return false
     })
-    this.listenerUpward([ 'Dialog' ], 'me-dialog--visible-true', () => this.reset())
+    this.listenerUpward([ 'Dialog' ], 'me-dialog--visible-false', () => this.reset())
   },
   methods: {
     reset () {

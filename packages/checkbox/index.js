@@ -1,6 +1,6 @@
 import Checkbox from './Checkbox'
 
-Checkbox.install = (Vue, { mePrefix = 'Me' } = {}) => {
-  Vue.component(`${mePrefix}${Checkbox.name}`, Checkbox)
+Checkbox.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${Checkbox.name}`, Checkbox)
 }
 export default Checkbox

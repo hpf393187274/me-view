@@ -51,10 +51,10 @@ export default {
     }
   },
   created () {
-    this.dispatchParent(`${this.mePrefix}-button-group--register`, { name: this.name, component: this })
+    this.dispatchParent(`${this.$mePrefix}-button-group--register`, { name: this.name, component: this })
   },
   beforeDestroy () {
-    this.dispatchParent(`${this.mePrefix}-button-group--destroy`, { name: this.name })
+    this.dispatchParent(`${this.$mePrefix}-button-group--destroy`, { name: this.name })
   },
   methods: {
     resetType () {
@@ -65,7 +65,7 @@ export default {
     },
     handlerClick () {
       if (this.existParentComponent([ 'ButtonGroup' ])) {
-        this.dispatchParent(`${this.mePrefix}-button-group--click`, { name: this.name, component: this })
+        this.dispatchParent(`${this.$mePrefix}-button-group--click`, { name: this.name, component: this })
         this.handlerActivate()
       }
     }

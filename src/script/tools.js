@@ -131,9 +131,11 @@ export default class Tools {
         return condition
       }
       if (Type.isFunction(condition)) {
-        const index = target.findIndex(condition)
-        index !== -1 && target.splice(index, 1)
-        return index
+        do {
+          const index = target.findIndex(condition)
+          if (index === -1) { return }
+          target.splice(index, 1)
+        } while (true)
       }
     }
   }

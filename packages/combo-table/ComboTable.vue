@@ -1,5 +1,5 @@
 <template>
-  <me-combo ref="combo" v-bind="$props" v-model="value__">
+  <me-combo ref="combo" v-bind="$props" v-on="$listeners">
     <me-table
         :border="border"
         :columns="columns"
@@ -15,13 +15,17 @@
 </template>
 
 <script>
-import ComboCommon from '../combo/combo.common'
-import ComboExtend from '../combo/combo.extend'
+import ComboProps from '../combo/combo.props'
 export default {
-  mixins: [ ComboCommon, ComboExtend ],
+  mixins: [ ComboProps ],
   name: 'ComboTable',
   props: {
     columns: { type: Array, default: () => [] }
+  },
+  methods: {
+    handlerClick ({ data, index }) {
+      this.$refs.combo.$emit('me-combo--select', data, index)
+    }
   }
 }
 </script>

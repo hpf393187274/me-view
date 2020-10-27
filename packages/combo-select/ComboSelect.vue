@@ -1,17 +1,18 @@
 <template>
-  <me-combo ref="combo" v-bind="$props" v-model="value__">
-    <me-list v-bind="$props" v-model="value__" @click="handlerClick"></me-list>
+  <me-combo ref="combo" v-bind="$props" v-on="$listeners">
+    <me-list v-bind="$props" v-on="$listeners" @click="handlerClick"></me-list>
   </me-combo>
 </template>
 
 <script>
-import ComboCommon from '../combo/combo.common'
-import ComboExtend from '../combo/combo.extend'
+import ComboProps from '../combo/combo.props'
 export default {
-  mixins: [ ComboCommon, ComboExtend ],
+  mixins: [ ComboProps ],
   name: 'ComboSelect',
-  props: {
-    columns: { type: Array, default: () => [] }
+  methods: {
+    handlerClick ({ data, index }) {
+      this.$refs.combo.$emit('me-combo--select', data, index)
+    }
   }
 }
 </script>

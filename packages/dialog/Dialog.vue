@@ -11,7 +11,7 @@
     @cancel="$emit('cancel')"
     :vertical-align='verticalAlign'
     class-container="me-dialog"
-    v-model="visibility"
+    v-model="visible"
   >
     <div class="me-row dialog-header">
       <slot name="header">

@@ -9,8 +9,6 @@ export default {
     clearable: Boolean,
     checkbox: Boolean,
     width: String,
-    defaultValue: String,
-    defaultIndex: Number,
     height: [ String, Number ],
     index: Number,
     border: Boolean,
@@ -22,11 +20,5 @@ export default {
     fieldLabel: { type: String, default: 'label' },
     fieldValue: { type: String, default: 'value' },
     value: { type: [ Number, String, Array ] }
-  },
-  data () {
-    return {
-      value__: undefined,
-      label__: undefined
-    }
   }
 }

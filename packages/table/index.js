@@ -1,5 +1,5 @@
 import Table from './Table.vue'
-Table.install = (Vue, { mePrefix = 'Me' } = {}) => {
-  Vue.component(`${mePrefix}${Table.name}`, Table)
+Table.install = (Vue, { prefix = 'Me' } = {}) => {
+  Vue.component(`${prefix}${Table.name}`, Table)
 }
 export default Table

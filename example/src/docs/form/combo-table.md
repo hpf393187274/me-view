@@ -49,7 +49,7 @@ export default {
 | readonly    | 只读状态                | Boolean | false  | true, false |
 | clearable   | 可清除的                | Boolean | false  | true, false |
 | placeholder | 原生属性 - 提示表述     | String  |   -    | -           |
-| multiple    | 只读状态                | Boolean | false  | true, false |
+| multiple    | 多选状态                | Boolean | false  | true, false |
 | checkbox    | multiple = true，复选框 | Boolean | false  | true, false |
 
 ## ComboSelect Events

@@ -1,6 +1,6 @@
 <template>
   <label class="me-checkbox">
-    <input :disabled="disabled" @click.stop="onClick" class="checkbox-inner" ref="checkbox" type="checkbox" v-model="value__" />
+    <input :disabled="disabled" @click="handlerClick" class="checkbox-inner" ref="checkbox" type="checkbox" v-model="value__" />
     <span class="checkbox-label" v-if="$slots.default"><slot /></span>
   </label>
 </template>
@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    onClick (event) {
+    handlerClick (event) {
       const checked = event.target.checked
       this.$emit('click', checked)
     }
