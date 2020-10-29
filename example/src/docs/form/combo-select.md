@@ -2,7 +2,7 @@
 # ComboSelect 组合框
 
 
-## 基础用法
+<!-- ## 基础用法
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的
 ```html
 
@@ -31,25 +31,33 @@ export default {
 }
 </script>
 ```
-:::
+::: -->
 
 ## 多选用法
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的  `multiple` 多选
 ```html
 
 <div class="me-column">
-  <me-combo-select multiple checkbox :data="data" v-model="modelB"> </me-combo-select>
+  {{modelB}}
+  <me-combo-select multiple checkbox :data="getData()" :test-data="getTestData()" v-model="modelB"> </me-combo-select>
 </div>
 <script>
 
 export default {
   data() {
     return {
-      modelB:['河南省','2','3'],
+      modelB:[],
       form: {
         provinces: ['1'],
         province:''
       },
+      defaultData: [
+        { label: '山西省', value: '1' },
+        { label: '陕西省', value: '2' },
+        { label: '四川省', value: '3' },
+        { label: '河南省', value: '4' },
+        { label: '江苏省', value: '5' }
+      ],
       data: [
         { label: '山西省', value: '1' },
         { label: '陕西省', value: '2' },
@@ -57,6 +65,11 @@ export default {
         { label: '河南省', value: '4' },
         { label: '江苏省', value: '5' }
       ]
+    }
+  },
+  methods: {
+    getData () {
+      return this.defaultData
     }
   }
 }

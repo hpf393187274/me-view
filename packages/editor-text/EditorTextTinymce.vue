@@ -33,6 +33,8 @@ export default {
         height: 500,
         plugins,
         toolbar,
+        language_url: '/tinymce/langs/zh_CN.js',
+        language: 'zh_CN',
         images_upload_handler: (blobInfo, success, failure) => {
           const form = new FormData()
           form.append('file', blobInfo.blob(), blobInfo.filename())

@@ -97,7 +97,10 @@ export default {
       }
     },
     data (newValue, oldValue) {
-      if (newValue !== oldValue) {
+      const length = 60
+      const newValueStr = JSON.stringify(newValue || []).slice(0, length)
+      const oldValueStr = JSON.stringify(oldValue || []).slice(0, length)
+      if (newValueStr !== oldValueStr) {
         this.deepFlatData(newValue, true)
         this.initValue(this.value)
       }
@@ -137,7 +140,13 @@ export default {
       }
     },
     initValue (value) {
-      if (Tools.isBlank(this.dataFlat) || Tools.isBlank(value)) { return }
+      if (Tools.isBlank(this.dataFlat) || Tools.isBlank(value)) {
+        if (this.multiple === true) {
+          this.label__ = []
+          this.value__ = []
+        }
+        return
+      }
       this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
       this.handlerChangeValue({ value: this.value__ })
     },

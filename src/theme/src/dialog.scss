@@ -1,6 +1,8 @@
 @import "./Modal.scss";
 .#{$me-prefix}-dialog {
 	border-color: $dialog-border;
+	max-width: 95%;
+  max-height: 95%;
 	box-shadow: 0px 0px 10px 5px $dialog-shadow;
 	.dialog-body {
 		padding: 5px;

@@ -6,6 +6,8 @@ import 'highlight.js/styles/color-brewer.css'
 import MeView from '../src/index.js'
 import MeDemo from './src/components/index'
 import './src/style/markdown.css'
+import 'kindeditor/kindeditor-all-min.js'
+import 'kindeditor/themes/default/default.css'
 Vue.use(MeView)
 Vue.use(MeDemo)
 Vue.config.productionTip = false

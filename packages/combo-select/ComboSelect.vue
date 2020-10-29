@@ -1,6 +1,6 @@
 <template>
   <me-combo ref="combo" v-bind="$props" v-on="$listeners">
-    <me-list v-bind="$props" v-on="$listeners" @click="handlerClick"></me-list>
+    <me-list :data="data" :checkbox="checkbox" @click="handlerClick"></me-list>
   </me-combo>
 </template>
 
