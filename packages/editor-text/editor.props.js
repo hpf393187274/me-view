@@ -50,7 +50,7 @@ export default {
     fullscreenMode: { type: Boolean, default: false },
     basePath: String,
     themesPath: String,
-    pluginsPath: String,
+    pluginsPath: { type: String, default: 'http://kindeditor.net/ke4/plugins/' },
     langPath: String,
     minChangeSize: { type: Number, default: 5 },
     loadStyleMode: { type: Boolean, default: true },
