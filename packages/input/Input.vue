@@ -1,6 +1,7 @@
 <template>
   <div :class="classes" :style="styles">
     <input
+      :multiple="multiple"
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
@@ -57,6 +58,7 @@ export default {
     rules: Array,
     min: Number,
     max: Number,
+    multiple: Boolean,
     minLength: Number,
     maxLength: Number,
     iconPrefix: String,

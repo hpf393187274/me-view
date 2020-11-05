@@ -39,14 +39,14 @@ export default {
 
 <div class="me-column">
   {{modelB}}
-  <me-combo-select multiple checkbox :data="getData()" :test-data="getTestData()" v-model="modelB"> </me-combo-select>
+  <me-combo-select multiple checkbox :data="getData()" v-model="modelB"> </me-combo-select>
 </div>
 <script>
 
 export default {
   data() {
     return {
-      modelB:[],
+      modelB:[ '1', '2' ],
       form: {
         provinces: ['1'],
         province:''
