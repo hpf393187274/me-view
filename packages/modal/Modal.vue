@@ -1,6 +1,5 @@
 <template>
   <div @click.self="handlerClick" class="me-row me-center me-modal" :style="{ 'z-index': zIndex}" v-if="modal" v-show="visible">
-    {{visible}}
     <div :class="classContainer" :style="styles" @mousedown="onMouseDown" class="me-column modal-container" ref="target">
       <slot>
         <me-button @click="handlerCancel">关闭</me-button>

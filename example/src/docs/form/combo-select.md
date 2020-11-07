@@ -2,12 +2,12 @@
 # ComboSelect 组合框
 
 
-<!-- ## 基础用法
+## 基础用法
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的
 ```html
 
 <div class="me-column">
-  <me-combo-select :data="data" readonly v-model="modelA"> </me-combo-select>
+  <me-combo-select fieldLabel="name" :data="data" readonly v-model="modelA"> </me-combo-select>
 </div>
 <script>
 
@@ -20,18 +20,18 @@ export default {
         province:''
       },
       data: [
-        { label: '山西省', value: '1' },
-        { label: '陕西省', value: '2' },
-        { label: '四川省', value: '3' },
-        { label: '河南省', value: '4' },
-        { label: '江苏省', value: '5' }
+        { name: '山西省', value: '1' },
+        { name: '陕西省', value: '2' },
+        { name: '四川省', value: '3' },
+        { name: '河南省', value: '4' },
+        { name: '江苏省', value: '5' }
       ]
     }
   }
 }
 </script>
 ```
-::: -->
+:::
 
 ## 多选用法
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的  `multiple` 多选

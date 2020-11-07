@@ -156,18 +156,16 @@ export default {
     bindFormRules () {
       if (this.prop && this.FormInstance) {
         const formRules = this.FormInstance.rules
-        if (Type.notObject(formRules)) {
-          console.debug('Form.rules is not Object --> rules：', formRules)
-          return
-        }
-        const ruleProp = Tools.findPath(formRules, this.prop)
-        if (Type.isArray(ruleProp)) {
-          const index = ruleProp.findIndex(({ required }) => required === true)
-          if (index !== -1) {
-            this.required__ = true
+        if (Type.isObject(formRules)) {
+          const ruleProp = Tools.findPath(formRules, this.prop)
+          if (Type.isArray(ruleProp)) {
+            const index = ruleProp.findIndex(({ required }) => required === true)
+            if (index !== -1) {
+              this.required__ = true
+            }
           }
+          this.setRules(ruleProp)
         }
-        this.setRules(ruleProp)
       }
     },
     setValidateInfo (status, message) {
