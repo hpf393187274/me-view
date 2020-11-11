@@ -54,7 +54,7 @@
 <template>
   <div class="me-column" style="height: 400px;">
       <div class="me-column me-flex">
-        <me-table class="me-border-red" ref="tableList" field-value ="id" checkbox multiple :data="data" :columns="columns" highlight>
+        <me-table ref="tableList" field-value ="id" checkbox multiple :data="data" :columns="columns" highlight>
         <template #header>
           <me-button plain type="primary" @click="height = height + 50" icon="icon-plus_strong"> 50 </me-button>
           <me-button plain type="primary" @click="height = height - 50" icon="icon-minus_strong"> 50 </me-button>

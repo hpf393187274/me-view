@@ -9,19 +9,23 @@
         :highlight="highlight"
         :field-value="fieldValue"
         :field-label="fieldLabel"
+        :multiple="multiple"
         v-model="item.checked"
         >
         <slot :data="data" slot-scope="{data}"/>
       </list-item>
     </template>
+    <pre>{{Object.keys(allElement)}}</pre>
   </div>
 </template>
 <script>
 import Tools from 'me-view/src/script/tools'
 import Type from 'me-view/src/script/type'
 import ListItem from '../list/ListItem'
+import Selector from 'me-view/src/mixins/selector-listener'
 export default {
   name: 'List',
+  mixins: [ Selector ],
   components: { [ListItem.name]: ListItem },
   props: {
     data: Array,

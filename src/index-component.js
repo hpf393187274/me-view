@@ -34,8 +34,10 @@ import DemoBlock from 'me-view/packages/demo-block/index'
 import EditorText from 'me-view/packages/editor-text/index'
 import CollapseTransition from 'me-view/packages/collapse-transition/index'
 import Image from 'me-view/packages/image/index'
+import DynamicRender from 'me-view/packages/dynamic-render/index'
 export {
   Image,
+  DynamicRender,
   CollapseTransition,
   Panel,
   Dialog,

@@ -4,21 +4,21 @@
     min-height: 32px;
     align-items: center;
     &:nth-child(odd){
-      background: $combo-row-odd;
+      background-color: $list--odd;
     }
     &:nth-child(even){
-      background: $combo-row-even;
+      background-color: $list--even;
     }
     &:hover{
       cursor: pointer;
-      background-color: $combo-hover;
+      background-color: $list--hover;
     }
     .list-item-inner {
       flex: 1;
     }
   }
   
-  &.is-selected {
-    background-color: $combo-active !important;
+  .is-selected {
+    background-color: $list--active !important;
   }
 }

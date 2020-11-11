@@ -1,12 +1,12 @@
 <template>
   <div @click.self="handlerClick" class="me-row me-center me-modal" :style="{ 'z-index': zIndex}" v-if="modal" v-show="visible">
-    <div :class="classContainer" :style="styles" @mousedown="onMouseDown" class="me-column modal-container" ref="target">
+    <div :class="classContainer" :style="styles" @mousedown.stop="onMouseDown" class="me-column modal-container" ref="target">
       <slot>
         <me-button @click="handlerCancel">关闭</me-button>
       </slot>
     </div>
   </div>
-  <div :class="classContainer" :style="{...styles, 'z-index': zIndex}" @mousedown="onMouseDown" class="me-column modal-container" ref="target" v-else v-show="visible" >
+  <div :class="classContainer" :style="{...styles, 'z-index': zIndex}" @mousedown.stop="onMouseDown" class="me-column modal-container" ref="target" v-else v-show="visible" >
     <slot>
       <me-button @click="handlerCancel">关闭</me-button>
     </slot>

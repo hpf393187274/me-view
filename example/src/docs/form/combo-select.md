@@ -5,10 +5,11 @@
 ## 基础用法
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的
 ```html
-
+<template>
 <div class="me-column">
   <me-combo-select fieldLabel="name" :data="data" readonly v-model="modelA"> </me-combo-select>
 </div>
+</template>
 <script>
 
 export default {
@@ -36,11 +37,12 @@ export default {
 ## 多选用法
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的  `multiple` 多选
 ```html
-
+<template>
 <div class="me-column">
   {{modelB}}
   <me-combo-select multiple checkbox :data="getData()" v-model="modelB"> </me-combo-select>
 </div>
+</template>
 <script>
 
 export default {

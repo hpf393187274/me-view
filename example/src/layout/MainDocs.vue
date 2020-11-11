@@ -56,8 +56,10 @@ export default {
             { label: 'Panel 面板', path: '/doc/layout/panel' },
             { label: 'Tabs 标签页', path: '/doc/layout/tabs' },
             { label: 'Table 表格', path: '/doc/layout/table' },
+            { label: 'List 列表', path: '/doc/layout/list' },
             { label: 'Paging 分页', path: '/doc/layout/paging' },
             { label: 'Tree 树型控件', path: '/doc/layout/tree' },
+            { label: 'Modal 模态框', path: '/doc/layout/modal' },
             { label: 'Dialog 对话框', path: '/doc/layout/dialog' },
             { label: 'Message 提示', path: '/doc/layout/message' },
             { label: 'Transfer 穿梭框', path: '/doc/layout/transfer' }

@@ -4,10 +4,12 @@
 ## 基础用法
 ::: demo `clearable` 可清除的
 ```html
-<me-column>
-  <me-input multiple clearable placeholder="请输入姓名" v-model="form.name"></me-input>
-  <me-input type="number" clearable placeholder="请输入年龄" v-model="form.age" :rules="rules"></me-input>
-</me-column>
+<template>
+  <me-column>
+    <me-input multiple clearable placeholder="请输入姓名" v-model="form.name"></me-input>
+    <me-input type="number" clearable placeholder="请输入年龄" v-model="form.age" :rules="rules"></me-input>
+  </me-column>
+</template>
 <script>
 export default {
   data() {

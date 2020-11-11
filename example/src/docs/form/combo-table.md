@@ -5,11 +5,12 @@
 ## Slot 用法
 ::: demo `multiple` 多选的 `checkbox`
 ```html
-
+<template>
 <me-column>
   <me-combo-table :data="data"  field-value="value" :columns="columns" field-label="label"> 
   </me-combo-table>
 </me-column>
+</template>
 <script>
 export default {
   data() {

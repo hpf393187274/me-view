@@ -180,6 +180,11 @@ $message-border                       : #4c84ff !default;
 $message-shadow                       : #a5b0b8 !default;
 $message-header                       : #4c84ff !default;
 
+// view -- List
+$list--odd                            : #FFFFFF !default;
+$list--even                           : #F8F8F9 !default;
+$list--hover                          : #ebf7ff !default;
+$list--active                         : #4c84ff !default;
 // view -- table
 $table-border                         : rgba(218, 214, 214, 0.514) !default;
 $table-color                          : rgba(211, 207, 207, 0.863) !default;

@@ -4,7 +4,7 @@
 ## 基础用法
 ::: demo `label` 设置标签 `clearable` 可清除的
 ```html
-
+<template>
 <me-column>
 {{valueData}}
   <me-combo-tree readonly accordion click-event="click-leaf" :data="regionList" :expanded-level="1" field-value="id" @change="handlerChange">
@@ -17,6 +17,7 @@
    
   </me-combo-tree>
 </me-column>
+</template>
 <script>
 export default {
   data() {

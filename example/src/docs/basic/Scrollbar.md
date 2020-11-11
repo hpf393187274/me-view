@@ -3,6 +3,7 @@
 ## 基础用法
 ::: demo `clearable` 可清除的
 ```html
+<template>
 <div class="me-row">
   <div class="me-column me-flex"  style="height:400px;">
     <div >ssss</div>
@@ -22,6 +23,7 @@
     </me-scrollbar>
   </div>
 </div>
+</template>
 <script>
 export default {
   data() {

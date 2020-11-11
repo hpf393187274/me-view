@@ -3,12 +3,14 @@
 ## 水平滑块
 ::: demo `clearable` 可清除的
 ```html
+<template>
 <me-column>
   <me-slidebar style="margin: 2px 0px;"></me-slidebar>
   <me-slidebar style="margin: 2px 0px;"></me-slidebar>
   <me-slidebar style="margin: 2px 0px;"></me-slidebar>
   <me-slidebar style="margin: 2px 0px;"></me-slidebar>
 </me-column>
+</template>
 <script>
 export default {
   data() {
@@ -23,12 +25,14 @@ export default {
 ## 垂直滑块
 ::: demo `clearable` 可清除的
 ```html
+<template>
 <me-row style="height:400px;">
   <me-slidebar vertical style="margin: 0px 2px;"></me-slidebar>
   <me-slidebar vertical style="margin: 0px 2px;"></me-slidebar>
   <me-slidebar vertical style="margin: 0px 2px;"></me-slidebar>
   <me-slidebar vertical style="margin: 0px 2px;"></me-slidebar>
 </me-row>
+</template>
 <script>
 export default {
   data() {

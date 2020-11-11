@@ -192,13 +192,6 @@ export default {
     },
     dialogForm () {
       this.statusForm = true
-      // setTimeout(() => {
-      //   this.sexList = [ 
-      //     { label: '男', value: '1' },
-      //     { label: '女', value: '0' },
-      //     { label: '未知', value: '-1' }
-      //   ]
-      // })
       setTimeout(() => {
         this.form.sex = '1'
       })
@@ -209,13 +202,6 @@ export default {
     handlerConfirm () {
       const selectedData = this.$refs.tableList.getCheckedRows()
       if(!selectedData || selectedData.length < 1) {
-        // this.$dialog.alert({
-        //   content: '我们都是好孩子',
-        //   render(h) {
-        //     return h('div', "请选择数据")
-        //   }
-        // })
-
         this.$message.info('请选择数据')
         return 
       }
@@ -227,84 +213,6 @@ export default {
 </script>
 ```
 :::
-
-<!-- ### 可移动
-### 自定义 Header
-### 自定义 Footer -->
-
-## Modal 遮罩层
-
-### 有遮罩
-::: demo `data` 数据 `border` 边框
-
-```html
-<template>
-  <div>
-    <me-modal v-model="status">
-      <br />ssssssssssssssssss
-      <br />ssssssssssssssssss
-      <br />ssssssssssssssssss
-    </me-modal>
-    <me-button @click="status=!status">有遮罩层</me-button>
-  </div>
-</template>
-<script>
-export default {
-  data() {
-    return { status: false }
-  }
-}
-</script>
-```
-:::
-
-### 无遮罩
-::: demo `data` 数据 `border` 边框
-
-```html
-<template>
-  <div>
-    <me-modal :modal="false" v-model="status"></me-modal>
-    <me-button @click="status=!status">无遮罩层</me-button>
-  </div>
-</template>
-<script>
-export default {
-  data() {
-    return {
-      status: false
-    }
-  }
-}
-</script>
-```
-:::
-
-
-### 可拖拽
-::: demo `data` 数据 `border` 边框
-
-```html
-<template>
-  <div>
-    <me-modal v-model="status">
-      我是可拖拽的哦
-    </me-modal>
-    <me-button @click="status=!status">拖拽</me-button>
-  </div>
-</template>
-<script>
-export default {
-  data() {
-    return {
-      status: false
-    }
-  }
-}
-</script>
-```
-:::
-
 
 # Dialog 弹出框
 
@@ -386,8 +294,7 @@ export default {
 ## Dialog Events
 | 名称    | 描述     | 参数  |
 | ------- | -------- | :---: |
-| confirm | 事件确定 |   -   |
-| cancel  | 事件取消 |   -   |
+| confirm | 确定 |   -   |
 
 ## Dialog Slot
 | 名称 | 描述 |

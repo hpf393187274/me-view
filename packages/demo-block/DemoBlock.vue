@@ -1,6 +1,6 @@
 <template>
   <div :class="[ { 'hover': hovering }]" @mouseenter="hovering = true" @mouseleave="hovering = false" class="me-container">
-    <div class="container-view" ref="source"></div>
+    <me-dynamic-render class="container-view" :value="content" />
     <div class="container-meta" ref="meta">
       <div class="description" v-if="$slots.description">
         <slot name="description" />
@@ -18,60 +18,15 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
-function stripScript (content) {
-  const result = content.match(/<(script)>([\s\S]+)<\/\1>/)
-  return result && result[2] ? result[2].trim() : ''
-}
-
-function stripStyle (content) {
-  const result = content.match(/<(style)\s*>([\s\S]+)<\/\1>/)
-  return result && result[2] ? result[2].trim() : ''
-}
-
-function stripTemplate (content) {
-  content = content.trim()
-  if (!content) {
-    return content
-  }
-  content = content.replace(/<(script|style)[\s\S]+<\/\1>/g, '').trim()
-  return content.replace(/^(<template[\s]*>)|(<\/template>)$/g, '').trim()
-}
-
 export default {
   name: 'DemoBlock',
   data () {
     return {
-      codepen: {
-        script: '',
-        html: '',
-        style: ''
-      },
+      content: '',
       hovering: false,
-      isExpanded: false,
-      scrollParent: null
+      isExpanded: false
     }
   },
-
-  methods: {
-    compileComponent () {
-      let target = {}
-      try {
-        target = window.eval(`(${this.codepen.script.replace(/^export\s+default\s+/, '')})`)
-      } catch (error) {
-        console.debug('DemoBlock -> compileComponent：', error)
-      }
-      const Component = Vue.extend({
-        template: `${this.codepen.html}`,
-        mixins: [ target ]
-      })
-      const markedComponent = new Component().$mount()
-      // 将挂载以后的子组件dom插入到父组件中
-      // markedComponent.$el就是挂载后生成的渲染dom
-      this.$refs.source.appendChild(markedComponent.$el)
-    }
-  },
-
   computed: {
     controlText () {
       return this.isExpanded ? '隐藏 Code' : '显示 Code'
@@ -110,10 +65,7 @@ export default {
           }
         }
         if (code) {
-          this.codepen.html = stripTemplate(code)
-          this.codepen.script = stripScript(code)
-          this.codepen.style = stripStyle(code)
-          this.compileComponent()
+          this.content = code
         }
       }
     })

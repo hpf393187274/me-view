@@ -16,6 +16,7 @@ module.exports = {
     "no-console": "off",
     "no-debugger": "off",
     "no-eval": "off",
+    "no-new-func": "off",
     "no-callback-literal": 0,
     "array-bracket-spacing": [2, "always"]
   }

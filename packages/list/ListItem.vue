@@ -1,51 +1,47 @@
 <template>
   <div :class="classes" @click="handleClick">
-    <me-checkbox v-if="checkbox" v-model="checked__" />
+    <me-checkbox v-if="checkbox" v-model="valueInner" />
     <span class="list-item-inner">
       <slot :data="data">{{data[fieldLabel]}}</slot>
     </span>
   </div>
 </template>
 <script>
-import emitter from 'me-view/src/mixins/emitter'
+import Selector from 'me-view/src/mixins/selector-dispatch'
 export default {
   name: 'ListItem',
-  mixins: [ emitter ],
+  mixins: [ Selector ],
   props: {
     index: Number,
     checkbox: Boolean,
     disabled: Boolean,
     highlight: Boolean,
-    value: Boolean,
+    multiple: Boolean,
     data: { type: Object, default () { return {} } },
     fieldValue: { type: String, default: 'value' },
     fieldLabel: { type: String, default: 'label' }
   },
-  data () {
-    return {
-      checked__: this.value
-    }
-  },
-  created () {
-    this.__data = { ...this.data }
-  },
-  watch: {
-    checked (value) {
-      this.checked__ = value
-    }
-  },
   computed: {
+    uniqueValue () {
+      return Reflect.get(this.data, this.fieldValue) || this.index
+    },
+    containerName () { return 'List' },
     classes () {
       return [
         'me-row list-item',
-        { 'is-selected': this.highlight && this.checked__ }
+        { 'is-selected': this.selected }
       ]
+    },
+    selected () {
+      if (this.multiple === true) { return false }
+      return this.highlight === true && this.valueInner
     }
   },
   methods: {
     handleClick () {
       if (this.disabled === true) { return }
-      this.checked__ = this.checked__ !== true
+      this.valueInner = this.valueInner !== true
+      this.handleSelector && this.handleSelector(this.valueInner)
       this.dispatchParent('click', { data: this.data, index: this.index })
     }
   }

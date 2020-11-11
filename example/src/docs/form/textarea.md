@@ -4,6 +4,7 @@
 ## 基础用法
 ::: demo `clearable` 可清除的
 ```html
+<template>
 <me-column>
   <me-label title="姓名">
     <me-input clearable placeholder="请输入姓名" v-model="userName" :rules="rules">
@@ -16,6 +17,7 @@
     </me-textarea>
   </me-label>
 </me-column>
+</template>
 <script>
 export default {
   data() {
