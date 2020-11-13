@@ -9,11 +9,17 @@
     <me-row>
       <me-button @click="handlerClear">清空选中数据</me-button>
       <me-button @click="getCheckedRecords">获取选中数据</me-button>
+      <me-button @click="multiple = !multiple">{{ multiple ? '设为单选' : '设为多选' }}</me-button>
       <me-button @click="handlerSetting">设置数据选中</me-button>
       <me-input v-model="value"/>
     </me-row>
-    <me-list ref="list" v-model="value" :data="data" field-value="id" checkbox highlight></me-list>
-    <pre>{{records}}</pre>
+    <me-list ref="list" v-model="value" :data="data" field-value="id" checkbox highlight :multiple="multiple"></me-list>
+    <div>
+      [
+        <div v-for="record in records" :key="record.id">{{ record }}</div>
+      ]
+    </div>
+    dataModel={{dataModel}}
   </div>
 </template>
 <script>
@@ -21,6 +27,7 @@
     data() {
       return {
         value: '',
+        multiple: false,
         records: [],
         data: [
           { id: '1', label: '陕西省sssss'},
@@ -52,20 +59,18 @@
 
 
 ## List Attributes
-| 名称      | 描述   |  类型   | 默认值 | 可选值      |
-| --------- | ------ | :-----: | :----: | ----------- |
-| title     | 标题   | String  |   -    | -           |
-| width     | 宽度   | String  | false  | true, false |
-| height    | 高度   | String  | false  | true, false |
-| draggable | 可拖拽 | Boolean |  true  | true, false |
-| closable  | 可关闭 | Boolean |  true  | true, false |
+| 名称        | 描述                        |  类型   | 默认值 | 可选值      |
+| ----------- | --------------------------- | :-----: | :----: | ----------- |
+| data        | 数据                        |  Array  |   -    | -           |
+| value       | v-model 当前数据            | String  |   -    | -           |
+| multiple    | 多选                        | Boolean | false  | true, false |
+| checkbox    | 复选框                      | Boolean |  true  | true, false |
+| highlight   | 高亮 - multiple = true 失效 | Boolean |  true  | true, false |
+| field-value | 值字段                      | String  | false  | -           |
+| field-label | 显示字段                    | String  | false  | -           |
 
 ## List Events
-| 名称    | 描述     | 参数  |
-| ------- | -------- | :---: |
-| confirm | 事件确定 |   -   |
-| cancel  | 事件取消 |   -   |
-
-## List Slot
-| 名称 | 描述 |
-| ---- | ---- |
+| 名称  | 描述     |                   参数                   |
+| ----- | -------- | :--------------------------------------: |
+| click | 点击事件 | { data: Object, index: Number } |
+<br />

@@ -3,12 +3,13 @@
 </template>
 <script>
 import Vue from 'vue'
+import Type from 'me-view/src/script/type'
 import Tools from 'me-view/src/script/tools'
 export default {
   name: 'DynamicRender',
   props: {
     value: String,
-    dataModel: { type: Object, default () { return {} } }
+    modelMethod: Function
   },
   data () {
     return {
@@ -25,14 +26,12 @@ export default {
   },
   created () { this.parseValue(this.value) },
   watch: {
-    value (value) {
-      this.parseValue(value)
-    }
+    value (value) { this.parseValue(value) }
   },
   methods: {
     async parseValue (value) {
       await this.$nextTick()
-      this.dynamicCompile()
+      this.dynamicComponentTemplate()
     },
     strip (value, tag) {
       if (Tools.isBlank(value)) { return Reflect.get(this.defaultValue, tag) }
@@ -51,44 +50,45 @@ export default {
       const rest = regExp.exec(value)
       return rest ? rest[rest.length - 1] : Reflect.get(this.defaultValue, tag)
     },
-    async dynamicCompile () {
+    /**
+     * 动态组件 - 模板加载
+     */
+    async dynamicComponentTemplate () {
       if (Tools.isBlank(this.value)) { return }
       this.template = this.stripRegExp(this.value, 'template')
       this.script = this.stripRegExp(this.value, 'script')
       this.style = this.stripRegExp(this.value, 'style')
-
       const template = Vue.compile(this.template)
       const script = this.looseJsonParse(this.script)
-
-      const dataModel = {
-        ...(script.data && script.data()) || {},
-        ...(this.dataModel || {})
-      }
-      Reflect.deleteProperty(script, 'data')
-      const instance = new Vue({
-        ...template,
-        data () {
-          return dataModel
-        },
-        ...script
-      }).$mount()
-      const childNodes = this.$el.childNodes
-      if (!(childNodes == null || childNodes.length <= 0)) {
-        this.$el.removeChild(childNodes[0])
-      }
-      this.$el.appendChild(instance.$el)
+      await this.dynamicComponent({ ...template, ...script })
       this.createStyle(this.style)
     },
-    async dynamicMount () {
+    /**
+     * 动态组件 - 单文件加载模式
+     */
+    async dynamicComponentSingle () {
+      if (Tools.isBlank(this.value)) { return }
       const value = await import('@' + this.value)
-      const ComponentNew = Vue.extend({
-        ...value.default,
-        data () {
-          return {
-            ...(value.default.data && value.default.data()),
-            ...this.dataModel
-          }
+      this.dynamicComponent({ ...value.default })
+    },
+    async dynamicComponent ({ data, ...other } = {}) {
+      const newData = { dataModel: null }
+      if (Tools.notEmpty(data)) {
+        if (Type.isObject(data)) {
+          Object.assign(newData, data)
         }
+        if (Type.isFunction(data)) {
+          Object.assign(newData, { ...(data() || {}) })
+        }
+      }
+      if (Tools.notEmpty(this.modelMethod)) {
+        if (Type.isAsyncFunction(this.modelMethod) || Type.isPromise(this.modelMethod) || Type.isFunction(this.modelMethod)) {
+          Reflect.set(newData, 'dataModel', await this.modelMethod())
+        }
+      }
+      const ComponentNew = Vue.extend({
+        ...other,
+        data () { return newData }
       })
       const childNodes = this.$el.childNodes
       if (!(childNodes == null || childNodes.length <= 0)) {

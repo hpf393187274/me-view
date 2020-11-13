@@ -27,6 +27,15 @@ export default {
       isExpanded: false
     }
   },
+  methods: {
+    modelMethod () {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({ name: '2222', age: 33 })
+        }, 1000 * 2)
+      })
+    }
+  },
   computed: {
     controlText () {
       return this.isExpanded ? '隐藏 Code' : '显示 Code'

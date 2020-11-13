@@ -11,6 +11,8 @@ export default class Type {
   static TYPE_FILE = '[object File]'
   static TYPE_DATE = '[object Date]'
   static TYPE_ERROR = '[object Error]'
+  static TYPE_PROMISE = '[object Promise]'
+  static TYPE_ASYNC_FUNCTION = '[object AsyncFunction]'
 
   /**
    * 获取类型
@@ -156,6 +158,14 @@ export default class Type {
    */
   static isFunction (target) {
     return Type.getType(target) === Type.TYPE_FUNCTION
+  }
+
+  static isAsyncFunction (target) {
+    return Type.getType(target) === Type.TYPE_ASYNC_FUNCTION
+  }
+
+  static isPromise (target) {
+    return Type.getType(target) === Type.TYPE_PROMISE
   }
 
   /**

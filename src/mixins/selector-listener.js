@@ -13,6 +13,11 @@ export default {
     this.eventListenerInitialize()
     this.eventListenerSelector()
   },
+  watch: {
+    multiple () {
+      this.clearSelection()
+    }
+  },
   methods: {
     /**
      * 清空选择
@@ -59,25 +64,22 @@ export default {
      * 事件处理：子组件的选择 or 反选
      */
     eventListenerSelector () {
-      if (this.multiple === true) {
-        this.listener('element-selector--multiple-true', ({ key, value }) => {
-          this.$set(this.selectorElement, key, value)
-        })
-        this.listener('element-selector--multiple-false', ({ key }) => {
-          this.$delete(this.selectorElement, key)
-        })
-      } else {
-        this.listener('element-selector--single', ({ key, value }) => {
-          if (this.oldUniqueValue === key) { return }
-          if (Tools.notBlank(this.oldUniqueValue)) {
-            const value = Reflect.get(this.selectorElement, this.oldUniqueValue)
-            value && value.handlerCheckedChange(false)
-            this.$delete(this.selectorElement, this.oldUniqueValue)
-          }
-          this.$set(this.selectorElement, key, value)
-          this.oldUniqueValue = key
-        })
-      }
+      this.listener('element-selector--multiple-true', ({ key, value }) => {
+        this.$set(this.selectorElement, key, value)
+      })
+      this.listener('element-selector--multiple-false', ({ key }) => {
+        this.$delete(this.selectorElement, key)
+      })
+      this.listener('element-selector--single', ({ key, value }) => {
+        if (this.oldUniqueValue === key) { return }
+        if (Tools.notBlank(this.oldUniqueValue)) {
+          const value = Reflect.get(this.selectorElement, this.oldUniqueValue)
+          value && value.handlerCheckedChange(false)
+          this.$delete(this.selectorElement, this.oldUniqueValue)
+        }
+        this.$set(this.selectorElement, key, value)
+        this.oldUniqueValue = key
+      })
     }
   }
 }

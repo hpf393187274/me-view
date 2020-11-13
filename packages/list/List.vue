@@ -15,7 +15,6 @@
         <slot :data="data" slot-scope="{data}"/>
       </list-item>
     </template>
-    <pre>{{Object.keys(allElement)}}</pre>
   </div>
 </template>
 <script>
