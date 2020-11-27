@@ -22,7 +22,7 @@ export default {
   name: 'DemoBlock',
   data () {
     return {
-      content: '',
+      content: undefined,
       hovering: false,
       isExpanded: false
     }

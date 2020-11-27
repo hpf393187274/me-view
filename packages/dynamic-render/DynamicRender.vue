@@ -24,9 +24,13 @@ export default {
       }
     }
   },
-  created () { this.parseValue(this.value) },
+  created () {
+    if (Tools.notBlank(this.value)) { this.parseValue(this.value) }
+  },
   watch: {
-    value (value) { this.parseValue(value) }
+    value (value) {
+      if (Tools.notBlank(value)) { this.parseValue(value) }
+    }
   },
   methods: {
     async parseValue (value) {
@@ -55,6 +59,7 @@ export default {
      */
     async dynamicComponentTemplate () {
       if (Tools.isBlank(this.value)) { return }
+      console.log(`dynamicComponentTemplate-----------${this.value}------------`, new Date().getTime())
       this.template = this.stripRegExp(this.value, 'template')
       this.script = this.stripRegExp(this.value, 'script')
       this.style = this.stripRegExp(this.value, 'style')
