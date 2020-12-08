@@ -7,7 +7,7 @@
 ```html
 <template>
 <div class="me-column">
-  <me-combo-select fieldLabel="name" :data="data" readonly v-model="modelA"> </me-combo-select>
+  <me-combo-select fieldLabel="name" :data="data" clearable readonly v-model="modelA"> </me-combo-select>
 </div>
 </template>
 <script>
@@ -34,7 +34,7 @@ export default {
 ```
 :::
 
-## 多选用法
+<!-- ## 多选用法
 ::: demo `data` 数据 `clearable` 可清除的 `readonly` 只读的 `disabled` 禁用的  `multiple` 多选
 ```html
 <template>
@@ -77,7 +77,7 @@ export default {
 }
 </script>
 ```
-:::
+::: -->
 
 
 ## ComboSelect Attributes

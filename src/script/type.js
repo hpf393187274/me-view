@@ -233,8 +233,7 @@ export default class Type {
   static isBlank (target) {
     if (Type.isEmpty(target)) { return true }
     if (Type.isString(target)) {
-      const value = Type.trim(target)
-      return value === '' || value === 'null' || value === 'undefined'
+      return [ '', 'null', 'undefined' ].includes(Type.trim(target))
     }
     if (Type.isArray(target)) {
       return target.length === 0

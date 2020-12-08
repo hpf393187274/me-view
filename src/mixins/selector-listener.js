@@ -2,6 +2,15 @@ import Tools from 'me-view/src/script/tools'
 import emitter from 'me-view/src/mixins/emitter'
 export default {
   mixins: [ emitter ],
+  props: {
+    value: [ Number, String, Array ],
+    data: Array,
+    fieldValue: { type: String, default: 'value' },
+    fieldLabel: { type: String, default: 'label' },
+    checkbox: Boolean,
+    highlight: Boolean,
+    multiple: Boolean
+  },
   data () {
     return {
       selectorElement: { },
@@ -16,6 +25,12 @@ export default {
   watch: {
     multiple () {
       this.clearSelection()
+    },
+    value: {
+      immediate: true,
+      handler (value) {
+        this.setRecordSelection(value, true)
+      }
     }
   },
   methods: {
@@ -43,10 +58,15 @@ export default {
      */
     setRecordSelection (data = [], clear) {
       clear && this.clearSelection()
-      Tools.forEach(data, key => {
+      if (Tools.isBlank(data)) { return }
+      const records = this.multiple ? [ ...data ] : [ data[0] ]
+      Tools.forEach(records, key => {
         const value = Reflect.get(this.allElement, key)
-        value && value.handlerCheckedChange(true)
-        this.$set(this.selectorElement, key, value)
+        // 修改状态
+        if (value) {
+          value.handlerCheckedChange(true)
+          value.handleSelector(true)
+        }
       })
     },
     /**

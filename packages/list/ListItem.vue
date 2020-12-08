@@ -11,38 +11,12 @@ import Selector from 'me-view/src/mixins/selector-dispatch'
 export default {
   name: 'ListItem',
   mixins: [ Selector ],
-  props: {
-    index: Number,
-    checkbox: Boolean,
-    disabled: Boolean,
-    highlight: Boolean,
-    multiple: Boolean,
-    data: { type: Object, default () { return {} } },
-    fieldValue: { type: String, default: 'value' },
-    fieldLabel: { type: String, default: 'label' }
-  },
   computed: {
-    uniqueValue () {
-      return Reflect.get(this.data, this.fieldValue) || this.index
-    },
     containerName () { return 'List' },
     classes () {
       return [
-        'me-row list-item',
-        { 'is-selected': this.selected }
+        'me-row list-item', ...this.isSelected
       ]
-    },
-    selected () {
-      if (this.multiple === true) { return false }
-      return this.highlight === true && this.valueInner
-    }
-  },
-  methods: {
-    handleClick () {
-      if (this.disabled === true) { return }
-      this.valueInner = this.valueInner !== true
-      this.handleSelector && this.handleSelector(this.valueInner)
-      this.dispatchParent('click', { data: this.data, index: this.index })
     }
   }
 }

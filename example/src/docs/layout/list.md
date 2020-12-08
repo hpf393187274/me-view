@@ -13,13 +13,12 @@
       <me-button @click="handlerSetting">设置数据选中</me-button>
       <me-input v-model="value"/>
     </me-row>
-    <me-list ref="list" v-model="value" :data="data" field-value="id" checkbox highlight :multiple="multiple"></me-list>
+    <me-list ref="list" v-model="listValue" :data="data" field-value="id" highlight checkbox :multiple="multiple"></me-list>
     <div>
       [
         <div v-for="record in records" :key="record.id">{{ record }}</div>
       ]
     </div>
-    dataModel={{dataModel}}
   </div>
 </template>
 <script>
@@ -27,6 +26,7 @@
     data() {
       return {
         value: '',
+        listValue: undefined,
         multiple: false,
         records: [],
         data: [
@@ -39,6 +39,11 @@
           { id: '7', label: '江苏省'},
           { id: '8', label: '河南省'}
         ]
+      }
+    },
+    watch: {
+      value (value) {
+        this.listValue = value.split(/[,;；，]/)
       }
     },
     methods: {

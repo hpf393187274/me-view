@@ -141,10 +141,8 @@ export default {
     },
     initValue (value) {
       if (Tools.isBlank(this.dataFlat) || Tools.isBlank(value)) {
-        if (this.multiple === true) {
-          this.label__ = []
-          this.value__ = []
-        }
+        this.label__ = undefined
+        this.value__ = undefined
         return
       }
       this.multiple ? this.initValueMultiple(value) : this.initValueSingle(value)
