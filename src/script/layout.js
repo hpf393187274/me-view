@@ -6,12 +6,12 @@ export default class Layout {
   #pointList
   #denominator
   #height
-  constructor (data, denominator = 12) {
+  constructor (data, denominator = 12, screenHeight) {
     this.#dataSource = data
     this.#max = denominator + 1
     this.#denominator = denominator
     this.pointList = [ { row: 1, column: 1 } ]
-    this.#height = document.body.clientHeight || document.documentElement.clientHeight
+    this.#height = screenHeight
   }
 
   get pointList () {
@@ -32,9 +32,20 @@ export default class Layout {
 
   get containerStyle () {
     return {
+      display: 'grid',
       'grid-template-columns': `repeat(${this.#denominator}, 1fr)`,
       'grid-auto-rows': `${this.areaHeight}px`
     }
+  }
+
+  itemStyle ({ row, column }) {
+    if (row && column) {
+      return {
+        'grid-row': `${row.start} / ${row.end}`,
+        'grid-column': `${column.start} / ${column.end}`
+      }
+    }
+    return {}
   }
 
   include ({ start, end }, value) {
@@ -78,8 +89,11 @@ export default class Layout {
       if (data.row && data.column) {
         this.push(data)
         this.parsePoint()
+        this.#dataSource[index].row = data.row
+        this.#dataSource[index].column = data.column
       }
     }
+    return this.#dataSource
   }
 
   removeMarkArea () {
@@ -188,15 +202,5 @@ export default class Layout {
       point.discarded = storage = true
     }
     return result
-  }
-
-  itemStyle ({ row, column }) {
-    if (row && column) {
-      return {
-        'grid-row': `${row.start} / ${row.end}`,
-        'grid-column': `${column.start} / ${column.end}`
-      }
-    }
-    return {}
   }
 }
