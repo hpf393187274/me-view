@@ -23,6 +23,9 @@ import Selector from 'me-view/src/mixins/selector-listener'
 export default {
   name: 'List',
   mixins: [ Selector ],
-  components: { [ListItem.name]: ListItem }
+  components: { [ListItem.name]: ListItem },
+  mounted () {
+    console.log('s-----------', this)
+  }
 }
 </script>

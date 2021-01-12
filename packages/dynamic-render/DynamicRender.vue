@@ -59,7 +59,6 @@ export default {
      */
     async dynamicComponentTemplate () {
       if (Tools.isBlank(this.value)) { return }
-      console.log(`dynamicComponentTemplate-----------${this.value}------------`, new Date().getTime())
       this.template = this.stripRegExp(this.value, 'template')
       this.script = this.stripRegExp(this.value, 'script')
       this.style = this.stripRegExp(this.value, 'style')
@@ -93,6 +92,7 @@ export default {
       }
       const ComponentNew = Vue.extend({
         ...other,
+        router: this.$router,
         data () { return newData }
       })
       const childNodes = this.$el.childNodes
