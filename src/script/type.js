@@ -20,7 +20,7 @@ export default class Type {
    * @returns {string}
    */
   static getType (target) {
-    return toString.call(target)
+    return Object.prototype.toString.call(target)
   }
 
   static isDate (target) {
